@@ -199,7 +199,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         label: "Shiko si u perhap",
         href: "#pillars"
       },
-      notes: ["Mblidh ide", "Rendit propozime", "Hap pjesemarrjen"]
+      notes: ["Mblidh ide", "Rendit propozime", "Pjesemarrje"]
     },
     closing: {
       quote:
@@ -341,7 +341,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         label: "See how it spread",
         href: "#pillars"
       },
-      notes: ["Collect ideas", "Prioritize proposals", "Open participation"]
+      notes: ["Collect ideas", "Prioritize proposals", "Participation"]
     },
     closing: {
       quote:

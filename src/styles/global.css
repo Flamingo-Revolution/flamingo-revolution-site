@@ -402,6 +402,7 @@ h3 {
   color: var(--text);
   font-size: 0.98rem;
   line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .metric-card span,
@@ -413,6 +414,7 @@ h3 {
 .footer-note p {
   color: var(--muted);
   line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 
 .hero__visual {
@@ -670,8 +672,10 @@ h3 {
 
 .council-note strong {
   color: var(--text);
-  font-size: clamp(1.1rem, 2vw, 1.55rem);
+  font-size: clamp(1rem, 1.7vw, 1.35rem);
   line-height: 1.05;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .pillar-grid {
