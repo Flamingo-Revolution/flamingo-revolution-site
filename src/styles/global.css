@@ -176,6 +176,28 @@ html[data-theme="dark"] .page-shell::after {
   flex-wrap: wrap;
 }
 
+.site-menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-right: 0.2rem;
+}
+
+.site-menu a {
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 0.16rem;
+  text-underline-offset: 0.28rem;
+}
+
+.site-menu a:hover,
+.site-menu a:focus-visible {
+  color: var(--accent-strong);
+}
+
 .locale-switch,
 .theme-toggle {
   display: inline-flex;
@@ -846,9 +868,20 @@ blockquote {
     justify-content: stretch;
   }
 
+  .site-menu {
+    justify-content: flex-start;
+    gap: 1.4rem;
+    margin-right: 0;
+    padding: 0.3rem 0.1rem 0.15rem;
+  }
+
+  .site-menu a {
+    white-space: nowrap;
+  }
+
   .locale-switch,
   .theme-toggle {
-    width: 100%;
+    width: calc(100% - 4px);
     box-shadow: 3px 3px 0 var(--ink);
   }
 
@@ -908,7 +941,7 @@ blockquote {
   }
 
   .hero__actions {
-    width: 100%;
+    width: calc(100% - 4px);
   }
 
   .hero__actions .button {
@@ -923,18 +956,22 @@ blockquote {
 }
 
 @media (max-width: 520px) {
-  .page-shell {
-    width: min(100%, 390px);
-    margin-left: 0;
-    margin-right: 0;
-  }
-
   .hero,
   .section-block,
   .closing,
   .footer-note {
-    padding-right: 0.85rem;
-    padding-left: 0.85rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .hero__actions,
+  .metric-card,
+  .info-card,
+  .pillar-card,
+  .council-board,
+  .demands-panel,
+  .logo-panel {
+    width: calc(100% - 4px);
   }
 }
 

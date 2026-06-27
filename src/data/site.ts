@@ -111,7 +111,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       title: "Revolucioni Flamingo",
       description:
         "Misioni yne eshte te mbledhim ne menyre transparente zerin e qytetareve, problematikat qe prekin komunitetet dhe propozimet qe mund te kthehen ne pune konkrete. Revolucioni Flamingo eshte nje hapesire ku pjesemarrja, llogaridhenia dhe mbrojtja e interesit publik vendosen ne qender.",
-      primaryCta: "Merr pjese tani",
+      primaryCta: "Jepni mendimin tuaj",
       secondaryCta: "Pse nisi",
       tertiaryCta: "Si u perhap",
       participateLink:
@@ -123,10 +123,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       triggerText:
         "Me 30 maj 2026, nje protestues u terhoq zvarre nga anetare te sigurise private ne Zvërnec, nderkohe qe Policia e Shtetit ishte e pranishme dhe nuk nderhyri. Pamjet u bene nje nga shkendijat kryesore te mobilizimit me te gjere.",
       demands: [
+        "Shfuqizimi i ligjit per zonat e mbrojtura",
+        "Shfuqizimi i plote i Paketa e Maleve",
+        "Shfuqizimi i ligjit per investimet strategjike",
         "Doreheqja e kryeministrit Edi Rama",
-        "Anulimi i ligjit per zonat e mbrojtura",
-        "Anulimi i ligjit per investimet strategjike",
-        "Anulimi i plote i Paketa e Maleve",
         "Krijimi i nje qeverie teknike"
       ],
       metrics: [
@@ -160,7 +160,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "Kerkesat",
-          body: "Mes kerkesave te artikuluara ishin doreheqja e Edi Rames, anulimi i ligjit per zonat e mbrojtura, anulimi i ligjit per investimet strategjike, anulimi i plote i projektit te njohur si Paketa e Maleve dhe krijimi i nje qeverie teknike."
+          body: "Mes kerkesave te artikuluara ishin shfuqizimi i ligjit per zonat e mbrojtura, shfuqizimi i plote i projektit te njohur si Paketa e Maleve, shfuqizimi i ligjit per investimet strategjike, doreheqja e Edi Rames dhe krijimi i nje qeverie teknike."
         }
       ]
     },
@@ -253,7 +253,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       title: "Flamingo Revolution",
       description:
         "Our mission is to transparently collect people's voices, the problems affecting communities and the proposals that can become concrete work. Flamingo Revolution is a space where participation, accountability and the public interest stay at the center.",
-      primaryCta: "Participate now",
+      primaryCta: "Share your opinion",
       secondaryCta: "Why it began",
       tertiaryCta: "How it spread",
       participateLink:
@@ -265,10 +265,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       triggerText:
         "On May 30, 2026, a protester in Zvërnec was dragged by private security personnel while State Police officers were present and did not intervene. Footage of the incident became one of the main sparks for the wider mobilization.",
       demands: [
-        "Resignation of Prime Minister Edi Rama",
         "Cancellation of the protected areas law",
-        "Cancellation of the strategic investments law",
         "Full cancellation of the Mountain Package",
+        "Cancellation of the strategic investments law",
+        "Resignation of Prime Minister Edi Rama",
         "Creation of a technical government"
       ],
       metrics: [
@@ -302,7 +302,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "The demands",
-          body: "Among the demands highlighted by protesters were the resignation of Edi Rama, the cancellation of the protected areas law, the cancellation of the strategic investments law, the full cancellation of the project known as the Mountain Package and the creation of a technical government."
+          body: "Among the demands highlighted by protesters were the cancellation of the protected areas law, the full cancellation of the project known as the Mountain Package, the cancellation of the strategic investments law, the resignation of Edi Rama and the creation of a technical government."
         }
       ]
     },

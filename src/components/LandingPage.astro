@@ -28,6 +28,10 @@ const isExternalLink = (href: string) => href.startsWith("http");
       </a>
 
       <div class="topbar__actions">
+        <nav class="site-menu" aria-label="Page sections">
+          <a href="#manifesto">{copy.hero.secondaryCta}</a>
+          <a href="#pillars">{copy.hero.tertiaryCta}</a>
+        </nav>
         <LocaleSwitch currentLocale={locale} />
         <ThemeToggle labels={copy.theme} />
       </div>
@@ -46,8 +50,6 @@ const isExternalLink = (href: string) => href.startsWith("http");
             <a class="button button--primary" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
               {copy.hero.primaryCta}
             </a>
-            <a class="button button--ghost" href="#manifesto">{copy.hero.secondaryCta}</a>
-            <a class="button button--ghost" href="#pillars">{copy.hero.tertiaryCta}</a>
           </div>
 
           <ul class="metrics">
@@ -146,9 +148,6 @@ const isExternalLink = (href: string) => href.startsWith("http");
           <a class="button button--primary" href={copy.council.primaryLink.href} target="_blank" rel="noreferrer">
             {copy.council.primaryLink.label}
           </a>
-          <a class="button button--ghost" href={copy.council.secondaryLink.href}>
-            {copy.council.secondaryLink.label}
-          </a>
         </div>
       </section>
 
@@ -164,14 +163,6 @@ const isExternalLink = (href: string) => href.startsWith("http");
             rel={isExternalLink(copy.closing.primaryLink.href) ? "noreferrer" : undefined}
           >
             {copy.closing.primaryLink.label}
-          </a>
-          <a
-            class="button button--ghost"
-            href={copy.closing.secondaryLink.href}
-            target={isExternalLink(copy.closing.secondaryLink.href) ? "_blank" : undefined}
-            rel={isExternalLink(copy.closing.secondaryLink.href) ? "noreferrer" : undefined}
-          >
-            {copy.closing.secondaryLink.label}
           </a>
         </div>
       </section>
