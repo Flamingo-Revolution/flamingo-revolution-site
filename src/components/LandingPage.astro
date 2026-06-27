@@ -10,6 +10,8 @@ interface Props {
 }
 
 const { locale, copy } = Astro.props;
+const titleWords = copy.hero.title.split(" ");
+const isExternalLink = (href: string) => href.startsWith("http");
 ---
 
 <BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
@@ -35,12 +37,17 @@ const { locale, copy } = Astro.props;
       <section class="hero">
         <div class="hero__content">
           <p class="eyebrow">{copy.hero.eyebrow}</p>
-          <h1>{copy.hero.title}</h1>
+          <h1>
+            {titleWords.map((word) => <span>{word}</span>)}
+          </h1>
           <p class="lead">{copy.hero.description}</p>
 
           <div class="hero__actions">
-            <a class="button button--primary" href="#manifesto">{copy.hero.primaryCta}</a>
-            <a class="button button--ghost" href="#pillars">{copy.hero.secondaryCta}</a>
+            <a class="button button--primary" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
+              {copy.hero.primaryCta}
+            </a>
+            <a class="button button--ghost" href="#manifesto">{copy.hero.secondaryCta}</a>
+            <a class="button button--ghost" href="#pillars">{copy.hero.tertiaryCta}</a>
           </div>
 
           <ul class="metrics">
@@ -61,6 +68,7 @@ const { locale, copy } = Astro.props;
             <img src="/images/flamingo-logo.jpg" alt={copy.brand.logoAlt} width="250" height="193" />
           </div>
           <p class="hero__caption"><em>{copy.hero.caption}</em></p>
+          <p class="hero__seal">{copy.brand.tagline}</p>
           <aside class="demands-panel" aria-labelledby="demands-title">
             <p class="demands-panel__eyebrow" id="demands-title">{copy.hero.demandsTitle}</p>
             <div class="demands-panel__trigger">
@@ -116,15 +124,53 @@ const { locale, copy } = Astro.props;
         </div>
       </section>
 
+      <section class="section-block section-block--council" id="council">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.council.kicker}</p>
+          <h2>{copy.council.title}</h2>
+          <p>{copy.council.description}</p>
+        </div>
+
+        <div class="council-board" aria-label={copy.council.kicker}>
+          {
+            copy.council.notes.map((note, index) => (
+              <article class="council-note">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{note}</strong>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="hero__actions">
+          <a class="button button--primary" href={copy.council.primaryLink.href} target="_blank" rel="noreferrer">
+            {copy.council.primaryLink.label}
+          </a>
+          <a class="button button--ghost" href={copy.council.secondaryLink.href}>
+            {copy.council.secondaryLink.label}
+          </a>
+        </div>
+      </section>
+
       <section class="closing">
         <blockquote>{copy.closing.quote}</blockquote>
         <p>{copy.closing.note}</p>
 
         <div class="hero__actions">
-          <a class="button button--primary" href={copy.closing.primaryLink.href} target="_blank" rel="noreferrer">
+          <a
+            class="button button--primary"
+            href={copy.closing.primaryLink.href}
+            target={isExternalLink(copy.closing.primaryLink.href) ? "_blank" : undefined}
+            rel={isExternalLink(copy.closing.primaryLink.href) ? "noreferrer" : undefined}
+          >
             {copy.closing.primaryLink.label}
           </a>
-          <a class="button button--ghost" href={copy.closing.secondaryLink.href}>
+          <a
+            class="button button--ghost"
+            href={copy.closing.secondaryLink.href}
+            target={isExternalLink(copy.closing.secondaryLink.href) ? "_blank" : undefined}
+            rel={isExternalLink(copy.closing.secondaryLink.href) ? "noreferrer" : undefined}
+          >
             {copy.closing.secondaryLink.label}
           </a>
         </div>

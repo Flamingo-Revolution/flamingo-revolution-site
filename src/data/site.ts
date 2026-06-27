@@ -20,6 +20,15 @@ type Pillar = {
   body: string;
 };
 
+type Council = {
+  kicker: string;
+  title: string;
+  description: string;
+  primaryLink: Link;
+  secondaryLink: Link;
+  notes: string[];
+};
+
 export type SiteCopy = {
   meta: {
     title: string;
@@ -44,6 +53,8 @@ export type SiteCopy = {
     description: string;
     primaryCta: string;
     secondaryCta: string;
+    tertiaryCta: string;
+    participateLink: string;
     caption: string;
     demandsTitle: string;
     triggerTitle: string;
@@ -62,6 +73,7 @@ export type SiteCopy = {
     title: string;
     items: Pillar[];
   };
+  council: Council;
   closing: {
     quote: string;
     note: string;
@@ -95,11 +107,14 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     hero: {
       eyebrow: "Nga 23 maji 2026",
-      title: "Flamingoja u be simbol i nje proteste qytetare per token, bregdetin dhe dinjitetin publik.",
+      title: "Revolucioni Flamingo",
       description:
         "Ajo qe u quajt Revolucioni Flamingo mori hov pas perplasjeve ne Zvërnec dhe u shtri nga Narta ne Tirane, ne qytete te tjera dhe ne diaspore. Ajo qe nisi si kundershtim ndaj projekteve turistike ne zona te mbrojtura u kthye gjithnje e me shume ne nje levizje kunder qeverise Rama, korrupsionit dhe kapjes se shtetit.",
-      primaryCta: "Cfare kerkohej",
-      secondaryCta: "Si u perhap",
+      primaryCta: "Merr pjese tani",
+      secondaryCta: "Pse nisi",
+      tertiaryCta: "Si u perhap",
+      participateLink:
+        "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform",
       caption:
         "(Flamingoja u kthye ne simbolin e protestes.)",
       demandsTitle: "Kerkesat kryesore",
@@ -108,10 +123,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         "Me 30 maj 2026, nje protestues u terhoq zvarre nga anetare te sigurise private ne Zvërnec, nderkohe qe Policia e Shtetit ishte e pranishme dhe nuk nderhyri. Pamjet u bene nje nga shkendijat kryesore te mobilizimit me te gjere.",
       demands: [
         "Doreheqja e kryeministrit Edi Rama",
-        "Krijimi i nje qeverie teknike",
         "Anulimi i ligjit per zonat e mbrojtura",
         "Anulimi i ligjit per investimet strategjike",
-        "Anulimi i plote i Paketa e Maleve"
+        "Anulimi i plote i Paketa e Maleve",
+        "Krijimi i nje qeverie teknike"
       ],
       metrics: [
         {
@@ -144,7 +159,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "Kerkesat",
-          body: "Mes kerkesave te artikuluara ishin doreheqja e Edi Rames, krijimi i nje qeverie teknike, anulimi i ligjit per zonat e mbrojtura, anulimi i ligjit per investimet strategjike dhe anulimi i plote i projektit te njohur si Paketa e Maleve."
+          body: "Mes kerkesave te artikuluara ishin doreheqja e Edi Rames, anulimi i ligjit per zonat e mbrojtura, anulimi i ligjit per investimet strategjike, anulimi i plote i projektit te njohur si Paketa e Maleve dhe krijimi i nje qeverie teknike."
         }
       ]
     },
@@ -170,18 +185,33 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         }
       ]
     },
+    council: {
+      kicker: "Keshilli",
+      title: "Nga reagimi publik te propozimet e organizuara.",
+      description:
+        "Keshilli mund te sherbeje si vendi ku idete, dokumentet dhe propozimet mblidhen, renditen dhe kthehen ne pune konkrete. Qellimi eshte qe energjia e protestes te mos mbetet vetem ne komente, por te kthehet ne pjesemarrje.",
+      primaryLink: {
+        label: "Merr pjese ne formular",
+        href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
+      },
+      secondaryLink: {
+        label: "Shiko si u perhap",
+        href: "#pillars"
+      },
+      notes: ["Mblidh ide", "Rendit propozime", "Hap pjesemarrjen"]
+    },
     closing: {
       quote:
         "\"Shqiperia nuk shitet.\"",
       note:
         "Ne keto protesta u lidhen mbrojtja e mjedisit, prona publike dhe kerkesa per llogaridhenie politike ne nje gjuhe te perbashket qytetare.",
       primaryLink: {
-        label: "Lexo artikullin ne shqip",
-        href: "https://sq.wikipedia.org/wiki/Protestat_n%C3%AB_Zv%C3%ABrnec,_2026"
+        label: "Merr pjese tani",
+        href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
       },
       secondaryLink: {
-        label: "Kalo ne anglisht",
-        href: "/en/"
+        label: "Lexo artikullin ne shqip",
+        href: "https://sq.wikipedia.org/wiki/Protestat_n%C3%AB_Zv%C3%ABrnec,_2026"
       }
     },
     footer: {
@@ -209,11 +239,14 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     hero: {
       eyebrow: "Since May 23, 2026",
-      title: "The flamingo became the emblem of a civic uprising over land, coastline and public accountability.",
+      title: "Flamingo Revolution",
       description:
         "What became known as the Flamingo Revolution gathered force after clashes in Zvërnec and spread from Narte to Tirana, other Albanian cities and the diaspora. What began as opposition to resort projects in protected areas increasingly turned into a broader movement against the Rama government, corruption and state capture.",
-      primaryCta: "What it demanded",
-      secondaryCta: "How it spread",
+      primaryCta: "Participate now",
+      secondaryCta: "Why it began",
+      tertiaryCta: "How it spread",
+      participateLink:
+        "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform",
       caption:
         "(The flamingo became the movement's symbol.)",
       demandsTitle: "Core demands",
@@ -222,10 +255,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         "On May 30, 2026, a protester in Zvërnec was dragged by private security personnel while State Police officers were present and did not intervene. Footage of the incident became one of the main sparks for the wider mobilization.",
       demands: [
         "Resignation of Prime Minister Edi Rama",
-        "Creation of a technical government",
         "Cancellation of the protected areas law",
         "Cancellation of the strategic investments law",
-        "Full cancellation of the Mountain Package"
+        "Full cancellation of the Mountain Package",
+        "Creation of a technical government"
       ],
       metrics: [
         {
@@ -258,7 +291,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "The demands",
-          body: "Among the demands highlighted by protesters were the resignation of Edi Rama, the creation of a technical government, the cancellation of the protected areas law, the cancellation of the strategic investments law and the full cancellation of the project known as the Mountain Package."
+          body: "Among the demands highlighted by protesters were the resignation of Edi Rama, the cancellation of the protected areas law, the cancellation of the strategic investments law, the full cancellation of the project known as the Mountain Package and the creation of a technical government."
         }
       ]
     },
@@ -284,18 +317,33 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         }
       ]
     },
+    council: {
+      kicker: "Council",
+      title: "From public reaction to organized proposals.",
+      description:
+        "The council can become the place where ideas, documents and proposals are collected, prioritized and turned into concrete work. The goal is to move the energy of the protest beyond comments and into participation.",
+      primaryLink: {
+        label: "Join through the form",
+        href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
+      },
+      secondaryLink: {
+        label: "See how it spread",
+        href: "#pillars"
+      },
+      notes: ["Collect ideas", "Prioritize proposals", "Open participation"]
+    },
     closing: {
       quote:
         "\"Albania is not for sale.\"",
       note:
         "The movement tied together environmental protection, public land and democratic accountability in a single civic language.",
       primaryLink: {
-        label: "Read the English article",
-        href: "https://en.wikipedia.org/wiki/Flamingo_Revolution"
+        label: "Participate now",
+        href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
       },
       secondaryLink: {
-        label: "Switch to Albanian",
-        href: "/"
+        label: "Read the English article",
+        href: "https://en.wikipedia.org/wiki/Flamingo_Revolution"
       }
     },
     footer: {
