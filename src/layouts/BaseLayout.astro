@@ -1,0 +1,95 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  locale: "sq" | "en";
+}
+
+const { title, description, locale } = Astro.props;
+---
+
+<!doctype html>
+<html lang={locale} data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#edf6ff" />
+    <title>{title}</title>
+    <link rel="icon" href="/images/flamingo-logo.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      const themeKey = "flamingo-theme";
+      const setTheme = (theme) => {
+        const resolvedTheme = theme === "dark" ? "dark" : "light";
+        document.documentElement.dataset.theme = resolvedTheme;
+        document.body?.setAttribute("data-theme", resolvedTheme);
+
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta instanceof HTMLMetaElement) {
+          themeMeta.content = resolvedTheme === "dark" ? "#08131d" : "#edf6ff";
+        }
+
+        document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+          if (!(button instanceof HTMLButtonElement)) return;
+
+          const textNode = button.querySelector("[data-theme-toggle-text]");
+          const nextLabel =
+            resolvedTheme === "dark"
+              ? button.dataset.labelLight ?? "Light mode"
+              : button.dataset.labelDark ?? "Dark mode";
+
+          button.setAttribute("aria-pressed", resolvedTheme === "dark" ? "true" : "false");
+
+          if (textNode) {
+            textNode.textContent = nextLabel;
+          }
+        });
+      };
+
+      const getPreferredTheme = () => {
+        const storedTheme = localStorage.getItem(themeKey);
+        if (storedTheme === "light" || storedTheme === "dark") {
+          return storedTheme;
+        }
+
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      };
+
+      const attachThemeToggle = () => {
+        document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+          if (!(button instanceof HTMLButtonElement) || button.dataset.themeBound === "true") return;
+
+          button.dataset.themeBound = "true";
+          button.addEventListener("click", () => {
+            const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+            localStorage.setItem(themeKey, nextTheme);
+            setTheme(nextTheme);
+          });
+        });
+      };
+
+      const bootTheme = () => {
+        setTheme(getPreferredTheme());
+        attachThemeToggle();
+      };
+
+      document.addEventListener("astro:page-load", bootTheme);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", bootTheme, { once: true });
+      } else {
+        bootTheme();
+      }
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,24 @@
+---
+interface Props {
+  labels: {
+    button: string;
+    light: string;
+    dark: string;
+  };
+}
+
+const { labels } = Astro.props;
+---
+
+<button
+  class="theme-toggle"
+  type="button"
+  data-theme-toggle
+  data-label-light={labels.light}
+  data-label-dark={labels.dark}
+  aria-label={labels.button}
+  aria-pressed="false"
+>
+  <span class="theme-toggle__icon" aria-hidden="true"></span>
+  <span class="theme-toggle__text" data-theme-toggle-text>{labels.dark}</span>
+</button>

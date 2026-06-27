@@ -1,0 +1,25 @@
+{
+  "name": "flamingo-revolution-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "cf:preview": "pnpm run build && wrangler pages dev",
+    "cf:deploy": "pnpm run build && wrangler pages deploy"
+  },
+  "dependencies": {
+    "astro": "^6.4.8",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.105.0"
+  }
+}

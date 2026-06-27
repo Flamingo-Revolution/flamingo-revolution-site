@@ -1,0 +1,138 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import type { Locale, SiteCopy } from "../data/site";
+import LocaleSwitch from "./LocaleSwitch.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  locale: Locale;
+  copy: SiteCopy;
+}
+
+const { locale, copy } = Astro.props;
+---
+
+<BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href={locale === "sq" ? "/" : "/en/"} aria-label={copy.nav.homeLabel}>
+        <span class="brand__mark">
+          <img src="/images/flamingo-logo.jpg" alt={copy.brand.logoAlt} width="72" height="56" />
+        </span>
+        <span class="brand__text">
+          <strong>{copy.brand.name}</strong>
+          <small>{copy.brand.tagline}</small>
+        </span>
+      </a>
+
+      <div class="topbar__actions">
+        <LocaleSwitch currentLocale={locale} />
+        <ThemeToggle labels={copy.theme} />
+      </div>
+    </header>
+
+    <main class="landing">
+      <section class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">{copy.hero.eyebrow}</p>
+          <h1>{copy.hero.title}</h1>
+          <p class="lead">{copy.hero.description}</p>
+
+          <div class="hero__actions">
+            <a class="button button--primary" href="#manifesto">{copy.hero.primaryCta}</a>
+            <a class="button button--ghost" href="#pillars">{copy.hero.secondaryCta}</a>
+          </div>
+
+          <ul class="metrics">
+            {
+              copy.hero.metrics.map((metric) => (
+                <li class="metric-card">
+                  <strong>{metric.value}</strong>
+                  <span>{metric.label}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="hero__visual">
+          <div class="logo-panel">
+            <div class="logo-panel__halo"></div>
+            <img src="/images/flamingo-logo.jpg" alt={copy.brand.logoAlt} width="250" height="193" />
+          </div>
+          <p class="hero__caption"><em>{copy.hero.caption}</em></p>
+          <aside class="demands-panel" aria-labelledby="demands-title">
+            <p class="demands-panel__eyebrow" id="demands-title">{copy.hero.demandsTitle}</p>
+            <div class="demands-panel__trigger">
+              <strong>{copy.hero.triggerTitle}</strong>
+              <p>{copy.hero.triggerText}</p>
+            </div>
+            <ul class="demands-list">
+              {
+                copy.hero.demands.map((demand) => (
+                  <li>{demand}</li>
+                ))
+              }
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-block" id="manifesto">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.manifesto.kicker}</p>
+          <h2>{copy.manifesto.title}</h2>
+          <p>{copy.manifesto.description}</p>
+        </div>
+
+        <div class="card-grid">
+          {
+            copy.manifesto.cards.map((card) => (
+              <article class="info-card">
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block section-block--accent" id="pillars">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.pillars.kicker}</p>
+          <h2>{copy.pillars.title}</h2>
+        </div>
+
+        <div class="pillar-grid">
+          {
+            copy.pillars.items.map((pillar, index) => (
+              <article class="pillar-card">
+                <span class="pillar-card__index">{String(index + 1).padStart(2, "0")}</span>
+                <h3>{pillar.title}</h3>
+                <p>{pillar.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="closing">
+        <blockquote>{copy.closing.quote}</blockquote>
+        <p>{copy.closing.note}</p>
+
+        <div class="hero__actions">
+          <a class="button button--primary" href={copy.closing.primaryLink.href} target="_blank" rel="noreferrer">
+            {copy.closing.primaryLink.label}
+          </a>
+          <a class="button button--ghost" href={copy.closing.secondaryLink.href}>
+            {copy.closing.secondaryLink.label}
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-note">
+      <p>{copy.footer.text}</p>
+    </footer>
+  </div>
+</BaseLayout>
