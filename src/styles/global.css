@@ -717,16 +717,44 @@ blockquote {
 }
 
 .footer-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
   padding: 1.1rem clamp(1rem, 5vw, 3.4rem) 1.35rem;
   color: var(--ink-reverse);
   background: var(--ink);
-  text-align: center;
 }
 
 .footer-note p {
   margin: 0;
   color: inherit;
   font-size: 0.92rem;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0.48rem 0.8rem;
+  border: 2px solid currentColor;
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--accent);
 }
 
 @media (max-width: 1020px) {
@@ -771,6 +799,16 @@ blockquote {
   .footer-note {
     padding-right: 1rem;
     padding-left: 1rem;
+  }
+
+  .footer-note {
+    align-items: stretch;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .footer-links a {
+    flex: 1 1 auto;
   }
 
   .hero {

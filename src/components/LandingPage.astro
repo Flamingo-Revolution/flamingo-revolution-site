@@ -179,6 +179,15 @@ const isExternalLink = (href: string) => href.startsWith("http");
 
     <footer class="footer-note">
       <p>{copy.footer.text}</p>
+      <nav class="footer-links" aria-label="Social links">
+        {
+          copy.footer.links.map((link) => (
+            <a href={link.href} target="_blank" rel="noreferrer">
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
     </footer>
   </div>
 </BaseLayout>

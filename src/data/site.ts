@@ -82,6 +82,7 @@ export type SiteCopy = {
   };
   footer: {
     text: string;
+    links: Link[];
   };
 };
 
@@ -109,14 +110,14 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "Nga 23 maji 2026",
       title: "Revolucioni Flamingo",
       description:
-        "Ajo qe u quajt Revolucioni Flamingo mori hov pas perplasjeve ne Zvërnec dhe u shtri nga Narta ne Tirane, ne qytete te tjera dhe ne diaspore. Ajo qe nisi si kundershtim ndaj projekteve turistike ne zona te mbrojtura u kthye gjithnje e me shume ne nje levizje kunder qeverise Rama, korrupsionit dhe kapjes se shtetit.",
+        "Misioni yne eshte te mbledhim ne menyre transparente zerin e qytetareve, problematikat qe prekin komunitetet dhe propozimet qe mund te kthehen ne pune konkrete. Revolucioni Flamingo eshte nje hapesire ku pjesemarrja, llogaridhenia dhe mbrojtja e interesit publik vendosen ne qender.",
       primaryCta: "Merr pjese tani",
       secondaryCta: "Pse nisi",
       tertiaryCta: "Si u perhap",
       participateLink:
         "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform",
       caption:
-        "(Flamingoja u kthye ne simbolin e protestes.)",
+        "(Nje simbol per te mbledhur zera, probleme dhe propozime.)",
       demandsTitle: "Kerkesat kryesore",
       triggerTitle: "Shkrepja qe e ndezi",
       triggerText:
@@ -130,16 +131,16 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       ],
       metrics: [
         {
-          value: "23 maj 2026",
-          label: "Nisja e protestave prane lagunes se Nartes"
+          value: "Zeri qytetar",
+          label: "Mbledhje e hapur e shqetesimeve dhe ideve"
         },
         {
-          value: "Zvërnec - Tirane",
-          label: "Nga bregdeti ne kryeqytet dhe ne qytete te tjera"
+          value: "Transparence",
+          label: "Problematika te renditura qarte dhe publikisht"
         },
         {
-          value: "Diaspora",
-          label: "Tubime solidariteti ne shume qytete jashte vendit"
+          value: "Pjesemarrje",
+          label: "Nga formulari te propozimet dhe organizimi"
         }
       ]
     },
@@ -215,7 +216,17 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       }
     },
     footer: {
-      text: "Zvërnec, Narte dhe zeri qytetar qe u njoh si Revolucioni Flamingo."
+      text: "Zeri qytetar, problematikat dhe propozimet e mbledhura hapur nga Revolucioni Flamingo.",
+      links: [
+        {
+          label: "Discord",
+          href: "https://discord.gg/jzznwrMFc"
+        },
+        {
+          label: "YouTube",
+          href: "https://www.youtube.com/@flamingorevolution2026"
+        }
+      ]
     }
   },
   en: {
@@ -241,14 +252,14 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "Since May 23, 2026",
       title: "Flamingo Revolution",
       description:
-        "What became known as the Flamingo Revolution gathered force after clashes in Zvërnec and spread from Narte to Tirana, other Albanian cities and the diaspora. What began as opposition to resort projects in protected areas increasingly turned into a broader movement against the Rama government, corruption and state capture.",
+        "Our mission is to transparently collect people's voices, the problems affecting communities and the proposals that can become concrete work. Flamingo Revolution is a space where participation, accountability and the public interest stay at the center.",
       primaryCta: "Participate now",
       secondaryCta: "Why it began",
       tertiaryCta: "How it spread",
       participateLink:
         "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform",
       caption:
-        "(The flamingo became the movement's symbol.)",
+        "(A symbol for collecting voices, problems and proposals.)",
       demandsTitle: "Core demands",
       triggerTitle: "What triggered it",
       triggerText:
@@ -262,16 +273,16 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       ],
       metrics: [
         {
-          value: "May 23, 2026",
-          label: "Protests begin near the Narte lagoon"
+          value: "Civic voice",
+          label: "Open collection of concerns and ideas"
         },
         {
-          value: "Zvërnec - Tirana",
-          label: "From the coast to the capital and beyond"
+          value: "Transparency",
+          label: "Problems organized clearly and publicly"
         },
         {
-          value: "Diaspora",
-          label: "Solidarity rallies across many cities abroad"
+          value: "Participation",
+          label: "From the form to proposals and organizing"
         }
       ]
     },
@@ -347,7 +358,17 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       }
     },
     footer: {
-      text: "Zvërnec, Narte and the civic voice that came to be known as the Flamingo Revolution."
+      text: "Civic voices, problems and proposals collected openly by Flamingo Revolution.",
+      links: [
+        {
+          label: "Discord",
+          href: "https://discord.gg/jzznwrMFc"
+        },
+        {
+          label: "YouTube",
+          href: "https://www.youtube.com/@flamingorevolution2026"
+        }
+      ]
     }
   }
 };
