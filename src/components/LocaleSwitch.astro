@@ -4,29 +4,36 @@ import type { Locale } from "../data/site";
 
 interface Props {
   currentLocale: Locale;
+  currentPath?: string;
 }
 
-const { currentLocale } = Astro.props;
+const { currentLocale, currentPath = "" } = Astro.props;
 
-const locales = [
-  { code: "sq", label: "Shqip", href: getRelativeLocaleUrl("sq", "") },
-  { code: "en", label: "English", href: getRelativeLocaleUrl("en", "") }
+const allLocales = [
+  { code: "sq", label: "Shqip", href: getRelativeLocaleUrl("sq", currentPath) },
+  { code: "en", label: "English", href: getRelativeLocaleUrl("en", currentPath) }
 ] as const;
+
+const enabledLocaleCodes: Locale[] = ["sq"];
+const locales = allLocales.filter((locale) => enabledLocaleCodes.includes(locale.code));
+const shouldRender = locales.length > 1;
 ---
 
-<nav class="locale-switch" aria-label="Languages">
-  {
-    locales.map((locale) => (
-      <a
-        href={locale.href}
-        class:list={[
-          "locale-switch__link",
-          locale.code === currentLocale && "locale-switch__link--active"
-        ]}
-        aria-current={locale.code === currentLocale ? "page" : undefined}
-      >
-        {locale.label}
-      </a>
-    ))
-  }
-</nav>
+{
+  shouldRender && (
+    <nav class="locale-switch" aria-label="Languages">
+      {locales.map((locale) => (
+        <a
+          href={locale.href}
+          class:list={[
+            "locale-switch__link",
+            locale.code === currentLocale && "locale-switch__link--active"
+          ]}
+          aria-current={locale.code === currentLocale ? "page" : undefined}
+        >
+          {locale.label}
+        </a>
+      ))}
+    </nav>
+  )
+}

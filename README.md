@@ -1,13 +1,14 @@
 # Revolucioni Flamingo
 
-`Revolucioni Flamingo` eshte nje faqe statike e ndertuar me Astro dhe TypeScript, me lokalizim ne shqip dhe anglisht. Shqipja eshte gjuha kryesore dhe sherbehet ne rrugen `/`, ndersa versioni anglisht ne `/en/`.
+`Revolucioni Flamingo` eshte nje faqe statike e ndertuar me Astro dhe TypeScript. Shqipja eshte gjuha publike kryesore dhe sherbehet ne rrugen `/`. Kopja dhe komponentet per anglisht ruhen ne kod, por rruget `/en/` jane te caktivizuara per momentin.
 
 ## Cfare perfshin projekti
 
 - Astro me konfigurim `static site generation`
 - TypeScript me `astro/tsconfigs/strict`
-- Lokalizim i strukturuar per shqip dhe anglisht
+- Kopje e strukturuar per shqip dhe anglisht, me rruget publike anglisht te caktivizuara
 - Landing page me light mode dhe dark mode
+- Faqe `/projektligje` per dokumente PDF dhe paketa ligjore
 - Stilizim i bazuar te logoja flamingo me tone koral dhe bojeqielli.
 
 ## Nisja lokale
@@ -38,6 +39,7 @@ pnpm cf:deploy
 ```text
 .
 ├─ public/
+│  ├─ documents/
 │  └─ images/
 ├─ src/
 │  ├─ components/
@@ -53,9 +55,17 @@ pnpm cf:deploy
 ## Lokalizimi
 
 - Shqip: `/`
-- Anglisht: `/en/`
+- Projektligje shqip: `/projektligje/`
 
 Tekstet ruhen ne [src/data/site.ts](src/data/site.ts) qe te jete e lehte te shtohen seksione ose gjuhe te reja ne te ardhmen.
+
+Faqet Astro te versionit anglisht ruhen te [src/disabled-pages/en](src/disabled-pages/en). Per t'i aktivizuar perseri, zhvendosi ne `src/pages/en/` dhe shto `en` te lista e lokaleve te aktivizuara ne [src/components/LocaleSwitch.astro](src/components/LocaleSwitch.astro).
+
+## Dokumentet PDF
+
+PDF-te e faqes se projektligjeve ruhen ne [public/documents/projektligje](public/documents/projektligje). Te dhenat per kartat, titujt, pershkrimet dhe kategorite ruhen ne [src/data/documents.ts](src/data/documents.ts).
+
+Per Cloudflare Pages, mbaj cdo PDF nen `25 MiB`. Nese nje dokument e kalon kete kufi, mos e shto ne repo; hostoje ne Cloudflare R2 ose ne nje burim tjeter publik dhe vendos linkun ne te dhenat e dokumenteve.
 
 ## Branding
 

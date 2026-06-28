@@ -1,0 +1,52 @@
+---
+import type { Locale, SiteCopy } from "../data/site";
+import LocaleSwitch from "./LocaleSwitch.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  locale: Locale;
+  copy: SiteCopy;
+  currentPage: "home" | "documents";
+  localePath?: string;
+}
+
+const { locale, copy, currentPage, localePath = "" } = Astro.props;
+const homeHref = locale === "sq" ? "/" : "/en/";
+const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
+---
+
+<header class="topbar">
+  <a class="brand" href={homeHref} aria-label={copy.nav.homeLabel}>
+    <span class="brand__mark">
+      <img src="/images/flamingo-logo.jpg" alt={copy.brand.logoAlt} width="72" height="56" />
+    </span>
+    <span class="brand__text">
+      <strong>{copy.brand.name}</strong>
+      <small>{copy.brand.tagline}</small>
+    </span>
+  </a>
+
+  <div class="topbar__actions">
+    <nav class="site-menu" aria-label={copy.nav.menuLabel}>
+      {
+        currentPage === "home" ? (
+          <>
+            <a href="#manifesto">{copy.hero.secondaryCta}</a>
+            <a href="#pillars">{copy.hero.tertiaryCta}</a>
+            <a href={documentsHref}>{copy.nav.documentsLabel}</a>
+          </>
+        ) : (
+          <>
+            <a href={homeHref}>{copy.nav.homeLabel}</a>
+            <a href={documentsHref} aria-current="page">{copy.nav.documentsLabel}</a>
+          </>
+        )
+      }
+    </nav>
+    <a class="button button--primary topbar-cta" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
+      {copy.hero.primaryCta}
+    </a>
+    <LocaleSwitch currentLocale={locale} currentPath={localePath} />
+    <ThemeToggle labels={copy.theme} />
+  </div>
+</header>

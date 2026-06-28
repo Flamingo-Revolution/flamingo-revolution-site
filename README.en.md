@@ -1,13 +1,14 @@
 # Flamingo Revolution
 
-`Flamingo Revolution` is a static Astro + TypeScript site with Albanian and English localization. Albanian is the default language at `/`, and the English version lives at `/en/`.
+`Flamingo Revolution` is a static Astro + TypeScript site. Albanian is the active public language at `/`. English copy and components remain in the codebase, but `/en/` routes are disabled for now.
 
 ## What’s included
 
 - Astro configured for static site generation
 - TypeScript using `astro/tsconfigs/strict`
-- Structured localization for Albanian and English
+- Structured Albanian and English copy, with public English routes currently disabled
 - A branded landing page with light and dark themes
+- A `/projektligje` PDF library for legal packages and draft-law documents
 - Styling derived from the flamingo logo with coral and sky-blue accents
 
 ## Local development
@@ -38,6 +39,7 @@ pnpm cf:deploy
 ```text
 .
 ├─ public/
+│  ├─ documents/
 │  └─ images/
 ├─ src/
 │  ├─ components/
@@ -53,9 +55,17 @@ pnpm cf:deploy
 ## Localization
 
 - Albanian: `/`
-- English: `/en/`
+- Albanian draft-law library: `/projektligje/`
 
 Copy is centralized in [src/data/site.ts](src/data/site.ts) so the site can be extended without duplicating content logic.
+
+The disabled English Astro pages live in [src/disabled-pages/en](src/disabled-pages/en). To enable them again, move them back into `src/pages/en/` and add `en` to the enabled locale list in [src/components/LocaleSwitch.astro](src/components/LocaleSwitch.astro).
+
+## PDF documents
+
+PDFs for the draft-law library live in [public/documents/projektligje](public/documents/projektligje). Card data, titles, summaries and categories live in [src/data/documents.ts](src/data/documents.ts).
+
+For Cloudflare Pages, keep each PDF under `25 MiB`. If a document is larger than that, do not commit it to the repo; host it in Cloudflare R2 or another public source and point the document data to that URL.
 
 ## Branding
 

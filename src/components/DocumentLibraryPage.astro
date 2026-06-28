@@ -1,0 +1,162 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "./SiteHeader.astro";
+import type { Locale, SiteCopy } from "../data/site";
+import { documentLibraryCopy, projectDocuments } from "../data/documents";
+import type { DocumentCategory } from "../data/documents";
+
+interface Props {
+  locale: Locale;
+  siteCopy: SiteCopy;
+}
+
+const { locale, siteCopy } = Astro.props;
+const copy = documentLibraryCopy[locale];
+const categoryKeys: DocumentCategory[] = ["overview", "constitutional", "package"];
+---
+
+<BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
+  <div class="page-shell">
+    <SiteHeader locale={locale} copy={siteCopy} currentPage="documents" localePath="projektligje" />
+
+    <main class="document-library" data-document-library>
+      <section class="documents-hero">
+        <div>
+          <p class="eyebrow">{copy.kicker}</p>
+          <h1>
+            <span>{locale === "sq" ? "Projektligje" : "Draft"}</span>
+            <span>{locale === "sq" ? "dhe paketa" : "laws"}</span>
+          </h1>
+        </div>
+        <div class="documents-hero__copy">
+          <h2>{copy.title}</h2>
+          <p>{copy.description}</p>
+          <div class="documents-note">
+            <p>{copy.discussionNote}</p>
+            <a class="button button--primary" href={siteCopy.hero.participateLink} target="_blank" rel="noreferrer">
+              {copy.discussionCta}
+            </a>
+          </div>
+          <strong>{copy.countLabel}</strong>
+        </div>
+      </section>
+
+      <section class="documents-toolbar" aria-label={copy.searchLabel}>
+        <label class="document-search">
+          <span>{copy.searchLabel}</span>
+          <input type="search" placeholder={copy.searchPlaceholder} data-document-search />
+        </label>
+
+        <div class="document-filters" aria-label="Document categories">
+          <button class="document-filter document-filter--active" type="button" data-document-filter="all">
+            {copy.allCategoriesLabel}
+          </button>
+          {
+            categoryKeys.map((category) => (
+              <button class="document-filter" type="button" data-document-filter={category}>
+                {copy.categories[category]}
+              </button>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="document-grid" aria-label={copy.title}>
+        {
+          projectDocuments.map((document, index) => (
+            <article
+              class="document-card"
+              data-document-card
+              data-category={document.category}
+              data-search={`${document.title} ${document.summary[locale]} ${copy.categories[document.category]}`}
+            >
+              <div class="document-card__index">{String(index + 1).padStart(2, "0")}</div>
+              <div class="document-card__body">
+                <p class="document-card__category">{copy.categories[document.category]}</p>
+                <h2>{document.title}</h2>
+                <p>{document.summary[locale]}</p>
+              </div>
+              <div class="document-card__meta" aria-label="Document metadata">
+                <span>{copy.languageLabel}</span>
+                <span>{document.status || copy.statusLabel}</span>
+              </div>
+              <div class="document-card__actions">
+                <a class="button button--primary" href={document.href} target="_blank" rel="noreferrer">
+                  {copy.openLabel}
+                </a>
+                <a class="button button--ghost" href={document.href} download>
+                  {copy.downloadLabel}
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+
+      <p class="document-empty" data-document-empty hidden>{copy.noResults}</p>
+    </main>
+
+    <footer class="footer-note">
+      <p>{siteCopy.footer.text}</p>
+      <nav class="footer-links" aria-label="Social links">
+        {
+          siteCopy.footer.links.map((link) => (
+            <a href={link.href} target="_blank" rel="noreferrer">
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+    </footer>
+  </div>
+
+  <script is:inline>
+    const bindDocumentLibrary = () => {
+      const root = document.querySelector("[data-document-library]");
+      if (!root || root.dataset.bound === "true") return;
+
+      root.dataset.bound = "true";
+      const input = root.querySelector("[data-document-search]");
+      const filters = [...root.querySelectorAll("[data-document-filter]")];
+      const cards = [...root.querySelectorAll("[data-document-card]")];
+      const empty = root.querySelector("[data-document-empty]");
+      let activeCategory = "all";
+
+      const updateCards = () => {
+        const query = input instanceof HTMLInputElement ? input.value.trim().toLowerCase() : "";
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const categoryMatches = activeCategory === "all" || card.dataset.category === activeCategory;
+          const searchText = (card.dataset.search || "").toLowerCase();
+          const queryMatches = query === "" || searchText.includes(query);
+          const isVisible = categoryMatches && queryMatches;
+
+          card.toggleAttribute("hidden", !isVisible);
+          if (isVisible) visibleCount += 1;
+        });
+
+        empty?.toggleAttribute("hidden", visibleCount > 0);
+      };
+
+      input?.addEventListener("input", updateCards);
+
+      filters.forEach((filter) => {
+        filter.addEventListener("click", () => {
+          activeCategory = filter.dataset.documentFilter || "all";
+          filters.forEach((candidate) => {
+            candidate.classList.toggle("document-filter--active", candidate === filter);
+          });
+          updateCards();
+        });
+      });
+    };
+
+    document.addEventListener("astro:page-load", bindDocumentLibrary);
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bindDocumentLibrary, { once: true });
+    } else {
+      bindDocumentLibrary();
+    }
+  </script>
+</BaseLayout>

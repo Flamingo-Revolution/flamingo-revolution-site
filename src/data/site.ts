@@ -41,6 +41,8 @@ export type SiteCopy = {
   };
   nav: {
     homeLabel: string;
+    documentsLabel: string;
+    menuLabel: string;
   };
   theme: {
     button: string;
@@ -52,6 +54,7 @@ export type SiteCopy = {
     title: string;
     description: string;
     primaryCta: string;
+    documentsCta: string;
     secondaryCta: string;
     tertiaryCta: string;
     participateLink: string;
@@ -99,7 +102,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       logoAlt: "Logoja e Revolucioni Flamingo"
     },
     nav: {
-      homeLabel: "Ballina"
+      homeLabel: "Ballina",
+      documentsLabel: "Projektligje",
+      menuLabel: "Menuja kryesore"
     },
     theme: {
       button: "Nderro temen",
@@ -112,6 +117,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       description:
         "Misioni yne eshte te mbledhim ne menyre transparente zerin e qytetareve, problematikat qe prekin komunitetet dhe propozimet qe mund te kthehen ne pune konkrete. Revolucioni Flamingo eshte nje hapesire ku pjesemarrja, llogaridhenia dhe mbrojtja e interesit publik vendosen ne qender.",
       primaryCta: "Jepni mendimin tuaj",
+      documentsCta: "Ide dhe projektligje",
       secondaryCta: "Pse nisi",
       tertiaryCta: "Si u perhap",
       participateLink:
@@ -241,7 +247,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       logoAlt: "Flamingo Revolution logo"
     },
     nav: {
-      homeLabel: "Home"
+      homeLabel: "Home",
+      documentsLabel: "Draft laws",
+      menuLabel: "Main menu"
     },
     theme: {
       button: "Toggle theme",
@@ -254,6 +262,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       description:
         "Our mission is to transparently collect people's voices, the problems affecting communities and the proposals that can become concrete work. Flamingo Revolution is a space where participation, accountability and the public interest stay at the center.",
       primaryCta: "Share your opinion",
+      documentsCta: "Ideas and draft laws",
       secondaryCta: "Why it began",
       tertiaryCta: "How it spread",
       participateLink:

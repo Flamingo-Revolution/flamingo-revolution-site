@@ -1,8 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import type { Locale, SiteCopy } from "../data/site";
-import LocaleSwitch from "./LocaleSwitch.astro";
-import ThemeToggle from "./ThemeToggle.astro";
+import SiteHeader from "./SiteHeader.astro";
 
 interface Props {
   locale: Locale;
@@ -12,33 +11,12 @@ interface Props {
 const { locale, copy } = Astro.props;
 const titleWords = copy.hero.title.split(" ");
 const isExternalLink = (href: string) => href.startsWith("http");
+const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 ---
 
 <BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
   <div class="page-shell">
-    <header class="topbar">
-      <a class="brand" href={locale === "sq" ? "/" : "/en/"} aria-label={copy.nav.homeLabel}>
-        <span class="brand__mark">
-          <img src="/images/flamingo-logo.jpg" alt={copy.brand.logoAlt} width="72" height="56" />
-        </span>
-        <span class="brand__text">
-          <strong>{copy.brand.name}</strong>
-          <small>{copy.brand.tagline}</small>
-        </span>
-      </a>
-
-      <div class="topbar__actions">
-        <nav class="site-menu" aria-label="Page sections">
-          <a href="#manifesto">{copy.hero.secondaryCta}</a>
-          <a href="#pillars">{copy.hero.tertiaryCta}</a>
-        </nav>
-        <a class="button button--primary topbar-cta" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
-          {copy.hero.primaryCta}
-        </a>
-        <LocaleSwitch currentLocale={locale} />
-        <ThemeToggle labels={copy.theme} />
-      </div>
-    </header>
+    <SiteHeader locale={locale} copy={copy} currentPage="home" />
 
     <main class="landing">
       <section class="hero">
@@ -52,6 +30,9 @@ const isExternalLink = (href: string) => href.startsWith("http");
           <div class="hero__actions">
             <a class="button button--primary" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
               {copy.hero.primaryCta}
+            </a>
+            <a class="button button--ghost" href={documentsHref}>
+              {copy.hero.documentsCta}
             </a>
           </div>
 
