@@ -32,6 +32,9 @@ const isExternalLink = (href: string) => href.startsWith("http");
           <a href="#manifesto">{copy.hero.secondaryCta}</a>
           <a href="#pillars">{copy.hero.tertiaryCta}</a>
         </nav>
+        <a class="button button--primary topbar-cta" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
+          {copy.hero.primaryCta}
+        </a>
         <LocaleSwitch currentLocale={locale} />
         <ThemeToggle labels={copy.theme} />
       </div>
@@ -64,28 +67,6 @@ const isExternalLink = (href: string) => href.startsWith("http");
           </ul>
         </div>
 
-        <div class="hero__visual">
-          <div class="logo-panel">
-            <div class="logo-panel__halo"></div>
-            <img src="/images/flamingo-logo.jpg" alt={copy.brand.logoAlt} width="250" height="193" />
-          </div>
-          <p class="hero__caption"><em>{copy.hero.caption}</em></p>
-          <p class="hero__seal">{copy.brand.tagline}</p>
-          <aside class="demands-panel" aria-labelledby="demands-title">
-            <p class="demands-panel__eyebrow" id="demands-title">{copy.hero.demandsTitle}</p>
-            <div class="demands-panel__trigger">
-              <strong>{copy.hero.triggerTitle}</strong>
-              <p>{copy.hero.triggerText}</p>
-            </div>
-            <ul class="demands-list">
-              {
-                copy.hero.demands.map((demand) => (
-                  <li>{demand}</li>
-                ))
-              }
-            </ul>
-          </aside>
-        </div>
       </section>
 
       <section class="section-block" id="manifesto">
