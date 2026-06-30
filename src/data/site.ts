@@ -231,6 +231,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         {
           label: "YouTube",
           href: "https://www.youtube.com/@flamingorevolution2026"
+        },
+        {
+          label: "Instagram",
+          href: "https://www.instagram.com/flamingotelevision"
         }
       ]
     }
