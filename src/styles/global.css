@@ -216,6 +216,42 @@ html[data-theme="dark"] .page-shell::after {
   color: var(--accent-strong);
 }
 
+.header-socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.header-socials__link {
+  display: inline-grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 4px 4px 0 var(--ink);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.header-socials__link:hover,
+.header-socials__link:focus-visible {
+  color: var(--ink-reverse);
+  background: var(--ink);
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.header-socials__link svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+}
+
 .topbar-cta {
   min-height: 2.8rem;
   padding: 0.66rem 0.9rem;
@@ -1001,6 +1037,17 @@ blockquote {
 
   .site-menu a {
     white-space: nowrap;
+  }
+
+  .header-socials {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: calc(100% - 4px);
+  }
+
+  .header-socials__link {
+    width: 100%;
+    box-shadow: 3px 3px 0 var(--ink);
   }
 
   .locale-switch,
