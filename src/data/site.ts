@@ -198,7 +198,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       description:
         "Keshilli mund te sherbeje si vendi ku idete, dokumentet dhe propozimet mblidhen, renditen dhe kthehen ne pune konkrete. Qellimi eshte qe energjia e protestes te mos mbetet vetem ne komente, por te kthehet ne pjesemarrje.",
       primaryLink: {
-        label: "Merr pjese ne formular",
+        label: "Jepni mendimin tuaj",
         href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
       },
       secondaryLink: {
@@ -213,7 +213,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       note:
         "Ne keto protesta u lidhen mbrojtja e mjedisit, prona publike dhe kerkesa per llogaridhenie politike ne nje gjuhe te perbashket qytetare.",
       primaryLink: {
-        label: "Merr pjese tani",
+        label: "Jepni mendimin tuaj",
         href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
       },
       secondaryLink: {
@@ -347,7 +347,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       description:
         "The council can become the place where ideas, documents and proposals are collected, prioritized and turned into concrete work. The goal is to move the energy of the protest beyond comments and into participation.",
       primaryLink: {
-        label: "Join through the form",
+        label: "Share your opinion",
         href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
       },
       secondaryLink: {
@@ -362,7 +362,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       note:
         "The movement tied together environmental protection, public land and democratic accountability in a single civic language.",
       primaryLink: {
-        label: "Participate now",
+        label: "Share your opinion",
         href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
       },
       secondaryLink: {

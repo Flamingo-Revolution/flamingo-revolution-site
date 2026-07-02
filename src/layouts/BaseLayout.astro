@@ -18,7 +18,7 @@ const { title, description, locale } = Astro.props;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#edf6ff" />
     <title>{title}</title>
-    <link rel="icon" href="/images/flamingo-logo.jpg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -90,6 +90,7 @@ const { title, description, locale } = Astro.props;
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Kalo te permbajtja</a>
     <slot />
   </body>
 </html>

@@ -35,7 +35,22 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
     </span>
   </a>
 
-  <div class="topbar__actions">
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-controls="topbar-actions"
+    aria-expanded="false"
+    data-menu-toggle
+  >
+    <span class="menu-toggle__icon" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span>Menu</span>
+  </button>
+
+  <div class="topbar__actions" id="topbar-actions" data-menu-actions>
     <nav class="site-menu" aria-label={copy.nav.menuLabel}>
       {
         currentPage === "home" ? (
@@ -68,3 +83,50 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
     <ThemeToggle labels={copy.theme} />
   </div>
 </header>
+
+<script is:inline>
+  const attachHeaderMenu = () => {
+    document.querySelectorAll("[data-menu-toggle]").forEach((button) => {
+      if (!(button instanceof HTMLButtonElement) || button.dataset.menuBound === "true") return;
+
+      const actionsId = button.getAttribute("aria-controls");
+      const actions = actionsId ? document.getElementById(actionsId) : null;
+      if (!actions) return;
+
+      const mobileQuery = window.matchMedia("(max-width: 760px)");
+      const setOpen = (isOpen) => {
+        actions.dataset.open = isOpen ? "true" : "false";
+        button.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      };
+      const close = () => setOpen(false);
+
+      button.dataset.menuBound = "true";
+      setOpen(false);
+
+      button.addEventListener("click", () => {
+        setOpen(button.getAttribute("aria-expanded") !== "true");
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || button.getAttribute("aria-expanded") !== "true") return;
+
+        close();
+        button.focus();
+      });
+
+      actions.addEventListener("click", (event) => {
+        if (!mobileQuery.matches || !(event.target instanceof Element)) return;
+        if (event.target.closest("a")) close();
+      });
+
+      mobileQuery.addEventListener("change", close);
+    });
+  };
+
+  document.addEventListener("astro:page-load", attachHeaderMenu);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachHeaderMenu, { once: true });
+  } else {
+    attachHeaderMenu();
+  }
+</script>

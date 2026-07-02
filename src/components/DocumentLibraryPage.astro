@@ -19,7 +19,7 @@ const categoryKeys: DocumentCategory[] = ["overview", "constitutional", "package
   <div class="page-shell">
     <SiteHeader locale={locale} copy={siteCopy} currentPage="documents" localePath="projektligje" />
 
-    <main class="document-library" data-document-library>
+    <main class="document-library" id="main" tabindex="-1" data-document-library>
       <section class="documents-hero">
         <div>
           <p class="eyebrow">{copy.kicker}</p>
