@@ -56,6 +56,7 @@ pnpm cf:deploy
 
 - Shqip: `/`
 - Projektligje shqip: `/projektligje/`
+- Idete tuaja shqip: `/idete-tuaja/`
 
 Tekstet ruhen ne [src/data/site.ts](src/data/site.ts) qe te jete e lehte te shtohen seksione ose gjuhe te reja ne te ardhmen.
 
@@ -92,6 +93,17 @@ Per lokal preview ne runtime-in e Pages:
 ```bash
 pnpm cf:preview
 ```
+
+## Idete tuaja
+
+Faqja `/idete-tuaja/` merr idete e miratuara nga nje Cloudflare Pages Function ne
+`/api/ideas`. Function-i lexon URL-ne e Google Apps Script nga environment variable:
+
+```text
+APPS_SCRIPT_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
+```
+
+Per lokal preview me Cloudflare, kopjo `.dev.vars.example` ne `.dev.vars` dhe vendos URL-ne reale.
 
 Per deploy nga CLI pasi te kesh krijuar projektin dhe kredencialet ne Cloudflare:
 

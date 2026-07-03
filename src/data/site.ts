@@ -42,6 +42,7 @@ export type SiteCopy = {
   nav: {
     homeLabel: string;
     documentsLabel: string;
+    ideasLabel: string;
     menuLabel: string;
   };
   theme: {
@@ -104,6 +105,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     nav: {
       homeLabel: "Ballina",
       documentsLabel: "Projektligje",
+      ideasLabel: "Idete tuaja",
       menuLabel: "Menuja kryesore"
     },
     theme: {
@@ -253,6 +255,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     nav: {
       homeLabel: "Home",
       documentsLabel: "Draft laws",
+      ideasLabel: "Your ideas",
       menuLabel: "Main menu"
     },
     theme: {
