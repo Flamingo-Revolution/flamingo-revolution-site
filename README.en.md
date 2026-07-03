@@ -56,6 +56,7 @@ pnpm cf:deploy
 
 - Albanian: `/`
 - Albanian draft-law library: `/projektligje/`
+- Albanian ideas: `/idete-tuaja/`
 
 Copy is centralized in [src/data/site.ts](src/data/site.ts) so the site can be extended without duplicating content logic.
 
@@ -92,6 +93,19 @@ For local preview in the Pages runtime:
 ```bash
 pnpm cf:preview
 ```
+
+## Your Ideas
+
+The `/idete-tuaja/` page loads approved ideas through a Cloudflare Pages Function
+at `/api/ideas`. The function reads the Google Apps Script URL from this
+environment variable:
+
+```text
+APPS_SCRIPT_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
+```
+
+For local Cloudflare preview, copy `.dev.vars.example` to `.dev.vars` and set the
+real URL. Do not commit `.dev.vars`.
 
 For CLI deploys after the Cloudflare project and credentials are ready:
 
