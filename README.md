@@ -1,6 +1,6 @@
 # Revolucioni Flamingo
 
-`Revolucioni Flamingo` eshte nje faqe statike e ndertuar me Astro dhe TypeScript. Shqipja eshte gjuha publike kryesore dhe sherbehet ne rrugen `/`. Kopja dhe komponentet per anglisht ruhen ne kod, por rruget `/en/` jane te caktivizuara per momentin.
+`Revolucioni Flamingo` eshte nje faqe statike e ndertuar me Astro dhe TypeScript. Shqipja eshte gjuha publike kryesore dhe sherbehet ne rrugen `/`. Texti (copy) dhe komponentet per anglisht ruhen ne kod, por rruget `/en/` jane te caktivizuara per momentin.
 
 ## Cfare perfshin projekti
 
