@@ -1,28 +1,29 @@
 # Revolucioni Flamingo
 
-`Revolucioni Flamingo` eshte nje faqe statike e ndertuar me Astro dhe TypeScript. Shqipja eshte gjuha publike kryesore dhe sherbehet ne rrugen `/`. Texti (copy) dhe komponentet per anglisht ruhen ne kod, por rruget `/en/` jane te caktivizuara per momentin.
+`Revolucioni Flamingo` eshte nje "site" statik i ndertuar me Astro dhe TypeScript. "Site"-i serviret permes [Cloudflare Pages](https://developers.cloudflare.com/pages/get-started/git-integration/).
+
+Permbajtja e informacionit dhe mekanizmave te lundrimit (navigation) eshte ne shqip. Ekziston dhe nje version ne anglisht (`/en/`), por per momentin eshte i caktivizuar.
 
 ## Cfare perfshin projekti
 
 - Astro me konfigurim `static site generation`
 - TypeScript me `astro/tsconfigs/strict`
-- Kopje e strukturuar per shqip dhe anglisht, me rruget publike anglisht te caktivizuara
-- Landing page me light mode dhe dark mode
-- Faqe `/projektligje` per dokumente PDF dhe paketa ligjore
-- Stilizim i bazuar te logoja flamingo me tone koral dhe bojeqielli.
+- Tekst i strukturuar ne shqip dhe anglisht, me rruget publike anglisht `/en/` te caktivizuara
+- Light mode dhe dark mode
+- Faqen `/projektligje` per dokumente PDF dhe paketa ligjore
+- Faqen `/idete-tuaja` per stampimin e ideve te mbledhura permes [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform)
+- Faqen `/kontakt` per ["email"-in zyrtar](mailto:info@flamingorevolution.eu) dhe rrjete sociale: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision) dhe [YouTube](https://www.youtube.com/@flamingorevolution2026)
 
-## Nisja lokale
+## Vullnetarizmi
 
-Ky projekt kerkon `Node.js 22.12+` dhe perdor `pnpm` si package manager kryesor. Ne kete repo eshte shtuar `.node-version` dhe `.nvmrc` me `24.14.0` per ta bere mjedisin me te qarte.
+Ky projekt kerkon `Node.js 22.12+` dhe perdor `pnpm` si package manager.
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Faqja lokale hapet zakonisht te `http://localhost:4321`.
-
-Nese mjedisi yt po perdor nje version me te vjeter te Node, kalo fillimisht ne versionin e duhur me menaxherin tend te preferuar te versioneve.
+Serveri lokal hapet zakonisht ne `http://localhost:4321`.
 
 ## Skriptet
 
@@ -34,7 +35,7 @@ pnpm cf:preview
 pnpm cf:deploy
 ```
 
-## Struktura kryesore
+## Struktura e projektit
 
 ```text
 .
@@ -59,27 +60,27 @@ pnpm cf:deploy
 - Idete tuaja shqip: `/idete-tuaja/`
 - Kontakt: `/kontakt/`
 
-Tekstet ruhen ne [src/data/site.ts](src/data/site.ts) qe te jete e lehte te shtohen seksione ose gjuhe te reja ne te ardhmen.
+Tekstet ruhen ne [src/data/site.ts](src/data/site.ts) per te lehtesuar shtimin e seksioneve apo gjuheve te tjera ne te ardhmen.
 
-Faqet Astro te versionit anglisht ruhen te [src/disabled-pages/en](src/disabled-pages/en). Per t'i aktivizuar perseri, zhvendosi ne `src/pages/en/` dhe shto `en` te lista e lokaleve te aktivizuara ne [src/components/LocaleSwitch.astro](src/components/LocaleSwitch.astro).
+Faqet anglisht ruhen te [src/disabled-pages/en](src/disabled-pages/en). Per t'i aktivizuar, zhvendosi ne `src/pages/en/` dhe shto `en` te lista e lokaleve te aktivizuara ne [src/components/LocaleSwitch.astro](src/components/LocaleSwitch.astro).
 
 ## Dokumentet PDF
 
 PDF-te e faqes se projektligjeve ruhen ne [public/documents/projektligje](public/documents/projektligje). Te dhenat per kartat, titujt, pershkrimet dhe kategorite ruhen ne [src/data/documents.ts](src/data/documents.ts).
 
-Per Cloudflare Pages, mbaj cdo PDF nen `25 MiB`. Nese nje dokument e kalon kete kufi, mos e shto ne repo; hostoje ne Cloudflare R2 ose ne nje burim tjeter publik dhe vendos linkun ne te dhenat e dokumenteve.
-
-## Branding
-
-Logoja ruhet ne [public/images/flamingo-logo.jpg](public/images/flamingo-logo.jpg). Paleta vizuale perdor:
-
-- koral/roze per thekset kryesore
-- blu te hapur per sfondet dhe kontrastin
-- tone me te erreta blu per dark mode
+Per Cloudflare Pages, mbaj cdo PDF nen `25 MiB`. Nese nje dokument e kalon kete kufi, mos e shto ne repo; hostoje ne Cloudflare R2 ose ne nje burim tjeter publik dhe vendos linkun ne dokumentacion.
 
 ## Deploy ne Cloudflare Pages
 
-Repo tani eshte pergatitur per `Cloudflare Pages` pa pasur nevoje per `deploy.sh` ose `GitHub Actions` te detyrueshme.
+"Repository" serviret permes `Cloudflare Pages` pa pasur nevoje per `deploy.sh` ose `GitHub Actions`.
+
+Deploy ne production ndodh automatikisht nga Cloudflare Pages sa here behet `push` ne degen `main`. Pra, rrjedha normale e punes eshte:
+
+```bash
+git push origin main
+```
+
+Pas push-it, Cloudflare merr commit-in e fundit, ekzekuton `pnpm build` dhe publikon permbajtjen nga `dist`. `pnpm cf:deploy` perdoret vetem per deploy manual nga CLI.
 
 Ne dashboard-in e Cloudflare Pages perdor:
 
