@@ -57,6 +57,7 @@ pnpm cf:deploy
 - Shqip: `/`
 - Projektligje shqip: `/projektligje/`
 - Idete tuaja shqip: `/idete-tuaja/`
+- Kontakt: `/kontakt/`
 
 Tekstet ruhen ne [src/data/site.ts](src/data/site.ts) qe te jete e lehte te shtohen seksione ose gjuhe te reja ne te ardhmen.
 

@@ -43,6 +43,7 @@ export type SiteCopy = {
     homeLabel: string;
     documentsLabel: string;
     ideasLabel: string;
+    contactLabel: string;
     menuLabel: string;
   };
   theme: {
@@ -106,6 +107,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       homeLabel: "Ballina",
       documentsLabel: "Projektligje",
       ideasLabel: "Idete tuaja",
+      contactLabel: "Kontakt",
       menuLabel: "Menuja kryesore"
     },
     theme: {
@@ -256,6 +258,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       homeLabel: "Home",
       documentsLabel: "Draft laws",
       ideasLabel: "Your ideas",
+      contactLabel: "Contact",
       menuLabel: "Main menu"
     },
     theme: {
