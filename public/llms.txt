@@ -1,0 +1,19 @@
+# Flamingo Revolution
+
+> Flamingo Revolution is a civic website for transparently collecting public concerns, ideas, and proposals in service of the protest and the public interest.
+
+## Primary Language
+
+Albanian (sq).
+
+## Site
+
+- Home: https://flamingorevolution.eu/
+- Ideas and draft laws: https://flamingorevolution.eu/projektligje/
+- Your ideas: https://flamingorevolution.eu/idete-tuaja/
+- Contact: https://flamingorevolution.eu/kontakt/
+- Sitemap: https://flamingorevolution.eu/sitemap-index.xml
+
+## Crawling
+
+Public pages and static documents may be crawled and indexed. Please respect the sitemap and avoid excessive request rates.
