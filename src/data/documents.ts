@@ -272,7 +272,7 @@ export const documentLibraryCopy: Record<Locale, DocumentLibraryCopy> = {
     meta: {
       title: "Projektligje | Revolucioni Flamingo",
       description:
-        "Biblioteka e projektligjeve, paketave dhe dokumenteve PDF te mbledhura nga Revolucioni Flamingo."
+        "Libraria e projektligjeve, paketave dhe dokumenteve PDF."
     },
     kicker: "Biblioteka e dokumenteve",
     title: "Projektligje dhe paketa per t'u lexuar, hapur dhe shkarkuar.",

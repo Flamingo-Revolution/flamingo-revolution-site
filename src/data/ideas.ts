@@ -30,7 +30,7 @@ export const ideasPageCopy: Record<Locale, IdeasPageCopy> = {
     meta: {
       title: "Idete tuaja | Revolucioni Flamingo",
       description:
-        "Ide qytetare te publikuara per Revolucionin Flamingo dhe Shqiperine e re."
+        "Ide qytetare te mbledhura permes Google Forms."
     },
     kicker: "Zeri qytetar",
     title: ["Idete", "tuaja"],

@@ -8,6 +8,19 @@ interface Props {
 }
 
 const { title, description, locale } = Astro.props;
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://flamingorevolution.eu";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const socialImageUrl = new URL("/social-card.jpg?v=20260705", siteUrl).toString();
+const faviconUrl = "/favicon.svg?v=20260705";
+const faviconPngUrl = "/favicon-32x32.png?v=20260705";
+const iconPngUrl = "/icon-192.png?v=20260705";
+const appleTouchIconUrl = "/apple-touch-icon.png?v=20260705";
+const siteName = locale === "sq" ? "Revolucioni Flamingo" : "Flamingo Revolution";
+const imageAlt =
+  locale === "sq"
+    ? "Logoja e Revolucionit Flamingo"
+    : "Flamingo Revolution logo";
+const ogLocale = locale === "sq" ? "sq_AL" : "en_US";
 ---
 
 <!doctype html>
@@ -17,8 +30,31 @@ const { title, description, locale } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#edf6ff" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={faviconUrl} type="image/svg+xml" sizes="any" />
+    <link rel="icon" href={faviconPngUrl} type="image/png" sizes="32x32" />
+    <link rel="icon" href={iconPngUrl} type="image/png" sizes="192x192" />
+    <link rel="shortcut icon" href={faviconUrl} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={appleTouchIconUrl} sizes="180x180" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:secure_url" content={socialImageUrl} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

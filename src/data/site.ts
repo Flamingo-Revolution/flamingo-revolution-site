@@ -96,7 +96,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     meta: {
       title: "Revolucioni Flamingo",
       description:
-        "Protestat e vitit 2026 ne Zvërnec, Narte dhe me gjere, te njohura si Revolucioni Flamingo."
+        "Portal per te mbledhur ne menyre transparente problematika, ide dhe propozime ne sherbim te protestes dhe interesit publik."
     },
     brand: {
       name: "Revolucioni Flamingo",
@@ -247,7 +247,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     meta: {
       title: "Flamingo Revolution",
       description:
-        "The 2026 protests in Zvërnec, Narte and beyond, known as the Flamingo Revolution."
+        "A civic website for transparently collecting public concerns, ideas and proposals in service of the protest and the public interest."
     },
     brand: {
       name: "Flamingo Revolution",

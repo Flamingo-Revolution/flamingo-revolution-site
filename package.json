@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "assets:generate": "node scripts/generate-assets.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "cf:preview": "pnpm run build && wrangler pages dev",
@@ -21,6 +22,7 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "sharp": "^0.35.3",
     "wrangler": "^4.105.0"
   }
 }
