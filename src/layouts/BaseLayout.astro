@@ -11,6 +11,7 @@ const { title, description, locale } = Astro.props;
 const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://flamingorevolution.eu";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const socialImageUrl = new URL("/social-card.jpg?v=20260705", siteUrl).toString();
+const faviconIcoUrl = "/favicon.ico";
 const faviconUrl = "/favicon.svg?v=20260705";
 const faviconPngUrl = "/favicon-32x32.png?v=20260705";
 const iconPngUrl = "/icon-192.png?v=20260705";
@@ -33,6 +34,7 @@ const ogLocale = locale === "sq" ? "sq_AL" : "en_US";
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
+    <link rel="icon" href={faviconIcoUrl} sizes="any" />
     <link rel="icon" href={faviconUrl} type="image/svg+xml" sizes="any" />
     <link rel="icon" href={faviconPngUrl} type="image/png" sizes="32x32" />
     <link rel="icon" href={iconPngUrl} type="image/png" sizes="192x192" />
