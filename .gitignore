@@ -9,3 +9,5 @@ dist
 .dev.vars
 !.env.example
 !.dev.vars.example
+
+.direnv
