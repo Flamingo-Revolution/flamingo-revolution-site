@@ -16,7 +16,7 @@ Permbajtja e informacionit dhe mekanizmave te lundrimit (navigation) eshte ne sh
 
 ## Vullnetarizmi
 
-Ky projekt kerkon `Node.js 22.12+` dhe perdor `pnpm` si package manager.
+Ky projekt kerkon `Node.js 24.14.0` dhe perdor `pnpm` si package manager.
 
 ```bash
 pnpm install
