@@ -86,8 +86,8 @@ export const projectDocuments: ProjectDocument[] = [
     href: documentPath("relacioni-paketa-kushtetuese-shqiperi-e-re")
   },
   {
-    slug: "paketa-1-referendumi",
-    title: "Paketa 1 - Referendumi",
+    slug: "projektligji-per-referendumet",
+    title: "Projektligji per referendumet",
     summary: {
       sq: "Propozime qe lidhen me referendumin dhe pjesemarrjen direkte qytetare.",
       en: "Proposals related to referendums and direct civic participation."
@@ -95,7 +95,7 @@ export const projectDocuments: ProjectDocument[] = [
     category: "package",
     language: "sq",
     status: "PDF",
-    href: documentPath("paketa-1-referendumi")
+    href: documentPath("projektligji-per-referendumet")
   },
   {
     slug: "paketa-2-prona-mjedisi-investimet-strategjike",
