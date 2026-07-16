@@ -12,7 +12,7 @@ interface Props {
 
 const { locale, siteCopy } = Astro.props;
 const copy = documentLibraryCopy[locale];
-const categoryKeys: DocumentCategory[] = ["overview", "constitutional", "package"];
+const categoryKeys: DocumentCategory[] = ["package"];
 ---
 
 <BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
@@ -24,8 +24,8 @@ const categoryKeys: DocumentCategory[] = ["overview", "constitutional", "package
         <div>
           <p class="eyebrow">{copy.kicker}</p>
           <h1>
-            <span>{locale === "sq" ? "Projektligje" : "Draft"}</span>
-            <span>{locale === "sq" ? "dhe paketa" : "laws"}</span>
+            <span>{locale === "sq" ? "Projektligj" : "Draft"}</span>
+            <span>{locale === "sq" ? "referendumi" : "law"}</span>
           </h1>
         </div>
         <div class="documents-hero__copy">
