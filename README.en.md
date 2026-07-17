@@ -33,6 +33,10 @@ pnpm build
 pnpm preview
 pnpm cf:preview
 pnpm cf:deploy
+pnpm db:generate
+pnpm db:migrate
+pnpm db:migrate:deploy
+pnpm db:studio
 ```
 
 ## Project Structure
@@ -42,6 +46,12 @@ pnpm cf:deploy
 ├─ public/
 │  ├─ documents/
 │  └─ images/
+├─ prisma/
+│  ├─ schema.prisma
+│  └─ migrations/
+├─ functions/
+│  ├─ api/
+│  └─ lib/
 ├─ src/
 │  ├─ components/
 │  ├─ data/
@@ -49,9 +59,34 @@ pnpm cf:deploy
 │  ├─ pages/
 │  │  └─ en/
 │  └─ styles/
+├─ prisma.config.ts
 ├─ README.md
 └─ README.en.md
 ```
+
+## Database (Neon + Prisma)
+
+The project uses [Neon](https://neon.tech) Postgres with Prisma.
+
+| Variable | Where | Purpose |
+|----------|-------|---------|
+| `DIRECT_URL` | `.env` (gitignored) | Prisma CLI (`migrate`, `studio`) — direct host, no `-pooler` |
+| `DATABASE_URL` | `.env` locally; Cloudflare Pages in deploy | Pages Functions — pooled (`-pooler`) host |
+
+```bash
+cp .env.example .env
+```
+
+Then paste the real strings from the Neon dashboard (include `?sslmode=require`). Wrangler reads `.env` during `pnpm cf:preview`.
+
+```bash
+pnpm db:migrate --name init_ideas_votes   # CLI uses DIRECT_URL
+pnpm db:studio                            # inspect tables
+pnpm cf:preview                           # Functions + DB (not `astro dev`)
+curl http://127.0.0.1:8788/api/health/db
+```
+
+`astro dev` does not run Pages Functions or talk to Neon. Use `pnpm cf:preview` for local DB work.
 
 ## Localization
 
@@ -104,7 +139,7 @@ The `/idete-tuaja/` page gets approved ideas from a Cloudflare Pages Function at
 APPS_SCRIPT_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
 ```
 
-For local preview with Cloudflare, copy `.dev.vars.example` to `.dev.vars` and set the real URL.
+For local preview with Cloudflare, keep `APPS_SCRIPT_API_URL` (and later `DATABASE_URL`) in `.env`.
 
 For CLI deploys after creating the Cloudflare project and credentials:
 

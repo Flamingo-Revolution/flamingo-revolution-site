@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum IdeaStatus {
+  VISIBLE
+  HIDDEN
+}
+
+enum VoteValue {
+  UP
+  DOWN
+}
+
+model Idea {
+  id            String     @id @default(uuid())
+  createdAt     DateTime   @default(now()) @map("created_at")
+  content       String
+  name          String?
+  status        IdeaStatus @default(VISIBLE)
+  submitterHash String     @map("submitter_hash")
+  upvoteCount   Int        @default(0) @map("upvote_count")
+  downvoteCount Int        @default(0) @map("downvote_count")
+  score         Int        @default(0)
+  votes         Vote[]
+
+  @@index([status, score(sort: Desc), createdAt(sort: Desc)])
+  @@map("ideas")
+}
+
+model Vote {
+  id        String    @id @default(uuid())
+  ideaId    String    @map("idea_id")
+  idea      Idea      @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  voterHash String    @map("voter_hash")
+  value     VoteValue
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@unique([ideaId, voterHash])
+  @@index([voterHash])
+  @@map("votes")
+}

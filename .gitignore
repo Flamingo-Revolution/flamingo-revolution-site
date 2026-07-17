@@ -6,8 +6,7 @@ dist
 *.log
 .env
 .env.*
-.dev.vars
 !.env.example
-!.dev.vars.example
+.prisma-engines
 
 .direnv

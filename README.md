@@ -33,6 +33,10 @@ pnpm build
 pnpm preview
 pnpm cf:preview
 pnpm cf:deploy
+pnpm db:generate
+pnpm db:migrate
+pnpm db:migrate:deploy
+pnpm db:studio
 ```
 
 ## Struktura e projektit
@@ -42,6 +46,12 @@ pnpm cf:deploy
 ├─ public/
 │  ├─ documents/
 │  └─ images/
+├─ prisma/
+│  ├─ schema.prisma
+│  └─ migrations/
+├─ functions/
+│  ├─ api/
+│  └─ lib/
 ├─ src/
 │  ├─ components/
 │  ├─ data/
@@ -49,9 +59,34 @@ pnpm cf:deploy
 │  ├─ pages/
 │  │  └─ en/
 │  └─ styles/
+├─ prisma.config.ts
 ├─ README.md
 └─ README.en.md
 ```
+
+## Database (Neon + Prisma)
+
+Projekti perdor [Neon](https://neon.tech) Postgres dhe Prisma.
+
+| Variabla | Ku | Qellimi |
+|----------|----|---------|
+| `DIRECT_URL` | `.env` (gitignored) | Prisma CLI (`migrate`, `studio`) — lidhje direkte, pa `-pooler` |
+| `DATABASE_URL` | `.env` lokalisht; Cloudflare Pages ne deploy | Pages Functions — lidhje e pool-uar (`-pooler`) |
+
+```bash
+cp .env.example .env
+```
+
+Pastaj vendos stringjet reale nga Neon dashboard (me `?sslmode=require`). Wrangler lexon `.env` gjate `pnpm cf:preview`.
+
+```bash
+pnpm db:migrate --name init_ideas_votes   # CLI me DIRECT_URL
+pnpm db:studio                            # shiko tabelat
+pnpm cf:preview                           # Functions + DB (jo `astro dev`)
+curl http://127.0.0.1:8788/api/health/db
+```
+
+`astro dev` nuk ekzekuton Pages Functions dhe nuk lidhet me Neon. Per DB lokale perdor `pnpm cf:preview`.
 
 ## Lokalizimi
 
@@ -105,7 +140,7 @@ Faqja `/idete-tuaja/` merr idete e miratuara nga nje Cloudflare Pages Function n
 APPS_SCRIPT_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
 ```
 
-Per lokal preview me Cloudflare, kopjo `.dev.vars.example` ne `.dev.vars` dhe vendos URL-ne reale.
+Per lokal preview me Cloudflare, mbaj `APPS_SCRIPT_API_URL` (dhe me vone `DATABASE_URL`) ne `.env`.
 
 Per deploy nga CLI pasi te kesh krijuar projektin dhe kredencialet ne Cloudflare:
 

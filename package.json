@@ -11,17 +11,26 @@
     "dev": "astro dev",
     "start": "astro dev",
     "assets:generate": "node scripts/generate-assets.mjs",
-    "build": "astro build",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && astro build",
     "preview": "astro preview",
     "cf:preview": "pnpm run build && wrangler pages dev",
-    "cf:deploy": "pnpm run build && wrangler pages deploy"
+    "cf:deploy": "pnpm run build && wrangler pages deploy",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
+    "@prisma/adapter-neon": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "astro": "^6.4.8",
+    "dotenv": "^17.4.2",
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "prisma": "^7.8.0",
     "sharp": "^0.35.3",
     "wrangler": "^4.105.0"
   }
