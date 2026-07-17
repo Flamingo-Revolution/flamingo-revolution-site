@@ -10,3 +10,4 @@ dist
 .prisma-engines
 
 .direnv
+misc/fingerprinting-examples/

@@ -83,7 +83,6 @@ Pastaj vendos stringjet reale nga Neon dashboard (me `?sslmode=require`). Wrangl
 pnpm db:migrate --name init_ideas_votes   # CLI me DIRECT_URL
 pnpm db:studio                            # shiko tabelat
 pnpm cf:preview                           # Functions + DB (jo `astro dev`)
-curl http://127.0.0.1:8788/api/health/db
 ```
 
 `astro dev` nuk ekzekuton Pages Functions dhe nuk lidhet me Neon. Per DB lokale perdor `pnpm cf:preview`.

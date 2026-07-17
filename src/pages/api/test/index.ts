@@ -1,4 +1,5 @@
 export function GET({ params, request }) {
+	
 	return new Response(
 		JSON.stringify({
 			name: "Astro",
@@ -6,3 +7,4 @@ export function GET({ params, request }) {
 		}),
 	);
 };
+

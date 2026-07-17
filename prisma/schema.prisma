@@ -20,7 +20,6 @@ model Idea {
   id            String     @id @default(uuid())
   createdAt     DateTime   @default(now()) @map("created_at")
   content       String
-  name          String?
   status        IdeaStatus @default(VISIBLE)
   submitterHash String     @map("submitter_hash")
   upvoteCount   Int        @default(0) @map("upvote_count")

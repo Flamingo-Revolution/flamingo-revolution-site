@@ -19,6 +19,7 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
+    "db:seed": "prisma db seed",
     "db:studio": "prisma studio"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
   "devDependencies": {
     "prisma": "^7.8.0",
     "sharp": "^0.35.3",
+    "tsx": "^4.21.0",
     "wrangler": "^4.105.0"
   }
 }
