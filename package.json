@@ -23,14 +23,18 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "14.1.3",
     "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/svelte": "^9.0.1",
     "@prisma/adapter-neon": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "astro": "^6.4.8",
     "dotenv": "^17.4.2",
+    "svelte": "^5.56.6",
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "prettier": "3.9.5",
     "prisma": "^7.8.0",
     "sharp": "^0.35.3",
     "tsx": "^4.21.0",
