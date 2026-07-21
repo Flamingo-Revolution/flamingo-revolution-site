@@ -11,7 +11,7 @@ The site content and navigation are in Albanian. An English version (`/en/`) exi
 - Structured Albanian and English text, with public English `/en/` routes disabled
 - Light mode and dark mode
 - The `/projektligje` page for PDF documents and legal packages
-- The `/idete-tuaja` page for publishing ideas collected through [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform)
+- The `/idete-tuaja` page for submitting and browsing civic ideas
 - The `/kontakt` page for the [official email](mailto:info@flamingorevolution.eu) and social links: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision), and [YouTube](https://www.youtube.com/@flamingorevolution2026)
 
 ## Volunteering
@@ -133,15 +133,17 @@ pnpm cf:preview
 
 ## Your Ideas
 
-The `/idete-tuaja/` page gets approved ideas from a Cloudflare Pages Function at `/api/ideas`. The function reads the Google Apps Script URL from this environment variable:
+The `/idete-tuaja/` page loads published ideas from Neon Postgres via the Cloudflare Pages Function at `/api/ideas`.
 
-```text
-APPS_SCRIPT_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
-```
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/ideas` | `GET` | Visible ideas (`?fingerprint=` optional for `userVote`) |
+| `/api/ideas` | `POST` | Create an idea (`content` + `fingerprint`) |
+| `/api/ideas/[id]` | `PATCH` | Set submitter name (`name` + `fingerprint`) |
+| `/api/ideas/[id]/vote` | `POST` | Vote `UP`/`DOWN` (same vote again removes it) |
+| `/api/ideas/[id]/vote` | `DELETE` | Remove this device's vote |
 
-For local preview with Cloudflare, keep `APPS_SCRIPT_API_URL` (and later `DATABASE_URL`) in `.env`.
-
-For CLI deploys after creating the Cloudflare project and credentials:
+For local Cloudflare preview, keep `DATABASE_URL` (and `DIRECT_URL` for Prisma CLI) in `.env`.
 
 ```bash
 pnpm cf:deploy

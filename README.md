@@ -11,7 +11,7 @@ Permbajtja e informacionit dhe mekanizmave te lundrimit (navigation) eshte ne sh
 - Tekst i strukturuar ne shqip dhe anglisht, me rruget publike anglisht `/en/` te caktivizuara
 - Light mode dhe dark mode
 - Faqen `/projektligje` per dokumente PDF dhe paketa ligjore
-- Faqen `/idete-tuaja` per stampimin e ideve te mbledhura permes [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform)
+- Faqen `/idete-tuaja` per dergimin dhe shikimin e ideve qytetare
 - Faqen `/kontakt` per ["email"-in zyrtar](mailto:info@flamingorevolution.eu) dhe rrjete sociale: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision) dhe [YouTube](https://www.youtube.com/@flamingorevolution2026)
 
 ## Vullnetarizmi
@@ -132,16 +132,17 @@ pnpm cf:preview
 
 ## Idete tuaja
 
-Faqja `/idete-tuaja/` merr idete e miratuara nga nje Cloudflare Pages Function ne
-`/api/ideas`. Function-i lexon URL-ne e Google Apps Script nga environment variable:
+Faqja `/idete-tuaja/` merr idete e publikuara nga Neon Postgres permes Cloudflare Pages Function ne `/api/ideas`.
 
-```text
-APPS_SCRIPT_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
-```
+| Endpoint | Metoda | Qellimi |
+|----------|--------|---------|
+| `/api/ideas` | `GET` | Lista e ideve te dukshme (`?fingerprint=` opsionale per `userVote`) |
+| `/api/ideas` | `POST` | Krijon nje ide (`content` + `fingerprint`) |
+| `/api/ideas/[id]` | `PATCH` | Shton emrin e derguesit (`name` + `fingerprint`) |
+| `/api/ideas/[id]/vote` | `POST` | Vote `UP`/`DOWN` (e njejta vote perseri e heq) |
+| `/api/ideas/[id]/vote` | `DELETE` | Heq voten e pajisjes |
 
-Per lokal preview me Cloudflare, mbaj `APPS_SCRIPT_API_URL` (dhe me vone `DATABASE_URL`) ne `.env`.
-
-Per deploy nga CLI pasi te kesh krijuar projektin dhe kredencialet ne Cloudflare:
+Per lokal preview me Cloudflare, mbaj `DATABASE_URL` (dhe `DIRECT_URL` per Prisma CLI) ne `.env`.
 
 ```bash
 pnpm cf:deploy
