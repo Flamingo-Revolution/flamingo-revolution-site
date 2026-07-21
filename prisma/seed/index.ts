@@ -13,10 +13,13 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
+	const date = new Date();
+
   const result = await prisma.idea.createMany({
     data: ideas.map((content, index) => ({
       content,
       submitterHash: `seed:${index}`,
+			createdAt: new Date(date.setTime(index * 1000)).toISOString(),
     })),
   });
 
