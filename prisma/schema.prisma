@@ -22,6 +22,7 @@ model Idea {
   content       String
   status        IdeaStatus @default(VISIBLE)
   submitterHash String     @map("submitter_hash")
+  submitterName String?    @map("submitter_name")
   upvoteCount   Int        @default(0) @map("upvote_count")
   downvoteCount Int        @default(0) @map("downvote_count")
   score         Int        @default(0)
