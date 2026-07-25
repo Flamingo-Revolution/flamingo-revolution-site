@@ -34,12 +34,24 @@ const mapUrl = "https://pomodoren.github.io/flamingo-map/";
 </BaseLayout>
 
 <style>
+  :global(html),
+  :global(body) {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
   .map-page {
-    min-height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   main {
-    height: calc(100vh - 90px);
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
   }
 
   iframe {
