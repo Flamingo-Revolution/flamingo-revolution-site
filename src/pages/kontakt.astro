@@ -1,6 +1,8 @@
 ---
 import ContactPage from "../components/ContactPage.astro";
 import { siteCopy } from "../data/site";
+
+export const prerender = true;
 ---
 
 <ContactPage locale="sq" siteCopy={siteCopy.sq} />

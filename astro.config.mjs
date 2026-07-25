@@ -1,16 +1,18 @@
-import { defineConfig } from "astro/config";
-import sitemap from "@astrojs/sitemap";
+import { defineConfig } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
+import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
 
 export default defineConfig({
-  site: "https://flamingorevolution.eu",
-  output: "static",
+	site: 'https://flamingorevolution.eu',
+	output: 'server',
+	adapter: cloudflare(),
 	integrations: [svelte(), sitemap()],
-  i18n: {
-    defaultLocale: "sq",
-    locales: ["sq", "en"],
-    routing: {
-      prefixDefaultLocale: false
-    }
-  }
+	i18n: {
+		defaultLocale: 'sq',
+		locales: ['sq', 'en'],
+		routing: {
+			prefixDefaultLocale: false
+		}
+	}
 });

@@ -1,45 +1,46 @@
 {
-  "name": "flamingo-revolution-site",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "packageManager": "pnpm@11.9.0",
-  "engines": {
-    "node": ">=22.12.0"
-  },
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "assets:generate": "node scripts/generate-assets.mjs",
-    "postinstall": "prisma generate",
-    "build": "prisma generate && astro build",
-    "preview": "astro preview",
-    "cf:preview": "pnpm run build && wrangler pages dev",
-    "cf:deploy": "pnpm run build && wrangler pages deploy",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:seed": "prisma db seed",
-    "db:studio": "prisma studio"
-  },
-  "dependencies": {
-    "@astrojs/cloudflare": "14.1.3",
-    "@astrojs/sitemap": "^3.7.3",
-    "@astrojs/svelte": "^9.0.1",
-    "@prisma/adapter-neon": "^7.8.0",
-    "@prisma/client": "^7.8.0",
-    "astro": "^6.4.8",
-    "dotenv": "^17.4.2",
-    "prettier-plugin-svelte": "^4.1.1",
-    "prettier-plugin-tailwindcss": "^0.8.1",
-    "svelte": "^5.56.6",
-    "typescript": "^6.0.3"
-  },
-  "devDependencies": {
-    "prettier": "3.9.5",
-    "prisma": "^7.8.0",
-    "sharp": "^0.35.3",
-    "tsx": "^4.21.0",
-    "wrangler": "^4.105.0"
-  }
+	"name": "flamingo-revolution-site",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"packageManager": "pnpm@11.9.0",
+	"engines": {
+		"node": ">=22.12.0"
+	},
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"assets:generate": "node scripts/generate-assets.mjs",
+		"postinstall": "prisma generate",
+		"build": "prisma generate && astro build",
+		"preview": "astro preview",
+		"cf:preview": "prisma generate && astro build && astro preview",
+		"cf:deploy": "prisma generate && astro build && wrangler deploy",
+		"db:generate": "prisma generate",
+		"db:migrate": "prisma migrate dev",
+		"db:migrate:deploy": "prisma migrate deploy",
+		"db:seed": "prisma db seed",
+		"db:studio": "prisma studio"
+	},
+	"dependencies": {
+		"@astrojs/cloudflare": "14.1.3",
+		"@astrojs/sitemap": "^3.7.3",
+		"@astrojs/svelte": "^9.0.1",
+		"@prisma/adapter-neon": "^7.8.0",
+		"@prisma/client": "^7.8.0",
+		"astro": "^7.0.0",
+		"dotenv": "^17.4.2",
+		"prettier-plugin-svelte": "^4.1.1",
+		"prettier-plugin-tailwindcss": "^0.8.1",
+		"svelte": "^5.56.6",
+		"typescript": "^6.0.3"
+	},
+	"devDependencies": {
+		"@types/node": "24.0.0",
+		"prettier": "3.9.5",
+		"prisma": "^7.8.0",
+		"sharp": "^0.35.3",
+		"tsx": "^4.21.0",
+		"wrangler": "^4.107.0"
+	}
 }

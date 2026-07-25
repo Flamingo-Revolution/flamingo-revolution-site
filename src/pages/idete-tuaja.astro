@@ -1,6 +1,8 @@
 ---
 import IdeasPage from "../components/IdeasPage.astro";
 import { siteCopy } from "../data/site";
+
+export const prerender = true;
 ---
 
 <IdeasPage locale="sq" siteCopy={siteCopy.sq} />

@@ -10,3 +10,9 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+declare module "cloudflare:workers" {
+	const env: {
+		readonly DATABASE_URL?: string;
+	};
+}

@@ -1,6 +1,8 @@
 ---
 import DocumentLibraryPage from "../components/DocumentLibraryPage.astro";
 import { siteCopy } from "../data/site";
+
+export const prerender = true;
 ---
 
 <DocumentLibraryPage locale="sq" siteCopy={siteCopy.sq} />
