@@ -6,15 +6,20 @@ import ThemeToggle from "./ThemeToggle.astro";
 interface Props {
   locale: Locale;
   copy: SiteCopy;
-  currentPage: "home" | "documents" | "ideas" | "contact";
+  currentPage: "home" | "documents" | "ideas" | "map" | "contact";
   localePath?: string;
 }
 
 const { locale, copy, currentPage, localePath = "" } = Astro.props;
+
 const homeHref = locale === "sq" ? "/" : "/en/";
 const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 const ideasHref = locale === "sq" ? "/idete-tuaja/" : "/en/idete-tuaja/";
 const contactHref = locale === "sq" ? "/kontakt/" : "/en/kontakt/";
+const mapHref = locale === "sq" ? "/harta/" : "/en/map/";
+
+const mapLabel = locale === "sq" ? "Harta" : "Map";
+
 const socialIcons: Record<string, string> = {
   Discord:
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 5.1A16.2 16.2 0 0 0 15 3.9l-.2.4c1.4.4 2.1 1 2.1 1a13 13 0 0 0-9.8 0s.7-.6 2.2-1L9 3.9A16 16 0 0 0 5.1 5.1C2.6 8.8 1.9 12.4 2.2 16c1.6 1.2 3.2 1.9 4.8 2.4l1-1.7c-.6-.2-1.1-.5-1.6-.8l.4-.3c3.1 1.4 6.4 1.4 9.4 0l.4.3c-.5.3-1 .6-1.6.8l1 1.7c1.6-.5 3.2-1.2 4.8-2.4.4-4.2-.7-7.7-2.9-10.9ZM8.4 13.8c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8S10 11 10 12s-.7 1.8-1.6 1.8Zm7.2 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z"/></svg>',
@@ -50,30 +55,57 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
   </button>
 
   <div class="topbar__actions" id="topbar-actions" data-menu-actions>
-    <nav class="site-menu" aria-label={copy.nav.menuLabel}>
-      {
-        currentPage === "home" ? (
-          <>
-            <a href="#manifesto">{copy.hero.secondaryCta}</a>
-            <a href="#pillars">{copy.hero.tertiaryCta}</a>
-            <a href={documentsHref}>{copy.nav.documentsLabel}</a>
-            <a href={ideasHref}>{copy.nav.ideasLabel}</a>
-            <a href={contactHref}>{copy.nav.contactLabel}</a>
-          </>
-        ) : (
-          <>
-            <a href={homeHref} aria-current={currentPage === "home" ? "page" : undefined}>{copy.nav.homeLabel}</a>
-            <a href={documentsHref} aria-current={currentPage === "documents" ? "page" : undefined}>
-              {copy.nav.documentsLabel}
-            </a>
-            <a href={ideasHref} aria-current={currentPage === "ideas" ? "page" : undefined}>
-              {copy.nav.ideasLabel}
-            </a>
-            <a href={contactHref} aria-current={currentPage === "contact" ? "page" : undefined}>{copy.nav.contactLabel}</a>
-          </>
-        )
-      }
-    </nav>
+<nav class="site-menu" aria-label={copy.nav.menuLabel}>
+  {
+    currentPage === "home" ? (
+      <>
+        <a href="#manifesto">{copy.hero.secondaryCta}</a>
+        <a href="#pillars">{copy.hero.tertiaryCta}</a>
+        <a href={documentsHref}>{copy.nav.documentsLabel}</a>
+        <a href={ideasHref}>{copy.nav.ideasLabel}</a>
+        <a href={mapHref}>{mapLabel}</a>
+        <a href={contactHref}>{copy.nav.contactLabel}</a>
+      </>
+    ) : (
+      <>
+        <a
+          href={homeHref}
+          aria-current={currentPage === "home" ? "page" : undefined}
+        >
+          {copy.nav.homeLabel}
+        </a>
+
+        <a
+          href={documentsHref}
+          aria-current={currentPage === "documents" ? "page" : undefined}
+        >
+          {copy.nav.documentsLabel}
+        </a>
+
+        <a
+          href={ideasHref}
+          aria-current={currentPage === "ideas" ? "page" : undefined}
+        >
+          {copy.nav.ideasLabel}
+        </a>
+
+        <a
+          href={mapHref}
+          aria-current={currentPage === "map" ? "page" : undefined}
+        >
+          {mapLabel}
+        </a>
+
+        <a
+          href={contactHref}
+          aria-current={currentPage === "contact" ? "page" : undefined}
+        >
+          {copy.nav.contactLabel}
+        </a>
+      </>
+    )
+  }
+</nav>
     <nav class="header-socials" aria-label="Social links">
       {
         copy.footer.links.map((link) => (
