@@ -1,0 +1,13 @@
+# Ignore artifacts:
+build
+coverage
+dist
+node_modules
+.direnv
+.astro
+pnpm-lock.yaml
+README*
+.env*
+scripts
+prisma
+misc

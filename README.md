@@ -1,6 +1,6 @@
 # Revolucioni Flamingo
 
-`Revolucioni Flamingo` eshte nje "site" statik i ndertuar me Astro dhe TypeScript. "Site"-i serviret permes [Cloudflare Pages](https://developers.cloudflare.com/pages/get-started/git-integration/).
+`Revolucioni Flamingo` eshte nje "site" Astro dhe TypeScript i deploy-uar ne [Cloudflare Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/). Faqet publike prerenderohen, ndersa API-ja e ideve ekzekutohet ne Worker.
 
 Permbajtja e informacionit dhe mekanizmave te lundrimit (navigation) eshte ne shqip. Ekziston dhe nje version ne anglisht (`/en/`), por per momentin eshte i caktivizuar.
 
@@ -11,7 +11,7 @@ Permbajtja e informacionit dhe mekanizmave te lundrimit (navigation) eshte ne sh
 - Tekst i strukturuar ne shqip dhe anglisht, me rruget publike anglisht `/en/` te caktivizuara
 - Light mode dhe dark mode
 - Faqen `/projektligje` per dokumente PDF dhe paketa ligjore
-- Faqen `/idete-tuaja` per stampimin e ideve te mbledhura permes [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform)
+- Faqen `/idete-tuaja` per dergimin dhe shikimin e ideve qytetare
 - Faqen `/kontakt` per ["email"-in zyrtar](mailto:info@flamingorevolution.eu) dhe rrjete sociale: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision) dhe [YouTube](https://www.youtube.com/@flamingorevolution2026)
 
 ## Vullnetarizmi
@@ -33,6 +33,10 @@ pnpm build
 pnpm preview
 pnpm cf:preview
 pnpm cf:deploy
+pnpm db:generate
+pnpm db:migrate
+pnpm db:migrate:deploy
+pnpm db:studio
 ```
 
 ## Struktura e projektit
@@ -42,6 +46,12 @@ pnpm cf:deploy
 ├─ public/
 │  ├─ documents/
 │  └─ images/
+├─ prisma/
+│  ├─ schema.prisma
+│  └─ migrations/
+├─ functions/
+│  ├─ api/
+│  └─ lib/
 ├─ src/
 │  ├─ components/
 │  ├─ data/
@@ -49,9 +59,33 @@ pnpm cf:deploy
 │  ├─ pages/
 │  │  └─ en/
 │  └─ styles/
+├─ prisma.config.ts
 ├─ README.md
 └─ README.en.md
 ```
+
+## Database (Neon + Prisma)
+
+Projekti perdor [Neon](https://neon.tech) Postgres dhe Prisma.
+
+| Variabla | Ku | Qellimi |
+|----------|----|---------|
+| `DIRECT_URL` | `.env` (gitignored) | Prisma CLI (`migrate`, `studio`) — lidhje direkte, pa `-pooler` |
+| `DATABASE_URL` | `.env` lokalisht; Cloudflare Worker secret ne deploy | API routes — lidhje e pool-uar (`-pooler`) |
+
+```bash
+cp .env.example .env
+```
+
+Pastaj vendos stringjet reale nga Neon dashboard (me `?sslmode=require`). Wrangler lexon `.env` gjate `pnpm cf:preview`.
+
+```bash
+pnpm db:migrate --name init_ideas_votes   # CLI me DIRECT_URL
+pnpm db:studio                            # shiko tabelat
+pnpm cf:preview                           # Functions + DB (jo `astro dev`)
+```
+
+Perdor `pnpm cf:preview` per ta ndertuar dhe ekzekutuar faqen ne runtime-in lokal `workerd` te Cloudflare.
 
 ## Lokalizimi
 
@@ -68,46 +102,32 @@ Faqet anglisht ruhen te [src/disabled-pages/en](src/disabled-pages/en). Per t'i 
 
 PDF-te e faqes se projektligjeve ruhen ne [public/documents/projektligje](public/documents/projektligje). Te dhenat per kartat, titujt, pershkrimet dhe kategorite ruhen ne [src/data/documents.ts](src/data/documents.ts).
 
-Per Cloudflare Pages, mbaj cdo PDF nen `25 MiB`. Nese nje dokument e kalon kete kufi, mos e shto ne repo; hostoje ne Cloudflare R2 ose ne nje burim tjeter publik dhe vendos linkun ne dokumentacion.
+Mbaj cdo PDF statik nen kufirin e madhesise per asset te Cloudflare Workers. Nese nje dokument e kalon kufirin, hostoje ne Cloudflare R2 ose ne nje burim tjeter publik dhe vendos linkun ne dokumentacion.
 
-## Deploy ne Cloudflare Pages
+## Deploy ne Cloudflare Workers
 
-"Repository" serviret permes `Cloudflare Pages` pa pasur nevoje per `deploy.sh` ose `GitHub Actions`.
-
-Deploy ne production ndodh automatikisht nga Cloudflare Pages sa here behet `push` ne degen `main`. Pra, rrjedha normale e punes eshte:
+Skedari [wrangler.jsonc](wrangler.jsonc) konfiguron aplikacionin Astro per Cloudflare Workers. Ruaj `DATABASE_URL` si secret te enkriptuar dhe pastaj bej deploy:
 
 ```bash
-git push origin main
+pnpm exec wrangler secret put DATABASE_URL
+pnpm cf:deploy
 ```
 
-Pas push-it, Cloudflare merr commit-in e fundit, ekzekuton `pnpm build` dhe publikon permbajtjen nga `dist`. `pnpm cf:deploy` perdoret vetem per deploy manual nga CLI.
-
-Ne dashboard-in e Cloudflare Pages perdor:
-
-- Build command: `pnpm build`
-- Build output directory: `dist`
-- Node version: `24.14.0` ose lexoje nga `.node-version`
-
-Skedari [wrangler.jsonc](wrangler.jsonc) mban konfigurimin bazik te projektit per `wrangler pages dev` dhe `wrangler pages deploy`. Nese krijon nje Pages project me emer tjeter, perditeso fushen `name` ne ate skedar.
-
-Per lokal preview ne runtime-in e Pages:
-
-```bash
-pnpm cf:preview
-```
+Deploy-i hapet fillimisht ne nje URL `workers.dev`. Per preview lokal ne runtime-in `workerd` te Cloudflare, perdor `pnpm cf:preview`.
 
 ## Idete tuaja
 
-Faqja `/idete-tuaja/` merr idete e miratuara nga nje Cloudflare Pages Function ne
-`/api/ideas`. Function-i lexon URL-ne e Google Apps Script nga environment variable:
+Faqja `/idete-tuaja/` merr idete e publikuara nga Neon Postgres permes Astro API routes ne Cloudflare Workers.
 
-```text
-APPS_SCRIPT_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
-```
+| Endpoint | Metoda | Qellimi |
+|----------|--------|---------|
+| `/api/ideas` | `GET` | Lista e ideve te dukshme (`?fingerprint=` opsionale per `userVote`) |
+| `/api/ideas` | `POST` | Krijon nje ide (`content` + `fingerprint`) |
+| `/api/ideas/[id]` | `PATCH` | Shton emrin e derguesit (`name` + `fingerprint`) |
+| `/api/ideas/[id]/vote` | `POST` | Vote `UP`/`DOWN` (e njejta vote perseri e heq) |
+| `/api/ideas/[id]/vote` | `DELETE` | Heq voten e pajisjes |
 
-Per lokal preview me Cloudflare, kopjo `.dev.vars.example` ne `.dev.vars` dhe vendos URL-ne reale.
-
-Per deploy nga CLI pasi te kesh krijuar projektin dhe kredencialet ne Cloudflare:
+Per preview lokal me Cloudflare, mbaj `DATABASE_URL` dhe `DIRECT_URL` ne `.env`. Ne production, ruaj URL-ne pooled me `wrangler secret put DATABASE_URL`; `DIRECT_URL` duhet te mbetet vetem ne ambientin lokal ose CI.
 
 ```bash
 pnpm cf:deploy
