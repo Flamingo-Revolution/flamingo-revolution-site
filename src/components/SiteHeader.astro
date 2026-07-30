@@ -62,10 +62,8 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
       {
         currentPage === "home" ? (
           <>
-            <a href="#manifesto">{copy.hero.secondaryCta}</a>
-            <a href="#pillars">{copy.hero.tertiaryCta}</a>
-            <a href={documentsHref}>{copy.nav.documentsLabel}</a>
             <a href={timesHref}>{copy.nav.timesLabel}</a>
+            <a href={documentsHref}>{copy.nav.documentsLabel}</a>
             <a href={ideasHref}>{copy.nav.ideasLabel}</a>
             <a href={mapHref}>{mapLabel}</a>
             <a href={pulseHref}>{pulseLabel}</a>
@@ -73,12 +71,12 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
           </>
         ) : (
           <>
+            <a href={timesHref} aria-current={currentPage === "times" ? "page" : undefined}>
+              {copy.nav.timesLabel}
+            </a>
             <a href={homeHref} aria-current={currentPage === "home" ? "page" : undefined}>{copy.nav.homeLabel}</a>
             <a href={documentsHref} aria-current={currentPage === "documents" ? "page" : undefined}>
               {copy.nav.documentsLabel}
-            </a>
-            <a href={timesHref} aria-current={currentPage === "times" ? "page" : undefined}>
-              {copy.nav.timesLabel}
             </a>
             <a href={ideasHref} aria-current={currentPage === "ideas" ? "page" : undefined}>
               {copy.nav.ideasLabel}
