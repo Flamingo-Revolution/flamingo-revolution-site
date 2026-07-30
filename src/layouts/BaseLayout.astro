@@ -5,19 +5,21 @@ interface Props {
   title: string;
   description: string;
   locale: "sq" | "en";
+  socialImagePath?: string;
+  socialImageAlt?: string;
 }
 
-const { title, description, locale } = Astro.props;
+const { title, description, locale, socialImagePath = "/social-card.jpg?v=20260705", socialImageAlt } = Astro.props;
 const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://flamingorevolution.eu";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const socialImageUrl = new URL("/social-card.jpg?v=20260705", siteUrl).toString();
+const socialImageUrl = new URL(socialImagePath, siteUrl).toString();
 const faviconIcoUrl = "/favicon.ico";
 const faviconUrl = "/favicon.svg?v=20260705";
 const faviconPngUrl = "/favicon-32x32.png?v=20260705";
 const iconPngUrl = "/icon-192.png?v=20260705";
 const appleTouchIconUrl = "/apple-touch-icon.png?v=20260705";
 const siteName = locale === "sq" ? "Revolucioni Flamingo" : "Flamingo Revolution";
-const imageAlt =
+const imageAlt = socialImageAlt ??
   locale === "sq"
     ? "Logoja e Revolucionit Flamingo"
     : "Flamingo Revolution logo";

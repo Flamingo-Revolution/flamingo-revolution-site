@@ -42,6 +42,7 @@ export type SiteCopy = {
   nav: {
     homeLabel: string;
     documentsLabel: string;
+    timesLabel: string;
     ideasLabel: string;
     contactLabel: string;
     menuLabel: string;
@@ -106,6 +107,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     nav: {
       homeLabel: "Ballina",
       documentsLabel: "Projektligje",
+      timesLabel: "Flamingo Times",
       ideasLabel: "Idete tuaja",
       contactLabel: "Kontakt",
       menuLabel: "Menuja kryesore"
@@ -257,6 +259,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     nav: {
       homeLabel: "Home",
       documentsLabel: "Draft laws",
+      timesLabel: "Flamingo Times",
       ideasLabel: "Your ideas",
       contactLabel: "Contact",
       menuLabel: "Main menu"

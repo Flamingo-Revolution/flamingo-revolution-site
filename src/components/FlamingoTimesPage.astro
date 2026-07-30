@@ -1,0 +1,255 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteCopy } from "../data/site";
+import SiteHeader from "./SiteHeader.astro";
+import "../styles/flamingo-times.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-i.pdf";
+
+const demands = [
+  "Ligji për referendumet të bëhet i zbatueshëm — populli ka të drejtë të vendosë.",
+  "Ndalim të menjëhershëm të punimeve në Zvërnec dhe Sazan.",
+  "Publikim të plotë të kontratave, të mos fshihen në offshore në Holandë.",
+  "Studim mjedisor të pavarur ndërkombëtar.",
+  "Shfuqizim të ndryshimeve ligjore të 2024–2026."
+];
+
+const steps = [
+  "Investitori paraqet projekt me mbi 5 milionë euro. Qeveria e shpall “strategjik” — pa votim, pa referendum.",
+  "Ti DUHET t’ia shesësh tokën. Nëse nuk bie dakord me çmimin — shteti mund ta marrë me shpronësim.",
+  "Toka jote kalon tek investitori. Ti merr “kompensim sipas referencave të qeverisë” — me vlerë qesharake, 200 lekë/m².",
+  "Investitori ndërton, shet me 4,000–€10,000/m² dhe fiton 100-fish vlerën që pagoi. Ky nuk është zhvillim, është zhvatje e pasurisë private dhe kombëtare."
+];
+---
+
+<BaseLayout
+  title="Flamingo Times — Botimi I"
+  description="Ligji kriminal i investimeve strategjike — Flamingo Times, Tiranë, Korrik 2026."
+  locale="sq"
+  socialImagePath="/flamingo-times-social.png"
+  socialImageAlt="Ballina e Flamingo Times për ligjin e investimeve strategjike"
+>
+  <div class="page-shell times-shell">
+    <SiteHeader locale="sq" copy={copy} currentPage="times" showPrimaryCta={false} />
+
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Korrik 2026</span>
+          <span>Botimi I</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#zvernec">Zvërnec</a>
+        <a href="#si-funksionon">Hap pas hapi</a>
+        <a href="#vendit">Vendi ynë</a>
+        <a href="#vepro">Çfarë mund të bëni</a>
+      </nav>
+
+      <article class="times-lead" id="kryeartikulli">
+        <header class="times-lead__header">
+          <p class="times-label">Ligji kriminal i investimeve strategjike</p>
+          <h2>Shteti ta merr tokën dhe ja jep investitorit “strategjik”</h2>
+        </header>
+
+        <div class="times-lead__grid">
+          <div class="times-article-column times-article-column--first">
+            <p class="times-dropcap">
+              Hajdutat e PD-së janë brenda në një tavë me ata të PS-së. Megjithëse e kundërshtojnë
+              me fjalë, nuk e kundërshtojnë me veprime ligjin në Strasburg, në Gjykatën Europiane
+              të të Drejtave të Njeriut. Qeveria ka miratuar një ligj që lejon shpronësimin e
+              pronës private për hir të investitorëve privatë — nëse projekti quhet “strategjik.”
+              Pragu: investim prej vetëm 5 milionë euro. Kjo po ndodh tani në Zvërnec të Vlorës.
+            </p>
+
+            <h3>Çfarë thotë ligji?</h3>
+            <p>
+              Ligji Nr. 55/2015 “Për Investimet Strategjike” thotë se nëse ju dhe investitori nuk
+              bini dakord për çmimin e tokës tuaj — shteti mund të ta marrë tokën dhe t’ia japë
+              “investitorit”. Ky nuk është interes publik. Është dhurim i pronës tënde te një kompani
+              private.
+            </p>
+            <blockquote class="times-inline-quote">
+              “Ky ligj i jep qeverisë të drejtën të rrëmbeje pronën e një pale private në interes
+              të një pale tjetër private. Jo për të bërë shkolla, spitale, lulishte si interes
+              PUBLIK, por që privati i pasur të fitojë edhe më shumë pasuri.”
+            </blockquote>
+            <p class="times-inline-quote__source">
+              Departamenti Amerikan i Shtetit, Deklarata e Klimës së Investimeve 2025
+            </p>
+            <p>
+              Neni 41 i Kushtetutës Shqiptare lejon shpronësimin vetëm për interes publik të
+              vërtetë — rrugë,
+            </p>
+          </div>
+
+          <div class="times-article-column times-article-column--second" id="zvernec">
+            <p>spitale, shkolla. Jo resorte private me vila luksoze.</p>
+            <h3>Çfarë ndodhi në Zvërnec?</h3>
+            <p>
+              Banorët e fshatit kishin tokë të trashëguar ose të fituar me ligjin famëkeq 7501 të
+              vitit 1991.
+            </p>
+            <p>
+              Vendime administrative të viteve 2006–2009 ia njohën tokën një figure nga Vlora e
+              viteve ’90.
+            </p>
+            <p>
+              Gjykata e Vlorës u dha të drejtë banorëve në 2013 — por apeli mbeti i bllokuar me
+              vite.
+            </p>
+            <p>
+              Ndërkohë toka u shit. Çmimi: rreth 63 euro për metër katror. Çmim shumë i mirë nëse
+              atë tokë e ke të vjedhur. Çmimi i shitjes së apartamenteve të ndërtuar mbi tokë të
+              vjedhur? 4,000–10,000 euro për metër katror.
+            </p>
+          </div>
+
+          <div class="times-article-column times-article-column--visual">
+            <figure class="times-zvernec-photo">
+              <img
+                src="/images/zverneci.jpg"
+                alt="Pamje ajrore e plazhit dhe lagunës së Zvërnecit"
+                width="711"
+                height="399"
+              />
+              <figcaption>Zvërnec, Vlorë</figcaption>
+            </figure>
+
+            <div class="times-price-comparison" aria-label="Krahasimi i çmimit të tokës">
+              <span>Toka u ble me</span>
+              <strong>63€/m²</strong>
+              <span>dhe më pas u shit me</span>
+              <strong>10.000€/m²</strong>
+            </div>
+
+            <p class="times-zvernec__winner">
+              <strong>Fituesi:</strong> kompania private nga Katari — e lidhur me biznesmenin
+              amerikan dhe dhëndrin e Donald Trump, Jared Kushner.
+            </p>
+          </div>
+
+          <section class="times-demands times-demands--lead">
+            <p class="times-label">5 Kërkesat tona</p>
+            <ol>
+              {demands.map((demand) => <li>{demand}</li>)}
+            </ol>
+          </section>
+        </div>
+      </article>
+
+      <section class="times-country-intro" id="vendit">
+        <p class="times-label">Çfarë po ndodh me vendin tonë?</p>
+        <h2>Paradoksi: Euro hyjnë, por shqiptarët ikin.</h2>
+        <p>
+          Që nga viti 2013, investimet e huaja u dyfishuan. Në të njëjtën kohë, pothuajse
+          600,000 shqiptarë u larguan nga vendi. Dhe vazhdojnë të ikin çdo vit.
+        </p>
+      </section>
+
+      <section class="times-explainer" id="si-funksionon">
+        <header>
+          <p class="times-label">Shpjeguesi</p>
+          <h2>Si e marrin tokën — hap pas hapi</h2>
+        </header>
+        <ol class="times-steps">
+          {steps.map((step, index) => (
+            <li>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>Hapi {index + 1}</h3>
+                <p>{step}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="times-self-report">
+        <p class="times-label">Ekonomia & integrimi</p>
+        <h2>Çfarë thotë Shqipëria për veten?</h2>
+        <div class="times-self-report__columns">
+          <p>
+            Ndërtimi është 20% e GDP — tri herë më shumë se Greqia. Kur Greqia kishte rreth
+            7–8% ndërtim të GDP, kishte krizë ekonomike dhe për pak falimentoi gjithë Evropën
+            dhe monedhën euro. Shqipëria e ka 20% sot.
+          </p>
+          <p>
+            Bujqësia ka rënie në pesë vite rresht — ndërkohë që tokat tona po shiten për resorte.
+            Fëmijët tuaj emigrojnë sepse nuk ka punë të mirë. Ky projekt nuk krijon punë të mirë
+            — krijon punë sezonale me pagë të ulët.
+          </p>
+          <p>
+            Reforma të premtuara për BE: 50% dështim. Nga 66 hapa të vlerësuara nga Komisioni
+            Europian, 33 janë “Jo të Arritura.” Ja pra që Rama tregon përralla që gjoja do na
+            fusë në BE. Kjo temë vijon në numrin e radhës.
+          </p>
+        </div>
+      </section>
+
+      <section class="times-action" id="vepro">
+        <div class="times-action__demands">
+          <p class="times-label">Çfarë mund të bëni ju?</p>
+          <h2>Prania juaj ka peshë.</h2>
+          <p>
+            Dilni në protestë — çdo 3 ditë ka ngjarje të re. Prania juaj ka peshë. Ju, prindërit
+            tanë, jeni +50% e votave. Ju nuk u trembët hajdutëve të PD-së & PS-së as kur këta
+            kishin tanke. Edhe tanket i shitën për t’i vjedhur!
+          </p>
+          <p>
+            Nënshkruani peticionin 50,000 firma nevojiten sipas Nenit 150 të Kushtetutës për të
+            kërkuar referendum. Flisni me fëmijët tuaj — ata në diasporë mund të ndikojnë.
+            Dërgojuni këtë gazetë. Bisedoni.
+          </p>
+        </div>
+        <aside class="times-action__card">
+          <div class="times-action__brand">
+            <img
+              src="/images/flamingo-wordmark-light.svg"
+              alt="Flamingo Revolution"
+              width="419"
+              height="187"
+            />
+            <a href="https://flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+              <span>flamingorevolution.eu</span>
+              <img
+                class="times-action__qr"
+                src="/images/qr-code/png/black.png"
+                alt="QR code për flamingorevolution.eu"
+                width="480"
+                height="480"
+              />
+            </a>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="times-source">
+        <p>
+          Burime: US State Dept 2025 · INSTAT · Banka e Shqipërisë · GJK · KE SWD(2025)750
+        </p>
+        <strong>FLAMINGO TIMES · flamingorevolution.eu</strong>
+      </footer>
+    </main>
+
+    <footer class="footer-note">
+      <p>Flamingo Times · Përgatitur nga flamingorevolution.eu</p>
+      <nav class="footer-links" aria-label="Links">
+        {copy.footer.links.map((link) => (
+          <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+        ))}
+      </nav>
+    </footer>
+  </div>
+</BaseLayout>
