@@ -3,9 +3,7 @@ import { jsonResponse } from "@lib/functions";
 import { TokenBucket } from "@lib/services/rateLimit";
 
 /** Soft per-isolate limit: 100 tokens, 1 token refilled every 3s. */
-// const bucket = new TokenBucket<string>(100, 3);
-const bucket = new TokenBucket<string>(5, 3); // 5 tokens, refill 1 / 3s
-
+const bucket = new TokenBucket<string>(100, 3);
 
 function resolveClientIp(request: Request, clientAddress: () => string): string | null {
 	try {
@@ -19,7 +17,7 @@ function resolveClientIp(request: Request, clientAddress: () => string): string 
 	if (cfConnectingIp) return cfConnectingIp;
 
 	const forwardedFor = request.headers.get("X-Forwarded-For");
-	
+
 	if (forwardedFor) {
 		const first = forwardedFor.split(",")[0]?.trim();
 		if (first) return first;
