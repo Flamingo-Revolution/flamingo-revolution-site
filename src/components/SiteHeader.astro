@@ -6,7 +6,7 @@ import ThemeToggle from "./ThemeToggle.astro";
 interface Props {
   locale: Locale;
   copy: SiteCopy;
-  currentPage: "home" | "documents" | "ideas" | "map" | "contact";
+  currentPage: "home" | "documents" | "ideas" | "map" | "pulse" | "contact";
   localePath?: string;
 }
 
@@ -17,8 +17,10 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 const ideasHref = locale === "sq" ? "/idete-tuaja/" : "/en/idete-tuaja/";
 const contactHref = locale === "sq" ? "/kontakt/" : "/en/kontakt/";
 const mapHref = locale === "sq" ? "/harta/" : "/en/map/";
+const pulseHref = "/pulsi/";
 
 const mapLabel = locale === "sq" ? "Harta" : "Map";
+const pulseLabel = locale === "sq" ? "Pulsi" : "Pulse";
 
 const socialIcons: Record<string, string> = {
   Discord:
@@ -64,6 +66,7 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
         <a href={documentsHref}>{copy.nav.documentsLabel}</a>
         <a href={ideasHref}>{copy.nav.ideasLabel}</a>
         <a href={mapHref}>{mapLabel}</a>
+        <a href={pulseHref}>{pulseLabel}</a>
         <a href={contactHref}>{copy.nav.contactLabel}</a>
       </>
     ) : (
@@ -94,6 +97,13 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
           aria-current={currentPage === "map" ? "page" : undefined}
         >
           {mapLabel}
+        </a>
+
+        <a
+          href={pulseHref}
+          aria-current={currentPage === "pulse" ? "page" : undefined}
+        >
+          {pulseLabel}
         </a>
 
         <a
