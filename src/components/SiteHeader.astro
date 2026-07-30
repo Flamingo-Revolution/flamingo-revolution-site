@@ -8,17 +8,16 @@ interface Props {
   copy: SiteCopy;
   currentPage: "home" | "documents" | "ideas" | "map" | "pulse" | "contact" | "times";
   localePath?: string;
-  showPrimaryCta?: boolean;
 }
 
-const { locale, copy, currentPage, localePath = "", showPrimaryCta = true } = Astro.props;
+const { locale, copy, currentPage, localePath = "" } = Astro.props;
 
 const homeHref = locale === "sq" ? "/" : "/en/";
 const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 const ideasHref = locale === "sq" ? "/idete-tuaja/" : "/en/idete-tuaja/";
 const contactHref = locale === "sq" ? "/kontakt/" : "/en/kontakt/";
 const mapHref = locale === "sq" ? "/harta/" : "/en/map/";
-const pulseHref = "/pulsi/";
+const pulseHref = "/pulsi-protestes/";
 const timesHref = "/flamingo-times/";
 
 const mapLabel = locale === "sq" ? "Harta" : "Map";
@@ -62,6 +61,7 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
       {
         currentPage === "home" ? (
           <>
+            <a href={homeHref} aria-current="page">{copy.nav.homeLabel}</a>
             <a href={timesHref}>{copy.nav.timesLabel}</a>
             <a href={documentsHref}>{copy.nav.documentsLabel}</a>
             <a href={ideasHref}>{copy.nav.ideasLabel}</a>
@@ -71,10 +71,10 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
           </>
         ) : (
           <>
+            <a href={homeHref} aria-current={currentPage === "home" ? "page" : undefined}>{copy.nav.homeLabel}</a>
             <a href={timesHref} aria-current={currentPage === "times" ? "page" : undefined}>
               {copy.nav.timesLabel}
             </a>
-            <a href={homeHref} aria-current={currentPage === "home" ? "page" : undefined}>{copy.nav.homeLabel}</a>
             <a href={documentsHref} aria-current={currentPage === "documents" ? "page" : undefined}>
               {copy.nav.documentsLabel}
             </a>
@@ -101,11 +101,9 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
         ))
       }
     </nav>
-    {showPrimaryCta && (
-      <a class="button button--primary topbar-cta" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
-        {copy.hero.primaryCta}
-      </a>
-    )}
+    <a class="button button--primary topbar-cta" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
+      {copy.hero.primaryCta}
+    </a>
     <LocaleSwitch currentLocale={locale} currentPath={localePath} />
     <ThemeToggle labels={copy.theme} />
   </div>

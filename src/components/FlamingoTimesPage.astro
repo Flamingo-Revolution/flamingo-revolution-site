@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteCopy } from "../data/site";
-import SiteHeader from "./SiteHeader.astro";
+import SiteFrame from "./SiteFrame.astro";
 import "../styles/flamingo-times.css";
 
 const copy = siteCopy.sq;
@@ -30,9 +30,7 @@ const steps = [
   socialImagePath="/flamingo-times-social.png"
   socialImageAlt="Ballina e Flamingo Times për ligjin e investimeve strategjike"
 >
-  <div class="page-shell times-shell">
-    <SiteHeader locale="sq" copy={copy} currentPage="times" showPrimaryCta={false} />
-
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
     <main class="times-page" id="main" tabindex="-1">
       <section class="times-masthead" aria-labelledby="times-title">
         <div class="times-masthead__meta">
@@ -90,12 +88,11 @@ const steps = [
             </p>
             <p>
               Neni 41 i Kushtetutës Shqiptare lejon shpronësimin vetëm për interes publik të
-              vërtetë — rrugë,
+              vërtetë — rrugë, spitale, shkolla. Jo resorte private me vila luksoze.
             </p>
           </div>
 
           <div class="times-article-column times-article-column--second" id="zvernec">
-            <p>spitale, shkolla. Jo resorte private me vila luksoze.</p>
             <h3>Çfarë ndodhi në Zvërnec?</h3>
             <p>
               Banorët e fshatit kishin tokë të trashëguar ose të fituar me ligjin famëkeq 7501 të
@@ -243,13 +240,5 @@ const steps = [
       </footer>
     </main>
 
-    <footer class="footer-note">
-      <p>Flamingo Times · Përgatitur nga flamingorevolution.eu</p>
-      <nav class="footer-links" aria-label="Links">
-        {copy.footer.links.map((link) => (
-          <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
-        ))}
-      </nav>
-    </footer>
-  </div>
+  </SiteFrame>
 </BaseLayout>

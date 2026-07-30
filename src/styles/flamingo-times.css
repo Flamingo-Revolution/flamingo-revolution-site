@@ -205,15 +205,17 @@
 }
 
 .times-inline-quote {
+	width: 100%;
+	max-width: none;
 	margin: 1.15rem 0 0.6rem;
-	padding: 0.9rem 0 0.9rem 1rem;
-	border-top: 2px solid #151515;
-	border-bottom: 2px solid #151515;
+	padding: 0.9rem 1rem;
 	border-left: 0.45rem solid var(--accent-strong);
+	background: #ffd7e3;
 	font-family: var(--font-display);
-	font-size: clamp(1.25rem, 2vw, 1.65rem);
+	font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+	font-style: normal;
 	font-weight: 700;
-	line-height: 1.08;
+	line-height: 1.24;
 }
 
 .times-article-column .times-inline-quote__source {

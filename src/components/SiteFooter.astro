@@ -1,0 +1,24 @@
+---
+import type { Locale, SiteCopy } from "../data/site";
+
+interface Props {
+	locale: Locale;
+	copy: SiteCopy;
+}
+
+const { locale, copy } = Astro.props;
+const linksLabel = locale === "sq" ? "Lidhje" : "Links";
+---
+
+<footer class="footer-note">
+	<p>{copy.footer.text}</p>
+	<nav class="footer-links" aria-label={linksLabel}>
+		{
+			copy.footer.links.map((link) => (
+				<a href={link.href} target="_blank" rel="noreferrer">
+					{link.label}
+				</a>
+			))
+		}
+	</nav>
+</footer>

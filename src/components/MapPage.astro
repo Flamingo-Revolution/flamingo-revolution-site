@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SiteHeader from "./SiteHeader.astro";
+import SiteFrame from "./SiteFrame.astro";
 import type { Locale, SiteCopy } from "../data/site";
 
 interface Props {
@@ -28,14 +28,7 @@ const mapHref = "https://pomodoren.github.io/flamingo-map/";
   description={description}
   locale={locale}
 >
-  <div class="page-shell">
-    <SiteHeader
-      locale={locale}
-      copy={siteCopy}
-      currentPage="map"
-      localePath="map"
-    />
-
+  <SiteFrame {locale} copy={siteCopy} currentPage="map" localePath="map">
     <main class="map-page" id="main" tabindex="-1">
       <section class="map-intro">
         <div>
@@ -78,20 +71,7 @@ const mapHref = "https://pomodoren.github.io/flamingo-map/";
       </section>
     </main>
 
-    <footer class="footer-note">
-      <p>{siteCopy.footer.text}</p>
-
-      <nav class="footer-links" aria-label="Links">
-        {
-          siteCopy.footer.links.map((link) => (
-            <a href={link.href} target="_blank" rel="noreferrer">
-              {link.label}
-            </a>
-          ))
-        }
-      </nav>
-    </footer>
-  </div>
+  </SiteFrame>
 </BaseLayout>
 
 <style>
