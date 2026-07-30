@@ -524,22 +524,73 @@ const pulsePoints =
       margin: 0;
     }
 
+    .pulse-hero {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.25rem;
+      padding: 2.25rem 1rem 2.75rem;
+    }
+
+    .pulse-copy {
+      min-width: 0;
+    }
+
     .pulse-copy h1 {
-      font-size: clamp(2.15rem, 9.4vw, 3.25rem);
+      max-width: none;
+      font-size: clamp(2.25rem, 10.5vw, 3.1rem);
     }
 
     .pulse-copy h1 span {
-      white-space: normal;
+      width: fit-content;
+      max-width: 100%;
+      white-space: nowrap;
+    }
+
+    .pulse-body {
+      margin-top: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.55;
     }
 
     .pulse-stats {
       grid-template-columns: 1fr;
       width: calc(100% - 4px);
+      gap: 0.8rem;
     }
 
     .pulse-stats li,
     .pulse-preview {
       transform: none;
+    }
+
+    .pulse-preview {
+      box-sizing: border-box;
+      width: calc(100% - 6px);
+      padding: 0.9rem;
+      overflow: hidden;
+    }
+
+    .pulse-preview figcaption {
+      gap: 0.35rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .pulse-preview svg {
+      height: clamp(9rem, 48vw, 12rem);
+    }
+
+    .pulse-note {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.65rem;
+      align-items: start;
+      padding: 1.25rem 1rem;
+    }
+
+    .pulse-note__mark {
+      display: none;
+    }
+
+    .pulse-note a {
+      white-space: normal;
     }
   }
 </style>
