@@ -67,8 +67,8 @@
 
 	<div class="published-idea__body">
 		<div class="published-idea__meta-row">
-			<span class="published-idea__meta">{ideaBadge}</span>
-			<span class="published-idea__author">{authorLabel}</span>
+			<span class="published-idea__meta">{authorLabel}</span>
+			<span class="published-idea__author">{ideaBadge}</span>
 		</div>
 
 		<p class="published-idea__text" bind:this={textEl}>{idea.idea}</p>
