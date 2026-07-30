@@ -1,0 +1,13 @@
+{
+	"$schema": "../../.astro/collections/authors.schema.json",
+	"redaksia": {
+		"name": "Redaksia",
+		"bio": "Ekipi editorial i Revolucionit Flamingo. Mbledh dhe boton zera, dokumente dhe analiza ne sherbim te interesit publik.",
+		"portfolio": "https://flamingorevolution.eu"
+	},
+	"reporter": {
+		"name": "Reporteri qytetar",
+		"bio": "Kontribute nga terreni: protesta, dëshmi dhe përditësime nga komunitetet e prekura.",
+		"portfolio": "https://discord.gg/jzznwrMFc"
+	}
+}
