@@ -26,7 +26,7 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
           <p class="lead">{copy.hero.description}</p>
 
           <div class="hero__actions">
-            <a class="button button--primary" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
+            <a class="button button--primary" href={copy.hero.participateLink}>
               {copy.hero.primaryCta}
             </a>
             <a class="button button--ghost" href={documentsHref}>
@@ -105,7 +105,7 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
         </div>
 
         <div class="hero__actions">
-          <a class="button button--primary" href={copy.council.primaryLink.href} target="_blank" rel="noreferrer">
+          <a class="button button--primary" href={copy.council.primaryLink.href}>
             {copy.council.primaryLink.label}
           </a>
         </div>

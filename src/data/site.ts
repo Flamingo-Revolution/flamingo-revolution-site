@@ -126,8 +126,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       documentsCta: "Ide dhe projektligje",
       secondaryCta: "Pse nisi",
       tertiaryCta: "Si u perhap",
-      participateLink:
-        "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform",
+      participateLink: "/idete-tuaja/",
       caption:
         "(Nje simbol per te mbledhur zera, probleme dhe propozime.)",
       demandsTitle: "Kerkesat kryesore",
@@ -205,7 +204,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         "Keshilli mund te sherbeje si vendi ku idete, dokumentet dhe propozimet mblidhen, renditen dhe kthehen ne pune konkrete. Qellimi eshte qe energjia e protestes te mos mbetet vetem ne komente, por te kthehet ne pjesemarrje.",
       primaryLink: {
         label: "Jepni mendimin tuaj",
-        href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
+        href: "/idete-tuaja/"
       },
       secondaryLink: {
         label: "Shiko si u perhap",
@@ -220,7 +219,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         "Ne keto protesta u lidhen mbrojtja e mjedisit, prona publike dhe kerkesa per llogaridhenie politike ne nje gjuhe te perbashket qytetare.",
       primaryLink: {
         label: "Jepni mendimin tuaj",
-        href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
+        href: "/idete-tuaja/"
       },
       secondaryLink: {
         label: "Lexo artikullin ne shqip",
@@ -278,8 +277,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       documentsCta: "Ideas and draft laws",
       secondaryCta: "Why it began",
       tertiaryCta: "How it spread",
-      participateLink:
-        "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform",
+      participateLink: "/idete-tuaja/",
       caption:
         "(A symbol for collecting voices, problems and proposals.)",
       demandsTitle: "Core demands",
@@ -357,7 +355,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         "The council can become the place where ideas, documents and proposals are collected, prioritized and turned into concrete work. The goal is to move the energy of the protest beyond comments and into participation.",
       primaryLink: {
         label: "Share your opinion",
-        href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
+        href: "/idete-tuaja/"
       },
       secondaryLink: {
         label: "See how it spread",
@@ -372,7 +370,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         "The movement tied together environmental protection, public land and democratic accountability in a single civic language.",
       primaryLink: {
         label: "Share your opinion",
-        href: "https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform"
+        href: "/idete-tuaja/"
       },
       secondaryLink: {
         label: "Read the English article",
