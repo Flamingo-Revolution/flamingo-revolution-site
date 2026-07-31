@@ -12,7 +12,7 @@ Permbajtja e informacionit dhe mekanizmave te lundrimit (navigation) eshte ne sh
 - Light mode dhe dark mode
 - Faqen `/projektligje` per dokumente PDF dhe paketa ligjore
 - Faqen `/idete-tuaja` per dergimin dhe shikimin e ideve qytetare
-- Faqen `/kontakt` per ["email"-in zyrtar](mailto:info@flamingorevolution.eu) dhe rrjete sociale: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision) dhe [YouTube](https://www.youtube.com/@flamingorevolution2026)
+- Faqen `/kontakt` per ["email"-in zyrtar](mailto:info@flamingorevolution.eu) dhe rrjete sociale: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision) dhe [YouTube](https://www.youtube.com/@flamingotelevision)
 
 ## Vullnetarizmi
 

@@ -235,7 +235,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           label: "YouTube",
-          href: "https://www.youtube.com/@flamingorevolution2026"
+          href: "https://www.youtube.com/@flamingotelevision"
         },
         {
           label: "Instagram",
@@ -386,7 +386,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           label: "YouTube",
-          href: "https://www.youtube.com/@flamingorevolution2026"
+          href: "https://www.youtube.com/@flamingotelevision"
         },
         {
           label: "Instagram",

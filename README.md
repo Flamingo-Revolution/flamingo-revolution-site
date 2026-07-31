@@ -12,7 +12,7 @@ The site content and navigation are in Albanian. An English version (`/en/`) exi
 - Light mode and dark mode
 - The `/projektligje` page for PDF documents and legal packages
 - The `/idete-tuaja` page for submitting and browsing civic ideas
-- The `/kontakt` page for the [official email](mailto:info@flamingorevolution.eu) and social links: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision), and [YouTube](https://www.youtube.com/@flamingorevolution2026)
+- The `/kontakt` page for the [official email](mailto:info@flamingorevolution.eu) and social links: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision), and [YouTube](https://www.youtube.com/@flamingotelevision)
 
 ## Volunteering
 
