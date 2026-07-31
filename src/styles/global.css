@@ -16,6 +16,7 @@
 	--accent-blue: #71b7da;
 	--accent-soft: #ffd7e3;
 	--shadow: 0 28px 70px rgba(0, 0, 0, 0.24);
+	--site-max-width: 1440px;
 	--font-body: 'Space Grotesk', 'Segoe UI', sans-serif;
 	--font-display: 'Cormorant Garamond', Georgia, serif;
 }
@@ -109,7 +110,7 @@ img {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	width: min(1120px, calc(100% - 2rem));
+	width: min(var(--site-max-width), calc(100% - clamp(2rem, 4vw, 5rem)));
 	max-width: 100%;
 	min-width: 0;
 	min-height: 100dvh;
