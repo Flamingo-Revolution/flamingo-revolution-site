@@ -6,7 +6,10 @@ import svelte from '@astrojs/svelte';
 export default defineConfig({
 	site: 'https://flamingorevolution.eu',
 	output: 'server',
-	adapter: cloudflare(),
+	// Prerendered content collections fail in workerd during `astro dev`.
+	adapter: cloudflare({
+		prerenderEnvironment: 'node'
+	}),
 	integrations: [svelte(), sitemap()],
 	i18n: {
 		defaultLocale: 'sq',
