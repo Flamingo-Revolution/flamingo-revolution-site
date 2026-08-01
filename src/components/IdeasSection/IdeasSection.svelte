@@ -264,3 +264,9 @@
 		</div>
 	</form>
 </dialog>
+
+<style>
+	#ideas-compose-input {
+		scroll-margin-top: 20vh;
+	}
+</style>

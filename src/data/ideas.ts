@@ -10,6 +10,7 @@ type IdeasPageCopy = {
   description: string;
   panelTitle: string;
   panelText: string;
+  panelCTA: string;
   formLabel: string;
   composePlaceholder: string;
   composeHint: string;
@@ -52,7 +53,8 @@ export const ideasPageCopy: Record<Locale, IdeasPageCopy> = {
       "Nje vend i hapur per propozime, shqetesime dhe pune konkrete qe mund te vazhdojne pas protestes.",
     panelTitle: "Shkruaj dhe propozo",
     panelText:
-      "Dergo idene ketu. Ajo shfaqet ne listen publike dhe mund te vleresohet nga te tjeret.",
+			"Dergo idene ketu. Ajo shfaqet ne listen publike dhe mund te vleresohet nga te tjeret.",
+		panelCTA: 'Na kontaktoni',
     formLabel: "Dergo idene",
     composePlaceholder: "Shkruaj idene tende ketu...",
     composeHint: "Mbajeni te qarte dhe konkrete. Pa te dhena personale.",
@@ -96,7 +98,8 @@ export const ideasPageCopy: Record<Locale, IdeasPageCopy> = {
       "An open place for proposals, concerns and concrete work that can continue after the protest.",
     panelTitle: "Write and propose",
     panelText:
-      "Send your idea here. It appears in the public list and can be rated by others.",
+			"Send your idea here. It appears in the public list and can be rated by others.",
+		panelCTA: "Contact us",
     formLabel: "Send idea",
     composePlaceholder: "Write your idea here...",
     composeHint: "Keep it clear and concrete. No personal data.",
