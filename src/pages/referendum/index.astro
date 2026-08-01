@@ -1,0 +1,119 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import { siteCopy } from "../../data/site";
+
+export const prerender = true;
+
+const copy = siteCopy.sq;
+const pages = (await getCollection("referendum", ({ data, id }) => !data.draft && !id.includes("/"))).sort(
+	(a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
+);
+
+const title = "Referendum";
+const description = "Dokumentim, analiza ligjore dhe hapat e referendumit shfuqizues për Ligjin Nr. 21/2024.";
+---
+
+<BaseLayout title={`${title} | ${copy.meta.title}`} description={description} locale="sq">
+	<div class="page-shell">
+		<SiteHeader locale="sq" copy={copy} currentPage="referendum" localePath="referendum" />
+
+		<main class="content-page" id="main" tabindex="-1">
+			<section class="content-hero">
+				<p class="eyebrow">Ligji 21/2024</p>
+				<h1><span>{title}</span></h1>
+				<p class="lead">{description}</p>
+			</section>
+
+			<section class="content-list" aria-label="Faqet e referendumit">
+				{
+					pages.map((page) => (
+						<article class="content-list__item">
+							<a href={`/referendum/${page.id}/`}>
+								<h2>{page.data.title}</h2>
+								{page.data.description ? <p>{page.data.description}</p> : null}
+							</a>
+						</article>
+					))
+				}
+			</section>
+		</main>
+
+		<footer class="footer-note">
+			<p>{copy.footer.text}</p>
+			<nav class="footer-links" aria-label="Social links">
+				{
+					copy.footer.links.map((link) => (
+						<a href={link.href} target="_blank" rel="noreferrer">
+							{link.label}
+						</a>
+					))
+				}
+			</nav>
+		</footer>
+	</div>
+</BaseLayout>
+
+<style>
+	.content-page {
+		display: grid;
+		gap: 0;
+		background: var(--paper);
+	}
+
+	.content-hero {
+		padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
+		background:
+			radial-gradient(circle at 86% 22%, rgba(255, 105, 184, 0.18), transparent 26%),
+			linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+	}
+
+	.content-hero h1 {
+		margin: 0.2rem 0 0.8rem;
+		font-family: var(--font-display);
+		font-size: clamp(2.6rem, 7vw, 4.4rem);
+		line-height: 0.95;
+	}
+
+	.content-hero .lead {
+		max-width: 40rem;
+		margin: 0;
+	}
+
+	.content-list {
+		display: grid;
+		gap: 0;
+		padding: 0 clamp(1rem, 5vw, 3.4rem) clamp(2rem, 5vw, 3.4rem);
+		border-top: 1px solid var(--line);
+	}
+
+	.content-list__item {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.content-list__item a {
+		display: grid;
+		gap: 0.45rem;
+		padding: 1.35rem 0;
+	}
+
+	.content-list__item h2 {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: clamp(1.55rem, 3vw, 2rem);
+		line-height: 1.1;
+	}
+
+	.content-list__item p {
+		margin: 0;
+		max-width: 42rem;
+		color: var(--muted);
+		line-height: 1.55;
+	}
+
+	.content-list__item a:hover h2,
+	.content-list__item a:focus-visible h2 {
+		color: var(--accent-strong);
+	}
+</style>

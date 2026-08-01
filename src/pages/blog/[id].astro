@@ -2,6 +2,7 @@
 import { getCollection, getEntry, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleNav from "../../components/ArticleNav.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import { siteCopy } from "../../data/site";
 
@@ -49,9 +50,13 @@ const formatDate = (date: Date) =>
 		<main class="blog-post" id="main" tabindex="-1">
 			<article>
 				<header class="blog-post__header">
-					<p class="eyebrow">
-						<a href="/blog/">Blog</a>
-					</p>
+					<ArticleNav
+						backHref="/blog/"
+						crumbs={[
+							{ label: "Blog", href: "/blog/" },
+							{ label: post.data.title }
+						]}
+					/>
 					<h1>{post.data.title}</h1>
 					<p class="lead">{post.data.description}</p>
 					<p class="blog-post__byline">

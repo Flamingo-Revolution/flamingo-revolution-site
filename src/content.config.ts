@@ -13,7 +13,7 @@ const authors = defineCollection({
 });
 
 const blog = defineCollection({
-	loader: glob({ base: "./src/content/blog", pattern: "**/*.md" }),
+	loader: glob({ base: "./src/content/blog", pattern: "**/[^_]*.md" }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
@@ -24,4 +24,14 @@ const blog = defineCollection({
 	})
 });
 
-export const collections = { blog, authors };
+const referendum = defineCollection({
+	loader: glob({ base: "./src/content/referendum", pattern: "**/[^_]*.md" }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string().optional(),
+		draft: z.boolean().default(false),
+		order: z.number().optional()
+	})
+});
+
+export const collections = { blog, authors, referendum };

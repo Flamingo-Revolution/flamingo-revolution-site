@@ -1,0 +1,109 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleNav from "../../components/ArticleNav.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import { siteCopy } from "../../data/site";
+import "../../styles/prose.css";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+	const pages = await getCollection("referendum", ({ data }) => !data.draft);
+	return pages.map((page) => ({
+		params: { id: page.id },
+		props: { page }
+	}));
+}
+
+interface Props {
+	page: CollectionEntry<"referendum">;
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const copy = siteCopy.sq;
+const description = page.data.description ?? copy.meta.description;
+
+const crumbs: { label: string; href?: string }[] = [
+	{ label: "Referendum", href: "/referendum/" }
+];
+const segments = page.id.split("/");
+let backHref = "/referendum/";
+
+for (let i = 0; i < segments.length - 1; i++) {
+	const parentId = segments.slice(0, i + 1).join("/");
+	const parent = await getEntry("referendum", parentId);
+	if (parent && !parent.data.draft) {
+		crumbs.push({ label: parent.data.title, href: `/referendum/${parentId}/` });
+		backHref = `/referendum/${parentId}/`;
+	}
+}
+
+crumbs.push({ label: page.data.title });
+---
+
+<BaseLayout title={`${page.data.title} | ${copy.meta.title}`} description={description} locale="sq">
+	<div class="page-shell prose-lg">
+		<SiteHeader locale="sq" copy={copy} currentPage="referendum" localePath="referendum" />
+
+		<main class="content-post prose prose-sm" id="main" tabindex="-1">
+			<article>
+				<header class="content-post__header">
+					<ArticleNav backHref={backHref} crumbs={crumbs} />
+					<h1>{page.data.title}</h1>
+					{page.data.description ? <p class="lead">{page.data.description}</p> : null}
+				</header>
+
+				<div class="content-post__body">
+					<Content />
+				</div>
+			</article>
+		</main>
+
+		<footer class="footer-note">
+			<p>{copy.footer.text}</p>
+			<nav class="footer-links" aria-label="Social links">
+				{
+					copy.footer.links.map((link) => (
+						<a href={link.href} target="_blank" rel="noreferrer">
+							{link.label}
+						</a>
+					))
+				}
+			</nav>
+		</footer>
+	</div>
+</BaseLayout>
+
+<style>
+	.content-post {
+		background: var(--paper);
+	}
+
+	.content-post__header {
+		padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem) 1.5rem;
+		background:
+			radial-gradient(circle at 86% 22%, rgba(255, 105, 184, 0.18), transparent 26%),
+			linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+		border-bottom: 1px solid var(--line);
+	}
+
+	.content-post__header h1 {
+		margin: 0.2rem 0 0.8rem;
+		font-family: var(--font-display);
+		font-size: clamp(2.4rem, 6vw, 4rem);
+		line-height: 0.98;
+	}
+
+	.content-post__body {
+		padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1rem, 5vw, 3.4rem) clamp(2rem, 5vw, 3.4rem);
+		font-size: 1.05rem;
+		line-height: 1.7;
+	}
+
+	.content-post table {
+		border: solid 1px white;
+	}
+</style>
