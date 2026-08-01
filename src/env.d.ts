@@ -5,6 +5,8 @@ interface ImportMetaEnv {
 	readonly DIRECT_URL: string;
 	readonly DATABASE_URL: string;
 	readonly APPS_SCRIPT_API_URL: string;
+	readonly PUBLIC_UMAMI_SCRIPT: string;
+	readonly PUBLIC_UMAMI_DATA_WEBSITE_ID: string;
 }
 
 interface ImportMeta {
