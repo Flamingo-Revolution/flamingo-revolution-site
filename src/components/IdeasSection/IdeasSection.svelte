@@ -51,33 +51,6 @@
 		return data;
 	}
 
-	async function refreshIdeas(nextSort: IdeasSort = sort) {
-		try {
-			const data = await fetchIdeas(fingerprint, nextSort);
-			ideas = data.ideas;
-			approvedCount = data.stats?.approved ?? data.ideas.length;
-		} catch {
-			// Keep the last successful list visible during background refresh failures.
-		}
-	}
-
-	$effect(() => {
-		const interval = window.setInterval(() => {
-			void refreshIdeas();
-		}, 10_000);
-
-		const onVisibility = () => {
-			if (document.visibilityState === "visible") void refreshIdeas();
-		};
-
-		document.addEventListener("visibilitychange", onVisibility);
-
-		return () => {
-			window.clearInterval(interval);
-			document.removeEventListener("visibilitychange", onVisibility);
-		};
-	});
-
 	async function onSubmit(event: Event) {
 		event.preventDefault();
 		const content = draft.trim();
