@@ -14,6 +14,7 @@ const { title, description, locale, socialImagePath = "/social-card.jpg?v=202607
 const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://flamingorevolution.eu";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const socialImageUrl = new URL(socialImagePath, siteUrl).toString();
+const socialImageType = socialImagePath.toLowerCase().split("?")[0].endsWith(".png") ? "image/png" : "image/jpeg";
 const faviconIcoUrl = "/favicon.ico";
 const faviconUrl = "/favicon.svg?v=20260705";
 const faviconPngUrl = "/favicon-32x32.png?v=20260705";
@@ -53,7 +54,7 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageUrl} />
     <meta property="og:image:secure_url" content={socialImageUrl} />
-    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:type" content={socialImageType} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={imageAlt} />
