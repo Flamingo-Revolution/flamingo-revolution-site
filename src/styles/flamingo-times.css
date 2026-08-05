@@ -979,6 +979,8 @@
 .times-students__right > p {
 	font-family: Georgia, serif;
 	line-height: 1.6;
+	text-align: justify;
+	text-justify: inter-word;
 }
 
 .times-students__quote {
