@@ -7,6 +7,7 @@ import SiteFrame from "./SiteFrame.astro";
 import "../styles/flamingo-times.css";
 
 const copy = siteCopy.sq;
+const toRoman = (number: number) => ["", "I", "II", "III", "IV", "V"][number] ?? String(number);
 ---
 
 <BaseLayout
@@ -57,7 +58,7 @@ const copy = siteCopy.sq;
               data-search={`${issue.title} ${issue.category} ${issue.excerpt} ${issue.topics.join(" ")}`.toLocaleLowerCase("sq")}
             >
               <div class="times-article-card__meta">
-                <span>Botimi {issue.number}</span>
+                <span>Botimi {toRoman(issue.number)}</span>
                 <time datetime={issue.datetime}>Tiranë, {issue.date}</time>
                 {index === 0 && <strong>Më i fundit</strong>}
               </div>
