@@ -1031,23 +1031,9 @@
 }
 
 .times-government__columns {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.times-government__columns > div {
-	min-width: 0;
-	padding: 0 1.25rem;
-	border-right: 1px solid rgba(21, 21, 21, 0.35);
-}
-
-.times-government__columns > div:first-child {
-	padding-left: 0;
-}
-
-.times-government__columns > div:last-child {
-	padding-right: 0;
-	border-right: 0;
+	columns: 3 16rem;
+	column-gap: 2.5rem;
+	column-rule: 1px solid rgba(21, 21, 21, 0.35);
 }
 
 .times-government__columns p,
@@ -1060,6 +1046,8 @@
 }
 
 .times-government__columns h3 {
+	break-after: avoid;
+	break-inside: avoid;
 	margin: 0.25rem 0 0.7rem;
 	font-family: var(--font-display);
 	font-size: clamp(1.55rem, 2.5vw, 2.2rem);
@@ -1367,24 +1355,8 @@
 	}
 
 	.times-government__columns {
-		grid-template-columns: 1fr;
-	}
-
-	.times-government__columns > div,
-	.times-government__columns > div:first-child,
-	.times-government__columns > div:last-child {
-		padding: 1.2rem 0;
-		border-right: 0;
-		border-bottom: 1px solid rgba(21, 21, 21, 0.35);
-	}
-
-	.times-government__columns > div:first-child {
-		padding-top: 0;
-	}
-
-	.times-government__columns > div:last-child {
-		padding-bottom: 0;
-		border-bottom: 0;
+		columns: auto;
+		column-rule: 0;
 	}
 
 }
