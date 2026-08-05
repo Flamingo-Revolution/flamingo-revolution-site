@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { flamingoTimesIssues } from "../data/flamingoTimes";
+import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+
+const copy = siteCopy.sq;
+---
+
+<BaseLayout
+  title="Arkivi i artikujve — Flamingo Times"
+  description="Kërkoni dhe lexoni të gjitha botimet e Flamingo Times."
+  locale="sq"
+  socialImagePath="/flamingo-times-social.png"
+  socialImageAlt="Arkivi i Flamingo Times"
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page times-archive" id="main" tabindex="-1">
+      <section class="times-masthead times-archive__masthead" aria-labelledby="archive-title">
+        <div class="times-masthead__meta">
+          <span>Arkivi i gazetës</span>
+          <span>{flamingoTimesIssues.length} botime</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="archive-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Artikujt, analizat dhe botimet tona</p>
+          <a class="times-download" href="/flamingo-times/">Lexo më të fundit</a>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current="archive" />
+
+      <section class="times-archive__content" aria-labelledby="articles-title">
+        <header class="times-archive__intro">
+          <p class="times-label">Të gjitha botimet</p>
+          <h2 id="articles-title">Kërko nëpër artikuj</h2>
+          <p>Kërko sipas titullit, temës ose fjalëve kyçe.</p>
+        </header>
+
+        <div class="times-search">
+          <label for="times-search-input">Kërko artikuj</label>
+          <div class="times-search__field">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+            <input id="times-search-input" type="search" placeholder="P.sh. administrata, prona, korrupsioni…" autocomplete="off" data-article-search />
+          </div>
+          <p class="times-search__count" aria-live="polite" data-result-count>{flamingoTimesIssues.length} artikuj</p>
+        </div>
+
+        <div class="times-article-cards" data-article-list>
+          {flamingoTimesIssues.map((issue, index) => (
+            <article
+              class:list={["times-article-card", { "times-article-card--latest": index === 0 }]}
+              data-article-card
+              data-search={`${issue.title} ${issue.category} ${issue.excerpt} ${issue.topics.join(" ")}`.toLocaleLowerCase("sq")}
+            >
+              <div class="times-article-card__meta">
+                <span>Botimi {issue.number}</span>
+                <time datetime={issue.datetime}>Tiranë, {issue.date}</time>
+                {index === 0 && <strong>Më i fundit</strong>}
+              </div>
+              <div class="times-article-card__body">
+                <p class="times-label">{issue.category}</p>
+                <h3><a href={issue.href}>{issue.title}</a></h3>
+                <p>{issue.excerpt}</p>
+                <ul aria-label="Temat">
+                  {issue.topics.map((topic) => <li>{topic}</li>)}
+                </ul>
+              </div>
+              <div class="times-article-card__actions">
+                <a class="times-article-card__read" href={issue.href}>Lexo artikullin <span aria-hidden="true">→</span></a>
+                <a href={issue.pdfHref} download>Shkarko PDF</a>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <p class="times-search__empty" hidden data-search-empty>Nuk u gjet asnjë artikull për këtë kërkim.</p>
+      </section>
+    </main>
+  </SiteFrame>
+
+  <script is:inline>
+    const attachArticleSearch = () => {
+      const input = document.querySelector("[data-article-search]");
+      const cards = [...document.querySelectorAll("[data-article-card]")];
+      const count = document.querySelector("[data-result-count]");
+      const empty = document.querySelector("[data-search-empty]");
+      if (!(input instanceof HTMLInputElement) || input.dataset.searchBound === "true") return;
+
+      input.dataset.searchBound = "true";
+      const filterArticles = () => {
+        const query = input.value.trim().toLocaleLowerCase("sq");
+        let visible = 0;
+
+        cards.forEach((card) => {
+          const matches = !query || (card.getAttribute("data-search") ?? "").includes(query);
+          card.toggleAttribute("hidden", !matches);
+          if (matches) visible += 1;
+        });
+
+        if (count) count.textContent = `${visible} ${visible === 1 ? "artikull" : "artikuj"}`;
+        if (empty instanceof HTMLElement) empty.hidden = visible !== 0;
+      };
+
+      input.addEventListener("input", filterArticles);
+    };
+
+    document.addEventListener("astro:page-load", attachArticleSearch);
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", attachArticleSearch, { once: true });
+    } else {
+      attachArticleSearch();
+    }
+  </script>
+</BaseLayout>

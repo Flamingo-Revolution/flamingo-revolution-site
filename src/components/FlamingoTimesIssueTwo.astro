@@ -1,0 +1,222 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-2.pdf";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+---
+
+<BaseLayout
+  title="Studentët — forca që ndryshon historinë — Flamingo Times, Botimi 2"
+  description="Nga Dhjetori 1990 te Qershori 2026: tri breza studentësh që ndryshuan historinë e Shqipërisë."
+  locale="sq"
+  socialImagePath="/flamingo-times-social.png"
+  socialImageAlt="Flamingo Times — Studentët, forca që ndryshon historinë"
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Gusht 2026</span>
+          <span>Botimi 2</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#brezat">Tre brezat</a>
+        <a href="#historia">Historia</a>
+        <a href="#vepro">Bëhu edhe ti student</a>
+      </nav>
+
+      <article class="times-students" id="kryeartikulli">
+        <header class="times-students__hero">
+          <p class="times-label">Nga Dhjetori 1990 te Qershori 2026</p>
+          <h2>Studentët <span>—</span> forca që ndryshon historinë</h2>
+        </header>
+
+        <div class="times-students__spread">
+          <div class="times-students__left">
+            <figure class="times-students__feature times-students__feature--wide">
+              <img
+                src="/images/flamingo-times/botimi-2/img-1.jpg"
+                alt="Studentë shqiptarë duke festuar në Dhjetor 1990"
+                width="545"
+                height="366"
+              />
+              <figcaption>
+                <strong>Dhjetor 1990.</strong> Studentët dalin në shesh. Nuk kërkonin poste apo
+                privilegje, por dinjitet dhe liri.
+              </figcaption>
+            </figure>
+
+            <ol class="times-student-timeline" id="brezat">
+              <li>
+                <time datetime="1990-12">1990</time>
+                <p>Muri i frikës.<br />Fundi i një sistemi.</p>
+              </li>
+              <li>
+                <time datetime="2018-12">2018</time>
+                <p>Zëri për një arsim<br />të drejtë e dinjitoz.</p>
+              </li>
+              <li>
+                <time datetime="2026-06">2026</time>
+                <p>Toka, prona dhe<br />e ardhmja e vendit.</p>
+              </li>
+            </ol>
+
+            <div class="times-students__left-copy" id="historia">
+              <div>
+                <p class="times-dropcap">
+                  Në historinë e kombeve, ndryshimin nuk e sjell pushteti. E sjell rinia. Nuk e
+                  sjell frika, por guximi. Nuk e sjell interesi, por ideali. Shqipëria e ka provuar
+                  këtë tri herë: në Dhjetor 1990, Dhjetor 2018 dhe Qershor 2026.
+                </p>
+
+                <h3>Kur nisi gjithçka</h3>
+                <p>
+                  Dhjetori i vitit 1990 nuk ishte thjesht një protestë studentore. Ishte momenti kur
+                  një brez vendosi t’i thoshte mjaft një sistemi që kishte mbyllur dyert e lirisë
+                  për gati gjysmë shekulli. Ishin studentët ata që guxuan të thyenin murin e frikës,
+                  duke i dhënë zemër një populli të tërë. Ata nuk kërkonin pasuri, poste apo
+                  privilegje. Kërkonin dinjitet, liri dhe një Shqipëri që, si gjithë Europa, t’u
+                  përkiste qytetarëve të saj. Pikërisht prej atyre auditorëve nisi një lëvizje që
+                  ndryshoi përgjithmonë historinë e vendit.
+                </p>
+
+                <h3>Zgjimi i dytë</h3>
+                <p>
+                  Dhjetori i vitit 2018 dëshmoi se fryma studentore nuk ishte shuar. Një brez i
+                  lindur në demokraci doli në sheshe për të kërkuar një arsim më të drejtë dhe më
+                  dinjitoz. Studentët kujtuan se universiteti nuk formon vetëm
+                </p>
+              </div>
+
+              <div>
+                <p>
+                  profesionistë, por edhe qytetarë që nuk pranojnë të heshtin përballë padrejtësisë.
+                  Edhe atëherë, ata u bënë zëri i shumë shqiptarëve që prisnin më shumë nga
+                  qeverisja e vendit.
+                </p>
+
+                <figure class="times-students__feature">
+                  <img
+                    src="/images/flamingo-times/botimi-2/img-2.jpg"
+                    alt="Sheshi i mbushur me studentë në protestën e Dhjetorit 2018"
+                    width="800"
+                    height="530"
+                  />
+                  <figcaption><strong>Dhjetor 2018.</strong> Sheshi mbushet me studentë në protestë.</figcaption>
+                </figure>
+
+                <h3>Radha e brezit të tretë</h3>
+                <p>
+                  Në Qershor 2026, studentët u panë sërish në mesin e protestuesve. Për shumë prej
+                  tyre, pjesëmarrja nuk ishte rastësi, por bindje se e ardhmja nuk ndërtohet me
+                  indiferencë. Ata sollën energjinë, idealizmin dhe besimin se qytetaria aktive
+                  është përgjegjësi e çdo brezi. Edhe një herë dëshmuan se pjesëmarrja e të rinjve
+                  në jetën publike është domosdoshmëri.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="times-students__right">
+            <figure class="times-students__feature times-students__feature--portrait">
+              <img
+                src="/images/flamingo-times/botimi-2/img-3.jpg"
+                alt="Banderolë studentore në Tiranë me tekstin Studentët: ju erdhi fundi"
+                width="335"
+                height="597"
+              />
+              <figcaption>
+                <strong>Qershor 2026.</strong> Banderolë studentore në Tiranë: “Studentët: ju erdhi fundi!”
+              </figcaption>
+            </figure>
+
+            <p>
+              Pikërisht për këtë arsye, zëri i studentëve nuk duhet parë si zëri i një grupi të
+              rinjsh, por si vazhdim i një tradite shqiptare, ku çdo brez i ri ngrihet
+              pashmangshmërisht për të mbrojtur të ardhmen e vendit të tij.
+            </p>
+
+            <blockquote class="times-inline-quote times-students__quote">
+              Ndryshimin nuk e sjell pushteti.<br />E sjell rinia.
+            </blockquote>
+
+            <p>
+              Pavarësisht ndasive tona, një e vërtetë mbetet e pandryshueshme: vetëm një komb që
+              dëgjon rininë e tij mund të ecë përpara. Sepse studentët nuk janë vetëm e ardhmja e
+              Shqipërisë. Në momentet vendimtare të saj, ata kanë qenë edhe ndërgjegjja e saj.
+            </p>
+            <p>
+              Sot, miliona shqiptarë e gjejnë veten te studentët. Disa ishin në auditorët e
+              Dhjetorit 1990. Të tjerë marshuan në vitin 2018. Të tjerë dolën në shesh në Qershor
+              2026. Brezat ndryshojnë, por mesazhi mbetet i njëjtë: liria nuk është dhuratë. Është
+              fitore. Demokracia nuk mbahet gjallë vetëm me votë, por edhe me ndërgjegje qytetare.
+            </p>
+          </aside>
+        </div>
+      </article>
+
+      <section class="times-action" id="vepro">
+        <div class="times-action__demands">
+          <p class="times-label">Thirrje për veprim</p>
+          <h2>BËHU EDHE TI STUDENT!</h2>
+          <p>
+            Historia nuk kujton brezat që hezituan. Kujton ata që vepruan kur të tjerët prisnin.
+            Kujton ata që dolën përpara kur rruga dukej e pamundur.
+          </p>
+          <hr class="times-student-closing__rule" />
+          <strong class="times-student-closing__statement">
+            HISTORIA KUJTON STUDENTËT, JO ATA QË HESHTËN.
+          </strong>
+        </div>
+        <aside class="times-action__card">
+          <div class="times-action__brand">
+            <img
+              src="/images/flamingo-wordmark-light.svg"
+              alt="Flamingo Revolution"
+              width="419"
+              height="187"
+            />
+            <a href="https://flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+              <span>flamingorevolution.eu</span>
+              <img
+                class="times-action__qr"
+                src="/images/qr-code/png/black.png"
+                alt="QR code për flamingorevolution.eu"
+                width="480"
+                height="480"
+              />
+            </a>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="times-source">
+        <p>Shpërndaje · Fotokopjo · Lexoje me të tjerët</p>
+        <strong>FLAMINGO TIMES · Botimi 2 · Gusht 2026</strong>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>

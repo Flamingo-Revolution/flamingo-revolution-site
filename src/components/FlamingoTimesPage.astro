@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
 import SiteFrame from "./SiteFrame.astro";
 import "../styles/flamingo-times.css";
 
@@ -24,8 +25,8 @@ const steps = [
 ---
 
 <BaseLayout
-  title="Flamingo Times — Botimi I"
-  description="Ligji kriminal i investimeve strategjike — Flamingo Times, Tiranë, Korrik 2026."
+  title="Flamingo Times — Botimi 1"
+  description="Shteti ta merr tokën dhe ja jep investitorit strategjik — Flamingo Times, Botimi 1."
   locale="sq"
   socialImagePath="/flamingo-times-social.png"
   socialImageAlt="Ballina e Flamingo Times për ligjin e investimeve strategjike"
@@ -35,7 +36,7 @@ const steps = [
       <section class="times-masthead" aria-labelledby="times-title">
         <div class="times-masthead__meta">
           <span>Tiranë, Korrik 2026</span>
-          <span>Botimi I</span>
+          <span>Botimi 1</span>
         </div>
         <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
         <h1 id="times-title">Flamingo <em>Times</em></h1>
@@ -46,6 +47,8 @@ const steps = [
           </div>
         </div>
       </section>
+
+      <FlamingoTimesNav current="archive" />
 
       <nav class="times-sections" aria-label="Seksionet e gazetës">
         <a href="#kryeartikulli">Kryeartikulli</a>
