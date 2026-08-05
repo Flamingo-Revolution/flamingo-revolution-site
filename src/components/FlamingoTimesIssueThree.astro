@@ -1,0 +1,275 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-3.pdf";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+---
+
+<BaseLayout
+  title="Fajin nuk e ka sportelisti — Flamingo Times, Botimi III"
+  description="Administrata është pasqyra e qeverisë. Një analizë e qeverisjes nga poshtë-lart — Flamingo Times, Botimi III."
+  locale="sq"
+  socialImagePath="/flamingo-times-social.png?v=20260805"
+  socialImageAlt="Flamingo Times — Fajin nuk e ka sportelisti"
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Gusht 2026</span>
+          <span>Botimi III</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#analiza">Analiza</a>
+        <a href="#ilustrimi">Ilustrimi</a>
+        <a href="#sistemi">Problemi i sistemit</a>
+        <a href="#vepro">Kërko llogari</a>
+      </nav>
+
+      <article class="times-government" id="analiza">
+        <header class="times-government__hero">
+          <p class="times-label">Një analizë e qeverisjes nga poshtë-lart</p>
+          <h2>Fajin nuk e ka sportelisti</h2>
+        </header>
+
+        <div class="times-government__opening times-government__columns">
+          <div>
+            <p class="times-dropcap times-government__opening-quote">
+              Fajin nuk e ka qeveria, e ka administrata.» Kjo është një nga frazat më të dëgjuara
+              sa herë që një qytetar përballet me një shërbim të dobët, me vonesa, me arrogancë
+              apo edhe me korrupsion. Përgjegjësia zhvendoset menjëherë te sportelisti, te roja, te
+              sanitarja ose, në rastin më të keq, te ndonjë drejtor lokal.
+            </p>
+            <p>
+              Por administrata nuk lind vetvetiu; ajo është një produkt i sistemit politik që e
+              krijon dhe kontrollon. Qeveria, nga ana tjetër, nuk gjykohet vetëm nga investimet që
+              realizon. Ajo gjykohet edhe nga cilësia e institucioneve që ndërton, nga
+            </p>
+          </div>
+
+          <div>
+            <p>
+              mënyra se si përzgjedh drejtuesit e tyre dhe nga aftësia për të krijuar një
+              administratë profesionale, të paanshme dhe në shërbim të qytetarit. Kur këto
+              elemente dështojnë vazhdimisht, përgjegjësia nuk mund të mbetet vetëm mbi punonjësin
+              e thjeshtë.
+            </p>
+            <h3>Administrata si pasqyrë e qeverisë</h3>
+            <p>
+              Asnjë ministër nuk përpunon dosje çdo ditë dhe asnjë kryeministër nuk ulet në
+              sportelet e shërbimeve publike. Megjithatë, ata janë përgjegjës për mënyrën se si
+              funksionon sistemi.
+            </p>
+          </div>
+
+          <div>
+            <p>
+              Nëse për vite me radhë qytetarët ankohen për të njëjtat probleme në institucione të
+              ndryshme, nuk kemi të bëjmë me gabime individuale, por me një model administrimi.
+              Një sistem që prodhon vazhdimisht të njëjtat rezultate negative nuk mund të
+              justifikohet duke fajësuar vetëm hallkën më të dobët të zinxhirit. Nëse një
+              administratë është e paaftë, e politizuar ose joefikase, pyetja nuk është vetëm
+              “çfarë bëri punonjësi?”, por “kush e ndërtoi këtë administratë?”.
+            </p>
+          </div>
+        </div>
+
+        <section class="times-government__illustration" id="ilustrimi">
+          <figure>
+            <img
+              src="/images/flamingo-times/botimi-3/img-1.png"
+              alt="Ilustrim satirik i një sportelisti të fajësuar nga qytetarët ndërsa fijet drejtohen nga pushteti"
+              width="1402"
+              height="1122"
+            />
+            <figcaption>
+              <strong>Ilustrim.</strong> Zemërimi i qytetarëve ndalet te sporteli. Fijet mbahen një
+              kat më lart, nën posterin “Pushteti është i yni. Përgjegjësia jo.”
+            </figcaption>
+          </figure>
+          <p>
+            Ky parim nuk vlen vetëm për administratën. Kur shikon një të ri rrugaç, fajin ia vë
+            familjes dhe shkollës. Kur kamarieri sillet vazhdimisht keq, i kërkon llogari pronarit.
+            Në të njëjtën logjikë, kur një administratë prodhon dështime të përsëritura, vlerësimi
+            duhet të fillojë nga ata të cilët e kanë ndërtuar dhe e drejtojnë sistemin.
+          </p>
+        </section>
+
+        <section class="times-government__evidence" aria-labelledby="corruption-title">
+          <div class="times-government__evidence-intro">
+            <div>
+              <h3 id="corruption-title">Korrupsioni nuk është vetëm ryshfet</h3>
+              <p>
+                Korrupsioni nuk fillon te zarfi me para. Ai fillon kur lidhjet vlejnë më shumë se
+                aftësia, kur besnikëria shpërblehet më shumë se profesionalizmi dhe kur posti
+                publik shihet si privilegj, jo si përgjegjësi.
+              </p>
+            </div>
+            <blockquote>“Ky është ligji”, thotë qeveria që ligjin e bën vetë.</blockquote>
+          </div>
+
+          <div class="times-government__graphs">
+            <figure>
+              <figcaption>
+                <strong>−19,1%</strong>
+                <span>Popullsia e Shqipërisë, 2016–2026</span>
+              </figcaption>
+              <img
+                src="/images/flamingo-times/botimi-3/first-graph.png"
+                alt="Grafik i rënies së popullsisë së Shqipërisë nga viti 2016 në 2026"
+                width="1185"
+                height="466"
+              />
+              <p class="times-government__graph-source">
+                <strong>Burimi:</strong> INSTAT, Popullsia më 1 janar. <strong>Shënim:</strong> nga
+                viti 2024 seria është rivlerësuar mbi bazën e rezultateve të Censit 2023; prandaj
+                ndryshimi 2023–2024 përfshin edhe efekt metodologjik.
+              </p>
+            </figure>
+            <figure>
+              <figcaption>
+                <strong>+12,6%</strong>
+                <span>Të punësuar në sektorin shtetëror, 2010–2025</span>
+              </figcaption>
+              <img
+                src="/images/flamingo-times/botimi-3/second-graph.png"
+                alt="Grafik i rritjes së të punësuarve në sektorin shtetëror nga viti 2010 në 2025"
+                width="1185"
+                height="492"
+              />
+              <p class="times-government__graph-source">
+                <strong>Burimi:</strong> INSTAT, të dhëna administrative të tregut të punës.
+                Treguesi i sektorit shtetëror është më i gjerë se administrata publike dhe përfshin
+                edhe njësi të tjera publike. Vitet pa vlera të verifikueshme nuk janë interpoluar.
+              </p>
+            </figure>
+          </div>
+
+          <p class="times-government__graphs-summary">
+            Popullsia ulet, administrata rritet. Kush ka faj për këtë, sportelisti që vjen për një
+            rrogë apo pushtetari që e sjell aty në këmbim të favoreve?
+          </p>
+        </section>
+
+        <section class="times-government__analysis" id="sistemi">
+          <div class="times-government__columns">
+            <div>
+              <h3>Më shumë se individë, një problem sistemi</h3>
+              <p>
+                Militantizmi, mungesa e meritokracisë dhe politizimi i administratës krijojnë një
+                sistem ku vendi i punës shpesh perceptohet si rezultat i besnikërisë politike dhe
+                jo i aftësisë profesionale. Kjo dekurajon konkurrencën, largon specialistët më të
+                mirë drejt sektorit privat ose emigrimit dhe dobëson institucionet. Sa më lart
+                ngjitesh, aq më e vërtetë është kjo.
+              </p>
+              <p>
+                Pak e dinë që edhe për sportelistin duhen shumë kohë dhe procedura për ta marrë e
+                për ta hequr
+              </p>
+            </div>
+
+            <div>
+              <p>
+                nga puna. Ndërsa për drejtuesit më të lartë të administratës të duhet vetëm një
+                letër dhe, brenda ditës, pa asnjë procedurë, ke shokun e shkollës Sekretar të
+                Përgjithshëm.
+              </p>
+              <p>
+                Pika 3 e Kreut 7 të Vendimit të Këshillit të Ministrave nr. 118/2014, me një fjali
+                të vetme, ka kthyer gjithë sistemin përmbys. Sportelistin e mbron ligji, kurse për
+                drejtuesin e institucionit të tij ligji thotë se mund të vihet e të hiqet nga puna
+                sa hap e mbyll sytë, me një kërkesë të thjeshtë nga ministri apo kryeministri. Kur
+                nuk ka konkurs,
+              </p>
+            </div>
+
+            <div>
+              <p>
+                kur nuk ka procedura, si mund të kemi besim tek ai që vjen në krye të
+                institucioneve tona?
+              </p>
+              <p>
+                “Ky është ligji”, thotë qeveria që ligjin e bën vetë. “Ndryshoni ligjin”, thotë
+                Bashkimi Europian që prej vitit 2020, duke kërkuar prej gjashtë vitesh që të ketë
+                meritë në rekrutimin e drejtuesve të lartë të administratës. “Patjetër e ndryshojmë
+                ne ligjin”, thotë qeveria. Megjithatë, nga viti 2020 gjuha e BE-së vetëm rëndohet,
+                këmbëngulja e tyre vetëm rritet, por politikanët tanë të ndritur e kanë me leverdi
+                të presin edhe ca.
+              </p>
+            </div>
+          </div>
+
+          <div class="times-government__cards">
+            <article>
+              <h3>BE kërkon</h3>
+              <p>Meritë për drejtuesit e lartë. Prej vitit 2020.</p>
+            </article>
+            <article>
+              <h3>Qeveria bën sikur dëgjon</h3>
+              <p>“Patjetër e ndryshojmë ne ligjin.”</p>
+            </article>
+            <article>
+              <h3>Administrata lëngon</h3>
+              <p>VKM nr. 118/2014, Kreu 7, pika 3.</p>
+            </article>
+          </div>
+
+          <div class="times-government__conclusion">
+            <p>
+              Në fund të fundit, administrata nuk është shkaku i qeverisjes; ajo është pasqyra e
+              saj. Nëse sportelisti sillet keq, pyetja nuk duhet të jetë vetëm “pse ndodhi?”, por
+              edhe “çfarë sistemi e prodhoi këtë sjellje?”. Një shtet nuk ndërtohet duke gjetur
+              vazhdimisht fajtorin më të vogël, por duke kërkuar përgjegjësi nga ata që kanë
+              pushtetin për ta ndryshuar sistemin. Për fat të keq, 13 vite qeverisje nuk mjaftuan
+              për të ndërtuar një shtet me sistem, por ndërtuan një <strong>SISTEM PA SHTET.</strong>
+            </p>
+          </div>
+        </section>
+      </article>
+
+      <section class="times-action" id="vepro">
+        <div class="times-action__demands">
+          <p class="times-label">Përgjegjësia është lart</p>
+          <h2>KËRKOJI LLOGARI<br />PUSHTETIT.</h2>
+          <p class="times-action__closing">Fajin nuk e ka sportelisti. E ka ai që e vuri aty.</p>
+        </div>
+        <aside class="times-action__card">
+          <div class="times-action__brand">
+            <img src="/images/flamingo-wordmark-light.svg" alt="Flamingo Revolution" width="419" height="187" />
+            <a href="https://flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+              <span>flamingorevolution.eu</span>
+              <img class="times-action__qr" src="/images/qr-code/png/black.png" alt="QR code për flamingorevolution.eu" width="480" height="480" />
+            </a>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="times-source">
+        <p>Burime: INSTAT · Raportet e Komisionit Europian, 2020 e në vijim · VKM nr. 118/2014</p>
+        <strong>FLAMINGO TIMES · Botimi III · Gusht 2026</strong>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>

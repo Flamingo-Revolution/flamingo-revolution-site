@@ -12,6 +12,18 @@ export type FlamingoTimesIssue = {
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
   {
+    number: 3,
+    date: "Gusht 2026",
+    datetime: "2026-08",
+    title: "Fajin nuk e ka sportelisti",
+    category: "Qeverisje & administratë",
+    excerpt:
+      "Administrata është pasqyra e qeverisë. Kur dështimet përsëriten, përgjegjësia fillon te sistemi që i prodhon.",
+    topics: ["administrata", "qeverisja", "korrupsioni", "meritokracia"],
+    href: "/flamingo-times/artikujt/botimi-3/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-3.pdf"
+  },
+  {
     number: 2,
     date: "Gusht 2026",
     datetime: "2026-08",
