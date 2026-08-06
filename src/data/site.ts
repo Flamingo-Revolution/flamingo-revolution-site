@@ -240,6 +240,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         {
           label: "Instagram",
           href: "https://www.instagram.com/flamingotelevision"
+        },
+        {
+          label: "X",
+          href: "https://x.com/Flamingo_TV"
         }
       ]
     }
@@ -391,6 +395,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         {
           label: "Instagram",
           href: "https://www.instagram.com/flamingotelevision"
+        },
+        {
+          label: "X",
+          href: "https://x.com/Flamingo_TV"
         }
       ]
     }

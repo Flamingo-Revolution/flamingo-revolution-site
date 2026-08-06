@@ -1,5 +1,6 @@
 ---
 import type { Locale, SiteCopy } from "../data/site";
+import SocialIcon from "./SocialIcon.astro";
 
 interface Props {
 	locale: Locale;
@@ -8,17 +9,29 @@ interface Props {
 
 const { locale, copy } = Astro.props;
 const linksLabel = locale === "sq" ? "Lidhje" : "Links";
+const email = "info@flamingorevolution.eu";
+const githubHref = "https://github.com/Flamingo-Revolution";
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer-note">
-	<p>{copy.footer.text}</p>
+	<div class="footer-note__copy">
+		<p>{copy.footer.text}</p>
+		<p class="footer-note__meta">
+			<span>© {currentYear} {copy.brand.name}</span>
+			<a href={`mailto:${email}`}>{email}</a>
+		</p>
+	</div>
 	<nav class="footer-links" aria-label={linksLabel}>
 		{
 			copy.footer.links.map((link) => (
-				<a href={link.href} target="_blank" rel="noreferrer">
-					{link.label}
+				<a href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+					<SocialIcon label={link.label} />
 				</a>
 			))
 		}
+		<a href={githubHref} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
+			<SocialIcon label="GitHub" />
+		</a>
 	</nav>
 </footer>
