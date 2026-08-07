@@ -4,8 +4,6 @@ description: 'Aplikimi për VNM katër ditë pas fillimit të punimeve.'
 order: 3
 ---
 
-# ⚠️ Dosja 03 — Aplikimi për VNM pas Fillimit të Punimeve
-
 **Data:** 5 Maj  
 **Statusi:** ⚠️ Veprim jashtë radhe — Aplikim pas faktit
 

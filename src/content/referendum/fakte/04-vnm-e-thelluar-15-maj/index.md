@@ -4,8 +4,6 @@ description: 'Ministria kërkon VNM të thelluar, ndërsa punimet vazhdojnë.'
 order: 4
 ---
 
-# ⚠️ Dosja 04 — Ministria Kërkon VNM të Thelluar
-
 **Data:** 15 Maj  
 **Statusi:** ⚠️ Veprim jashtë radhe — Projekti ende në vlerësim, punime aktive
 

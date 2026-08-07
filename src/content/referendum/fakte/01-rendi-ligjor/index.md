@@ -4,8 +4,6 @@ description: 'Si duhet të ndodhte procesi sipas ligjit, para 1 majit.'
 order: 1
 ---
 
-# 📋 Dosja 01 — Rendi Ligjor i Kërkuar
-
 **Periudha:** Para 1 Majit  
 **Statusi:** ✅ Si duhet të ndodhte
 

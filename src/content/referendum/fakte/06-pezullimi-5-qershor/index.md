@@ -4,8 +4,6 @@ description: 'Pezullimi i vonuar i punimeve më 5 qershor.'
 order: 6
 ---
 
-# ✅ Dosja 06 — Pezullimi i Punimeve
-
 **Data:** 5 Qershor  
 **Statusi:** ✅ Hap i duhur ligjor — por **35 ditë vonë**
 

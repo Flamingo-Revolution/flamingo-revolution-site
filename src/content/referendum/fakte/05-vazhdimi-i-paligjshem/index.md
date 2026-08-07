@@ -4,8 +4,6 @@ description: 'Vazhdimi i punimeve pas kërkesës për VNM të thelluar.'
 order: 5
 ---
 
-# 🚨 Dosja 05 — Vazhdimi i Paligjshëm i Punimeve
-
 **Periudha:** 15 Maj – 5 Qershor (rreth 21 ditë)  
 **Statusi:** ❌ SHKELJE NË VAZHDIM
 

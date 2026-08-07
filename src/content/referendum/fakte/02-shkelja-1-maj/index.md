@@ -4,8 +4,6 @@ description: 'Fillimi i punimeve pa VNM dhe pa leje.'
 order: 2
 ---
 
-# 🚨 Dosja 02 — Shkelja e 1 Majit
-
 **Data:** 1 Maj  
 **Statusi:** ❌ SHKELJE — Ndërtim pa VNM, pa Leje Mjedisi
 
