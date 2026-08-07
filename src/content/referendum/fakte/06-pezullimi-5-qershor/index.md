@@ -120,10 +120,10 @@ Periudha **1 maj – 5 qershor** mbetet e dokumentueshme dhe e vlefshme ligjëri
 
 | Ligji                                                             | Neni     | Veprimi i kërkuar                                       |
 | ----------------------------------------------------------------- | -------- | ------------------------------------------------------- |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 68       | Vlerësim dëmi + rehabilitim nga ndërtuesit              |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 69(2)(c) | Çmontim i mundshëm i instalimeve pa leje                |
-| [Ligji 10440/2011](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | —        | Rifillim nga hapi 1 — VNM e plotë para çdo lejeje       |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 67(1)(b) | Gjoba për veprimtari pa leje — periudha 1 maj–5 qershor |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 68       | Vlerësim dëmi + rehabilitim nga ndërtuesit              |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 69(2)(c) | Çmontim i mundshëm i instalimeve pa leje                |
+| [Ligji 10440/2011](</documents/ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | —        | Rifillim nga hapi 1 — VNM e plotë para çdo lejeje       |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 67(1)(b) | Gjoba për veprimtari pa leje — periudha 1 maj–5 qershor |
 
 ---
 

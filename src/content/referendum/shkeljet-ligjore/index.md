@@ -4,7 +4,7 @@ description: "Kronologjia e shkeljeve të VNM-së dhe ndërtimit në zonat e mbr
 order: 4
 ---
 
-<div align="center">
+<div align="left">
 
 # 🦩 FLAMINGO REVOLUTION
 
@@ -258,7 +258,7 @@ Ligji bazë — "kushtetuta" e zonave të mbrojtura mjedisore në Shqipëri. Rre
 
 <br>
 
-**[📄 Hap PDF](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)**
+**[📄 Hap PDF](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)**
 
 </td>
 <td align="center" valign="top" width="33%">
@@ -279,7 +279,7 @@ Paketa e ndryshimeve që futi konceptin e "turizmit të ekselencës" dhe ndrysho
 
 <br>
 
-**[📄 Hap PDF](<../Ligjet/LIGJ nr. 21, datë 22.2.2024.pdf>)**
+**[📄 Hap PDF](</documents/ligjet/LIGJ nr. 21, datë 22.2.2024.pdf>)**
 
 </td>
 <td align="center" valign="top" width="33%">
@@ -303,7 +303,7 @@ Ligji specifik i VNM-së — procedura e plotë, sekuencat, nivelet (shtojca I/I
 
 <br>
 
-**[📄 Hap PDF](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>)**
+**[📄 Hap PDF](</documents/ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>)**
 
 </td>
 </tr>

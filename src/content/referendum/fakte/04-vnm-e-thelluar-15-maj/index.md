@@ -93,9 +93,9 @@ Kjo ishte **"pika e dytë"** ku autoritetet kishin detyrimin ligjor për të nd�
 
 | Ligji                                                             | Parimi i zbatueshëm                                                                |
 | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [Ligji 10440/2011](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | Projekti në VNM aktive = projekt pa leje = punime të ndaluara                      |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | Neni 69 — pezullim i detyruar i punimeve pa leje                                   |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | Neni 68 — çdo dëm i shkaktuar gjatë kësaj periudhe është në ngarkesë të ndërtuesit |
+| [Ligji 10440/2011](</documents/ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | Projekti në VNM aktive = projekt pa leje = punime të ndaluara                      |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | Neni 69 — pezullim i detyruar i punimeve pa leje                                   |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | Neni 68 — çdo dëm i shkaktuar gjatë kësaj periudhe është në ngarkesë të ndërtuesit |
 
 ---
 

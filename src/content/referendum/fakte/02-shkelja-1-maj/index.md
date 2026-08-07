@@ -91,9 +91,9 @@ Sipas kronologjisë, kjo ishte **"pika e parë"** ku autoritetet duhej të kishi
 
 | Ligji                                                             | Neni     | Sanksioni                      |
 | ----------------------------------------------------------------- | -------- | ------------------------------ |
-| [Ligji 10440/2011](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | —        | Gjobë 65k–650k lekë + pezullim |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 67(1)(b) | Gjobë 1M–2M lekë               |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 69(2)(c) | Pezullim + çmontim             |
+| [Ligji 10440/2011](documents/ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf) | —        | Gjobë 65k–650k lekë + pezullim |
+| [Ligji 81/2017](documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf)       | 67(1)(b) | Gjobë 1M–2M lekë               |
+| [Ligji 81/2017](documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf)       | 69(2)(c) | Pezullim + çmontim             |
 
 ---
 

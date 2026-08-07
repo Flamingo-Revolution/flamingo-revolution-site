@@ -93,9 +93,9 @@ Ligji nr. **21/2024** (shtesë ndaj 81/2017) lehtësoi disa procedura, por **nuk
 
 | Ligji                                                             | Dispozita kryesore                                                |
 | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
-| [Ligji 10440/2011](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | VNM përpara lejes — parim themelor                                |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | Neni 4 (parandalimi), neni 10, nenet 60-61                        |
-| [Ligji 21/2024](<../Ligjet/LIGJ nr. 21, datë 22.2.2024.pdf>)      | Shtesa ndaj 81/2017 — ndryshon procedura, por jo parimin e VNM-së |
+| [Ligji 10440/2011](</documents/ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | VNM përpara lejes — parim themelor                                |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | Neni 4 (parandalimi), neni 10, nenet 60-61                        |
+| [Ligji 21/2024](</documents/ligjet/LIGJ nr. 21, datë 22.2.2024.pdf>)      | Shtesa ndaj 81/2017 — ndryshon procedura, por jo parimin e VNM-së |
 
 ---
 

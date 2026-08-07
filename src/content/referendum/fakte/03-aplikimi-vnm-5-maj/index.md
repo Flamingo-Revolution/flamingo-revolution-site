@@ -79,8 +79,8 @@ Situata është e ngjashme me fillimin e drejtimit të automobilit pa patentë, 
 
 | Ligji                                                             | Parimi                                                                              |
 | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| [Ligji 10440/2011](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | Aplikimi duhet bërë dhe vlerësimi duhet përfunduar _para_ lejes dhe _para_ punimeve |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | Neni 4 — parimi i parandalimit: masat paraprake merren _përpara_, jo pas            |
+| [Ligji 10440/2011](</documents/ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | Aplikimi duhet bërë dhe vlerësimi duhet përfunduar _para_ lejes dhe _para_ punimeve |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | Neni 4 — parimi i parandalimit: masat paraprake merren _përpara_, jo pas            |
 
 ---
 

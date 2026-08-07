@@ -97,10 +97,10 @@ Mosveprimi i autoriteteve gjatë kësaj periudhe mund të jetë vetë shkelje ad
 
 | Ligji                                                             | Neni     | Shkelja / Sanksioni                                         |
 | ----------------------------------------------------------------- | -------- | ----------------------------------------------------------- |
-| [Ligji 10440/2011](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | —        | Çdo ditë punime = shkelje e re; gjobë + pezullim i detyruar |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 67(1)(b) | Gjobë 1M–2M lekë                                            |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 68       | Dëmi mjedisor = kosto rehabilitimi në ngarkim të ndërtuesit |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 69(2)(c) | Pezullim + çmontim i instalimeve                            |
+| [Ligji 10440/2011](</documents/ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | —        | Çdo ditë punime = shkelje e re; gjobë + pezullim i detyruar |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 67(1)(b) | Gjobë 1M–2M lekë                                            |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 68       | Dëmi mjedisor = kosto rehabilitimi në ngarkim të ndërtuesit |
+| [Ligji 81/2017](</documents/ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 69(2)(c) | Pezullim + çmontim i instalimeve                            |
 
 ---
 

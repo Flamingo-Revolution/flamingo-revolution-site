@@ -100,7 +100,7 @@ Referendumi administrohet nga KQZ-ja nëpërmjet komisioneve zonale, sipas rregu
 
 ### 🔟 Rezultati dhe hyrja në fuqi
 
-Në referendum konsiderohet fituese alternativa që ka fituar shumicën e votave të vlefshme, por jo më pak se një të tretën e numrit të zgjedhësve të regjistruar në Regjistrin Kombëtar të Zgjedhësve (neni 118, pika 3, [ligji 9087/2003](../Ligjet/ligj-2003-06-19-9087.pdf)). Nëse alternativa "PRO shfuqizimit" i plotëson të dyja kushtet, ligji 21/2024 shfuqizohet me efektin e rezultatit të shpallur.
+Në referendum konsiderohet fituese alternativa që ka fituar shumicën e votave të vlefshme, por jo më pak se një të tretën e numrit të zgjedhësve të regjistruar në Regjistrin Kombëtar të Zgjedhësve (neni 118, pika 3, [ligji 9087/2003](/documents/ligjet/ligj-2003-06-19-9087.pdf)). Nëse alternativa "PRO shfuqizimit" i plotëson të dyja kushtet, ligji 21/2024 shfuqizohet me efektin e rezultatit të shpallur.
 
 Numri zyrtar i zgjedhësve të regjistruar në Shqipëri për zgjedhjet e 11 majit 2025 është 3,713,761, sipas listës përfundimtare të publikuar nga Ministria e Brendshme dhe të mbikëqyrur nga KQZ-ja. Me nje perllogaritje te thjeshte shifrat minimale jane:
 
