@@ -1,66 +1,127 @@
 ---
-import { getCollection, getEntry, render } from "astro:content";
+import { getEntry, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ArticleNav from "../../components/ArticleNav.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
+import {
+	getReferendumPages,
+	getReferendumSections,
+	type ReferendumSection
+} from "../../data/referendum";
 import { siteCopy } from "../../data/site";
 import "../../styles/prose.css";
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-	const pages = await getCollection("referendum", ({ data }) => !data.draft);
-	return pages.map((page) => ({
-		params: { id: page.id },
-		props: { page }
-	}));
+	const pages = await getReferendumPages();
+	const sections = await getReferendumSections();
+
+	return [
+		...pages.map((page) => ({
+			params: { id: page.id },
+			props: { page, section: null }
+		})),
+		...sections.map((section) => ({
+			params: { id: section.id },
+			props: { page: null, section }
+		}))
+	];
 }
 
 interface Props {
-	page: CollectionEntry<"referendum">;
+	page: CollectionEntry<"referendum"> | null;
+	section: ReferendumSection | null;
 }
 
-const { page } = Astro.props;
-const { Content } = await render(page);
+const { page, section } = Astro.props;
 const copy = siteCopy.sq;
-const description = page.data.description ?? copy.meta.description;
+
+const title = page?.data.title ?? section!.title;
+const description =
+	page?.data.description ??
+	(section ? `Faqet nën ${section.title}.` : undefined) ??
+	copy.meta.description;
+
+const Content = page ? (await render(page)).Content : null;
+
+const publishedPages = await getReferendumPages();
+const pageIds = new Set(publishedPages.map((entry) => entry.id));
+const sectionsById = new Map((await getReferendumSections()).map((entry) => [entry.id, entry]));
 
 const crumbs: { label: string; href?: string }[] = [
 	{ label: "Referendum", href: "/referendum/" }
 ];
-const segments = page.id.split("/");
+const pathId = page?.id ?? section!.id;
+const segments = pathId.split("/");
 let backHref = "/referendum/";
 
+// Walk ancestors only (exclude the current page/section segment).
 for (let i = 0; i < segments.length - 1; i++) {
 	const parentId = segments.slice(0, i + 1).join("/");
-	const parent = await getEntry("referendum", parentId);
-	if (parent && !parent.data.draft) {
-		crumbs.push({ label: parent.data.title, href: `/referendum/${parentId}/` });
+
+	if (pageIds.has(parentId)) {
+		const parentPage = await getEntry("referendum", parentId);
+		if (parentPage && !parentPage.data.draft) {
+			crumbs.push({ label: parentPage.data.title, href: `/referendum/${parentId}/` });
+			backHref = `/referendum/${parentId}/`;
+		}
+		continue;
+	}
+
+	const parentSection = sectionsById.get(parentId);
+	if (parentSection) {
+		crumbs.push({ label: parentSection.title, href: `/referendum/${parentId}/` });
 		backHref = `/referendum/${parentId}/`;
 	}
 }
 
-crumbs.push({ label: page.data.title });
+crumbs.push({ label: title });
 ---
 
-<BaseLayout title={`${page.data.title} | ${copy.meta.title}`} description={description} locale="sq">
-	<div class="page-shell prose-lg">
+<BaseLayout title={`${title} | ${copy.meta.title}`} description={description} locale="sq">
+	<div class={`page-shell ${page ? "prose-lg" : ""}`}>
 		<SiteHeader locale="sq" copy={copy} currentPage="referendum" localePath="referendum" />
 
-		<main class="content-post prose prose-sm" id="main" tabindex="-1">
-			<article>
-				<header class="content-post__header">
-					<ArticleNav backHref={backHref} crumbs={crumbs} />
-					<h1>{page.data.title}</h1>
-					{page.data.description ? <p class="lead">{page.data.description}</p> : null}
-				</header>
+		{
+			page && Content ? (
+				<main class="content-post prose prose-sm" id="main" tabindex="-1">
+					<article>
+						<header class="content-post__header">
+							<ArticleNav backHref={backHref} crumbs={crumbs} />
+							<h1>{title}</h1>
+							{page.data.description ? <p class="lead">{page.data.description}</p> : null}
+						</header>
 
-				<div class="content-post__body">
-					<Content />
-				</div>
-			</article>
-		</main>
+						<div class="content-post__body">
+							<Content />
+						</div>
+					</article>
+				</main>
+			) : (
+				<main class="content-page" id="main" tabindex="-1">
+					<section class="content-hero">
+						<ArticleNav backHref={backHref} crumbs={crumbs} />
+						<h1>
+							<span>{title}</span>
+						</h1>
+						<p class="lead">{description}</p>
+					</section>
+
+					<section class="content-list" aria-label={`Faqet nën ${title}`}>
+						{section!.children.map((child) => (
+							<article class="content-list__item">
+								<a href={`/referendum/${child.id}/`}>
+									<h2>{child.data.title}</h2>
+									{child.data.description ? <p>{child.data.description}</p> : null}
+								</a>
+							</article>
+						))}
+					</section>
+				</main>
+			)
+		}
 
 		<footer class="footer-note">
 			<p>{copy.footer.text}</p>
@@ -91,7 +152,10 @@ crumbs.push({ label: page.data.title });
 	}
 
 	.content-post__header h1 {
+		display: block;
 		margin: 0.2rem 0 0.8rem;
+		max-width: none;
+		color: var(--ink);
 		font-family: var(--font-display);
 		font-size: clamp(2.4rem, 6vw, 4rem);
 		line-height: 0.98;
@@ -105,5 +169,66 @@ crumbs.push({ label: page.data.title });
 
 	.content-post table {
 		border: solid 1px white;
+	}
+
+	.content-page {
+		display: grid;
+		gap: 0;
+		background: var(--paper);
+	}
+
+	.content-hero {
+		padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
+		background:
+			radial-gradient(circle at 86% 22%, rgba(255, 105, 184, 0.18), transparent 26%),
+			linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+	}
+
+	.content-hero h1 {
+		margin: 0.2rem 0 0.8rem;
+		font-family: var(--font-display);
+		font-size: clamp(2.6rem, 7vw, 4.4rem);
+		line-height: 0.95;
+	}
+
+	.content-hero .lead {
+		max-width: 40rem;
+		margin: 0;
+	}
+
+	.content-list {
+		display: grid;
+		gap: 0;
+		padding: 0 clamp(1rem, 5vw, 3.4rem) clamp(2rem, 5vw, 3.4rem);
+		border-top: 1px solid var(--line);
+	}
+
+	.content-list__item {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.content-list__item a {
+		display: grid;
+		gap: 0.45rem;
+		padding: 1.35rem 0;
+	}
+
+	.content-list__item h2 {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: clamp(1.55rem, 3vw, 2rem);
+		line-height: 1.1;
+	}
+
+	.content-list__item p {
+		margin: 0;
+		max-width: 42rem;
+		color: var(--muted);
+		line-height: 1.55;
+	}
+
+	.content-list__item a:hover h2,
+	.content-list__item a:focus-visible h2 {
+		color: var(--accent-strong);
 	}
 </style>

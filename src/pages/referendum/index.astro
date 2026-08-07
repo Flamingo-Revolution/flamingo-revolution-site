@@ -1,15 +1,13 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
+import { getReferendumIndexItems } from "../../data/referendum";
 import { siteCopy } from "../../data/site";
 
 export const prerender = true;
 
 const copy = siteCopy.sq;
-const pages = (await getCollection("referendum", ({ data, id }) => !data.draft && !id.includes("/"))).sort(
-	(a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
-);
+const items = await getReferendumIndexItems();
 
 const title = "Referendum";
 const description = "Dokumentim, analiza ligjore dhe hapat e referendumit shfuqizues për Ligjin Nr. 21/2024.";
@@ -28,14 +26,23 @@ const description = "Dokumentim, analiza ligjore dhe hapat e referendumit shfuqi
 
 			<section class="content-list" aria-label="Faqet e referendumit">
 				{
-					pages.map((page) => (
-						<article class="content-list__item">
-							<a href={`/referendum/${page.id}/`}>
-								<h2>{page.data.title}</h2>
-								{page.data.description ? <p>{page.data.description}</p> : null}
-							</a>
-						</article>
-					))
+					items.map((item) =>
+						item.kind === "page" ? (
+							<article class="content-list__item">
+								<a href={`/referendum/${item.page.id}/`}>
+									<h2>{item.page.data.title}</h2>
+									{item.page.data.description ? <p>{item.page.data.description}</p> : null}
+								</a>
+							</article>
+						) : (
+							<article class="content-list__item">
+								<a href={`/referendum/${item.section.id}/`}>
+									<h2>{item.section.title}</h2>
+									<p>{item.section.children.length} dosje</p>
+								</a>
+							</article>
+						)
+					)
 				}
 			</section>
 		</main>
