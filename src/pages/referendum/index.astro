@@ -3,7 +3,7 @@ import ReferendumLayout from "../../layouts/ReferendumLayout.astro";
 import NewsletterSignup from "../../components/referendum/NewsletterSignup/NewsletterSignup.svelte";
 import ReferendumStatusBar from "../../components/referendum/ReferendumStatusBar/ReferendumStatusBar.astro";
 import ReferendumReveal from "../../components/referendum/ReferendumReveal/ReferendumReveal.astro";
-import LandingNav from "../../components/referendum/LandingNav/LandingNav.astro";
+import LandingNav from "../../components/referendum/LandingNav/LandingNav.svelte";
 import ReasonsSection from "../../components/referendum/ReasonsSection/ReasonsSection.astro";
 import OriginSection from "../../components/referendum/OriginSection/OriginSection.astro";
 import FAQSection from "../../components/referendum/FAQSection/FAQSection.svelte";
@@ -35,7 +35,7 @@ const socialIcons: Record<string, string> = {
 <ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
 	<div class="referendum-landing">
 		<ReferendumStatusBar processHref="#procesi" />
-		<LandingNav />
+		<LandingNav client:load />
 
 		<main id="main" tabindex="-1">
 			<section class="hero" id="njoftime" aria-labelledby="deklarata-title">
@@ -92,7 +92,7 @@ const socialIcons: Record<string, string> = {
 								<span class="hero-line">Natyra</span>
 								<span class="hero-line"><span class="slogan-emph">nuk shitet,</span></span>
 								<span class="hero-line">mbrohet,</span>
-								<span class="hero-line">trashegohet!</span>
+								<span class="hero-line">trashëgohet!</span>
 							</h1>
 							<p class="hero-lede">
 								Nisma qytetare kërkon shfuqizimin e Ligjit nr. 21/2024. Lini email-in për t’u
@@ -273,12 +273,7 @@ const socialIcons: Record<string, string> = {
 			<section class="times-action" id="vepro">
 				<div class="times-action__demands">
 					<p class="times-label">Çfarë mund të bëni ju?</p>
-					<h2>Prania juaj ka peshë.</h2>
-					<p>
-						Dilni në protestë — çdo 3 ditë ka ngjarje të re. Prania juaj ka peshë. Ju, prindërit
-						tanë, jeni +50% e votave. Ju nuk u trembët hajdutëve të PD-së & PS-së as kur këta
-						kishin tanke. Edhe tanket i shitën për t’i vjedhur!
-					</p>
+					<h2>Fjala juaj ka vlerë.</h2>
 					<p>
 						Nënshkruani peticionin 50,000 firma nevojiten sipas Nenit 150 të Kushtetutës për të
 						kërkuar referendum. Flisni me fëmijët tuaj — ata në diasporë mund të ndikojnë.
