@@ -1,18 +1,12 @@
 ---
-title: "Deklaratat"
-description: "Deklarata publike, peticione dhe letra drejtuar institucioneve."
+title: 'Deklaratat'
+description: 'Deklarata publike, peticione dhe letra drejtuar institucioneve.'
 order: 5
 ---
-
-<div align="center">
 
 # 🦩 FLAMINGO REVOLUTION
 
 ### Dokumentim Faktesh &nbsp;·&nbsp; Analiza Ligjore &nbsp;·&nbsp; Kronologji Shkeljesh &nbsp;·&nbsp; Deklarata &nbsp;·&nbsp; Referendum
-
-[← Kthehu në faqen kryesore](/referendum/)
-
-</div>
 
 ---
 
@@ -32,13 +26,9 @@ Deklaratë publike e 213+ akademikëve shqiptarë jashtë vendit — nga Evropa,
 
 → **[Hap faqen e plotë dhe nënshkruaj](https://diaspora-akademike.org/deklarate.php?ok=1#shto)**
 
-<div align="center">
-
 [![assets/Deklarata e Akademikëve të Diasporës — Hap faqen e plotë](https://image.thum.io/get/width/600/crop/400/https://diaspora-akademike.org/deklarate.php?ok=1)](https://diaspora-akademike.org/deklarate.php?ok=1#shto)
 
 **[→ Hap faqen e plotë dhe nënshkruaj deklaratën](https://diaspora-akademike.org/deklarate.php?ok=1#shto)**
-
-</div>
 
 ---
 
@@ -50,13 +40,9 @@ Peticion i drejtuar Institucioneve të Bashkimit Europian nga aleanca IASEE–RI
 
 → **[Hap peticionin dhe nënshkruaj](https://ia-see.com/peticioni/)**
 
-<div align="center">
-
 [![assets/Letër e hapur drejtuar Bashkimit Europian](https://image.thum.io/get/width/600/crop/400/https://ia-see.com/peticioni)](https://ia-see.com/peticioni/)
 
 **[→ Hap faqen e plotë dhe nënshkruaj letrën](https://ia-see.com/peticioni/)**
-
-</div>
 
 ---
 
@@ -76,10 +62,6 @@ Letër zyrtare (Prot. 21, datë 21.06.2026) nga **Akademia 'Rrënjët Tona'** dr
 
 → **Klikoni mbi imazh për të hapur PDF-në e plotë**
 
-<div align="center">
-
 [![assets/Deklaratë drejtuar Presidentit të Republikës së Shqipërisë — Hap PDF](./assets/deklarate-president.png)](./assets/deklarate-per-protesten.pdf)
 
 **[📄 Hap PDF-në e plotë](./assets/deklarate-per-protesten.pdf)**
-
-</div>
