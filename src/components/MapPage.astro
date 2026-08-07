@@ -1,0 +1,151 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFrame from "./SiteFrame.astro";
+import type { Locale, SiteCopy } from "../data/site";
+
+interface Props {
+  locale: Locale;
+  siteCopy: SiteCopy;
+}
+
+const { locale, siteCopy } = Astro.props;
+
+const title = locale === "sq" ? "Harta e protestave" : "Protest map";
+
+const description =
+  locale === "sq"
+    ? "Eksploroni protestat, aktivitetet dhe qytetet e Revolucionit Flamingo në hartën interaktive."
+    : "Explore Flamingo Revolution protests, activities and participating cities on the interactive map.";
+
+// Replace this with your actual GitHub Pages URL.
+const mapUrl = "https://YOUR-USERNAME.github.io/YOUR-MAP-REPOSITORY/";
+
+const mapHref = "https://pomodoren.github.io/flamingo-map/";
+---
+
+<BaseLayout
+  title={`${title} | ${siteCopy.meta.title}`}
+  description={description}
+  locale={locale}
+>
+  <SiteFrame {locale} copy={siteCopy} currentPage="map" localePath="map">
+    <main class="map-page" id="main" tabindex="-1">
+      <section class="map-intro">
+        <div>
+          <p class="eyebrow">
+            {locale === "sq" ? "Revolucioni Flamingo" : "Flamingo Revolution"}
+          </p>
+
+          <h1>{title}</h1>
+
+          <p class="lead">
+            {
+              locale === "sq"
+                ? "Shikoni protestat e përfunduara, aktivitetet e ardhshme dhe qytetet pjesëmarrëse."
+                : "View completed protests, upcoming activities and participating cities."
+            }
+          </p>
+        </div>
+
+        <a
+          class="button button--ghost"
+          href={mapUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {locale === "sq" ? "Hape hartën veçmas" : "Open map separately"}
+        </a>
+      </section>
+
+      <section
+        class="map-container"
+        aria-label={locale === "sq" ? "Harta interaktive" : "Interactive map"}
+      >
+        <iframe
+          class="map-frame"
+          src={mapUrl}
+          title={title}
+          loading="eager"
+          allowfullscreen
+        ></iframe>
+      </section>
+    </main>
+
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .map-page {
+    width: min(calc(100% - 2rem), 1600px);
+    margin-inline: auto;
+    padding-block: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .map-intro {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .map-intro > div {
+    max-width: 760px;
+  }
+
+  .map-intro h1 {
+    margin: 0.35rem 0 0.8rem;
+  }
+
+  .map-intro .lead {
+    margin: 0;
+  }
+
+  .map-intro .button {
+    flex-shrink: 0;
+  }
+
+  .map-container {
+    position: relative;
+    width: 100%;
+    height: min(78vh, 900px);
+    min-height: 650px;
+    overflow: hidden;
+    border: 1px solid var(--border-color, rgba(128, 128, 128, 0.3));
+    border-radius: 1.25rem;
+    background: var(--surface-color, #f3f3f3);
+  }
+
+  .map-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (max-width: 760px) {
+    .map-page {
+      width: 100%;
+      padding-top: 1.5rem;
+      padding-bottom: 0;
+    }
+
+    .map-intro {
+      display: block;
+      padding-inline: 1rem;
+    }
+
+    .map-intro .button {
+      margin-top: 1.25rem;
+    }
+
+    .map-container {
+      height: calc(100dvh - 160px);
+      min-height: 600px;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: 0;
+      border-radius: 0;
+    }
+  }
+</style>

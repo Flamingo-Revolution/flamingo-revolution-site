@@ -5,23 +5,29 @@ interface Props {
   title: string;
   description: string;
   locale: "sq" | "en";
+  socialImagePath?: string;
+  socialImageAlt?: string;
 }
 
-const { title, description, locale } = Astro.props;
+const { title, description, locale, socialImagePath = "/social-card.jpg?v=20260705", socialImageAlt } = Astro.props;
+
 const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://flamingorevolution.eu";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const socialImageUrl = new URL("/social-card.jpg?v=20260705", siteUrl).toString();
+const socialImageUrl = new URL(socialImagePath, siteUrl).toString();
+const socialImageType = socialImagePath.toLowerCase().split("?")[0].endsWith(".png") ? "image/png" : "image/jpeg";
 const faviconIcoUrl = "/favicon.ico";
 const faviconUrl = "/favicon.svg?v=20260705";
 const faviconPngUrl = "/favicon-32x32.png?v=20260705";
 const iconPngUrl = "/icon-192.png?v=20260705";
 const appleTouchIconUrl = "/apple-touch-icon.png?v=20260705";
 const siteName = locale === "sq" ? "Revolucioni Flamingo" : "Flamingo Revolution";
-const imageAlt =
+const imageAlt = socialImageAlt ??
   locale === "sq"
     ? "Logoja e Revolucionit Flamingo"
     : "Flamingo Revolution logo";
 const ogLocale = locale === "sq" ? "sq_AL" : "en_US";
+
+const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.env;
 ---
 
 <!doctype html>
@@ -48,7 +54,7 @@ const ogLocale = locale === "sq" ? "sq_AL" : "en_US";
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageUrl} />
     <meta property="og:image:secure_url" content={socialImageUrl} />
-    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:type" content={socialImageType} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={imageAlt} />
@@ -63,6 +69,15 @@ const ogLocale = locale === "sq" ? "sq_AL" : "en_US";
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+    {!DEV && (
+      <script
+        is:inline
+        defer
+        src={PUBLIC_UMAMI_SCRIPT}
+        data-website-id={PUBLIC_UMAMI_DATA_WEBSITE_ID}
+        data-domains="flamingorevolution.eu,www.flamingorevolution.eu"
+      ></script>
+    )}
     <script is:inline>
       const themeKey = "flamingo-theme";
       const setTheme = (theme) => {

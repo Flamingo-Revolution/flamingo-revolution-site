@@ -1,31 +1,31 @@
-# Revolucioni Flamingo
+# Flamingo Revolution
 
-`Revolucioni Flamingo` eshte nje "site" statik i ndertuar me Astro dhe TypeScript. "Site"-i serviret permes [Cloudflare Pages](https://developers.cloudflare.com/pages/get-started/git-integration/).
+`Flamingo Revolution` is an Astro and TypeScript site deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/). Public pages are prerendered, while the ideas API runs on demand in the Worker.
 
-Permbajtja e informacionit dhe mekanizmave te lundrimit (navigation) eshte ne shqip. Ekziston dhe nje version ne anglisht (`/en/`), por per momentin eshte i caktivizuar.
+The site content and navigation are in Albanian. An English version (`/en/`) exists in the codebase, but it is currently disabled.
 
-## Cfare perfshin projekti
+## What The Project Includes
 
-- Astro me konfigurim `static site generation`
-- TypeScript me `astro/tsconfigs/strict`
-- Tekst i strukturuar ne shqip dhe anglisht, me rruget publike anglisht `/en/` te caktivizuara
-- Light mode dhe dark mode
-- Faqen `/projektligje` per dokumente PDF dhe paketa ligjore
-- Faqen `/idete-tuaja` per stampimin e ideve te mbledhura permes [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLSf10Lhvh55HT0iN5TSkqagKdVXVVNxquXsUweDSffp2dMjuWw/viewform)
-- Faqen `/kontakt` per ["email"-in zyrtar](mailto:info@flamingorevolution.eu) dhe rrjete sociale: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision) dhe [YouTube](https://www.youtube.com/@flamingorevolution2026)
+- Astro configured for `static site generation`
+- TypeScript with `astro/tsconfigs/strict`
+- Structured Albanian and English text, with public English `/en/` routes disabled
+- Light mode and dark mode
+- The `/projektligje` page for PDF documents and legal packages
+- The `/idete-tuaja` page for submitting and browsing civic ideas
+- The `/kontakt` page for the [official email](mailto:info@flamingorevolution.eu) and social links: [Discord](https://discord.gg/jzznwrMFc), [Instagram](https://www.instagram.com/flamingotelevision), and [YouTube](https://www.youtube.com/@flamingotelevision)
 
-## Vullnetarizmi
+## Volunteering
 
-Ky projekt kerkon `Node.js 24.14.0` dhe perdor `pnpm` si package manager.
+This project requires `Node.js 22.12+` and uses `pnpm` as the package manager.
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Serveri lokal hapet zakonisht ne `http://localhost:4321`.
+The local server usually opens at `http://localhost:4321`.
 
-## Skriptet
+## Scripts
 
 ```bash
 pnpm dev
@@ -33,15 +33,25 @@ pnpm build
 pnpm preview
 pnpm cf:preview
 pnpm cf:deploy
+pnpm db:generate
+pnpm db:migrate
+pnpm db:migrate:deploy
+pnpm db:studio
 ```
 
-## Struktura e projektit
+## Project Structure
 
 ```text
 .
 ├─ public/
 │  ├─ documents/
 │  └─ images/
+├─ prisma/
+│  ├─ schema.prisma
+│  └─ migrations/
+├─ functions/
+│  ├─ api/
+│  └─ lib/
 ├─ src/
 │  ├─ components/
 │  ├─ data/
@@ -49,72 +59,79 @@ pnpm cf:deploy
 │  ├─ pages/
 │  │  └─ en/
 │  └─ styles/
+├─ prisma.config.ts
 ├─ README.md
 └─ README.en.md
 ```
 
-## Lokalizimi
+## Database (Neon + Prisma)
 
-- Shqip: `/`
-- Projektligje shqip: `/projektligje/`
-- Idete tuaja shqip: `/idete-tuaja/`
-- Kontakt: `/kontakt/`
+The project uses [Neon](https://neon.tech) Postgres with Prisma.
 
-Tekstet ruhen ne [src/data/site.ts](src/data/site.ts) per te lehtesuar shtimin e seksioneve apo gjuheve te tjera ne te ardhmen.
-
-Faqet anglisht ruhen te [src/disabled-pages/en](src/disabled-pages/en). Per t'i aktivizuar, zhvendosi ne `src/pages/en/` dhe shto `en` te lista e lokaleve te aktivizuara ne [src/components/LocaleSwitch.astro](src/components/LocaleSwitch.astro).
-
-## Dokumentet PDF
-
-PDF-te e faqes se projektligjeve ruhen ne [public/documents/projektligje](public/documents/projektligje). Te dhenat per kartat, titujt, pershkrimet dhe kategorite ruhen ne [src/data/documents.ts](src/data/documents.ts).
-
-Per Cloudflare Pages, mbaj cdo PDF nen `25 MiB`. Nese nje dokument e kalon kete kufi, mos e shto ne repo; hostoje ne Cloudflare R2 ose ne nje burim tjeter publik dhe vendos linkun ne dokumentacion.
-
-## Deploy ne Cloudflare Pages
-
-"Repository" serviret permes `Cloudflare Pages` pa pasur nevoje per `deploy.sh` ose `GitHub Actions`.
-
-Deploy ne production ndodh automatikisht nga Cloudflare Pages sa here behet `push` ne degen `main`. Pra, rrjedha normale e punes eshte:
+| Variable | Where | Purpose |
+|----------|-------|---------|
+| `DIRECT_URL` | `.env` (gitignored) | Prisma CLI (`migrate`, `studio`) — direct host, no `-pooler` |
+| `DATABASE_URL` | `.env` locally; Cloudflare Worker secret in deploy | Runtime API routes — pooled (`-pooler`) host |
 
 ```bash
-git push origin main
+cp .env.example .env
 ```
 
-Pas push-it, Cloudflare merr commit-in e fundit, ekzekuton `pnpm build` dhe publikon permbajtjen nga `dist`. `pnpm cf:deploy` perdoret vetem per deploy manual nga CLI.
-
-Ne dashboard-in e Cloudflare Pages perdor:
-
-- Build command: `pnpm build`
-- Build output directory: `dist`
-- Node version: `24.14.0` ose lexoje nga `.node-version`
-
-Skedari [wrangler.jsonc](wrangler.jsonc) mban konfigurimin bazik te projektit per `wrangler pages dev` dhe `wrangler pages deploy`. Nese krijon nje Pages project me emer tjeter, perditeso fushen `name` ne ate skedar.
-
-Per lokal preview ne runtime-in e Pages:
+Then paste the real strings from the Neon dashboard (include `?sslmode=require`). Wrangler reads `.env` during `pnpm cf:preview`.
 
 ```bash
-pnpm cf:preview
+pnpm db:migrate --name init_ideas_votes   # CLI uses DIRECT_URL
+pnpm db:studio                            # inspect tables
+pnpm cf:preview                           # Functions + DB (not `astro dev`)
+curl http://127.0.0.1:8788/api/health/db
 ```
 
-## Idete tuaja
+Use `pnpm cf:preview` to build and run the site in Cloudflare's local `workerd` runtime.
 
-Faqja `/idete-tuaja/` merr idete e miratuara nga nje Cloudflare Pages Function ne
-`/api/ideas`. Function-i lexon URL-ne e Google Apps Script nga environment variable:
+## Localization
 
-```text
-APPS_SCRIPT_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
+- Albanian: `/`
+- Albanian draft laws: `/projektligje/`
+- Albanian ideas: `/idete-tuaja/`
+- Contact: `/kontakt/`
+
+Text is stored in [src/data/site.ts](src/data/site.ts) to make it easier to add new sections or languages in the future.
+
+English pages are stored in [src/disabled-pages/en](src/disabled-pages/en). To enable them, move them to `src/pages/en/` and add `en` to the enabled locale list in [src/components/LocaleSwitch.astro](src/components/LocaleSwitch.astro).
+
+## PDF Documents
+
+PDFs for the draft-law page are stored in [public/documents/projektligje](public/documents/projektligje). The card data, titles, descriptions, and categories are stored in [src/data/documents.ts](src/data/documents.ts).
+
+Keep each static PDF under Cloudflare Workers' per-asset size limit. If a document is larger, host it in Cloudflare R2 or another public source and add the link to the document data.
+
+## Cloudflare Workers Deploy
+
+The [wrangler.jsonc](wrangler.jsonc) file configures the Astro application for Cloudflare Workers. Store `DATABASE_URL` as an encrypted Worker secret, then deploy:
+
+```bash
+pnpm exec wrangler secret put DATABASE_URL
+pnpm cf:deploy
 ```
 
-Per lokal preview me Cloudflare, kopjo `.dev.vars.example` ne `.dev.vars` dhe vendos URL-ne reale.
+The deployment is first available on a `workers.dev` URL. Use `pnpm cf:preview` for a local preview in Cloudflare's `workerd` runtime.
 
-Per deploy nga CLI pasi te kesh krijuar projektin dhe kredencialet ne Cloudflare:
+## Your Ideas
+
+The `/idete-tuaja/` page loads published ideas from Neon Postgres via Astro API routes running in Cloudflare Workers.
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/ideas` | `GET` | Visible ideas (`?fingerprint=` optional for `userVote`) |
+| `/api/ideas` | `POST` | Create an idea (`content` + `fingerprint`) |
+| `/api/ideas/[id]` | `PATCH` | Set submitter name (`name` + `fingerprint`) |
+| `/api/ideas/[id]/vote` | `POST` | Vote `UP`/`DOWN` (same vote again removes it) |
+| `/api/ideas/[id]/vote` | `DELETE` | Remove this device's vote |
+
+For local Cloudflare preview, keep `DATABASE_URL` and `DIRECT_URL` in `.env`. In production, store the pooled `DATABASE_URL` with `wrangler secret put DATABASE_URL`; keep `DIRECT_URL` only in the local or CI build environment.
 
 ```bash
 pnpm cf:deploy
 ```
 
-Domeni kryesor ne konfigurim eshte vendosur te `https://flamingorevolution.eu`.
-
-## Dokumentacion ne anglisht
-
-Shiko [README.en.md](README.en.md).
+The main domain in the configuration is set to `https://flamingorevolution.eu`.

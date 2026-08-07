@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SiteHeader from "./SiteHeader.astro";
+import SiteFrame from "./SiteFrame.astro";
+import IdeasSection from "./IdeasSection/IdeasSection.svelte";
 import type { Locale, SiteCopy } from "../data/site";
 import { ideasPageCopy } from "../data/ideas";
 
@@ -14,21 +15,8 @@ const copy = ideasPageCopy[locale];
 ---
 
 <BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
-  <div class="page-shell">
-    <SiteHeader locale={locale} copy={siteCopy} currentPage="ideas" localePath="idete-tuaja" />
-
-    <main
-      class="ideas-page"
-      id="main"
-      tabindex="-1"
-      data-ideas-page
-      data-api-url="/api/ideas"
-      data-empty-label={copy.emptyLabel}
-      data-error-label={copy.errorLabel}
-      data-idea-badge={copy.ideaBadge}
-      data-expand-label={copy.expandLabel}
-      data-collapse-label={copy.collapseLabel}
-    >
+  <SiteFrame {locale} copy={siteCopy} currentPage="ideas" localePath="idete-tuaja">
+    <main class="ideas-page" id="main" tabindex="-1">
       <section class="ideas-hero">
         <div>
           <p class="eyebrow">{copy.kicker}</p>
@@ -37,7 +25,7 @@ const copy = ideasPageCopy[locale];
           </h1>
           <p class="lead">{copy.description}</p>
           <div class="hero__actions">
-            <a class="button button--primary" href={copy.formUrl} target="_blank" rel="noreferrer">
+            <a class="button button--primary" href="#ideas-compose-input">
               {copy.formLabel}
             </a>
           </div>
@@ -46,212 +34,12 @@ const copy = ideasPageCopy[locale];
         <div class="ideas-hero__panel">
           <h2>{copy.panelTitle}</h2>
           <p>{copy.panelText}</p>
-          <strong>{siteCopy.brand.name}</strong>
+          <!-- <a class="button button--ghost"  href="/contact">{copy.panelCTA}</a> -->
         </div>
       </section>
 
-      <section class="ideas-toolbar" aria-label={copy.countLabel}>
-        <div class="ideas-stat">
-          <strong data-ideas-count>0</strong>
-          <span>{copy.countLabel}</span>
-        </div>
-        <a class="button button--ghost" href={copy.formUrl} target="_blank" rel="noreferrer">
-          {copy.formLabel}
-        </a>
-      </section>
-
-      <section class="ideas-feed" aria-label={copy.feedTitle}>
-        <div class="section-heading">
-          <p class="eyebrow">{copy.feedKicker}</p>
-          <h2>{copy.feedTitle}</h2>
-          <p>{copy.feedDescription}</p>
-        </div>
-
-        <p class="ideas-note">{copy.note}</p>
-        <p class="ideas-status" data-ideas-status role="status">{copy.loadingLabel}</p>
-        <div class="ideas-list" data-ideas-list hidden></div>
-      </section>
+      <IdeasSection client:only="svelte" {copy} />
     </main>
 
-    <footer class="footer-note">
-      <p>{siteCopy.footer.text}</p>
-      <nav class="footer-links" aria-label="Social links">
-        {
-          siteCopy.footer.links.map((link) => (
-            <a href={link.href} target="_blank" rel="noreferrer">
-              {link.label}
-            </a>
-          ))
-        }
-      </nav>
-    </footer>
-  </div>
-
-  <script is:inline>
-    const bindIdeasPage = () => {
-      const root = document.querySelector("[data-ideas-page]");
-      if (!root || root.dataset.bound === "true") return;
-
-      root.dataset.bound = "true";
-      const apiUrl = root.dataset.apiUrl || "/api/ideas";
-      const emptyLabel = root.dataset.emptyLabel || "Ende nuk ka ide te publikuara.";
-      const errorLabel = root.dataset.errorLabel || "Te dhenat nuk u ngarkuan.";
-      const ideaBadge = root.dataset.ideaBadge || "Ide qytetare";
-      const expandLabel = root.dataset.expandLabel || "Trego me shume";
-      const collapseLabel = root.dataset.collapseLabel || "Trego me pak";
-      const count = root.querySelector("[data-ideas-count]");
-      const list = root.querySelector("[data-ideas-list]");
-      const status = root.querySelector("[data-ideas-status]");
-      let hasLoadedIdeas = false;
-
-      const makeIdeaKey = (item) => {
-        const timestamp = typeof item.timestamp === "string" ? item.timestamp.trim() : "";
-        const idea = typeof item.idea === "string" ? item.idea.trim() : "";
-        return `${timestamp}::${idea}`;
-      };
-
-      const getIdeaKey = (item) => {
-        if (!(item instanceof HTMLElement)) return "";
-        const text = item.querySelector(".published-idea__text");
-        return item.dataset.ideaKey || text?.textContent?.trim() || "";
-      };
-
-      const getExpandedKeys = () =>
-        new Set(
-          [...root.querySelectorAll(".published-idea.is-expanded")]
-            .map(getIdeaKey)
-            .filter(Boolean)
-        );
-
-      const setStatus = (message, isError = false) => {
-        if (!(status instanceof HTMLElement)) return;
-        status.hidden = false;
-        status.textContent = message;
-        status.classList.toggle("ideas-status--error", isError);
-      };
-
-      const updateIdeaToggles = () => {
-        root.querySelectorAll(".published-idea").forEach((item) => {
-          const text = item.querySelector(".published-idea__text");
-          const toggle = item.querySelector(".published-idea__toggle");
-          if (!(text instanceof HTMLElement) || !(toggle instanceof HTMLButtonElement)) return;
-
-          if (item.classList.contains("is-expanded")) {
-            toggle.hidden = false;
-            return;
-          }
-
-          toggle.hidden = text.scrollHeight <= text.clientHeight + 1;
-        });
-      };
-
-      const renderIdeas = (items) => {
-        if (!(list instanceof HTMLElement)) return;
-
-        if (!Array.isArray(items) || items.length === 0) {
-          list.hidden = true;
-          list.replaceChildren();
-          setStatus(emptyLabel);
-          return;
-        }
-
-        const expandedKeys = getExpandedKeys();
-        const fragment = document.createDocumentFragment();
-
-        items.forEach((item, index) => {
-          const ideaKey = makeIdeaKey(item);
-          const isExpanded = expandedKeys.has(ideaKey);
-          const article = document.createElement("article");
-          article.className = "published-idea";
-          article.dataset.ideaKey = ideaKey;
-          if (isExpanded) article.classList.add("is-expanded");
-
-          const indexNode = document.createElement("span");
-          indexNode.className = "published-idea__index";
-          indexNode.textContent = String(index + 1).padStart(2, "0");
-
-          const body = document.createElement("div");
-          body.className = "published-idea__body";
-
-          const meta = document.createElement("span");
-          meta.className = "published-idea__meta";
-          meta.textContent = ideaBadge;
-
-          const text = document.createElement("p");
-          text.className = "published-idea__text";
-          text.textContent = typeof item.idea === "string" ? item.idea : "";
-
-          const toggle = document.createElement("button");
-          toggle.className = "published-idea__toggle";
-          toggle.type = "button";
-          toggle.hidden = !isExpanded;
-          toggle.setAttribute("aria-expanded", String(isExpanded));
-          toggle.textContent = isExpanded ? collapseLabel : expandLabel;
-
-          body.append(meta, text, toggle);
-          article.append(indexNode, body);
-          fragment.append(article);
-        });
-
-        status?.toggleAttribute("hidden", true);
-        list.hidden = false;
-        list.replaceChildren(fragment);
-        requestAnimationFrame(updateIdeaToggles);
-      };
-
-      const refreshIdeas = async () => {
-        try {
-          const response = await fetch(apiUrl, { cache: "no-store" });
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(typeof data.error === "string" ? data.error : errorLabel);
-          }
-
-          if (count) count.textContent = String(data.stats?.approved ?? data.ideas?.length ?? 0);
-          hasLoadedIdeas = true;
-          renderIdeas(data.ideas);
-        } catch {
-          if (hasLoadedIdeas) return;
-          setStatus(errorLabel, true);
-        }
-      };
-
-      root.addEventListener("click", (event) => {
-        const target = event.target;
-        if (!(target instanceof Element)) return;
-
-        const toggle = target.closest(".published-idea__toggle");
-        if (!(toggle instanceof HTMLButtonElement)) return;
-
-        const item = toggle.closest(".published-idea");
-        if (!item) return;
-
-        const isExpanded = item.classList.toggle("is-expanded");
-        toggle.setAttribute("aria-expanded", String(isExpanded));
-        toggle.textContent = isExpanded ? collapseLabel : expandLabel;
-      });
-
-      let resizeTimer;
-      window.addEventListener("resize", () => {
-        window.clearTimeout(resizeTimer);
-        resizeTimer = window.setTimeout(updateIdeaToggles, 120);
-      });
-
-      window.setInterval(refreshIdeas, 10_000);
-      document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") refreshIdeas();
-      });
-
-      refreshIdeas();
-      document.fonts?.ready.then(updateIdeaToggles);
-    };
-
-    document.addEventListener("astro:page-load", bindIdeasPage);
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", bindIdeasPage, { once: true });
-    } else {
-      bindIdeasPage();
-    }
-  </script>
+  </SiteFrame>
 </BaseLayout>

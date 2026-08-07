@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import type { Locale, SiteCopy } from "../data/site";
-import SiteHeader from "./SiteHeader.astro";
+import SiteFrame from "./SiteFrame.astro";
 
 interface Props {
   locale: Locale;
@@ -15,9 +15,7 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 ---
 
 <BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
-  <div class="page-shell">
-    <SiteHeader locale={locale} copy={copy} currentPage="home" />
-
+  <SiteFrame {locale} {copy} currentPage="home">
     <main class="landing" id="main" tabindex="-1">
       <section class="hero">
         <div class="hero__content">
@@ -28,7 +26,7 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
           <p class="lead">{copy.hero.description}</p>
 
           <div class="hero__actions">
-            <a class="button button--primary" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
+            <a class="button button--primary" href={copy.hero.participateLink}>
               {copy.hero.primaryCta}
             </a>
             <a class="button button--ghost" href={documentsHref}>
@@ -107,7 +105,7 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
         </div>
 
         <div class="hero__actions">
-          <a class="button button--primary" href={copy.council.primaryLink.href} target="_blank" rel="noreferrer">
+          <a class="button button--primary" href={copy.council.primaryLink.href}>
             {copy.council.primaryLink.label}
           </a>
         </div>
@@ -130,17 +128,5 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
       </section>
     </main>
 
-    <footer class="footer-note">
-      <p>{copy.footer.text}</p>
-      <nav class="footer-links" aria-label="Links">
-        {
-          copy.footer.links.map((link) => (
-            <a href={link.href} target="_blank" rel="noreferrer">
-              {link.label}
-            </a>
-          ))
-        }
-      </nav>
-    </footer>
-  </div>
+  </SiteFrame>
 </BaseLayout>

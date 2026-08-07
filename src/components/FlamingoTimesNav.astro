@@ -1,0 +1,18 @@
+---
+interface Props {
+  current: "latest" | "archive";
+}
+
+const { current } = Astro.props;
+---
+
+<nav class="times-publication-nav" aria-label="Navigimi i Flamingo Times">
+  <a href="/flamingo-times/" aria-current={current === "latest" ? "page" : undefined}>
+    Flamingo Times
+    <small>Botimi më i fundit</small>
+  </a>
+  <a href="/flamingo-times/artikujt/" aria-current={current === "archive" ? "page" : undefined}>
+    Artikujt
+    <small>Kërko botimet e mëparshme në arkiv</small>
+  </a>
+</nav>

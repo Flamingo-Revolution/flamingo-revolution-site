@@ -1,17 +1,54 @@
 ---
-import EmbedPage from "../components/EmbedPage.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFrame from "../components/SiteFrame.astro";
 import { siteCopy } from "../data/site";
+
+const locale = "sq";
+const copy = siteCopy[locale];
+
+const mapUrl = "https://pomodoren.github.io/flamingo-map/";
 ---
 
-<EmbedPage
-  locale="sq"
-  siteCopy={siteCopy.sq}
-  currentPage="map"
-  localePath="harta"
-  eyebrow="Protestat"
-  title="Harta"
-  description="Harta e protestave te Revolucionit Flamingo."
-  lead="Shikoni protestat, aktivitetet dhe qytetet e Revolucionit Flamingo ne harten interaktive."
-  src="https://pomodoren.github.io/flamingo-map/"
-  openLabel="Hape harten ne dritare te re"
-/>
+<BaseLayout
+  title={`Harta | ${copy.meta.title}`}
+  description="Harta e protestave të Revolucionit Flamingo."
+  locale={locale}
+>
+  <SiteFrame {locale} {copy} currentPage="map" localePath="map" shellClass="map-shell">
+    <main class="map-content" id="main" tabindex="-1">
+      <iframe
+        src={mapUrl}
+        title="Harta e protestave"
+        loading="eager"
+        allowfullscreen
+      ></iframe>
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .map-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: min(76vh, 880px);
+    min-height: 620px;
+    overflow: hidden;
+    border-bottom: 4px solid var(--line);
+    background: var(--surface);
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (max-width: 760px) {
+    .map-content {
+      height: calc(100dvh - 13rem);
+      min-height: 540px;
+    }
+  }
+</style>

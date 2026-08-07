@@ -1,0 +1,21 @@
+---
+import type { Locale, SiteCopy } from "../data/site";
+import SiteFooter from "./SiteFooter.astro";
+import SiteHeader from "./SiteHeader.astro";
+
+interface Props {
+	locale: Locale;
+	copy: SiteCopy;
+	currentPage: "home" | "documents" | "ideas" | "map" | "pulse" | "contact" | "times";
+	localePath?: string;
+	shellClass?: string;
+}
+
+const { locale, copy, currentPage, localePath = "", shellClass } = Astro.props;
+---
+
+<div class:list={["page-shell", shellClass]} data-site-frame>
+	<SiteHeader {locale} {copy} {currentPage} {localePath} />
+	<slot />
+	<SiteFooter {locale} {copy} />
+</div>
