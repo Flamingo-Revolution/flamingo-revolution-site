@@ -31,7 +31,7 @@ Në datën **31.07.2025**, Gjykata Kushtetuese (vendimi nr. 45/2025, V-45/25 —
 
 ### 🖼️ Diagrami i procesit
 
-![Procesi i referendumit shfuqizues për ligjin 21/2024](./assets/Graph/procesi_referendumit_ligji_21_2024.svg)
+![Procesi i referendumit shfuqizues për ligjin 21/2024](./assets/Graph/procesi_referendumit_ligji_21_2024.png)
 
 ---
 
@@ -136,8 +136,3 @@ Numri zyrtar i zgjedhësve të regjistruar në Shqipëri për zgjedhjet e 11 maj
 - [Kushtetuta e Republikës së Shqipërisë — nenet 150–152](https://www.mod.gov.al/images/akteligjore/kushtetuta/Kushtetuta-e-REPUBLIKES-SE-SHQIPERISE.pdf)
 - [Kodi Zgjedhor — teksti i konsoliduar (KQZ)](https://kqz.gov.al/pdf/kodi-zgjedhor.pdf)
 - [Krahasimi i katër mjeteve ligjore të qytetarëve](/referendum/mekanizmat/)
-
----
-
-Presim me shume information nga Dorina Prethi
-[kontakto](mailto:gled.guri@gmail.com)
