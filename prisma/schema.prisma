@@ -45,3 +45,13 @@ model Vote {
   @@index([voterHash])
   @@map("votes")
 }
+
+model NewsletterSignup {
+  id        String   @id @default(uuid())
+  email     String
+  reason    String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([email, reason])
+  @@map("newsletter_signups")
+}

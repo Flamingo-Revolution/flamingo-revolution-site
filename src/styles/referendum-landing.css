@@ -1,0 +1,908 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Libre+Franklin:ital,wght@0,700;0,800;1,700&display=swap");
+
+.referendum-landing {
+	--forest: #102621;
+	--forest-2: #19382f;
+	--forest-3: #0a1a16;
+	--ink: #18221f;
+	--paper: #f3ecdf;
+	--paper-2: #e8dfd0;
+	--paper-3: #fffaf2;
+	--coral: #f26355;
+	--coral-dark: #cf493f;
+	--mint: #d9eee8;
+	--sage: #a9b6a5;
+	--white: #fffdf8;
+	--line: rgba(24, 34, 31, 0.18);
+	--line-light: rgba(255, 255, 255, 0.17);
+	--display: "Libre Franklin", "Arial Narrow", Arial, sans-serif;
+	--sans: "DM Sans", Arial, sans-serif;
+	--mono: "DM Mono", monospace;
+	--shell: min(1240px, calc(100vw - 48px));
+	--shadow: 0 26px 70px rgba(8, 27, 21, 0.16);
+
+	min-height: 100vh;
+	overflow-x: hidden;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--sans);
+	-webkit-font-smoothing: antialiased;
+}
+
+.referendum-landing *,
+.referendum-landing *::before,
+.referendum-landing *::after {
+	box-sizing: border-box;
+}
+
+.referendum-landing img {
+	display: block;
+	max-width: 100%;
+}
+
+.referendum-landing a {
+	color: inherit;
+}
+
+.referendum-landing button,
+.referendum-landing input {
+	font: inherit;
+}
+
+.referendum-landing .shell {
+	width: var(--shell);
+	margin-inline: auto;
+}
+
+.referendum-landing .sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.referendum-landing .status-bar {
+	position: relative;
+	z-index: 70;
+	background: var(--coral);
+	color: #101a17;
+}
+
+.referendum-landing .status-inner {
+	min-height: 40px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font: 500 10px/1.35 var(--mono);
+	letter-spacing: 0.035em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .status-dot {
+	width: 9px;
+	height: 9px;
+	margin-right: 4px;
+	border: 2px solid var(--forest);
+	border-radius: 50%;
+	background: var(--mint);
+	box-shadow: 0 0 0 4px rgba(16, 38, 33, 0.12);
+	animation: referendum-status-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes referendum-status-pulse {
+	0%,
+	100% {
+		box-shadow: 0 0 0 4px rgba(16, 38, 33, 0.12);
+	}
+	50% {
+		box-shadow: 0 0 0 7px rgba(16, 38, 33, 0.06);
+	}
+}
+
+.referendum-landing .status-inner a {
+	margin-left: auto;
+	font-weight: 500;
+	text-underline-offset: 3px;
+}
+
+.referendum-landing .brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.referendum-landing .brand-image {
+	width: 45px;
+	height: 45px;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	border-radius: 50%;
+	background: var(--paper);
+}
+
+.referendum-landing .brand-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.referendum-landing .brand-copy {
+	display: grid;
+	text-transform: uppercase;
+	line-height: 1;
+}
+
+.referendum-landing .brand-copy strong {
+	font: 800 15px/1 var(--display);
+	letter-spacing: 0.07em;
+}
+
+.referendum-landing .brand-copy small {
+	margin-top: 4px;
+	font: 500 9px/1 var(--mono);
+	letter-spacing: 0.2em;
+}
+
+.referendum-landing .hero {
+	min-height: 860px;
+	padding: 72px 0 78px;
+	overflow: hidden;
+	background:
+		radial-gradient(circle at 15% 10%, rgba(242, 99, 85, 0.15), transparent 31%),
+		linear-gradient(120deg, var(--forest) 0 63%, #19382f 63%);
+	color: var(--white);
+}
+
+.referendum-landing .hero-grid {
+	display: grid;
+	grid-template-columns: 0.98fr 1.02fr;
+	gap: 76px;
+	align-items: center;
+}
+
+.referendum-landing .hero-brand {
+	margin-bottom: 28px;
+}
+
+.referendum-landing .eyebrow,
+.referendum-landing .section-kicker {
+	margin: 0 0 22px;
+	font: 500 10px/1.45 var(--mono);
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .eyebrow {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--sage);
+}
+
+.referendum-landing .eyebrow span {
+	width: 36px;
+	height: 1px;
+	background: var(--coral);
+}
+
+.referendum-landing .section-kicker {
+	color: var(--coral-dark);
+}
+
+.referendum-landing .section-kicker.light {
+	color: #ff9285;
+}
+
+.referendum-landing .hero h1 {
+	margin: 0;
+	max-width: 700px;
+	font: 800 clamp(52px, 6.1vw, 88px) / 0.92 var(--display);
+	letter-spacing: -0.064em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .hero h1 .slogan-red {
+	color: #f26355;
+}
+
+.referendum-landing .hero-lede {
+	max-width: 650px;
+	margin: 32px 0 0;
+	color: #d2dcd8;
+	font-size: 18px;
+	line-height: 1.7;
+}
+
+.referendum-landing .hero-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 13px;
+	margin-top: 37px;
+}
+
+.referendum-landing .button {
+	display: inline-flex;
+	min-height: 54px;
+	align-items: center;
+	justify-content: center;
+	gap: 22px;
+	padding: 0 24px;
+	border: 1px solid transparent;
+	text-decoration: none;
+	font: 500 10px/1 var(--mono);
+	letter-spacing: 0.055em;
+	text-transform: uppercase;
+	transition:
+		transform 0.2s ease,
+		background 0.2s ease,
+		color 0.2s ease;
+}
+
+.referendum-landing .button:hover {
+	transform: translateY(-2px);
+}
+
+.referendum-landing .button-primary {
+	background: var(--coral);
+	color: #111b18;
+}
+
+.referendum-landing .button-primary:hover {
+	background: #ff7869;
+}
+
+.referendum-landing .button-quiet {
+	border-color: rgba(255, 255, 255, 0.34);
+	color: var(--white);
+}
+
+.referendum-landing .button-quiet:hover {
+	border-color: var(--white);
+	background: rgba(255, 255, 255, 0.06);
+}
+
+.referendum-landing .hero-metrics {
+	display: flex;
+	gap: 34px;
+	margin-top: 52px;
+	padding-top: 22px;
+	border-top: 1px solid var(--line-light);
+}
+
+.referendum-landing .hero-metrics span {
+	display: grid;
+	gap: 5px;
+}
+
+.referendum-landing .hero-metrics strong {
+	font: 800 24px/1 var(--display);
+}
+
+.referendum-landing .hero-metrics small {
+	color: #aebdb7;
+	font: 400 8px/1.3 var(--mono);
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .hero-visual {
+	position: relative;
+	margin: 0;
+}
+
+.referendum-landing .hero-visual::before {
+	content: "";
+	position: absolute;
+	inset: -17px 17px 17px -17px;
+	border: 1px solid var(--line-light);
+}
+
+.referendum-landing .hero-visual img {
+	position: relative;
+	width: 100%;
+	box-shadow: var(--shadow);
+}
+
+.referendum-landing .hero-stamp {
+	position: absolute;
+	right: -22px;
+	bottom: -22px;
+	width: 124px;
+	height: 124px;
+	display: grid;
+	place-content: center;
+	margin: 0;
+	background: var(--coral);
+	color: var(--forest);
+	text-align: center;
+	transform: rotate(3deg);
+}
+
+.referendum-landing .hero-stamp small,
+.referendum-landing .hero-stamp span {
+	font: 500 8px/1 var(--mono);
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .hero-stamp strong {
+	margin: 4px 0;
+	font: 800 42px/0.9 var(--display);
+}
+
+.referendum-landing .statement-section {
+	padding: 118px 0 132px;
+	background: var(--paper-3);
+}
+
+.referendum-landing .statement-grid {
+	display: grid;
+	grid-template-columns: 220px minmax(0, 800px);
+	gap: 90px;
+	justify-content: center;
+}
+
+.referendum-landing .statement-meta {
+	position: sticky;
+	top: 48px;
+	align-self: start;
+	display: grid;
+	gap: 11px;
+	padding-top: 6px;
+}
+
+.referendum-landing .statement-meta span {
+	color: #64716c;
+	font: 400 10px/1.4 var(--mono);
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .statement-copy h2 {
+	margin: 0 0 40px;
+	font: 800 clamp(39px, 5vw, 64px) / 1.02 var(--display);
+	letter-spacing: -0.05em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .statement-copy p {
+	margin: 0 0 22px;
+	font-size: 17px;
+	line-height: 1.82;
+}
+
+.referendum-landing .statement-copy .lead {
+	font-size: 23px;
+	line-height: 1.55;
+}
+
+.referendum-landing .statement-copy blockquote {
+	margin: 46px 0;
+	padding: 30px 34px;
+	border-left: 5px solid var(--coral);
+	background: var(--paper-2);
+	font: 700 clamp(23px, 3vw, 34px) / 1.28 var(--display);
+	letter-spacing: -0.025em;
+}
+
+.referendum-landing .signature-line {
+	display: grid;
+	gap: 5px;
+	margin-top: 54px;
+	padding-top: 24px;
+	border-top: 1px solid var(--line);
+}
+
+.referendum-landing .signature-line strong {
+	font: 700 20px/1.2 var(--display);
+	text-transform: uppercase;
+}
+
+.referendum-landing .process-section {
+	padding: 122px 0;
+	background: var(--paper-3);
+}
+
+.referendum-landing .process-grid {
+	display: block;
+	max-width: 820px;
+}
+
+.referendum-landing .process-copy > h2 {
+	margin: 0 0 46px;
+	font: 800 clamp(43px, 5vw, 68px) / 0.98 var(--display);
+	letter-spacing: -0.055em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .current-step {
+	position: relative;
+	min-height: 230px;
+	padding: 30px 34px 30px 142px;
+	background: var(--mint);
+	border: 1px solid #73b6a4;
+}
+
+.referendum-landing .current-step > span {
+	font: 500 9px/1 var(--mono);
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .current-step > strong {
+	position: absolute;
+	top: 66px;
+	left: 27px;
+	color: #13725f;
+	font: 800 84px/0.82 var(--display);
+	letter-spacing: -0.08em;
+}
+
+.referendum-landing .current-step h3 {
+	margin: 51px 0 12px;
+	font: 800 26px/1 var(--display);
+	text-transform: uppercase;
+}
+
+.referendum-landing .current-step p {
+	margin: 0;
+	color: #42534d;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.referendum-landing .process-list {
+	margin: 28px 0 0;
+	padding: 0;
+	list-style: none;
+	border-top: 1px solid var(--line);
+}
+
+.referendum-landing .process-list li {
+	display: grid;
+	grid-template-columns: 54px 1fr;
+	gap: 18px;
+	align-items: center;
+	min-height: 78px;
+	border-bottom: 1px solid var(--line);
+}
+
+.referendum-landing .process-list li > span {
+	width: 34px;
+	height: 34px;
+	display: grid;
+	place-items: center;
+	border: 1px solid #9d9f99;
+	color: #777d79;
+	font: 500 10px/1 var(--mono);
+}
+
+.referendum-landing .process-list li.done > span,
+.referendum-landing .process-list li.active > span {
+	border-color: #13836b;
+	background: var(--mint);
+	color: #0a5e4d;
+}
+
+.referendum-landing .process-list li.active {
+	background: rgba(217, 238, 232, 0.45);
+}
+
+.referendum-landing .process-list li.upcoming-signatures {
+	background: #fff0dc;
+}
+
+.referendum-landing .process-list li.upcoming-signatures > span {
+	border-color: #dc7a22;
+	background: #f4a261;
+	color: #30170a;
+}
+
+.referendum-landing .process-list li.upcoming-signatures strong {
+	color: #9c4810;
+}
+
+.referendum-landing .process-list div {
+	display: grid;
+	gap: 5px;
+}
+
+.referendum-landing .process-list strong {
+	font: 700 15px/1.2 var(--display);
+	text-transform: uppercase;
+}
+
+.referendum-landing .process-list small {
+	color: #66716d;
+	font-size: 12px;
+}
+
+.referendum-landing .process-cta {
+	margin-top: 42px;
+	padding: 32px;
+	border: 1px solid #d83b32;
+	background: #fff8f4;
+}
+
+.referendum-landing .process-cta p {
+	max-width: 610px;
+	margin: 0 0 22px;
+	color: #453b36;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.referendum-landing .signup-section {
+	padding: 118px 0;
+	background: var(--forest);
+	color: var(--white);
+}
+
+.referendum-landing .signup-grid {
+	display: grid;
+	grid-template-columns: 0.9fr 1.1fr;
+	gap: 72px;
+	align-items: start;
+}
+
+.referendum-landing .signup-copy h2 {
+	margin: 0;
+	font: 800 clamp(42px, 5.4vw, 72px) / 0.94 var(--display);
+	letter-spacing: -0.055em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .signup-lede {
+	max-width: 520px;
+	margin: 28px 0 0;
+	color: #c0cbc7;
+	font-size: 17px;
+	line-height: 1.7;
+}
+
+.referendum-landing .docs-section {
+	padding: 118px 0 100px;
+	background: var(--paper);
+}
+
+.referendum-landing .docs-heading {
+	display: grid;
+	grid-template-columns: 1.2fr 0.8fr;
+	gap: 48px;
+	align-items: end;
+	margin-bottom: 48px;
+}
+
+.referendum-landing .docs-heading h2 {
+	margin: 0;
+	font: 800 clamp(40px, 5.2vw, 68px) / 0.98 var(--display);
+	letter-spacing: -0.055em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .docs-heading p {
+	margin: 0;
+	color: #53605b;
+	font-size: 16px;
+	line-height: 1.72;
+}
+
+.referendum-landing .docs-list {
+	border-top: 1px solid var(--ink);
+}
+
+.referendum-landing .docs-list__item {
+	border-bottom: 1px solid var(--line);
+}
+
+.referendum-landing .docs-list__item a {
+	display: grid;
+	gap: 0.45rem;
+	padding: 1.4rem 0;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.referendum-landing .docs-list__item h3 {
+	margin: 0;
+	font: 800 clamp(1.45rem, 2.8vw, 1.9rem) / 1.1 var(--display);
+	letter-spacing: -0.03em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .docs-list__item p {
+	margin: 0;
+	max-width: 42rem;
+	color: #5b6863;
+	font-size: 15px;
+	line-height: 1.55;
+}
+
+.referendum-landing .docs-list__item a:hover h3,
+.referendum-landing .docs-list__item a:focus-visible h3 {
+	color: var(--coral-dark);
+}
+
+.referendum-landing .site-footer {
+	padding: 70px 0 18px;
+	background: var(--forest-3);
+	color: var(--white);
+}
+
+.referendum-landing .footer-grid {
+	display: grid;
+	grid-template-columns: 0.7fr 1.1fr 0.7fr;
+	gap: 48px;
+	align-items: start;
+}
+
+.referendum-landing .footer-grid > p {
+	margin: 0;
+	color: #93a49d;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.referendum-landing .footer-grid nav {
+	display: grid;
+	gap: 13px;
+}
+
+.referendum-landing .footer-grid nav a {
+	color: #d2dbd7;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.referendum-landing .footer-grid nav a:hover {
+	color: var(--coral);
+}
+
+.referendum-landing .footer-bottom {
+	display: flex;
+	justify-content: space-between;
+	gap: 30px;
+	margin-top: 61px;
+	padding-top: 17px;
+	border-top: 1px solid rgba(255, 255, 255, 0.11);
+	color: #7f928a;
+	font: 400 9px/1.4 var(--mono);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.referendum-landing .footer-bottom a {
+	text-decoration: none;
+}
+
+.referendum-landing [data-reveal] {
+	opacity: 0;
+	transform: translateY(18px);
+	transition:
+		opacity 0.58s ease,
+		transform 0.58s ease;
+}
+
+.referendum-landing [data-reveal].visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+@media (max-width: 1080px) {
+	.referendum-landing .hero-grid {
+		gap: 45px;
+	}
+
+	.referendum-landing .hero {
+		min-height: 760px;
+	}
+
+	.referendum-landing .hero h1 {
+		font-size: clamp(48px, 6.3vw, 72px);
+	}
+
+	.referendum-landing .statement-grid {
+		grid-template-columns: 180px minmax(0, 720px);
+		gap: 60px;
+	}
+
+	.referendum-landing .signup-grid,
+	.referendum-landing .docs-heading,
+	.referendum-landing .footer-grid {
+		gap: 40px;
+	}
+}
+
+@media (max-width: 820px) {
+	.referendum-landing {
+		--shell: min(100% - 34px, 720px);
+	}
+
+	.referendum-landing .status-inner {
+		min-height: 48px;
+		flex-wrap: wrap;
+		padding-block: 8px;
+	}
+
+	.referendum-landing .status-inner a {
+		width: 100%;
+		margin-left: 21px;
+	}
+
+	.referendum-landing .hero {
+		min-height: auto;
+		padding: 56px 0 80px;
+		background: var(--forest);
+	}
+
+	.referendum-landing .hero-grid,
+	.referendum-landing .statement-grid,
+	.referendum-landing .signup-grid,
+	.referendum-landing .docs-heading,
+	.referendum-landing .footer-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.referendum-landing .hero-visual {
+		max-width: 650px;
+		margin-top: 30px;
+	}
+
+	.referendum-landing .statement-section {
+		padding: 86px 0;
+	}
+
+	.referendum-landing .statement-meta {
+		position: static;
+		grid-template-columns: repeat(3, auto);
+		gap: 10px 20px;
+		padding-bottom: 25px;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.referendum-landing .statement-meta .section-kicker {
+		grid-column: 1 / -1;
+	}
+}
+
+@media (max-width: 560px) {
+	.referendum-landing {
+		--shell: calc(100vw - 26px);
+	}
+
+	.referendum-landing .brand-copy strong {
+		font-size: 13px;
+	}
+
+	.referendum-landing .brand-copy small {
+		font-size: 8px;
+	}
+
+	.referendum-landing .brand-image {
+		width: 40px;
+		height: 40px;
+	}
+
+	.referendum-landing .hero h1 {
+		font-size: 46px;
+	}
+
+	.referendum-landing .hero-lede {
+		font-size: 16px;
+	}
+
+	.referendum-landing .hero-actions,
+	.referendum-landing .button {
+		width: 100%;
+	}
+
+	.referendum-landing .hero-metrics {
+		gap: 18px;
+		justify-content: space-between;
+	}
+
+	.referendum-landing .hero-metrics strong {
+		font-size: 20px;
+	}
+
+	.referendum-landing .hero-stamp {
+		right: -4px;
+		bottom: -30px;
+		width: 103px;
+		height: 103px;
+	}
+
+	.referendum-landing .hero-stamp strong {
+		font-size: 34px;
+	}
+
+	.referendum-landing .statement-copy h2,
+	.referendum-landing .process-copy > h2,
+	.referendum-landing .signup-copy h2,
+	.referendum-landing .docs-heading h2 {
+		font-size: 39px;
+	}
+
+	.referendum-landing .statement-copy .lead {
+		font-size: 19px;
+	}
+
+	.referendum-landing .statement-copy p {
+		font-size: 15px;
+	}
+
+	.referendum-landing .statement-meta {
+		grid-template-columns: 1fr;
+	}
+
+	.referendum-landing .process-section,
+	.referendum-landing .signup-section,
+	.referendum-landing .docs-section {
+		padding-block: 86px;
+	}
+
+	.referendum-landing .current-step {
+		padding: 27px 25px 27px 108px;
+	}
+
+	.referendum-landing .current-step > strong {
+		left: 20px;
+		font-size: 65px;
+	}
+
+	.referendum-landing .current-step h3 {
+		margin-top: 42px;
+		font-size: 22px;
+	}
+
+	.referendum-landing .process-list li {
+		grid-template-columns: 46px 1fr;
+	}
+
+	.referendum-landing .footer-bottom {
+		flex-direction: column;
+		gap: 12px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.referendum-landing .status-dot {
+		animation: none;
+	}
+
+	.referendum-landing [data-reveal] {
+		opacity: 1;
+		transform: none;
+	}
+
+	.referendum-landing *,
+	.referendum-landing *::before,
+	.referendum-landing *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+html:has(.referendum-landing) {
+	scroll-behavior: smooth;
+	scroll-padding-top: 56px;
+}
+
+html:has(.referendum-landing),
+body:has(.referendum-landing) {
+	background: #f3ecdf;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html:has(.referendum-landing) {
+		scroll-behavior: auto;
+	}
+}

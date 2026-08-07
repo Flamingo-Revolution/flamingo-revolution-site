@@ -1,136 +1,354 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import SiteHeader from "../../components/SiteHeader.astro";
+import NewsletterSignup from "../../components/referendum/NewsletterSignup/NewsletterSignup.svelte";
 import { getReferendumIndexItems } from "../../data/referendum";
 import { siteCopy } from "../../data/site";
+import "../../styles/referendum-landing.css";
 
 export const prerender = true;
 
 const copy = siteCopy.sq;
 const items = await getReferendumIndexItems();
+const year = new Date().getFullYear();
 
-const title = "Referendum";
-const description = "Dokumentim, analiza ligjore dhe hapat e referendumit shfuqizues për Ligjin Nr. 21/2024.";
+const title = "Referendumi për Ligjin 21/2024";
+const description =
+	"Nisma qytetare për referendumin për shfuqizimin e Ligjit nr. 21/2024 për zonat e mbrojtura. Deklarata publike, procesi dhe dokumentimi.";
 ---
 
-<BaseLayout title={`${title} | ${copy.meta.title}`} description={description} locale="sq">
-	<div class="page-shell">
-		<SiteHeader locale="sq" copy={copy} currentPage="referendum" localePath="referendum" />
+<BaseLayout
+	title={`${title} | ${copy.meta.title}`}
+	description={description}
+	locale="sq"
+	socialImagePath="/referendum/flamingo-cover.png"
+	socialImageAlt="Flamingo Revolution — referendumi për Ligjin 21/2024"
+>
+	<div class="referendum-landing">
+		<div class="status-bar" role="status">
+			<div class="shell status-inner">
+				<span class="status-dot" aria-hidden="true"></span>
+				<strong>Ku jemi tani:</strong>
+				<span>Në pritje të konfirmimit nga KQZ-ja</span>
+				<a href="#procesi">Shiko procesin <span aria-hidden="true">↓</span></a>
+			</div>
+		</div>
 
-		<main class="content-page" id="main" tabindex="-1">
-			<section class="content-hero">
-				<p class="eyebrow">Ligji 21/2024</p>
-				<h1><span>{title}</span></h1>
-				<p class="lead">{description}</p>
+		<main id="main" tabindex="-1">
+			<section class="hero" id="deklarata" aria-labelledby="deklarata-title">
+				<div class="shell hero-grid">
+					<div class="hero-copy" data-reveal>
+						<a class="brand hero-brand" href="#deklarata" aria-label="Referendum 21/2024 — Kreu">
+							<span class="brand-image">
+								<img src="/referendum/favicon.svg" alt="" />
+							</span>
+							<span class="brand-copy">
+								<strong>Referendum</strong>
+								<small>21/2024</small>
+							</span>
+						</a>
+						<p class="eyebrow"><span></span> Deklaratë publike · 7 Gusht 2026</p>
+						<h1 id="deklarata-title">
+							Natyra <span class="slogan-red">nuk shitet</span>, mbrohet, trashegohet!
+						</h1>
+						<p class="hero-lede">
+							Nisma qytetare për referendum kërkon shfuqizimin e Ligjit nr. 21/2024 dhe rikthimin e
+							vendimit për zonat e mbrojtura te qytetarët e Shqipërisë.
+						</p>
+						<div class="hero-actions">
+							<a class="button button-primary" href="#njoftime">
+								Njoftomë <span aria-hidden="true">→</span>
+							</a>
+							<a class="button button-quiet" href="#deklarata-e-plote">
+								Lexo deklaratën <span aria-hidden="true">↓</span>
+							</a>
+						</div>
+						<div class="hero-metrics" role="group" aria-label="Të dhënat kryesore të nismës">
+							<span><strong>12</strong><small>nismëtarë</small></span>
+							<span><strong>50.000</strong><small>firma të vlefshme</small></span>
+							<span><strong>1</strong><small>vendim qytetar</small></span>
+						</div>
+					</div>
+					<figure class="hero-visual" data-reveal>
+						<img
+							src="/referendum/flamingo-cover.png"
+							alt="Flamingo Revolution, me flamingon mbi peizazhin shqiptar"
+							width="1200"
+							height="900"
+						/>
+						<figcaption class="hero-stamp">
+							<small>Faza</small>
+							<strong>02</strong>
+							<span>Në KQZ</span>
+						</figcaption>
+					</figure>
+				</div>
 			</section>
 
-			<section class="content-list" aria-label="Faqet e referendumit">
-				{
-					items.map((item) =>
-						item.kind === "page" ? (
-							<article class="content-list__item">
-								<a href={`/referendum/${item.page.id}/`}>
-									<h2>{item.page.data.title}</h2>
-									{item.page.data.description ? <p>{item.page.data.description}</p> : null}
-								</a>
-							</article>
-						) : (
-							<article class="content-list__item">
-								<a href={`/referendum/${item.section.id}/`}>
-									<h2>{item.section.title}</h2>
-									<p>{item.section.children.length} dosje</p>
-								</a>
-							</article>
-						)
-					)
-				}
+			<section class="statement-section" id="deklarata-e-plote" aria-labelledby="statement-title">
+				<div class="shell statement-grid">
+					<aside class="statement-meta" data-reveal>
+						<p class="section-kicker">Deklarata publike</p>
+						<span>Tiranë</span>
+						<span>7 Gusht 2026</span>
+						<span>Nismë qytetare · Jopartiake</span>
+					</aside>
+					<article class="statement-copy" data-reveal>
+						<h2 id="statement-title">
+							Për një referendum qytetar mbi shfuqizimin e Ligjit nr. 21/2024
+						</h2>
+						<p class="lead">
+							Ne, qytetarë, aktivistë dhe përfaqësues të shoqërisë civile, kemi nisur procedurën
+							kushtetuese për t'u kërkuar qytetarëve shqiptarë të vendosin mbi të ardhmen e zonave
+							të mbrojtura.
+						</p>
+						<p>
+							Në bazë të nenit 150 të Kushtetutës së Republikës së Shqipërisë, ne, një grup
+							nismëtarësh të kësaj nisme, i jemi drejtuar zyrtarisht Komisionit Qendror të
+							Zgjedhjeve (KQZ) me kërkesën për fillimin e procedurave ligjore për zhvillimin e një
+							referendumi kombëtar për shfuqizimin e Ligjit nr. 21/2024, “Për disa shtesa dhe
+							ndryshime në Ligjin nr. 81/2017, ‘Për zonat e mbrojtura’”. Qëllimi ynë është që mbi të
+							ardhmen e zonave të mbrojtura të vendosin vetë qytetarët shqiptarë.
+						</p>
+						<p>
+							Ligji nr. 21/2024 ndryshoi kuadrin ligjor të vitit 2017 dhe hapi rrugën për projekte
+							turistike e infrastrukturore brenda zonave të mbrojtura, me miratim të Këshillit të
+							Ministrave — territore që deri në miratimin e këtyre ndryshimeve gëzonin mbrojtje
+							ligjore pothuajse absolute. Pasojat janë të pakthyeshme: rrezikohen habitate, specie
+							dhe peizazhe natyrore që përbëjnë pasuri të patjetërsueshme të kombit shqiptar dhe të
+							brezave të ardhshëm. Për ne, kjo çështje nuk është as teknike dhe as e largët: ajo
+							prek tokën publike, biodiversitetin, ekonominë vendore dhe të drejtën e brezave që
+							vijnë për të trashëguar pasuritë natyrore të vendit.
+						</p>
+						<p>
+							Ne e mbështesim zhvillimin ekonomik që respekton shkencën, ligjin dhe komunitetet. Por
+							zhvillimi nuk mund të përdoret për të dobësuar mbrojtjen e vendeve të shpallura të
+							pazëvendësueshme. Një zonë e mbrojtur e humbet kuptimin e saj kur përjashtimet bëhen
+							rregull dhe kontrolli mjedisor vjen pas vendimeve të zhvillimit. Analiza dokumentare
+							që mbështet këtë nismë evidenton gjithashtu një hendek serioz transparence në
+							vendimmarrjen territoriale dhe në publikimin e vlerësimeve të ndikimit në mjedis.
+							Këto të dhëna nuk zëvendësojnë hetimin administrativ ose gjyqësor; ato kërkojnë
+							përgjigje publike, dokumente të plota dhe kontroll demokratik.
+						</p>
+						<blockquote>
+							Kur një vendim prek pasurinë që u përket të gjithëve, qytetarët duhet të kenë mjetin
+							për të thënë fjalën e tyre.
+						</blockquote>
+						<p>
+							Në kushtet kur Kuvendi i Shqipërisë, fillimisht përmes miratimit të ndryshimeve dhe
+							sot përmes mosveprimit, nuk i ka shfuqizuar ato as në kuadër të detyrimeve që burojnë
+							nga procesi i anëtarësimit në Bashkimin Evropian, dhe kur as Gjykata Kushtetuese nuk
+							e ka rikthyer mbrojtjen e mëparshme, përgjegjësia për mbrojtjen e trashëgimisë
+							natyrore dhe të vetë procesit të integrimit i mbetet sot qytetarëve. Besojmë se
+							referendumi është mjeti i vetëm ligjor i mbetur në dispozicion të tyre.
+						</p>
+						<p>
+							Kjo nismë është qytetare, e pavarur dhe jopartiake. Ajo nuk do të përdoret për
+							krijimin, mbështetjen apo promovimin e një subjekti politik. Qëllimi i saj është i
+							qartë dhe i kufizuar: të çojë deri në fund procedurën e referendumit për shfuqizimin
+							e Ligjit nr. 21/2024.
+						</p>
+						<p>
+							Depozitimi i kërkesës pranë KQZ-së ka përfunduar dhe jemi në pritje të konfirmimit.
+							Mbledhja e 50.000 firmave të vlefshme nuk ka nisur ende dhe do të fillojë vetëm pasi
+							KQZ-ja të miratojë kërkesën dhe të vërë në dispozicion fletët-tip zyrtare. Deri
+							atëherë po ndërtojmë rrjetin e vullnetarëve, koordinimin vendor dhe transparencën
+							publike të nismës. Ftojmë të gjithë qytetarët shqiptarë, organizatat mjedisore,
+							shoqërinë civile dhe çdo aktor të interesuar ta mbështesin këtë nismë, në përputhje
+							me Kushtetutën e Republikës së Shqipërisë dhe Kodin Zgjedhor.
+						</p>
+						<div class="signature-line">
+							<strong>Grupi nismëtar</strong>
+						</div>
+					</article>
+				</div>
+			</section>
+
+			<section class="process-section" id="procesi" aria-labelledby="process-title">
+				<div class="shell process-grid">
+					<div class="process-copy" data-reveal>
+						<p class="section-kicker">Ku jemi tani?</p>
+						<h2 id="process-title">Ku jemi tani?</h2>
+						<div class="current-step">
+							<span>Gjendja aktuale</span>
+							<strong>02</strong>
+							<h3>Në pritje të konfirmimit nga KQZ-ja</h3>
+							<p>
+								Kërkesa është depozituar. Mbledhja e firmave do të nisë vetëm pasi KQZ-ja të
+								konfirmojë kërkesën dhe të miratojë fletët-tip zyrtare.
+							</p>
+						</div>
+						<ol class="process-list">
+							<li class="done">
+								<span>01</span>
+								<div>
+									<strong>Grupi nismëtar</strong>
+									<small>Të paktën 12 zgjedhës të regjistruar</small>
+								</div>
+							</li>
+							<li class="active">
+								<span>02</span>
+								<div>
+									<strong>Depozitimi në KQZ</strong>
+									<small>Kërkesa është depozituar · në pritje të konfirmimit</small>
+								</div>
+							</li>
+							<li class="upcoming-signatures">
+								<span>03</span>
+								<div>
+									<strong>50.000+ firma</strong>
+									<small>Nuk ka nisur ende · fillon pas konfirmimit nga KQZ-ja</small>
+								</div>
+							</li>
+							<li>
+								<span>04</span>
+								<div>
+									<strong>Verifikimi nga KQZ</strong>
+									<small>Kontrolli i nënshkrimeve dhe dokumenteve</small>
+								</div>
+							</li>
+							<li>
+								<span>05</span>
+								<div>
+									<strong>Gjykata Kushtetuese</strong>
+									<small>Kontrolli i objektit të referendumit</small>
+								</div>
+							</li>
+							<li>
+								<span>06</span>
+								<div>
+									<strong>Dekreti i Presidentit</strong>
+									<small>Caktimi i datës së referendumit</small>
+								</div>
+							</li>
+							<li>
+								<span>07</span>
+								<div>
+									<strong>Votimi dhe rezultati</strong>
+									<small>Vendimi i qytetarëve</small>
+								</div>
+							</li>
+						</ol>
+						<div class="process-cta">
+							<p>
+								Regjistrohu me email për t’u njoftuar kur të nisin hapat e ardhshëm — përfshirë
+								mbledhjen e firmave.
+							</p>
+							<a class="button button-primary" href="#njoftime">
+								Njoftomë <span aria-hidden="true">→</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="signup-section" id="njoftime" aria-labelledby="njoftime-title">
+				<div class="shell signup-grid">
+					<div class="signup-copy" data-reveal>
+						<p class="section-kicker light">Qëndro i informuar</p>
+						<h2 id="njoftime-title">Merr njoftime për referendumin</h2>
+						<p class="signup-lede">
+							Lini email-in për përditësime mbi konfirmimin e KQZ-së, mbledhjen e firmave dhe
+							hapat e ardhshëm të nismës. Pa distraksione — vetëm ky referendum.
+						</p>
+					</div>
+					<div data-reveal>
+						<NewsletterSignup client:load reason="referendum" headingId="njoftime-title" />
+					</div>
+				</div>
+			</section>
+
+			<section class="docs-section" id="dokumentimi" aria-labelledby="dokumentimi-title">
+				<div class="shell">
+					<div class="docs-heading" data-reveal>
+						<div>
+							<p class="section-kicker">Dokumentimi</p>
+							<h2 id="dokumentimi-title">Analiza, faktet dhe baza ligjore</h2>
+						</div>
+						<p>
+							Legjitimiteti i kësaj nisme mbështetet në dokumentim publik: analiza e ligjit,
+							kronologjia e shkeljeve dhe deklaratat. Hapni dosjet më poshtë.
+						</p>
+					</div>
+					<section class="docs-list" aria-label="Faqet e referendumit" data-reveal>
+						{
+							items.map((item) =>
+								item.kind === "page" ? (
+									<article class="docs-list__item">
+										<a href={`/referendum/${item.page.id}/`}>
+											<h3>{item.page.data.title}</h3>
+											{item.page.data.description ? <p>{item.page.data.description}</p> : null}
+										</a>
+									</article>
+								) : (
+									<article class="docs-list__item">
+										<a href={`/referendum/${item.section.id}/`}>
+											<h3>{item.section.title}</h3>
+											<p>{item.section.children.length} dosje</p>
+										</a>
+									</article>
+								)
+							)
+						}
+					</section>
+				</div>
 			</section>
 		</main>
 
-		<footer class="footer-note">
-			<p>{copy.footer.text}</p>
-			<nav class="footer-links" aria-label="Social links">
-				{
-					copy.footer.links.map((link) => (
-						<a href={link.href} target="_blank" rel="noreferrer">
-							{link.label}
-						</a>
-					))
-				}
-			</nav>
+		<footer class="site-footer">
+			<div class="shell footer-grid">
+				<a class="brand footer-brand" href="#deklarata">
+					<span class="brand-image">
+						<img src="/referendum/favicon.svg" alt="" />
+					</span>
+					<span class="brand-copy">
+						<strong>Referendum</strong>
+						<small>21/2024</small>
+					</span>
+				</a>
+				<p>Nismë qytetare për referendumin për shfuqizimin e Ligjit nr. 21/2024.</p>
+				<nav aria-label="Navigimi në fund të faqes">
+					<a href="#deklarata-e-plote">Deklarata</a>
+					<a href="#procesi">Procesi</a>
+					<a href="#njoftime">Njoftime</a>
+					<a href="#dokumentimi">Dokumentimi</a>
+				</nav>
+			</div>
+			<div class="shell footer-bottom">
+				<span>© {year} Flamingo Revolution</span>
+				<span>Material informues · Jopartiak · Jo këshillë ligjore</span>
+				<a href="#deklarata">Kthehu lart ↑</a>
+			</div>
 		</footer>
 	</div>
+
+	<script>
+		document.documentElement.dataset.theme = "light";
+		document.body?.setAttribute("data-theme", "light");
+
+		const themeMeta = document.querySelector('meta[name="theme-color"]');
+		if (themeMeta instanceof HTMLMetaElement) {
+			themeMeta.content = "#102621";
+		}
+
+		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const nodes = document.querySelectorAll(".referendum-landing [data-reveal]");
+
+		if (reduceMotion || !("IntersectionObserver" in window)) {
+			nodes.forEach((node) => node.classList.add("visible"));
+		} else {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (entry.isIntersecting) {
+							entry.target.classList.add("visible");
+							observer.unobserve(entry.target);
+						}
+					}
+				},
+				{ rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+			);
+
+			nodes.forEach((node) => observer.observe(node));
+		}
+	</script>
 </BaseLayout>
-
-<style>
-	.content-page {
-		display: grid;
-		gap: 0;
-		background: var(--paper);
-	}
-
-	.content-hero {
-		padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
-		background:
-			radial-gradient(circle at 86% 22%, rgba(255, 105, 184, 0.18), transparent 26%),
-			linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
-	}
-
-	.content-hero h1 {
-		display: block;
-		margin: 0.2rem 0 0.8rem;
-		max-width: none;
-		color: var(--ink);
-		font-family: var(--font-display);
-		font-size: clamp(2.6rem, 7vw, 4.4rem);
-		line-height: 0.95;
-	}
-
-	.content-hero h1 span {
-		display: inline;
-		padding: 0;
-		background: none;
-	}
-
-	.content-hero .lead {
-		max-width: 40rem;
-		margin: 0;
-	}
-
-	.content-list {
-		display: grid;
-		gap: 0;
-		padding: 0 clamp(1rem, 5vw, 3.4rem) clamp(2rem, 5vw, 3.4rem);
-		border-top: 1px solid var(--line);
-	}
-
-	.content-list__item {
-		border-bottom: 1px solid var(--line);
-	}
-
-	.content-list__item a {
-		display: grid;
-		gap: 0.45rem;
-		padding: 1.35rem 0;
-	}
-
-	.content-list__item h2 {
-		margin: 0;
-		max-width: none;
-		font-family: var(--font-display);
-		font-size: clamp(1.55rem, 3vw, 2rem);
-		line-height: 1.1;
-	}
-
-	.content-list__item p {
-		margin: 0;
-		max-width: 42rem;
-		color: var(--muted);
-		line-height: 1.55;
-	}
-
-	.content-list__item a:hover h2,
-	.content-list__item a:focus-visible h2 {
-		color: var(--accent-strong);
-	}
-</style>
