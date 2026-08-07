@@ -612,3 +612,7 @@
 .content-post__body h6 {
 	max-width: none;
 }
+
+.content-post__body * {
+	scroll-margin-top: 12rem;
+}
