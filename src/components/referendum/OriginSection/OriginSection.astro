@@ -1,0 +1,80 @@
+---
+const objectives = [
+	{
+		n: "01",
+		title: "Presion institucional",
+		body: "Referendumi është instrument kushtetues që ushtron presion juridik mbi institucionet, duke plotësuar protestën. Në 2012, vetëm mbledhja e firmave e detyroi Parlamentin ta shfuqizonte ligjin para se referendumi të zhvillohej."
+	},
+	{
+		n: "02",
+		title: "Fuqizim qytetar",
+		body: "Qytetarët në Shqipëri nuk e kanë ushtruar kurrë vetë referendumin. Me vetëm 3 referendume të zhvilluara — të gjitha të iniciuara nga partitë — ky është momenti për ta kthyer përvojën në forcë bashkëqeverisjeje."
+	},
+	{
+		n: "03",
+		title: "Provë për sistemin",
+		body: "Kur kushtet janë praktikisht të paarritshme, e drejta mbetet formale. Pragu 33% dhe 50.000 firmat janë joproporcionalë përballë një Parlamenti të zgjedhur me 44% pjesëmarrje. Nisma i evidenton këto pengesa."
+	}
+] as const;
+---
+
+<section class="origin-landing" id="si-nisi" aria-labelledby="origin-landing-title">
+	<div class="shell origin-landing__intro" data-reveal>
+		<p class="section-kicker light">Si nisi kjo nismë?</p>
+		<div class="origin-landing__split">
+			<div>
+				<h2 id="origin-landing-title">Nga një thirrje qytetare te grupi nismëtar.</h2>
+				<p>
+					Nisma lindi nga bashkimi i aktivistëve në Shqipëri dhe qytetarëve nga diaspora — me
+					bindjen se mbrojtja e natyrës dhe demokracia e drejtpërdrejtë nuk mund t’u delegohen
+					vetëm partive.
+				</p>
+			</div>
+			<div class="origin-landing__story">
+				<p>
+					Hapi i parë: të paktën 12 zgjedhës të regjistruar për të depozituar kërkesën në KQZ.
+					Thirrja kërkoi profil apartiak, kurajë civile, reputacion të mirë dhe pa konflikte
+					interesi.
+				</p>
+				<p>
+					Katër shtylla: protestues e aktivistë; shoqëri civile mjedisore; diaspora; figura me
+					integritet. Pas referendumit, nisma shpërbëhet.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="shell">
+		<h3 class="origin-landing__obj-title" data-reveal>Çfarë synon të arrijë?</h3>
+		<div class="origin-landing__objectives">
+			{
+				objectives.map((item) => (
+					<article data-reveal>
+						<span>{item.n}</span>
+						<h4>{item.title}</h4>
+						<p>{item.body}</p>
+					</article>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="shell origin-landing__pact" data-reveal>
+		<p class="section-kicker light">Angazhimi i nënshkruar</p>
+		<div class="origin-landing__declarations">
+			<blockquote>
+				“Vendosim interesin kombëtar dhe vullnetin e qytetarëve mbi çdo interes personal, partiak
+				apo grupor dhe zotohemi ta çojmë këtë proces deri në përfundimin e tij.”
+				<footer>Deklarata I e Nismëtarëve</footer>
+			</blockquote>
+			<blockquote>
+				“Kjo nismë është tërësisht qytetare dhe e pavarur. Me përfundimin e referendumit, ajo do të
+				shpërbëhet, pa vijuar aktivitet në asnjë formë organizative apo politike.”
+				<footer>Deklarata II e Nismëtarëve</footer>
+			</blockquote>
+		</div>
+		<p class="origin-landing__more">
+			<a href="/referendum/si-nisi/">12 cilësitë e nismëtarëve dhe historia e plotë</a>
+		</p>
+	</div>
+</section>

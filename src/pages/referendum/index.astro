@@ -1,8 +1,15 @@
 ---
 import ReferendumLayout from "../../layouts/ReferendumLayout.astro";
 import NewsletterSignup from "../../components/referendum/NewsletterSignup/NewsletterSignup.svelte";
+import ReferendumStatusBar from "../../components/referendum/ReferendumStatusBar/ReferendumStatusBar.astro";
+import ReferendumReveal from "../../components/referendum/ReferendumReveal/ReferendumReveal.astro";
+import LandingNav from "../../components/referendum/LandingNav/LandingNav.astro";
+import ReasonsSection from "../../components/referendum/ReasonsSection/ReasonsSection.astro";
+import OriginSection from "../../components/referendum/OriginSection/OriginSection.astro";
+import FAQSection from "../../components/referendum/FAQSection/FAQSection.svelte";
 import ThemeToggle from "../../components/ThemeToggle.astro";
 import { getReferendumIndexItems } from "../../data/referendum";
+import { landingFaqs } from "../../data/referendumFaq";
 import { siteCopy } from "../../data/site";
 import "../../styles/referendum-landing.css";
 
@@ -27,14 +34,8 @@ const socialIcons: Record<string, string> = {
 
 <ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
 	<div class="referendum-landing">
-		<div class="status-bar" role="status">
-			<div class="shell status-inner">
-				<span class="status-dot" aria-hidden="true"></span>
-				<strong>Ku jemi tani:</strong>
-				<span>Në pritje të konfirmimit nga KQZ-ja</span>
-				<a href="#procesi">Shiko procesin <span aria-hidden="true">↓</span></a>
-			</div>
-		</div>
+		<ReferendumStatusBar processHref="#procesi" />
+		<LandingNav />
 
 		<main id="main" tabindex="-1">
 			<section class="hero" id="njoftime" aria-labelledby="deklarata-title">
@@ -115,29 +116,62 @@ const socialIcons: Record<string, string> = {
 			</section>
 
 			<section class="statement-section" id="deklarata" aria-labelledby="statement-title">
-				<div class="shell statement-center" data-reveal>
-					<p class="section-kicker">Pse ky referendum</p>
-					<h2 id="statement-title">Vendimi për zonat e mbrojtura u takon qytetarëve.</h2>
-					<p class="lead">
-						Grupi nismëtar i është drejtuar KQZ-së për një referendum kombëtar që shfuqizon Ligjin
-						nr. 21/2024 — në bazë të nenit 150 të Kushtetutës. Nisma është qytetare, e pavarur dhe
-						jopartiake.
-					</p>
-					<blockquote>
-						Kur një vendim prek pasurinë që u përket të gjithëve, qytetarët duhet të kenë mjetin për
-						të thënë fjalën e tyre.
-					</blockquote>
-					<p>
-						Analiza e ligjit, kronologjia e shkeljeve dhe baza kushtetuese janë dokumentuar në
-						faqet e mëposhtme.
-					</p>
+				<div class="shell statement-grid" data-reveal>
+					<aside class="statement-meta">
+						<p class="section-kicker">Deklarata publike</p>
+						<span>Tiranë</span>
+						<span>7 Gusht 2026</span>
+						<span>Nismë qytetare · Jopartiake</span>
+					</aside>
+					<article class="statement-copy">
+						<h2 id="statement-title">
+							Për një referendum qytetar mbi shfuqizimin e Ligjit nr. 21/2024
+						</h2>
+						<p class="lead">
+							Ne, qytetarë, aktivistë dhe përfaqësues të shoqërisë civile, kemi nisur procedurën
+							kushtetuese për t’u kërkuar qytetarëve shqiptarë të vendosin mbi të ardhmen e zonave
+							të mbrojtura.
+						</p>
+						<p>
+							Në bazë të nenit 150 të Kushtetutës, grupi nismëtar i është drejtuar zyrtarisht
+							KQZ-së me kërkesën për referendum kombëtar që shfuqizon Ligjin nr. 21/2024 — ndryshimet
+							mbi Ligjin nr. 81/2017 «Për zonat e mbrojtura».
+						</p>
+						<p>
+							Ligji 21/2024 hapi rrugën për projekte turistike e infrastrukturore brenda zonave të
+							mbrojtura. Pasojat janë të pakthyeshme: rrezikohen habitate, specie dhe peizazhe që
+							përbëjnë pasuri të patjetërsueshme të kombit. Kur Kuvendi nuk shfuqizon dhe Gjykata
+							Kushtetuese nuk e rikthen mbrojtjen, mjeti i mbetur është referendumi.
+						</p>
+						<blockquote>
+							Kur një vendim prek pasurinë që u përket të gjithëve, qytetarët duhet të kenë mjetin
+							për të thënë fjalën e tyre.
+						</blockquote>
+						<p>
+							Depozitimi në KQZ ka përfunduar. Mbledhja e 50.000 firmave nuk ka nisur ende — fillon
+							vetëm pasi KQZ-ja të miratojë kërkesën dhe fletët-tip. Deri atëherë ndërtojmë rrjetin e
+							vullnetarëve dhe transparencën publike.
+						</p>
+						<p class="signature-line"><strong>Grupi nismëtar</strong></p>
+					</article>
 				</div>
 			</section>
+
+			<ReasonsSection />
 
 			<section class="process-section" id="procesi" aria-labelledby="process-title">
 				<div class="shell process-center" data-reveal>
 					<p class="section-kicker">Ku jemi tani?</p>
 					<h2 id="process-title">Depozituar në KQZ — firmat nuk kanë nisur ende</h2>
+					<div class="current-step">
+						<span>Gjendja aktuale</span>
+						<strong>02</strong>
+						<h3>Në pritje të konfirmimit nga KQZ-ja</h3>
+						<p>
+							Kërkesa është depozituar. Mbledhja e firmave nis vetëm pasi KQZ-ja të konfirmojë
+							kërkesën dhe të miratojë fletët-tip zyrtare.
+						</p>
+					</div>
 					<ol class="process-list">
 						<li class="done">
 							<span>01</span>
@@ -151,10 +185,7 @@ const socialIcons: Record<string, string> = {
 							<div>
 								<em>Gjendja aktuale</em>
 								<strong>Depozitimi në KQZ</strong>
-								<small>
-									Në pritje të konfirmimit nga KQZ-ja. Mbledhja e firmave fillon vetëm pasi të
-									miratohen fletët-tip zyrtare.
-								</small>
+								<small>Kërkesa është depozituar · në pritje të konfirmimit</small>
 							</div>
 						</li>
 						<li class="upcoming-signatures">
@@ -193,8 +224,16 @@ const socialIcons: Record<string, string> = {
 							</div>
 						</li>
 					</ol>
+					<div class="process-cta">
+						<p>Nëse dëshironi të bëheni vullnetarë në mbledhjen e 50.000 firmave, angazhohuni këtu.</p>
+						<a class="button button-engage" href="https://pershqiperine.netlify.app">
+							Angazhohu <span aria-hidden="true">→</span>
+						</a>
+					</div>
 				</div>
 			</section>
+
+			<OriginSection />
 
 			<section class="docs-section" id="dokumentimi" aria-labelledby="dokumentimi-title">
 				<div class="shell docs-center">
@@ -228,6 +267,8 @@ const socialIcons: Record<string, string> = {
 					</section>
 				</div>
 			</section>
+
+			<FAQSection client:load faqs={landingFaqs} title="Çfarë duhet të dimë?" />
 
 			<section class="times-action" id="vepro">
 				<div class="times-action__demands">
@@ -268,26 +309,5 @@ const socialIcons: Record<string, string> = {
 		</main>
 	</div>
 
-	<script>
-		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-		const nodes = document.querySelectorAll(".referendum-landing [data-reveal]");
-
-		if (reduceMotion || !("IntersectionObserver" in window)) {
-			nodes.forEach((node) => node.classList.add("visible"));
-		} else {
-			const observer = new IntersectionObserver(
-				(entries) => {
-					for (const entry of entries) {
-						if (entry.isIntersecting) {
-							entry.target.classList.add("visible");
-							observer.unobserve(entry.target);
-						}
-					}
-				},
-				{ rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
-			);
-
-			nodes.forEach((node) => observer.observe(node));
-		}
-	</script>
+	<ReferendumReveal />
 </ReferendumLayout>

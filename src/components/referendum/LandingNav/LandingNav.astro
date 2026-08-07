@@ -1,0 +1,20 @@
+---
+const links = [
+	{ href: "#deklarata", label: "Deklarata" },
+	{ href: "#pse-referendum", label: "Pse" },
+	{ href: "#procesi", label: "Procesi" },
+	{ href: "#si-nisi", label: "Si nisi" },
+	{ href: "#faq", label: "Pyetje" },
+	{ href: "#vepro", label: "Vepro" }
+] as const;
+---
+
+<nav class="landing-nav" aria-label="Seksionet e faqes">
+	<div class="shell landing-nav__inner">
+		{
+			links.map((link) => (
+				<a href={link.href}>{link.label}</a>
+			))
+		}
+	</div>
+</nav>

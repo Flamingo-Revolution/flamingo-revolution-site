@@ -72,7 +72,7 @@
 	}
 
 	const countCaption = $derived(
-		!countLoaded ? "Duke ngarkuar…" : count === 1 ? "person i regjistruar" : "persona të regjistruar"
+		!countLoaded ? "Duke ngarkuar firmat…" : count === 1 ? "firme online " : "firma online"
 	);
 </script>
 
@@ -96,7 +96,7 @@
 		disabled={submitting}
 	/>
 	<button type="submit" class="newsletter-submit" disabled={submitting}>
-		{submitting ? "Duke u ruajtur…" : "Njoftomë"}
+		{submitting ? "Duke u ruajtur…" : "Firmos dhe njoftohu"}
 	</button>
 
 	{#if error}
@@ -118,7 +118,7 @@
 	.newsletter-count {
 		display: grid;
 		gap: 0.2rem;
-		margin: 0;
+		margin: 0 0 0.5rem 0;
 		padding: 1rem 1.15rem;
 		border: 3px solid var(--ink);
 		background: var(--accent-soft);
@@ -186,7 +186,7 @@
 		color: var(--ink);
 		box-shadow: 7px 7px 0 var(--ink);
 		font: inherit;
-		font-size: clamp(1.35rem, 3.5vw, 2rem);
+		font-size: clamp(1.35rem, 3.5vw, 1.5rem);
 		font-weight: 800;
 		letter-spacing: 0.02em;
 		text-transform: uppercase;
