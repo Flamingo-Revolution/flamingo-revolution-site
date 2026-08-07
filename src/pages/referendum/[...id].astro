@@ -3,6 +3,7 @@ import { getEntry, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import ReferendumLayout from "../../layouts/ReferendumLayout.astro";
 import ArticleNav from "../../components/ArticleNav.astro";
+import ReferendumHeader from "../../components/referendum/ReferendumHeader/ReferendumHeader.astro";
 import {
 	getReferendumPages,
 	getReferendumSections,
@@ -86,14 +87,7 @@ crumbs.push({ label: title });
 	shellClass={page ? "prose-lg referendum-content" : "referendum-content"}
 >
 	<div class="content-brand">
-		<a href="/referendum/" aria-label="Kthehu te referendumi">
-			<img
-				src="/images/flamingo-wordmark-light.svg"
-				alt={copy.brand.logoAlt}
-				width="419"
-				height="187"
-			/>
-		</a>
+		<ReferendumHeader copy={copy} brandHref="/referendum/" />
 	</div>
 	{
 		page && Content ? (
