@@ -6,10 +6,6 @@ order: 4
 
 <div align="left">
 
-# 🦩 FLAMINGO REVOLUTION
-
-### Dokumentim Faktesh &nbsp;·&nbsp; Analiza Ligjore &nbsp;·&nbsp; Kronologji Shkeljesh &nbsp;·&nbsp; Deklarata &nbsp;·&nbsp; Nidhme
-
 ## 📌 Rreth Kësaj Faqeje
 
 Ky repositor dokumenton shkeljet ligjore të ndodhura gjatë procesit të ndërtimit brenda (ose në afërsi të) zonave të mbrojtura mjedisore në Shqipëri, ku:

@@ -4,9 +4,7 @@ description: 'Baza ligjore, hapat kronologjikë dhe dokumentet e referendumit sh
 order: 1
 ---
 
-# 🦩 FLAMINGO REVOLUTION
 
-### Dokumentim Faktesh &nbsp;·&nbsp; Analiza Ligjore &nbsp;·&nbsp; Kronologji Shkeljesh &nbsp;·&nbsp; Deklarata &nbsp;·&nbsp; Referendum
 
 ---
 

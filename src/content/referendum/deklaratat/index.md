@@ -4,12 +4,6 @@ description: 'Deklarata publike, peticione dhe letra drejtuar institucioneve.'
 order: 5
 ---
 
-# 🦩 FLAMINGO REVOLUTION
-
-### Dokumentim Faktesh &nbsp;·&nbsp; Analiza Ligjore &nbsp;·&nbsp; Kronologji Shkeljesh &nbsp;·&nbsp; Deklarata &nbsp;·&nbsp; Referendum
-
----
-
 ### Përmbajtja
 
 1. [📜 Deklarata e Akademikëve të Diasporës](#-1-deklarata-e-akademikëve-të-diasporës)
