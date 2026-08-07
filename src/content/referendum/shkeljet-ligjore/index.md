@@ -20,7 +20,7 @@ Ky repositor dokumenton shkeljet ligjore të ndodhura gjatë procesit të ndërt
 
 <a id="hero"></a>
 
-![Kronologjia Vizuale e VNM-së, Ndërtimit dhe Pezullimit](/Grafik/kronologjia_vnm_ndertimi_pezullim.png)
+![Kronologjia Vizuale e VNM-së, Ndërtimit dhe Pezullimit](./assets/kronologjia_vnm_ndertimi_pezullim.webp)
 
 
 ---
