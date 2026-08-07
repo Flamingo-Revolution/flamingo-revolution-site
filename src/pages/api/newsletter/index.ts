@@ -25,6 +25,32 @@ function parseReason(value: unknown): string | null {
 	return reason;
 }
 
+export const GET = async (context: NewsletterContext) => {
+	const databaseUrl = getDatabaseUrl();
+
+	if (!databaseUrl) {
+		return jsonResponse({ error: "DATABASE_URL is not configured." }, 500);
+	}
+
+	const reason = parseReason(new URL(context.request.url).searchParams.get("reason"));
+
+	if (!reason) {
+		return jsonResponse({ error: "Arsyeja e regjistrimit nuk është e vlefshme." }, 400);
+	}
+
+	const prisma = createPrisma(databaseUrl);
+
+	try {
+		const count = await prisma.newsletterSignup.count({ where: { reason } });
+		return jsonResponse({ count, reason });
+	} catch (error) {
+		console.error("Newsletter GET error:", error);
+		return jsonResponse({ error: "Numri i regjistrimeve nuk u lexua." }, 500);
+	} finally {
+		await prisma.$disconnect();
+	}
+};
+
 export const POST = async (context: NewsletterContext) => {
 	const databaseUrl = getDatabaseUrl();
 

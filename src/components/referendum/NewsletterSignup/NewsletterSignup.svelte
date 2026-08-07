@@ -1,17 +1,42 @@
 <script lang="ts">
-	import { submitNewsletterSignup } from "./functions";
+	import { onMount } from "svelte";
+	import { fetchNewsletterCount, submitNewsletterSignup } from "./functions";
 
 	type Props = {
 		reason?: string;
 		headingId?: string;
+		initialCount?: number;
 	};
 
-	let { reason = "referendum", headingId = "njoftime-title" }: Props = $props();
+	let {
+		reason = "referendum",
+		headingId = "njoftime-title",
+		initialCount = 0
+	}: Props = $props();
 
 	let email = $state("");
 	let submitting = $state(false);
 	let error = $state<string | null>(null);
 	let success = $state<string | null>(null);
+	let count = $state(0);
+	let countLoaded = $state(false);
+
+	onMount(() => {
+		count = initialCount;
+		countLoaded = initialCount > 0;
+
+		let cancelled = false;
+
+		fetchNewsletterCount(reason).then((result) => {
+			if (cancelled || !result.ok) return;
+			count = result.count;
+			countLoaded = true;
+		});
+
+		return () => {
+			cancelled = true;
+		};
+	});
 
 	async function onSubmit(event: Event) {
 		event.preventDefault();
@@ -36,31 +61,44 @@
 			return;
 		}
 
-		success = result.created
-			? "U regjistrua. Do të njoftohesh për hapat e ardhshëm të referendumit."
-			: "Ky email është tashmë i regjistruar për këtë nismë.";
+		if (result.created) {
+			count += 1;
+			countLoaded = true;
+			success = "U regjistrua. Do të njoftohesh për hapat e ardhshëm të referendumit.";
+		} else {
+			success = "Ky email është tashmë i regjistruar për këtë nismë.";
+		}
 		email = "";
 	}
+
+	const countCaption = $derived(
+		!countLoaded ? "Duke ngarkuar…" : count === 1 ? "person i regjistruar" : "persona të regjistruar"
+	);
 </script>
 
 <form class="newsletter-form" onsubmit={onSubmit} aria-labelledby={headingId}>
-	<label class="newsletter-label" for="referendum-newsletter-email">Email</label>
-	<div class="newsletter-row">
-		<input
-			id="referendum-newsletter-email"
-			name="email"
-			type="email"
-			autocomplete="email"
-			inputmode="email"
-			required
-			placeholder="emri@shembull.com"
-			bind:value={email}
-			disabled={submitting}
-		/>
-		<button type="submit" class="button button-primary" disabled={submitting}>
-			{submitting ? "Duke u ruajtur…" : "Njoftomë"}
-		</button>
-	</div>
+	<p class="newsletter-count" aria-live="polite">
+		<strong>{countLoaded ? count.toLocaleString("sq-AL") : "—"}</strong>
+		<span>{countCaption}</span>
+	</p>
+
+	<label class="newsletter-label" for="referendum-newsletter-email">Email-i yt</label>
+	<input
+		id="referendum-newsletter-email"
+		class="newsletter-input"
+		name="email"
+		type="email"
+		autocomplete="email"
+		inputmode="email"
+		required
+		placeholder="emri@shembull.com"
+		bind:value={email}
+		disabled={submitting}
+	/>
+	<button type="submit" class="newsletter-submit" disabled={submitting}>
+		{submitting ? "Duke u ruajtur…" : "Njoftomë"}
+	</button>
+
 	{#if error}
 		<p class="newsletter-message newsletter-message--error" role="alert">{error}</p>
 	{/if}
@@ -73,102 +111,124 @@
 <style>
 	.newsletter-form {
 		display: grid;
-		gap: 12px;
-		max-width: 520px;
+		gap: 1rem;
+		width: 100%;
+	}
+
+	.newsletter-count {
+		display: grid;
+		gap: 0.2rem;
+		margin: 0;
+		padding: 1rem 1.15rem;
+		border: 3px solid var(--ink);
+		background: var(--accent-soft);
+		box-shadow: 5px 5px 0 var(--ink);
+		text-align: center;
+	}
+
+	.newsletter-count strong {
+		color: var(--ink);
+		font-size: clamp(2.4rem, 8vw, 3.6rem);
+		font-weight: 800;
+		line-height: 1;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.newsletter-count span {
+		color: var(--muted);
+		font-size: 0.85rem;
+		font-weight: 800;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
 	}
 
 	.newsletter-label {
-		font: 500 9px/1 var(--mono, monospace);
-		letter-spacing: 0.1em;
+		color: var(--accent-strong);
+		font-size: 0.9rem;
+		font-weight: 800;
+		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: #c0cbc7;
 	}
 
-	.newsletter-row {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-	}
-
-	.newsletter-row input {
-		flex: 1 1 220px;
-		min-height: 54px;
-		padding: 0 16px;
-		border: 1px solid rgba(255, 255, 255, 0.34);
+	.newsletter-input {
+		width: 100%;
+		min-height: 4.5rem;
+		padding: 0 1.25rem;
+		border: 3px solid var(--ink);
 		border-radius: 0;
-		background: transparent;
-		color: var(--white, #fffdf8);
+		background: var(--surface-strong);
+		color: var(--text);
+		font: inherit;
+		font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+		font-weight: 700;
+		box-shadow: 5px 5px 0 var(--ink);
 		outline: none;
 	}
 
-	.newsletter-row input::placeholder {
-		color: #8a9a94;
+	.newsletter-input::placeholder {
+		color: var(--muted);
+		font-weight: 600;
 	}
 
-	.newsletter-row input:focus {
-		box-shadow: 0 0 0 3px rgba(242, 99, 85, 0.35);
-		border-color: var(--coral, #f26355);
+	.newsletter-input:focus {
+		box-shadow: 7px 7px 0 var(--accent);
 	}
 
-	.newsletter-row input:disabled,
-	.newsletter-row button:disabled {
+	.newsletter-submit {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		min-height: 5rem;
+		padding: 1rem 1.5rem;
+		border: 3px solid var(--ink);
+		background: var(--accent);
+		color: var(--ink);
+		box-shadow: 7px 7px 0 var(--ink);
+		font: inherit;
+		font-size: clamp(1.35rem, 3.5vw, 2rem);
+		font-weight: 800;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		cursor: pointer;
+		transition:
+			transform 160ms ease,
+			box-shadow 160ms ease,
+			background-color 160ms ease;
+	}
+
+	.newsletter-submit:hover:not(:disabled),
+	.newsletter-submit:focus-visible:not(:disabled) {
+		background: var(--surface-strong);
+		transform: translate(-2px, -2px);
+		box-shadow: 9px 9px 0 var(--ink);
+	}
+
+	.newsletter-input:disabled,
+	.newsletter-submit:disabled {
 		opacity: 0.7;
 		cursor: not-allowed;
 	}
 
-	.newsletter-row :global(.button) {
-		display: inline-flex;
-		min-height: 54px;
-		align-items: center;
-		justify-content: center;
-		gap: 22px;
-		padding: 0 24px;
-		border: 1px solid transparent;
-		text-decoration: none;
-		font: 500 10px/1 var(--mono, monospace);
-		letter-spacing: 0.055em;
-		text-transform: uppercase;
-		cursor: pointer;
-		transition:
-			transform 0.2s ease,
-			background 0.2s ease,
-			color 0.2s ease;
-	}
-
-	.newsletter-row :global(.button-primary) {
-		background: var(--coral, #f26355);
-		color: #111b18;
-	}
-
-	.newsletter-row :global(.button-primary:hover:not(:disabled)) {
-		background: #ff7869;
-		transform: translateY(-2px);
-	}
-
 	.newsletter-message {
 		margin: 0;
-		font-size: 14px;
-		line-height: 1.5;
+		font-size: 1.05rem;
+		font-weight: 700;
+		line-height: 1.45;
 	}
 
 	.newsletter-message--error {
-		color: #ffb4ab;
+		color: var(--accent-strong);
 	}
 
 	.newsletter-message--success {
-		color: var(--mint, #d9eee8);
+		color: var(--accent-strong);
 	}
 
 	.newsletter-note {
 		margin: 0;
-		color: #93a49d;
-		font-size: 12px;
-		line-height: 1.5;
-	}
-
-	@media (max-width: 560px) {
-		.newsletter-row :global(.button) {
-			width: 100%;
-		}
+		color: var(--muted);
+		font-size: 0.95rem;
+		line-height: 1.45;
 	}
 </style>

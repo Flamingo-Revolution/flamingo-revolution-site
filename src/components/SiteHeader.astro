@@ -51,11 +51,19 @@ const pulseLabel = locale === "sq" ? "Pulsi" : "Pulse";
   <div class="topbar__actions" id="topbar-actions" data-menu-actions>
     <nav class="site-menu" aria-label={copy.nav.menuLabel}>
       {
-        currentPage === "home" ? (
+        currentPage === "referendum" ? (
+          <>
+            <a href={timesHref} target="_blank" rel="noreferrer">{copy.nav.timesLabel}</a>
+            <a href={documentsHref} target="_blank" rel="noreferrer">{copy.nav.documentsLabel}</a>
+            <a href={ideasHref} target="_blank" rel="noreferrer">{copy.nav.ideasLabel}</a>
+            <a href={mapHref} target="_blank" rel="noreferrer">{mapLabel}</a>
+            <a href={pulseHref} target="_blank" rel="noreferrer">{pulseLabel}</a>
+            <a href={contactHref} target="_blank" rel="noreferrer">{copy.nav.contactLabel}</a>
+          </>
+        ) : currentPage === "home" ? (
           <>
             <a href={homeHref} aria-current="page">{copy.nav.homeLabel}</a>
             <a href={timesHref}>{copy.nav.timesLabel}</a>
-            <a href={blogHref}>{copy.nav.blogLabel}</a>
             <a href={documentsHref}>{copy.nav.documentsLabel}</a>
             <a href={ideasHref}>{copy.nav.ideasLabel}</a>
             <a href={mapHref}>{mapLabel}</a>
