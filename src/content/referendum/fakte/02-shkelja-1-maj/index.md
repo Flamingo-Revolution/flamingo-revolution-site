@@ -1,6 +1,6 @@
 ---
-title: "Dosja 02 — Shkelja e 1 majit"
-description: "Fillimi i punimeve pa VNM dhe pa leje."
+title: 'Dosja 02 — Shkelja e 1 majit'
+description: 'Fillimi i punimeve pa VNM dhe pa leje.'
 order: 2
 ---
 
@@ -15,13 +15,13 @@ order: 2
 
 Punimet e ndërtimit nisën më **1 maj**. Në atë moment nuk ekzistonte:
 
-| Kushti ligjor | Gjendja më 1 maj |
-|---------------|-----------------|
-| VNM e kryer | ❌ Nuk ekzistonte |
-| Deklaratë / Vendim mjedisor | ❌ Nuk ekzistonte |
-| Leje mjedisi | ❌ Nuk ekzistonte |
-| Aplikim për VNM | ❌ Nuk ishte bërë as kaq |
-| Leje ndërtimi e ligjshme | ❌ E diskutueshme |
+| Kushti ligjor               | Gjendja më 1 maj         |
+| --------------------------- | ------------------------ |
+| VNM e kryer                 | ❌ Nuk ekzistonte        |
+| Deklaratë / Vendim mjedisor | ❌ Nuk ekzistonte        |
+| Leje mjedisi                | ❌ Nuk ekzistonte        |
+| Aplikim për VNM             | ❌ Nuk ishte bërë as kaq |
+| Leje ndërtimi e ligjshme    | ❌ E diskutueshme        |
 
 Aplikimi për VNM do të bëhej vetëm **4 ditë më vonë**, më 5 maj.
 
@@ -34,6 +34,7 @@ Aplikimi për VNM do të bëhej vetëm **4 ditë më vonë**, më 5 maj.
 **Fakti:** Nisja e punimeve pa deklaratë/vendim mjedisor.
 
 **Sanksioni:**
+
 - Gjobë nga **65,000 deri 650,000 lekë**
 - Autoriteti kompetent ka të drejtën dhe **detyrimin** të pezullojë aktivitetin
 
@@ -44,6 +45,7 @@ Aplikimi për VNM do të bëhej vetëm **4 ditë më vonë**, më 5 maj.
 **Fakti:** Veprimtari pa leje mjedisi brenda ose në afërsi të zonës së mbrojtur.
 
 **Neni 67(1)(b):**
+
 > Kryerja e veprimtarive pa leje mjedisi → gjobë nga **1,000,000 deri 2,000,000 lekë**.
 
 ---
@@ -53,6 +55,7 @@ Aplikimi për VNM do të bëhej vetëm **4 ditë më vonë**, më 5 maj.
 **Fakti:** Ndërtim pa leje të ligjshme.
 
 **Neni 69(2)(c):**
+
 > **Pezullim i veprimtarisë dhe çmontim i instalimeve** të ndërtuara pa leje.
 
 Ky është sanksioni më i rëndë — nuk është vetëm gjobë por **detyrim fizik** për të prishur atë që është ndërtuar pa leje.
@@ -86,15 +89,16 @@ Sipas kronologjisë, kjo ishte **"pika e parë"** ku autoritetet duhej të kishi
 
 ## Ligjet e zbatueshme
 
-| Ligji | Neni | Sanksioni |
-|-------|------|-----------|
-| [Ligji 10440/2011](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | — | Gjobë 65k–650k lekë + pezullim |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>) | 67(1)(b) | Gjobë 1M–2M lekë |
-| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>) | 69(2)(c) | Pezullim + çmontim |
+| Ligji                                                             | Neni     | Sanksioni                      |
+| ----------------------------------------------------------------- | -------- | ------------------------------ |
+| [Ligji 10440/2011](<../Ligjet/LIGJ nr. 10440, datë 7.7.2011.pdf>) | —        | Gjobë 65k–650k lekë + pezullim |
+| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 67(1)(b) | Gjobë 1M–2M lekë               |
+| [Ligji 81/2017](<../Ligjet/LIGJ nr. 81, datë 4.5.2017.pdf>)       | 69(2)(c) | Pezullim + çmontim             |
 
 ---
 
 **Ngjarjet vijuese:**
+
 - [← Dosja 01 — Rendi Ligjor](/referendum/fakte/01-rendi-ligjor/)
 - [→ Dosja 03 — Aplikimi për VNM pas faktit (5 Maj)](/referendum/fakte/03-aplikimi-vnm-5-maj/)
 

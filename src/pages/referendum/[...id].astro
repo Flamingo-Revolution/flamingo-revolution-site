@@ -166,6 +166,10 @@ crumbs.push({ label: title });
 		font-size: 1.05rem;
 		line-height: 1.7;
 	}
+	
+	.content-post__body h1 {
+		background-color: red !important;
+	}
 
 	.content-post table {
 		border: solid 1px white;
@@ -185,10 +189,19 @@ crumbs.push({ label: title });
 	}
 
 	.content-hero h1 {
+		display: block;
 		margin: 0.2rem 0 0.8rem;
+		max-width: none;
+		color: var(--ink);
 		font-family: var(--font-display);
 		font-size: clamp(2.6rem, 7vw, 4.4rem);
 		line-height: 0.95;
+	}
+
+	.content-hero h1 span {
+		display: inline;
+		padding: 0;
+		background: none;
 	}
 
 	.content-hero .lead {
@@ -215,6 +228,7 @@ crumbs.push({ label: title });
 
 	.content-list__item h2 {
 		margin: 0;
+		max-width: none;
 		font-family: var(--font-display);
 		font-size: clamp(1.55rem, 3vw, 2rem);
 		line-height: 1.1;
