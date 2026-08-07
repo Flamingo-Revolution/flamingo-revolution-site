@@ -277,70 +277,87 @@
 			0 3px 0 rgb(0 0 0 / 10%);
 	}
 
-	/* Table */
+	/* Table — neobrutalist (site tokens: ink border, hard shadow, surface) */
 	table {
-		display: block;
-		width: fit-content;
+		width: 100%;
 		max-width: 100%;
-		overflow-x: auto;
 		border-collapse: collapse;
+		border-spacing: 0;
+		border: 2px solid var(--ink, #050505);
+		border-radius: 0;
+		background: var(--surface, #fff8ef);
+		box-shadow: 4px 4px 0 var(--ink, #050505);
 		font-size: 0.875em;
-		line-height: 1.5;
-		margin: calc(var(--sp) * 2) 0;
+		line-height: 1.55;
+		margin: calc(var(--sp) * 2.25) 0;
+		color: var(--text, var(--prose-body));
 	}
 
 	th,
 	td {
 		text-align: start;
+		vertical-align: top;
 		overflow-wrap: break-word;
+		padding: 0.7em 0.85em;
+		border: 1.5px solid var(--ink, #050505);
 	}
-	thead {
-		border-bottom: 1px solid var(--prose-th-borders);
-	}
+
 	thead th {
-		color: var(--prose-headings);
-		font-weight: 600;
+		color: var(--ink-reverse, #fff3df);
+		background: var(--ink, #050505);
+		font-weight: 800;
+		letter-spacing: 0.01em;
 		vertical-align: bottom;
-		padding: 0 0.5em calc(var(--sp) * 0.5);
 	}
-	thead th:first-child {
-		padding-inline-start: 0;
-	}
-	thead th:last-child {
-		padding-inline-end: 0;
-	}
+
 	thead th strong,
-	thead th code {
+	thead th code,
+	thead th a {
 		color: inherit;
 	}
-	tbody tr {
-		border-bottom: 1px solid var(--prose-td-borders);
-	}
-	tbody tr:last-child {
-		border-bottom: 0;
-	}
+
 	tbody td {
-		vertical-align: baseline;
-		padding: calc(var(--sp) * 0.5) 0.5em;
+		background: transparent;
 	}
+
+	tbody tr:nth-child(even) td {
+		background: color-mix(in srgb, var(--paper-cool, #dff4fb) 42%, var(--surface, #fff8ef));
+	}
+
 	tbody td:first-child {
-		padding-inline-start: 0;
+		font-weight: 700;
+		color: var(--ink, #050505);
+		background: color-mix(in srgb, var(--accent-soft, #ffd7e3) 38%, var(--surface, #fff8ef));
 	}
-	tbody td:last-child {
-		padding-inline-end: 0;
+
+	tbody tr:nth-child(even) td:first-child {
+		background: color-mix(in srgb, var(--accent-soft, #ffd7e3) 52%, var(--surface, #fff8ef));
 	}
-	tfoot {
-		border-top: 1px solid var(--prose-th-borders);
-	}
+
 	tfoot td {
 		vertical-align: top;
-		padding: calc(var(--sp) * 0.5) 0.5em;
+		font-weight: 700;
+		background: var(--paper, #f1ece6);
+		border-top-width: 2px;
 	}
-	tfoot td:first-child {
-		padding-inline-start: 0;
-	}
-	tfoot td:last-child {
-		padding-inline-end: 0;
+
+	@media (max-width: 720px) {
+		table {
+			display: block;
+			width: 100%;
+			overflow-x: auto;
+			overscroll-behavior-inline: contain;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		table thead,
+		table tbody,
+		table tfoot {
+			display: table;
+			width: max(100%, 36rem);
+			table-layout: auto;
+			border-collapse: collapse;
+		}
 	}
 
 	/*
