@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "./SiteHeader.astro";
+import type { Locale, SiteCopy } from "../data/site";
+
+type NavPage =
+  | "home"
+  | "protest-list"
+  | "map"
+  | "pulse"
+  | "diaspora"
+  | "documents"
+  | "ideas"
+  | "times"
+  | "dossier"
+  | "mission"
+  | "team"
+  | "contact";
+
+interface Props {
+  locale: Locale;
+  siteCopy: SiteCopy;
+  currentPage: NavPage;
+  localePath: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  lead: string;
+  src: string;
+  openLabel: string;
+}
+
+const { locale, siteCopy, currentPage, localePath, eyebrow, title, description, lead, src, openLabel } = Astro.props;
+---
+
+<BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale}>
+  <div class="page-shell">
+    <SiteHeader locale={locale} copy={siteCopy} currentPage={currentPage} localePath={localePath} />
+
+    <main class="embed-page" id="main" tabindex="-1">
+      <section class="embed-frame-section" aria-label={title}>
+        <div class="embed-frame">
+          <iframe src={src} title={title} loading="eager" allowfullscreen></iframe>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-note">
+      <p>{siteCopy.footer.text}</p>
+      <nav class="footer-links" aria-label="Links">
+        {
+          siteCopy.footer.links.map((link) => (
+            <a href={link.href} target="_blank" rel="noreferrer">
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+    </footer>
+  </div>
+</BaseLayout>

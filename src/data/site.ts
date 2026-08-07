@@ -41,8 +41,19 @@ export type SiteCopy = {
   };
   nav: {
     homeLabel: string;
+    protestsLabel: string;
+    protestListLabel: string;
+    mapLabel: string;
+    pulseLabel: string;
+    diasporaLabel: string;
+    labLabel: string;
     documentsLabel: string;
     ideasLabel: string;
+    timesLabel: string;
+    dossierLabel: string;
+    aboutLabel: string;
+    missionLabel: string;
+    teamLabel: string;
     contactLabel: string;
     menuLabel: string;
   };
@@ -105,8 +116,19 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     nav: {
       homeLabel: "Ballina",
+      protestsLabel: "Protestat",
+      protestListLabel: "Lista e protestave",
+      mapLabel: "Harta",
+      pulseLabel: "Pulsi i Protestes",
+      diasporaLabel: "Diaspora zbarkon",
+      labLabel: "Laboratori",
       documentsLabel: "Projektligje",
       ideasLabel: "Idete tuaja",
+      timesLabel: "Flamingo Times",
+      dossierLabel: "Flamingo Dossier",
+      aboutLabel: "Rreth nesh",
+      missionLabel: "Misioni",
+      teamLabel: "Ekipi",
       contactLabel: "Kontakt",
       menuLabel: "Menuja kryesore"
     },
@@ -256,8 +278,19 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     nav: {
       homeLabel: "Home",
+      protestsLabel: "Protests",
+      protestListLabel: "List of protests",
+      mapLabel: "Map",
+      pulseLabel: "Protest pulse",
+      diasporaLabel: "Diaspora lands",
+      labLabel: "Lab",
       documentsLabel: "Draft laws",
       ideasLabel: "Your ideas",
+      timesLabel: "Flamingo Times",
+      dossierLabel: "Flamingo Dossier",
+      aboutLabel: "About us",
+      missionLabel: "Mission",
+      teamLabel: "Team",
       contactLabel: "Contact",
       menuLabel: "Main menu"
     },

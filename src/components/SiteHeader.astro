@@ -1,27 +1,79 @@
 ---
 import type { Locale, SiteCopy } from "../data/site";
-import LocaleSwitch from "./LocaleSwitch.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+
+type NavPage =
+  | "home"
+  | "protest-list"
+  | "map"
+  | "pulse"
+  | "diaspora"
+  | "documents"
+  | "ideas"
+  | "times"
+  | "dossier"
+  | "mission"
+  | "team"
+  | "contact";
 
 interface Props {
   locale: Locale;
   copy: SiteCopy;
-  currentPage: "home" | "documents" | "ideas" | "contact";
+  currentPage: NavPage;
   localePath?: string;
 }
 
 const { locale, copy, currentPage, localePath = "" } = Astro.props;
+const prefix = locale === "sq" ? "" : "/en";
 const homeHref = locale === "sq" ? "/" : "/en/";
-const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
-const ideasHref = locale === "sq" ? "/idete-tuaja/" : "/en/idete-tuaja/";
-const contactHref = locale === "sq" ? "/kontakt/" : "/en/kontakt/";
+
+type NavItem = {
+  page: NavPage;
+  label: string;
+  href: string;
+};
+
+type NavGroup = {
+  id: string;
+  label: string;
+  items: NavItem[];
+};
+
+const navGroups: NavGroup[] = [
+  {
+    id: "protests",
+    label: copy.nav.protestsLabel,
+    items: [
+      { page: "protest-list", label: copy.nav.protestListLabel, href: `${prefix}/lista-e-protestave/` },
+      { page: "map", label: copy.nav.mapLabel, href: `${prefix}/harta/` },
+      { page: "pulse", label: copy.nav.pulseLabel, href: `${prefix}/pulsi-protestes/` },
+      { page: "diaspora", label: copy.nav.diasporaLabel, href: `${prefix}/diaspora-zbarkon/` }
+    ]
+  },
+  {
+    id: "lab",
+    label: copy.nav.labLabel,
+    items: [
+      { page: "ideas", label: copy.nav.ideasLabel, href: `${prefix}/idete-tuaja/` },
+      { page: "documents", label: copy.nav.documentsLabel, href: `${prefix}/projektligje/` },
+      { page: "times", label: copy.nav.timesLabel, href: `${prefix}/flamingo-times/` },
+      { page: "dossier", label: copy.nav.dossierLabel, href: `${prefix}/dosjet/` }
+    ]
+  },
+  {
+    id: "about",
+    label: copy.nav.aboutLabel,
+    items: [
+      { page: "mission", label: copy.nav.missionLabel, href: `${prefix}/misioni/` },
+      { page: "team", label: copy.nav.teamLabel, href: `${prefix}/ekipi/` },
+      { page: "contact", label: copy.nav.contactLabel, href: `${prefix}/kontakt/` }
+    ]
+  }
+];
+
 const socialIcons: Record<string, string> = {
   Discord:
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 5.1A16.2 16.2 0 0 0 15 3.9l-.2.4c1.4.4 2.1 1 2.1 1a13 13 0 0 0-9.8 0s.7-.6 2.2-1L9 3.9A16 16 0 0 0 5.1 5.1C2.6 8.8 1.9 12.4 2.2 16c1.6 1.2 3.2 1.9 4.8 2.4l1-1.7c-.6-.2-1.1-.5-1.6-.8l.4-.3c3.1 1.4 6.4 1.4 9.4 0l.4.3c-.5.3-1 .6-1.6.8l1 1.7c1.6-.5 3.2-1.2 4.8-2.4.4-4.2-.7-7.7-2.9-10.9ZM8.4 13.8c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8S10 11 10 12s-.7 1.8-1.6 1.8Zm7.2 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z"/></svg>',
-  YouTube:
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2s-.2-1.5-.8-2.1c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4s-4 0-6.8.2c-.4.1-1.3.1-2 .9-.6.6-.8 2.1-.8 2.1S2 8.9 2 10.6v1.6c0 1.7.4 3.4.4 3.4s.2 1.5.8 2.1c.8.8 1.8.8 2.2.9 1.6.1 6.6.2 6.6.2s4 0 6.8-.2c.4-.1 1.3-.1 2-.9.6-.6.8-2.1.8-2.1s.4-1.7.4-3.4v-1.6c0-1.7-.4-3.4-.4-3.4ZM10 14.2V8.4l5.2 2.9L10 14.2Z"/></svg>',
-  Instagram:
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 2.8h9.6a4.4 4.4 0 0 1 4.4 4.4v9.6a4.4 4.4 0 0 1-4.4 4.4H7.2a4.4 4.4 0 0 1-4.4-4.4V7.2a4.4 4.4 0 0 1 4.4-4.4Zm0 2A2.4 2.4 0 0 0 4.8 7.2v9.6a2.4 2.4 0 0 0 2.4 2.4h9.6a2.4 2.4 0 0 0 2.4-2.4V7.2a2.4 2.4 0 0 0-2.4-2.4H7.2Zm4.8 3.4a3.8 3.8 0 1 1 0 7.6 3.8 3.8 0 0 1 0-7.6Zm0 2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Zm4.2-2.7a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"/></svg>'
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 5.1A16.2 16.2 0 0 0 15 3.9l-.2.4c1.4.4 2.1 1 2.1 1a13 13 0 0 0-9.8 0s.7-.6 2.2-1L9 3.9A16 16 0 0 0 5.1 5.1C2.6 8.8 1.9 12.4 2.2 16c1.6 1.2 3.2 1.9 4.8 2.4l1-1.7c-.6-.2-1.1-.5-1.6-.8l.4-.3c3.1 1.4 6.4 1.4 9.4 0l.4.3c-.5.3-1 .6-1.6.8l1 1.7c1.6-.5 3.2-1.2 4.8-2.4.4-4.2-.7-7.7-2.9-10.9ZM8.4 13.8c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8S10 11 10 12s-.7 1.8-1.6 1.8Zm7.2 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z"/></svg>'
 };
 const getSocialIcon = (label: string) => socialIcons[label] ?? "";
 ---
@@ -51,43 +103,55 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
 
   <div class="topbar__actions" id="topbar-actions" data-menu-actions>
     <nav class="site-menu" aria-label={copy.nav.menuLabel}>
+      <a href={homeHref} aria-current={currentPage === "home" ? "page" : undefined}>{copy.nav.homeLabel}</a>
       {
-        currentPage === "home" ? (
-          <>
-            <a href="#manifesto">{copy.hero.secondaryCta}</a>
-            <a href="#pillars">{copy.hero.tertiaryCta}</a>
-            <a href={documentsHref}>{copy.nav.documentsLabel}</a>
-            <a href={ideasHref}>{copy.nav.ideasLabel}</a>
-            <a href={contactHref}>{copy.nav.contactLabel}</a>
-          </>
-        ) : (
-          <>
-            <a href={homeHref} aria-current={currentPage === "home" ? "page" : undefined}>{copy.nav.homeLabel}</a>
-            <a href={documentsHref} aria-current={currentPage === "documents" ? "page" : undefined}>
-              {copy.nav.documentsLabel}
-            </a>
-            <a href={ideasHref} aria-current={currentPage === "ideas" ? "page" : undefined}>
-              {copy.nav.ideasLabel}
-            </a>
-            <a href={contactHref} aria-current={currentPage === "contact" ? "page" : undefined}>{copy.nav.contactLabel}</a>
-          </>
-        )
+        navGroups.map((group) => {
+          const isActive = group.items.some((item) => item.page === currentPage);
+          const menuId = `nav-${group.id}`;
+          return (
+            <div class="nav-group" data-nav-group>
+              <button
+                type="button"
+                class="nav-group__trigger"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls={menuId}
+                data-nav-trigger
+                data-active={isActive ? "true" : undefined}
+              >
+                <span>{group.label}</span>
+                <span class="nav-group__chevron" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </button>
+              <div class="nav-group__menu" id={menuId} data-nav-menu>
+                {group.items.map((item) => (
+                  <a href={item.href} aria-current={currentPage === item.page ? "page" : undefined}>
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })
       }
     </nav>
-    <nav class="header-socials" aria-label="Social links">
-      {
-        copy.footer.links.map((link) => (
-          <a class="header-socials__link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
-            <Fragment set:html={getSocialIcon(link.label)} />
-          </a>
-        ))
-      }
-    </nav>
-    <a class="button button--primary topbar-cta" href={copy.hero.participateLink} target="_blank" rel="noreferrer">
-      {copy.hero.primaryCta}
-    </a>
-    <LocaleSwitch currentLocale={locale} currentPath={localePath} />
-    <ThemeToggle labels={copy.theme} />
+    <div class="topbar__icons">
+      <nav class="header-socials" aria-label="Social links">
+        {
+          copy.footer.links
+            .filter((link) => link.label === "Discord")
+            .map((link) => (
+              <a class="header-socials__link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+                <Fragment set:html={getSocialIcon(link.label)} />
+              </a>
+            ))
+        }
+      </nav>
+      <ThemeToggle labels={copy.theme} />
+    </div>
   </div>
 </header>
 
@@ -130,10 +194,56 @@ const getSocialIcon = (label: string) => socialIcons[label] ?? "";
     });
   };
 
-  document.addEventListener("astro:page-load", attachHeaderMenu);
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", attachHeaderMenu, { once: true });
-  } else {
+  const attachNavGroups = () => {
+    const groups = Array.from(document.querySelectorAll("[data-nav-group]"));
+
+    const closeGroup = (group) => {
+      const trigger = group.querySelector("[data-nav-trigger]");
+      group.dataset.open = "false";
+      trigger?.setAttribute("aria-expanded", "false");
+    };
+
+    groups.forEach((group) => {
+      const trigger = group.querySelector("[data-nav-trigger]");
+      if (!(trigger instanceof HTMLButtonElement) || trigger.dataset.navBound === "true") return;
+      trigger.dataset.navBound = "true";
+
+      trigger.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const willOpen = trigger.getAttribute("aria-expanded") !== "true";
+        groups.forEach((other) => {
+          if (other !== group) closeGroup(other);
+        });
+        group.dataset.open = willOpen ? "true" : "false";
+        trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      });
+    });
+
+    if (document.body.dataset.navOutsideBound === "true") return;
+    document.body.dataset.navOutsideBound = "true";
+
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      document.querySelectorAll("[data-nav-group]").forEach((group) => {
+        if (group.dataset.open === "true" && !group.contains(event.target)) closeGroup(group);
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      document.querySelectorAll('[data-nav-group][data-open="true"]').forEach(closeGroup);
+    });
+  };
+
+  const attachAll = () => {
     attachHeaderMenu();
+    attachNavGroups();
+  };
+
+  document.addEventListener("astro:page-load", attachAll);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachAll, { once: true });
+  } else {
+    attachAll();
   }
 </script>
