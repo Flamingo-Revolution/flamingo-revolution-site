@@ -620,4 +620,7 @@
 .content-post__body img {
 	margin-left: auto;
 	margin-right: auto;
+	object-fit: contain;
+	width: 100%;
+	height: 100%;
 }
