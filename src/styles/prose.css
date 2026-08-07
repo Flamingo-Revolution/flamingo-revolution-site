@@ -381,9 +381,9 @@
 		border: none;
 		position: relative;
 		height: 1.25rem;
-		background-image: var(--divider-icon-image);
+		/*background-image: var(--divider-icon-image);
 		background-repeat: no-repeat;
-		background-position: 50% 50%;
+		background-position: 50% 50%;*/
 	}
 	hr::before,
 	hr::after {
