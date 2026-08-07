@@ -144,7 +144,7 @@
 
 	.newsletter-label {
 		color: var(--accent-strong);
-		font-size: 0.9rem;
+		font-size: 0.75rem;
 		font-weight: 800;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
@@ -159,7 +159,7 @@
 		background: var(--surface-strong);
 		color: var(--text);
 		font: inherit;
-		font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+		font-size: clamp(1.1rem, 2.4vw, 1.25rem);
 		font-weight: 700;
 		box-shadow: 5px 5px 0 var(--ink);
 		outline: none;
@@ -186,7 +186,7 @@
 		color: var(--ink);
 		box-shadow: 7px 7px 0 var(--ink);
 		font: inherit;
-		font-size: clamp(1.35rem, 3.5vw, 1.5rem);
+		font-size: clamp(1.1rem, 3.5vw, 1.3rem);
 		font-weight: 800;
 		letter-spacing: 0.02em;
 		text-transform: uppercase;
@@ -226,9 +226,10 @@
 	}
 
 	.newsletter-note {
-		margin: 0;
+		margin: 0.33rem 0 0 0;
 		color: var(--muted);
-		font-size: 0.95rem;
+		font-size: 0.75rem;
+		text-align: center;
 		line-height: 1.45;
 	}
 </style>

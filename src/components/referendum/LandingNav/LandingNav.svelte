@@ -17,8 +17,22 @@
 	const prefersReducedMotion = new MediaQuery("(prefers-reduced-motion: reduce)");
 
 	let showSignupCta = $state(false);
+	let hideEngageCta = $state(false);
 
 	const slideDuration = $derived(prefersReducedMotion.current ? 0 : 220);
+
+	$effect(() => {
+		if (showSignupCta) {
+			hideEngageCta = true;
+			return;
+		}
+
+		const timeout = window.setTimeout(() => {
+			hideEngageCta = false;
+		}, slideDuration);
+
+		return () => window.clearTimeout(timeout);
+	});
 
 	function scrollToSignup() {
 		const target =
@@ -59,7 +73,10 @@
 	});
 </script>
 
-<nav class="landing-nav" aria-label="Seksionet e faqes">
+<nav
+	class={["landing-nav", hideEngageCta && "landing-nav--signup-cta"]}
+	aria-label="Seksionet e faqes"
+>
 	<div class="shell landing-nav__inner">
 		<div class="landing-nav__links">
 			{#each links as link (link.href)}
