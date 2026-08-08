@@ -417,21 +417,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         }
       ]
     },
-    council: {
-      kicker: "Council",
-      title: "From public reaction to organized proposals.",
-      description:
-        "The council can become the place where ideas, documents and proposals are collected, prioritized and turned into concrete work. The goal is to move the energy of the protest beyond comments and into participation.",
-      primaryLink: {
-        label: "Share your opinion",
-        href: "/idete-tuaja/"
-      },
-      secondaryLink: {
-        label: "See how it spread",
-        href: "#pillars"
-      },
-      notes: ["Collect ideas", "Prioritize proposals", "Participation"]
-    },
     culture: {
       kicker: "Culture",
       title: "A decentralized culture of collaboration",

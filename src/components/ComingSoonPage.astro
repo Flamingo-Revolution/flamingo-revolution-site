@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
 import SiteHeader from "./SiteHeader.astro";
 import type { Locale, SiteCopy } from "../data/site";
 
@@ -63,17 +64,6 @@ const homeHref = locale === "sq" ? "/" : "/en/";
       </section>
     </main>
 
-    <footer class="footer-note">
-      <p>{siteCopy.footer.text}</p>
-      <nav class="footer-links" aria-label="Links">
-        {
-          siteCopy.footer.links.map((link) => (
-            <a href={link.href} target="_blank" rel="noreferrer">
-              {link.label}
-            </a>
-          ))
-        }
-      </nav>
-    </footer>
+    <SiteFooter locale={locale} copy={siteCopy} />
   </div>
 </BaseLayout>

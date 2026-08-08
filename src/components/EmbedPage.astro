@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
 import SiteHeader from "./SiteHeader.astro";
 import type { Locale, SiteCopy } from "../data/site";
 
@@ -22,15 +23,12 @@ interface Props {
   siteCopy: SiteCopy;
   currentPage: NavPage;
   localePath: string;
-  eyebrow: string;
   title: string;
   description: string;
-  lead: string;
   src: string;
-  openLabel: string;
 }
 
-const { locale, siteCopy, currentPage, localePath, eyebrow, title, description, lead, src, openLabel } = Astro.props;
+const { locale, siteCopy, currentPage, localePath, title, description, src } = Astro.props;
 ---
 
 <BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale}>
@@ -45,17 +43,6 @@ const { locale, siteCopy, currentPage, localePath, eyebrow, title, description, 
       </section>
     </main>
 
-    <footer class="footer-note">
-      <p>{siteCopy.footer.text}</p>
-      <nav class="footer-links" aria-label="Links">
-        {
-          siteCopy.footer.links.map((link) => (
-            <a href={link.href} target="_blank" rel="noreferrer">
-              {link.label}
-            </a>
-          ))
-        }
-      </nav>
-    </footer>
+    <SiteFooter locale={locale} copy={siteCopy} />
   </div>
 </BaseLayout>

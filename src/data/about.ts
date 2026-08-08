@@ -17,7 +17,8 @@ export type AboutPageCopy = {
   misioni: {
     kicker: string;
     title: string;
-    demandsTitle: string;
+    description: string;
+    principles: string[];
   };
   partneret: {
     kicker: string;
@@ -64,7 +65,9 @@ export const aboutPageCopy: Record<Locale, AboutPageCopy> = {
     misioni: {
       kicker: "Misioni",
       title: "Misioni yne",
-      demandsTitle: "Kerkesat kryesore"
+      description:
+        "Revolucioni Flamingo krijon hapesira ku qytetaret mund te informohen, te shprehin mendimin e tyre dhe te bashkepunojne per ceshtje me interes publik. Ne e kthejme energjine qytetare ne ide, dokumentim dhe veprim te perbashket.",
+      principles: ["Informim i hapur.", "Pjesemarrje qytetare.", "Veprim i perbashket."]
     },
     partneret: {
       kicker: "Partneret",
@@ -111,7 +114,9 @@ export const aboutPageCopy: Record<Locale, AboutPageCopy> = {
     misioni: {
       kicker: "Mission",
       title: "Our mission",
-      demandsTitle: "Core demands"
+      description:
+        "Flamingo Revolution creates spaces where people can stay informed, speak up and work together on issues of public interest. We turn civic energy into ideas, documentation and collective action.",
+      principles: ["Open information.", "Civic participation.", "Collective action."]
     },
     partneret: {
       kicker: "Partners",

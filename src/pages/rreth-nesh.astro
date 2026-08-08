@@ -41,26 +41,17 @@ const copy = aboutPageCopy[locale];
         </nav>
       </section>
 
-      <section class="section-block" id="misioni">
+      <section class="section-block mission-section" id="misioni">
         <div class="section-heading">
           <p class="eyebrow">{copy.misioni.kicker}</p>
           <h2>{copy.misioni.title}</h2>
-          <p>{siteCopyLocale.hero.description}</p>
         </div>
 
-        <div class="section-heading protests-subheading">
-          <p class="eyebrow">{copy.misioni.demandsTitle}</p>
-        </div>
-
-        <div class="council-board" aria-label={copy.misioni.demandsTitle}>
-          {
-            siteCopyLocale.hero.demands.map((demand, index) => (
-              <article class="council-note">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{demand}</strong>
-              </article>
-            ))
-          }
+        <div class="mission-section__content">
+          <p>{copy.misioni.description}</p>
+          <p class="mission-section__principle">
+            {copy.misioni.principles.map((principle) => <span>{principle}</span>)}
+          </p>
         </div>
       </section>
 
@@ -195,8 +186,41 @@ const copy = aboutPageCopy[locale];
     color: var(--accent-strong);
   }
 
-  .protests-subheading {
-    margin-top: clamp(2rem, 5vw, 2.8rem);
+  .mission-section {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .mission-section .section-heading {
+    margin-bottom: 0;
+  }
+
+  .mission-section__content {
+    display: grid;
+    gap: 1.35rem;
+    padding-left: clamp(1rem, 3vw, 1.6rem);
+    border-left: 0.3rem solid var(--accent);
+  }
+
+  .mission-section__content p {
+    max-width: 62ch;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .mission-section__content .mission-section__principle {
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .mission-section__principle span {
+    display: block;
   }
 
   .protests-note {
@@ -242,6 +266,11 @@ const copy = aboutPageCopy[locale];
   }
 
   @media (max-width: 760px) {
+    .mission-section {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
     .gallery-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
