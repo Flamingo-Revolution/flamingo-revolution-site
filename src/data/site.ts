@@ -42,20 +42,15 @@ export type SiteCopy = {
   nav: {
     homeLabel: string;
     protestsLabel: string;
-    protestListLabel: string;
     mapLabel: string;
     pulseLabel: string;
     diasporaLabel: string;
+    diasporaReportersLabel: string;
     labLabel: string;
-    documentsLabel: string;
-    timesLabel: string;
     ideasLabel: string;
     timesLabel: string;
     dossierLabel: string;
     aboutLabel: string;
-    missionLabel: string;
-    teamLabel: string;
-    contactLabel: string;
     menuLabel: string;
   };
   theme: {
@@ -73,11 +68,18 @@ export type SiteCopy = {
     tertiaryCta: string;
     participateLink: string;
     caption: string;
+    demandsKicker: string;
     demandsTitle: string;
     triggerTitle: string;
     triggerText: string;
     demands: string[];
     metrics: Metric[];
+  };
+  stats: {
+    kicker: string;
+    title: string;
+    description: string;
+    items: Metric[];
   };
   manifesto: {
     kicker: string;
@@ -91,6 +93,11 @@ export type SiteCopy = {
     items: Pillar[];
   };
   council: Council;
+  culture: {
+    kicker: string;
+    title: string;
+    body: string;
+  };
   closing: {
     quote: string;
     note: string;
@@ -118,20 +125,15 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     nav: {
       homeLabel: "Ballina",
       protestsLabel: "Protestat",
-      protestListLabel: "Lista e protestave",
-      mapLabel: "Harta",
+      mapLabel: "Harta e Protestave",
       pulseLabel: "Pulsi i Protestes",
       diasporaLabel: "Diaspora zbarkon",
-      labLabel: "Laboratori",
-      documentsLabel: "Projektligje",
-      timesLabel: "Flamingo Times",
-      ideasLabel: "Idete tuaja",
+      diasporaReportersLabel: "Reporteret e Diaspores",
+      labLabel: "Projekte",
+      ideasLabel: "Ide > Projektligje",
       timesLabel: "Flamingo Times",
       dossierLabel: "Flamingo Dossier",
       aboutLabel: "Rreth nesh",
-      missionLabel: "Misioni",
-      teamLabel: "Ekipi",
-      contactLabel: "Kontakt",
       menuLabel: "Menuja kryesore"
     },
     theme: {
@@ -151,16 +153,17 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       participateLink: "/idete-tuaja/",
       caption:
         "(Nje simbol per te mbledhur zera, probleme dhe propozime.)",
+      demandsKicker: "Kerkesat",
       demandsTitle: "Kerkesat kryesore",
       triggerTitle: "Shkrepja qe e ndezi",
       triggerText:
         "Me 30 maj 2026, nje protestues u terhoq zvarre nga anetare te sigurise private ne Zvërnec, nderkohe qe Policia e Shtetit ishte e pranishme dhe nuk nderhyri. Pamjet u bene nje nga shkendijat kryesore te mobilizimit me te gjere.",
       demands: [
-        "Shfuqizimi i ligjit per zonat e mbrojtura",
-        "Shfuqizimi i plote i Paketa e Maleve",
-        "Shfuqizimi i ligjit per investimet strategjike",
-        "Doreheqja e kryeministrit Edi Rama",
-        "Krijimi i nje qeverie teknike"
+        "Dorëheqja e qeverisë",
+        "Shfuqizimi i statusit dhe i kuadrit ligjor që lidhet me investitorët strategjikë",
+        "Shfuqizimi i Paketës së Maleve",
+        "Anulimi i ndryshimeve në Ligjin për Zonat e Mbrojtura",
+        "Anulimi i ndryshimeve në Ligjin për Trashëgiminë Kulturore"
       ],
       metrics: [
         {
@@ -175,6 +178,20 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           value: "Pjesemarrje",
           label: "Nga formulari te propozimet dhe organizimi"
         }
+      ]
+    },
+    stats: {
+      kicker: "Numrat",
+      title: "Angazhimi ne shifra",
+      description:
+        "Nje pamje e shpejte e asaj qe eshte ndertuar deri tani nga bashkesia e Revolucionit Flamingo.",
+      items: [
+        { value: "8+", label: "Projekte" },
+        { value: "20+", label: "Kontribues aktive" },
+        { value: "60+", label: "Dite aktivitet" },
+        { value: "300+", label: "Dite protestash" },
+        { value: "10+", label: "Qytete ne Shqiperi" },
+        { value: "70+", label: "Qytete ne diaspore" }
       ]
     },
     manifesto: {
@@ -193,7 +210,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "Kerkesat",
-          body: "Mes kerkesave te artikuluara ishin shfuqizimi i ligjit per zonat e mbrojtura, shfuqizimi i plote i projektit te njohur si Paketa e Maleve, shfuqizimi i ligjit per investimet strategjike, doreheqja e Edi Rames dhe krijimi i nje qeverie teknike."
+          body: "Mes kerkesave te artikuluara ishin doreheqja e qeverise, shfuqizimi i statusit dhe i kuadrit ligjor per investitoret strategjike, shfuqizimi i Paketes se Maleve, anulimi i ndryshimeve ne Ligjin per Zonat e Mbrojtura dhe anulimi i ndryshimeve ne Ligjin per Trashegimine Kulturore."
         }
       ]
     },
@@ -233,6 +250,11 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         href: "#pillars"
       },
       notes: ["Mblidh ide", "Rendit propozime", "Pjesemarrje"]
+    },
+    culture: {
+      kicker: "Kultura",
+      title: "Nje kulture bashkepunimi e decentralizuar",
+      body: "Revolucioni Flamingo funksionon si nje bashkesi e hapur, jo si nje strukture hierarkike. Bashkepunimi organizohet sipas normave qe njihen mire nga Reddit dhe Discord: kontribut i orientuar nga detyra, mbeshtetje reciproke midis pjesemarresve dhe vendimmarrje e shperndare, pa nje qender te vetme kontrolli."
     },
     closing: {
       quote:
@@ -284,20 +306,15 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     nav: {
       homeLabel: "Home",
       protestsLabel: "Protests",
-      protestListLabel: "List of protests",
-      mapLabel: "Map",
+      mapLabel: "Protest Map",
       pulseLabel: "Protest pulse",
       diasporaLabel: "Diaspora lands",
-      labLabel: "Lab",
-      documentsLabel: "Draft laws",
-      timesLabel: "Flamingo Times",
-      ideasLabel: "Your ideas",
+      diasporaReportersLabel: "Diaspora Reporters",
+      labLabel: "Projects",
+      ideasLabel: "Ideas > Draft laws",
       timesLabel: "Flamingo Times",
       dossierLabel: "Flamingo Dossier",
       aboutLabel: "About us",
-      missionLabel: "Mission",
-      teamLabel: "Team",
-      contactLabel: "Contact",
       menuLabel: "Main menu"
     },
     theme: {
@@ -317,16 +334,17 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       participateLink: "/idete-tuaja/",
       caption:
         "(A symbol for collecting voices, problems and proposals.)",
+      demandsKicker: "Demands",
       demandsTitle: "Core demands",
       triggerTitle: "What triggered it",
       triggerText:
         "On May 30, 2026, a protester in Zvërnec was dragged by private security personnel while State Police officers were present and did not intervene. Footage of the incident became one of the main sparks for the wider mobilization.",
       demands: [
-        "Cancellation of the protected areas law",
-        "Full cancellation of the Mountain Package",
-        "Cancellation of the strategic investments law",
-        "Resignation of Prime Minister Edi Rama",
-        "Creation of a technical government"
+        "Resignation of the government",
+        "Repeal of the legal status and framework for strategic investors",
+        "Full repeal of the Mountain Package",
+        "Cancellation of the changes to the Protected Areas Law",
+        "Cancellation of the changes to the Cultural Heritage Law"
       ],
       metrics: [
         {
@@ -341,6 +359,20 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           value: "Participation",
           label: "From the form to proposals and organizing"
         }
+      ]
+    },
+    stats: {
+      kicker: "Numbers",
+      title: "The movement in numbers",
+      description:
+        "A quick snapshot of what the Flamingo Revolution community has built so far.",
+      items: [
+        { value: "8+", label: "Projects" },
+        { value: "20+", label: "Active contributors" },
+        { value: "60+", label: "Days of activity" },
+        { value: "300+", label: "Protest days" },
+        { value: "10+", label: "Cities in Albania" },
+        { value: "70+", label: "Cities in the diaspora" }
       ]
     },
     manifesto: {
@@ -359,7 +391,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "The demands",
-          body: "Among the demands highlighted by protesters were the cancellation of the protected areas law, the full cancellation of the project known as the Mountain Package, the cancellation of the strategic investments law, the resignation of Edi Rama and the creation of a technical government."
+          body: "Among the demands highlighted by protesters were the resignation of the government, the repeal of the legal status and framework for strategic investors, the full repeal of the project known as the Mountain Package, the cancellation of the changes to the Protected Areas Law and the cancellation of the changes to the Cultural Heritage Law."
         }
       ]
     },
@@ -399,6 +431,11 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         href: "#pillars"
       },
       notes: ["Collect ideas", "Prioritize proposals", "Participation"]
+    },
+    culture: {
+      kicker: "Culture",
+      title: "A decentralized culture of collaboration",
+      body: "Flamingo Revolution works as an open community, not a hierarchy. Collaboration follows norms familiar from Reddit and Discord: task-oriented contribution, mutual support between participants, and decentralized decision-making with no single point of control."
     },
     closing: {
       quote:

@@ -170,6 +170,12 @@ html[data-theme='dark'] .page-shell::after {
 		18px 18px,
 		18px 18px,
 		auto;
+	transition: padding 200ms ease;
+}
+
+.topbar[data-scrolled="true"] {
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
 }
 
 .brand {
@@ -189,6 +195,11 @@ html[data-theme='dark'] .page-shell::after {
   object-fit: contain;
   filter: saturate(1.08) contrast(1.08);
   transform: rotate(-2deg);
+  transition: width 200ms ease;
+}
+
+.topbar[data-scrolled="true"] .brand__logo {
+  width: clamp(6rem, 9vw, 7.5rem);
 }
 
 .brand__logo--dark {
@@ -280,7 +291,7 @@ html[data-theme='dark'] .brand__logo--dark {
 	margin-right: 0.2rem;
 }
 
-.site-menu a {
+.site-menu > a {
   display: inline-flex;
   align-items: center;
   padding-bottom: 0.28rem;
@@ -290,9 +301,9 @@ html[data-theme='dark'] .brand__logo--dark {
   font-weight: 800;
 }
 
-.site-menu a:hover,
-.site-menu a:focus-visible,
-.site-menu a[aria-current="page"] {
+.site-menu > a:hover,
+.site-menu > a:focus-visible,
+.site-menu > a[aria-current="page"] {
   color: var(--accent-strong);
 }
 
@@ -362,11 +373,34 @@ html[data-theme='dark'] .brand__logo--dark {
 }
 
 .nav-group__menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   padding: 0.5rem 0.6rem;
+  border-bottom: none;
   color: var(--text);
   font-size: 0.9rem;
   font-weight: 800;
   text-decoration: none;
+}
+
+.nav-group__menu-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.nav-group__menu-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.nav-group__menu-divider {
+  display: block;
+  height: 1px;
+  margin: 0.3rem 0.2rem;
+  background: var(--line);
 }
 
 .nav-group__menu a:hover,
@@ -1774,6 +1808,90 @@ h3 {
 	letter-spacing: 0.16em;
 }
 
+.stats-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1rem;
+}
+
+.stat-tile {
+	display: grid;
+	gap: 0.45rem;
+	padding: 1.5rem 1.15rem;
+	border: 2px solid var(--ink);
+	background: var(--surface);
+	box-shadow: 5px 5px 0 var(--ink);
+	text-align: center;
+}
+
+.stat-tile:nth-child(3n+2) {
+	background: var(--paper-cool);
+	transform: rotate(0.75deg);
+}
+
+.stat-tile:nth-child(3n) {
+	background: var(--accent-soft);
+	transform: rotate(-0.65deg);
+}
+
+.stat-tile strong {
+	font-family: var(--font-body);
+	font-variant-numeric: proportional-nums;
+	font-size: clamp(2.75rem, 6vw, 4rem);
+	font-weight: 800;
+	line-height: 1;
+	color: var(--accent-strong);
+	overflow-wrap: anywhere;
+}
+
+.stat-tile span {
+	color: var(--muted);
+	font-size: 0.88rem;
+	font-weight: 700;
+}
+
+.culture-note {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 1.1rem;
+	align-items: start;
+	padding: clamp(1.4rem, 4vw, 2.2rem) clamp(1rem, 5vw, 3.4rem);
+	background: var(--paper-cool);
+	border-top: 1px solid var(--line);
+	border-bottom: 4px solid var(--line);
+}
+
+.culture-note__mark {
+	width: 0.85rem;
+	height: 0.85rem;
+	margin-top: 0.55rem;
+	border-radius: 50%;
+	background: var(--accent);
+	box-shadow: 0 0 0 0.35rem var(--accent-soft);
+}
+
+.culture-note__content {
+	display: grid;
+	gap: 0.6rem;
+}
+
+.culture-note__content .eyebrow {
+	margin: 0;
+	color: var(--accent-strong);
+	font-family: var(--font-body);
+	font-size: 0.84rem;
+	font-style: normal;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+
+.culture-note__content p:last-child {
+	max-width: 62ch;
+	margin: 0;
+	color: var(--muted);
+	line-height: 1.65;
+}
+
 .closing {
 	display: grid;
 	justify-items: center;
@@ -1888,6 +2006,7 @@ blockquote {
 	.document-grid,
 	.section-block--council,
 	.pillar-grid,
+	.stats-grid,
 	.contact-details,
 	.ideas-hero {
 		grid-template-columns: 1fr;
@@ -1910,6 +2029,10 @@ blockquote {
 
 	.council-board {
 		transform: none;
+	}
+
+	.culture-note {
+		grid-template-columns: 1fr;
 	}
 }
 
@@ -2067,7 +2190,8 @@ blockquote {
   .contact-card,
   .contact-panel,
   .pillar-card,
-  .council-note {
+  .council-note,
+  .stat-tile {
     transform: none !important;
   }
 
@@ -2102,6 +2226,7 @@ blockquote {
 	.hero,
 	.section-block,
 	.closing,
+	.culture-note,
 	.footer-note {
 		padding-right: 1rem;
 		padding-left: 1rem;
@@ -2112,7 +2237,8 @@ blockquote {
 	.info-card,
 	.document-card,
 	.pillar-card,
-	.council-board {
+	.council-board,
+	.stat-tile {
 		width: calc(100% - 4px);
 	}
 

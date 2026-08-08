@@ -1,0 +1,322 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFrame from "../components/SiteFrame.astro";
+import { siteCopy } from "../data/site";
+import { protestsPageCopy } from "../data/protests";
+
+const locale = "sq";
+const siteCopyLocale = siteCopy[locale];
+const copy = protestsPageCopy[locale];
+---
+
+<BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
+  <SiteFrame locale={locale} copy={siteCopyLocale} currentPage="protests" localePath="protestat">
+    <main class="protests-page" id="main" tabindex="-1">
+      <section class="protests-hero">
+        <div class="protests-hero__content">
+          <p class="eyebrow">{copy.hero.eyebrow}</p>
+          <h1><span>{copy.hero.title}</span></h1>
+          <p class="lead">{copy.hero.lead}</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href={siteCopyLocale.hero.participateLink}>
+              {copy.hero.primaryCta}
+            </a>
+            <a class="button button--ghost" href="#historiku">
+              {copy.hero.secondaryCta}
+            </a>
+          </div>
+        </div>
+
+        <nav class="protests-hero__panel" aria-label={copy.hero.panelTitle}>
+          <h2>{copy.hero.panelTitle}</h2>
+          <ul>
+            {
+              copy.hero.panelLinks.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </section>
+
+      <section class="section-block" id="historiku">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.historiku.kicker}</p>
+          <h2>{copy.historiku.title}</h2>
+          <p>{copy.historiku.description}</p>
+        </div>
+
+        <div class="pillar-grid protests-timeline">
+          {
+            copy.historiku.timeline.map((item) => (
+              <article class="pillar-card">
+                <span class="pillar-card__index">{item.date}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="section-heading protests-subheading">
+          <p class="eyebrow">{copy.historiku.backgroundKicker}</p>
+          <h3>{copy.historiku.backgroundTitle}</h3>
+        </div>
+
+        <div class="card-grid">
+          {
+            siteCopyLocale.manifesto.cards.map((card) => (
+              <article class="info-card">
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block section-block--accent" id="lista-e-protestave">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.list.kicker}</p>
+          <h2>{copy.list.title}</h2>
+          <p>{copy.list.description}</p>
+        </div>
+
+        <div class="protest-register">
+          {
+            copy.list.entries.map((entry) => (
+              <article class="protest-entry">
+                <span class="protest-entry__status">{entry.status}</span>
+                <span class="protest-entry__date">{entry.date}</span>
+                <h3>{entry.title}</h3>
+                <p class="protest-entry__location">{entry.location}</p>
+                <p>{entry.body}</p>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="protests-note">
+          <p>{copy.list.note}</p>
+          <a class="button button--ghost" href={siteCopyLocale.hero.participateLink}>
+            {copy.list.ctaLabel}
+          </a>
+        </div>
+      </section>
+
+      <section class="section-block" id="foto-galeri">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.gallery.kicker}</p>
+          <h2>{copy.gallery.title}</h2>
+          <p>{copy.gallery.description}</p>
+        </div>
+
+        <div class="gallery-grid">
+          {
+            Array.from({ length: 8 }).map(() => (
+              <div class="gallery-tile" aria-hidden="true">
+                <span>{copy.gallery.placeholderLabel}</span>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="hero__actions">
+          <a class="button button--primary" href={copy.gallery.ctaHref}>
+            {copy.gallery.ctaLabel}
+          </a>
+        </div>
+      </section>
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .protests-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.7fr);
+    gap: clamp(1.5rem, 4vw, 3.4rem);
+    align-items: start;
+    padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
+    background: linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+    border-top: 1px solid var(--line);
+    border-bottom: 4px solid var(--line);
+  }
+
+  .protests-hero__content {
+    width: min(100%, 760px);
+    min-width: 0;
+  }
+
+  .protests-hero__panel {
+    display: grid;
+    gap: 0.75rem;
+    height: fit-content;
+    min-width: 0;
+    padding: clamp(1rem, 3vw, 1.4rem);
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 7px 7px 0 var(--ink);
+    transform: rotate(-1deg);
+  }
+
+  .protests-hero__panel h2 {
+    margin: 0;
+    color: var(--accent-strong);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .protests-hero__panel ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .protests-hero__panel a {
+    display: inline-flex;
+    align-items: center;
+    padding-bottom: 0.12rem;
+    border-bottom: 0.14rem solid var(--accent);
+    color: var(--text);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .protests-hero__panel a:hover,
+  .protests-hero__panel a:focus-visible {
+    color: var(--accent-strong);
+  }
+
+  .protests-timeline {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .protests-subheading {
+    margin-top: clamp(2rem, 5vw, 2.8rem);
+  }
+
+  .protest-register {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .protest-entry {
+    position: relative;
+    padding: 1.15rem;
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+
+  .protest-entry:nth-child(2) {
+    background: var(--paper-cool);
+    transform: rotate(0.65deg);
+  }
+
+  .protest-entry:nth-child(3) {
+    background: var(--accent-soft);
+    transform: rotate(-0.5deg);
+  }
+
+  .protest-entry__status {
+    display: inline-block;
+    margin-bottom: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    color: var(--accent-strong);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .protest-entry__date {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--accent-strong);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  .protest-entry h3 {
+    margin: 0 0 0.3rem;
+  }
+
+  .protest-entry__location {
+    margin: 0 0 0.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .protests-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 1.6rem;
+  }
+
+  .protests-note p {
+    margin: 0;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.7rem;
+  }
+
+  .gallery-tile {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    padding: 0.5rem;
+    border: 2px dashed var(--ink);
+    background: var(--paper-cool);
+    color: var(--muted);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1020px) {
+    .protests-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .protests-timeline {
+      grid-template-columns: 1fr;
+    }
+
+    .protest-register {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .protest-entry,
+    .protests-hero__panel {
+      transform: none !important;
+    }
+  }
+</style>

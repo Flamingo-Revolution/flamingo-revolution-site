@@ -12,6 +12,7 @@ type IdeasPageCopy = {
   panelText: string;
   panelCTA: string;
   formLabel: string;
+  documentsCta: string;
   composePlaceholder: string;
   composeHint: string;
   countLabel: string;
@@ -56,6 +57,7 @@ export const ideasPageCopy: Record<Locale, IdeasPageCopy> = {
 			"Dergo idene ketu. Ajo shfaqet ne listen publike dhe mund te vleresohet nga te tjeret.",
 		panelCTA: 'Na kontaktoni',
     formLabel: "Dergo idene",
+    documentsCta: "Shiko projektligjet",
     composePlaceholder: "Shkruaj idene tende ketu...",
     composeHint: "Mbajeni te qarte dhe konkrete. Pa te dhena personale.",
     countLabel: "Ide te publikuara",
@@ -101,6 +103,7 @@ export const ideasPageCopy: Record<Locale, IdeasPageCopy> = {
 			"Send your idea here. It appears in the public list and can be rated by others.",
 		panelCTA: "Contact us",
     formLabel: "Send idea",
+    documentsCta: "View draft laws",
     composePlaceholder: "Write your idea here...",
     composeHint: "Keep it clear and concrete. No personal data.",
     countLabel: "Published ideas",

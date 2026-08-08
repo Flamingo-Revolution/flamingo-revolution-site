@@ -48,6 +48,25 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 
       </section>
 
+      <section class="section-block stats-block" id="stats">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.stats.kicker}</p>
+          <h2>{copy.stats.title}</h2>
+          <p>{copy.stats.description}</p>
+        </div>
+
+        <div class="stats-grid">
+          {
+            copy.stats.items.map((stat) => (
+              <article class="stat-tile">
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
       <section class="section-block" id="manifesto">
         <div class="section-heading">
           <p class="eyebrow">{copy.manifesto.kicker}</p>
@@ -61,6 +80,24 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
               <article class="info-card">
                 <h3>{card.title}</h3>
                 <p>{card.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block" id="kerkesat">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.hero.demandsKicker}</p>
+          <h2>{copy.hero.demandsTitle}</h2>
+        </div>
+
+        <div class="council-board" aria-label={copy.hero.demandsTitle}>
+          {
+            copy.hero.demands.map((demand, index) => (
+              <article class="council-note">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{demand}</strong>
               </article>
             ))
           }
@@ -108,6 +145,15 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
           <a class="button button--primary" href={copy.council.primaryLink.href}>
             {copy.council.primaryLink.label}
           </a>
+        </div>
+      </section>
+
+      <section class="culture-note" id="culture">
+        <span class="culture-note__mark" aria-hidden="true"></span>
+        <div class="culture-note__content">
+          <p class="eyebrow">{copy.culture.kicker}</p>
+          <h2>{copy.culture.title}</h2>
+          <p>{copy.culture.body}</p>
         </div>
       </section>
 

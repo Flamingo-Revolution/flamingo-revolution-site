@@ -1,0 +1,253 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFrame from "../components/SiteFrame.astro";
+import { siteCopy } from "../data/site";
+import { aboutPageCopy } from "../data/about";
+
+const locale = "sq";
+const siteCopyLocale = siteCopy[locale];
+const copy = aboutPageCopy[locale];
+---
+
+<BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
+  <SiteFrame locale={locale} copy={siteCopyLocale} currentPage="about" localePath="rreth-nesh">
+    <main class="about-page" id="main" tabindex="-1">
+      <section class="protests-hero">
+        <div class="protests-hero__content">
+          <p class="eyebrow">{copy.hero.eyebrow}</p>
+          <h1><span>{copy.hero.title}</span></h1>
+          <p class="lead">{copy.hero.lead}</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href={siteCopyLocale.hero.participateLink}>
+              {copy.hero.primaryCta}
+            </a>
+            <a class="button button--ghost" href="#misioni">
+              {copy.hero.secondaryCta}
+            </a>
+          </div>
+        </div>
+
+        <nav class="protests-hero__panel" aria-label={copy.hero.panelTitle}>
+          <h2>{copy.hero.panelTitle}</h2>
+          <ul>
+            {
+              copy.hero.panelLinks.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </section>
+
+      <section class="section-block" id="misioni">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.misioni.kicker}</p>
+          <h2>{copy.misioni.title}</h2>
+          <p>{siteCopyLocale.hero.description}</p>
+        </div>
+
+        <div class="section-heading protests-subheading">
+          <p class="eyebrow">{copy.misioni.demandsTitle}</p>
+        </div>
+
+        <div class="council-board" aria-label={copy.misioni.demandsTitle}>
+          {
+            siteCopyLocale.hero.demands.map((demand, index) => (
+              <article class="council-note">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{demand}</strong>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block section-block--accent" id="partneret">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.partneret.kicker}</p>
+          <h2>{copy.partneret.title}</h2>
+          <p>{copy.partneret.description}</p>
+        </div>
+
+        <div class="gallery-grid">
+          {
+            Array.from({ length: 4 }).map(() => (
+              <div class="gallery-tile" aria-hidden="true">
+                <span>{copy.partneret.placeholderLabel}</span>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="protests-note">
+          <p>{copy.partneret.note}</p>
+          <a class="button button--ghost" href="#kontakt">
+            {copy.partneret.ctaLabel}
+          </a>
+        </div>
+      </section>
+
+      <section class="contact-hero" id="kontakt">
+        <div class="contact-hero__intro">
+          <p class="eyebrow">{copy.kontakt.kicker}</p>
+          <h2>{copy.kontakt.title}</h2>
+          <p class="lead">{copy.kontakt.lead}</p>
+        </div>
+
+        <article class="contact-card">
+          <p class="contact-card__kicker">{copy.kontakt.emailKicker}</p>
+          <a class="contact-card__email" href={`mailto:${copy.kontakt.email}`}>{copy.kontakt.email}</a>
+          <p>{copy.kontakt.emailNote}</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href={`mailto:${copy.kontakt.email}`}>
+              {copy.kontakt.emailCta}
+            </a>
+          </div>
+        </article>
+      </section>
+
+      <section class="contact-details" aria-label={copy.kontakt.title}>
+        <article class="contact-panel">
+          <h2>{copy.kontakt.ideasTitle}</h2>
+          <p>{copy.kontakt.ideasText}</p>
+          <a class="button button--ghost" href={siteCopyLocale.hero.participateLink}>
+            {siteCopyLocale.hero.primaryCta}
+          </a>
+        </article>
+
+        <article class="contact-panel contact-panel--social">
+          <h2>{copy.kontakt.socialTitle}</h2>
+          <div class="contact-socials">
+            {
+              siteCopyLocale.footer.links.map((link) => (
+                <a href={link.href} target="_blank" rel="noreferrer">
+                  {link.label}
+                </a>
+              ))
+            }
+          </div>
+        </article>
+      </section>
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .protests-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.7fr);
+    gap: clamp(1.5rem, 4vw, 3.4rem);
+    align-items: start;
+    padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
+    background: linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+    border-top: 1px solid var(--line);
+    border-bottom: 4px solid var(--line);
+  }
+
+  .protests-hero__content {
+    width: min(100%, 760px);
+    min-width: 0;
+  }
+
+  .protests-hero__panel {
+    display: grid;
+    gap: 0.75rem;
+    height: fit-content;
+    min-width: 0;
+    padding: clamp(1rem, 3vw, 1.4rem);
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 7px 7px 0 var(--ink);
+    transform: rotate(-1deg);
+  }
+
+  .protests-hero__panel h2 {
+    margin: 0;
+    color: var(--accent-strong);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .protests-hero__panel ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .protests-hero__panel a {
+    display: inline-flex;
+    align-items: center;
+    padding-bottom: 0.12rem;
+    border-bottom: 0.14rem solid var(--accent);
+    color: var(--text);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .protests-hero__panel a:hover,
+  .protests-hero__panel a:focus-visible {
+    color: var(--accent-strong);
+  }
+
+  .protests-subheading {
+    margin-top: clamp(2rem, 5vw, 2.8rem);
+  }
+
+  .protests-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 1.6rem;
+  }
+
+  .protests-note p {
+    margin: 0;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.7rem;
+  }
+
+  .gallery-tile {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    padding: 0.5rem;
+    border: 2px dashed var(--ink);
+    background: var(--paper-cool);
+    color: var(--muted);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1020px) {
+    .protests-hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .protests-hero__panel {
+      transform: none !important;
+    }
+  }
+</style>
