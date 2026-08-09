@@ -128,35 +128,69 @@
 }
 
 .referendum-header {
-	display: grid;
-	grid-template-columns: 1fr auto 1fr;
+	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	gap: 0.75rem 1rem;
 	width: 100%;
 }
 
 .referendum-landing .referendum-header {
-	margin-bottom: clamp(3.45rem, 8.25vw, 5.55rem);
-}
-
-.referendum-header .header-socials {
-	justify-self: start;
-}
-
-.referendum-header .theme-toggle {
-	justify-self: end;
+	margin-bottom: 1rem;
 }
 
 .referendum-header__brand {
 	display: inline-flex;
-	justify-self: center;
 }
 
 .referendum-header__brand .brand__logo {
-	width: clamp(6.5rem, 16vw, 8.5rem);
+	width: clamp(5.5rem, 16vw, 7.5rem);
 	height: auto;
 	filter: saturate(1.08) contrast(1.08);
 	transform: rotate(-2deg);
+}
+
+.referendum-header .theme-toggle {
+	gap: 0.4rem;
+	min-height: 2rem;
+	padding: 0.35rem 0.55rem;
+	border-width: 1px;
+	border-color: color-mix(in srgb, var(--ink) 30%, transparent);
+	background: transparent;
+	box-shadow: none;
+	color: color-mix(in srgb, var(--text) 75%, transparent);
+	font-weight: 600;
+	transition:
+		opacity 180ms ease,
+		color 180ms ease,
+		border-color 180ms ease,
+		background-color 180ms ease;
+}
+
+.referendum-header .theme-toggle:hover,
+.referendum-header .theme-toggle:focus-visible {
+	transform: none;
+	box-shadow: none;
+	opacity: 1;
+	color: var(--text);
+	border-color: color-mix(in srgb, var(--ink) 38%, transparent);
+	background: color-mix(in srgb, var(--surface) 55%, transparent);
+}
+
+.referendum-header .theme-toggle[aria-pressed='true'] {
+	background: transparent;
+}
+
+.referendum-header .theme-toggle__icon {
+	width: 0.85rem;
+	height: 0.85rem;
+	opacity: 0.9;
+}
+
+.referendum-header .theme-toggle__text {
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.01em;
 }
 
 .referendum-landing .hero-split {
@@ -1362,10 +1396,6 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 	margin-inline: auto;
 }
 
-.referendum-content .content-brand .referendum-header__brand .brand__logo {
-	width: clamp(7.5rem, 18vw, 10rem);
-}
-
 .referendum-content .content-post,
 .referendum-content .content-page {
 	position: relative;
@@ -1516,6 +1546,12 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 	}
 }
 
+@media (max-width: 1100px) {
+	.referendum-landing .referendum-header {
+		margin-bottom: 4rem;
+	}
+}
+
 @media (max-width: 820px) {
 	.referendum-landing .times-action {
 		grid-template-columns: 1fr;
@@ -1530,31 +1566,15 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 
 /* Beat global.css ≤760px topbar stretch rules for referendum header controls */
 @media (max-width: 760px) {
-	.referendum-header .header-socials {
-		display: inline-flex;
-		width: auto;
-		grid-template-columns: none;
-	}
-
-	.referendum-header .header-socials__link {
-		width: 2.8rem;
-		height: 2.8rem;
-		box-shadow: 4px 4px 0 var(--ink);
-	}
-
-	.referendum-header .header-socials__link--hide-mobile {
-		display: none;
-	}
-
 	.referendum-header .theme-toggle {
 		box-sizing: border-box;
 		gap: 0;
-		width: 2.8rem;
-		height: 2.8rem;
-		min-width: 2.8rem;
+		width: 2rem;
+		height: 2rem;
+		min-width: 2rem;
 		padding: 0;
 		justify-content: center;
-		box-shadow: 4px 4px 0 var(--ink);
+		box-shadow: none;
 	}
 
 	.referendum-header .theme-toggle__text {
@@ -1567,6 +1587,10 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 		display: none;
 	}
 
+	.referendum-landing .referendum-header {
+		margin-bottom: 1rem;
+	}
+
 	.referendum-landing .hero .shell {
 		width: min(100% - 2.5rem, 72rem);
 	}
@@ -1576,11 +1600,7 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 	}
 
 	.referendum-landing .referendum-header__brand .brand__logo {
-		width: clamp(7.25rem, 34vw, 9rem);
-	}
-
-	.referendum-content .content-brand .referendum-header__brand .brand__logo {
-		width: clamp(5.75rem, 26vw, 7.5rem);
+		width: 6rem;
 	}
 
 	.referendum-landing .hero h1 {
