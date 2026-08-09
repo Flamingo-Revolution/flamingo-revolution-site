@@ -43,6 +43,7 @@ export type SiteCopy = {
     homeLabel: string;
     documentsLabel: string;
     timesLabel: string;
+    blogLabel: string;
     ideasLabel: string;
     contactLabel: string;
     menuLabel: string;
@@ -108,6 +109,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       homeLabel: "Ballina",
       documentsLabel: "Projektligje",
       timesLabel: "Flamingo Times",
+      blogLabel: "Blog",
       ideasLabel: "Idete tuaja",
       contactLabel: "Kontakt",
       menuLabel: "Menuja kryesore"
@@ -263,6 +265,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       homeLabel: "Home",
       documentsLabel: "Draft laws",
       timesLabel: "Flamingo Times",
+      blogLabel: "Blog",
       ideasLabel: "Your ideas",
       contactLabel: "Contact",
       menuLabel: "Main menu"

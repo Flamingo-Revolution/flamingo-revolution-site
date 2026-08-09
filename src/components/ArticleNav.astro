@@ -1,0 +1,144 @@
+---
+interface Crumb {
+	label: string;
+	href?: string;
+}
+
+interface Props {
+	backHref: string;
+	backLabel?: string;
+	crumbs: Crumb[];
+}
+
+const { backHref, backLabel = "Kthehu", crumbs } = Astro.props;
+---
+
+<nav class="article-nav" aria-label="Navigimi i artikullit">
+	<a class="article-nav__back" href={backHref}>
+		<svg class="article-nav__back-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+			<path
+				d="M15.5 4.5 8 12l7.5 7.5"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2.2"
+				stroke-linecap="square"
+				stroke-linejoin="miter"></path>
+		</svg>
+		<span>{backLabel}</span>
+	</a>
+
+	<ol class="article-nav__crumbs">
+		{
+			crumbs.map((crumb, index) => {
+				const isLast = index === crumbs.length - 1;
+				return (
+					<li class="article-nav__crumb">
+						{isLast || !crumb.href ? (
+							<span class="article-nav__current" aria-current={isLast ? "page" : undefined}>
+								{crumb.label}
+							</span>
+						) : (
+							<a href={crumb.href}>{crumb.label}</a>
+						)}
+					</li>
+				);
+			})
+		}
+	</ol>
+</nav>
+
+<style>
+	.article-nav {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem 1.15rem;
+		margin: 0 0 1.15rem;
+	}
+
+	.article-nav__back {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.28rem 0.55rem 0.28rem 0.35rem;
+		border: 2px solid var(--ink);
+		background: var(--surface);
+		color: var(--text);
+		font-size: 0.82rem;
+		font-weight: 800;
+		letter-spacing: 0.01em;
+		box-shadow: 3px 3px 0 var(--ink);
+		text-decoration: none;
+		transition:
+			transform 180ms ease,
+			box-shadow 180ms ease,
+			background-color 180ms ease,
+			color 180ms ease;
+	}
+
+	.article-nav__back:hover,
+	.article-nav__back:focus-visible {
+		color: var(--ink-reverse);
+		background: var(--ink);
+		transform: translate(-1px, -1px);
+		box-shadow: 4px 4px 0 var(--ink);
+	}
+
+	.article-nav__back-icon {
+		width: 0.95rem;
+		height: 0.95rem;
+		flex-shrink: 0;
+	}
+
+	.article-nav__crumbs {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.35rem 0.45rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		min-width: 0;
+		color: var(--muted);
+		font-size: 0.88rem;
+		line-height: 1.35;
+	}
+
+	.article-nav__crumb {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		min-width: 0;
+	}
+
+	.article-nav__crumb:not(:last-child)::after {
+		content: "/";
+		color: var(--muted);
+		opacity: 0.7;
+		font-weight: 600;
+	}
+
+	.article-nav__crumbs a {
+		color: var(--text);
+		font-weight: 700;
+		text-decoration: underline;
+		text-decoration-color: var(--accent);
+		text-decoration-thickness: 0.14rem;
+		text-underline-offset: 0.22rem;
+	}
+
+	.article-nav__crumbs a:hover,
+	.article-nav__crumbs a:focus-visible {
+		color: var(--accent-strong);
+	}
+
+	.article-nav__current {
+		display: inline-block;
+		max-width: min(42ch, 70vw);
+		overflow: hidden;
+		color: var(--muted);
+		font-weight: 600;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+</style>

@@ -6,7 +6,7 @@ import ThemeToggle from "./ThemeToggle.astro";
 interface Props {
   locale: Locale;
   copy: SiteCopy;
-  currentPage: "home" | "documents" | "ideas" | "map" | "pulse" | "contact" | "times";
+  currentPage: "home" | "documents" | "ideas" | "map" | "pulse" | "contact" | "times" | "blog" | "referendum";
   localePath?: string;
 }
 
@@ -19,6 +19,7 @@ const contactHref = locale === "sq" ? "/kontakt/" : "/en/kontakt/";
 const mapHref = locale === "sq" ? "/harta/" : "/en/map/";
 const pulseHref = "/pulsi-protestes/";
 const timesHref = "/flamingo-times/";
+const blogHref = "/blog/";
 
 const mapLabel = locale === "sq" ? "Harta" : "Map";
 const pulseLabel = locale === "sq" ? "Pulsi" : "Pulse";
@@ -54,6 +55,7 @@ const pulseLabel = locale === "sq" ? "Pulsi" : "Pulse";
           <>
             <a href={homeHref} aria-current="page">{copy.nav.homeLabel}</a>
             <a href={timesHref}>{copy.nav.timesLabel}</a>
+            <a href={blogHref}>{copy.nav.blogLabel}</a>
             <a href={documentsHref}>{copy.nav.documentsLabel}</a>
             <a href={ideasHref}>{copy.nav.ideasLabel}</a>
             <a href={mapHref}>{mapLabel}</a>
