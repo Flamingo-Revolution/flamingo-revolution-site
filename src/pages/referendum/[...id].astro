@@ -1,9 +1,9 @@
 ---
 import { getEntry, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import ReferendumLayout from "../../layouts/ReferendumLayout.astro";
 import ArticleNav from "../../components/ArticleNav.astro";
-import SiteHeader from "../../components/SiteHeader.astro";
+import ReferendumHeader from "../../components/referendum/ReferendumHeader/ReferendumHeader.astro";
 import {
 	getReferendumPages,
 	getReferendumSections,
@@ -11,6 +11,7 @@ import {
 } from "../../data/referendum";
 import { siteCopy } from "../../data/site";
 import "../../styles/prose.css";
+import "../../styles/referendum-landing.css";
 
 export const prerender = true;
 
@@ -80,161 +81,50 @@ for (let i = 0; i < segments.length - 1; i++) {
 crumbs.push({ label: title });
 ---
 
-<BaseLayout title={`${title} | ${copy.meta.title}`} description={description} locale="sq">
-	<div class={`page-shell ${page ? "prose-lg" : ""}`}>
-		<SiteHeader locale="sq" copy={copy} currentPage="referendum" localePath="referendum" />
-
-		{
-			page && Content ? (
-				<main class="content-post prose prose-sm" id="main" tabindex="-1">
-					<article>
-						<header class="content-post__header">
-							<ArticleNav backHref={backHref} crumbs={crumbs} />
-							<h1>{title}</h1>
-							{page.data.description ? <p class="lead">{page.data.description}</p> : null}
-						</header>
-
-						<div class="content-post__body">
-							<Content />
-						</div>
-					</article>
-				</main>
-			) : (
-				<main class="content-page" id="main" tabindex="-1">
-					<section class="content-hero">
-						<ArticleNav backHref={backHref} crumbs={crumbs} />
-						<h1>
-							<span>{title}</span>
-						</h1>
-						<p class="lead">{description}</p>
-					</section>
-
-					<section class="content-list" aria-label={`Faqet nën ${title}`}>
-						{section!.children.map((child) => (
-							<article class="content-list__item">
-								<a href={`/referendum/${child.id}/`}>
-									<h2>{child.data.title}</h2>
-									{child.data.description ? <p>{child.data.description}</p> : null}
-								</a>
-							</article>
-						))}
-					</section>
-				</main>
-			)
-		}
-
-		<footer class="footer-note">
-			<p>{copy.footer.text}</p>
-			<nav class="footer-links" aria-label="Social links">
-				{
-					copy.footer.links.map((link) => (
-						<a href={link.href} target="_blank" rel="noreferrer">
-							{link.label}
-						</a>
-					))
-				}
-			</nav>
-		</footer>
+<ReferendumLayout
+	title={`${title} | ${copy.meta.title}`}
+	description={description}
+	shellClass={page ? "prose-lg referendum-content" : "referendum-content"}
+>
+	<div class="content-brand">
+		<ReferendumHeader copy={copy} brandHref="/referendum/" />
 	</div>
-</BaseLayout>
+	{
+		page && Content ? (
+			<main class="content-post prose prose-sm" id="main" tabindex="-1">
+				<article>
+					<header class="content-post__header">
+						<ArticleNav backHref={backHref} crumbs={crumbs} />
+						<h1>{title}</h1>
+						{page.data.description ? <p class="lead">{page.data.description}</p> : null}
+					</header>
 
-<style>
-	.content-post {
-		background: var(--paper);
-	}
+					<div class="content-post__body">
+						<Content />
+					</div>
+				</article>
+			</main>
+		) : (
+			<main class="content-page" id="main" tabindex="-1">
+				<section class="content-hero">
+					<ArticleNav backHref={backHref} crumbs={crumbs} />
+					<h1>
+						<span>{title}</span>
+					</h1>
+					<p class="lead">{description}</p>
+				</section>
 
-	.content-post__header {
-		padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem) 1.5rem;
-		background:
-			radial-gradient(circle at 86% 22%, rgba(255, 105, 184, 0.18), transparent 26%),
-			linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
-		border-bottom: 1px solid var(--line);
+				<section class="content-list" aria-label={`Faqet nën ${title}`}>
+					{section!.children.map((child) => (
+						<article class="content-list__item">
+							<a href={`/referendum/${child.id}/`}>
+								<h2>{child.data.title}</h2>
+								{child.data.description ? <p>{child.data.description}</p> : null}
+							</a>
+						</article>
+					))}
+				</section>
+			</main>
+		)
 	}
-
-	.content-post__header h1 {
-		display: block;
-		margin: 0.2rem 0 0.8rem;
-		max-width: none;
-		color: var(--ink);
-		font-family: var(--font-display);
-		font-size: clamp(2.4rem, 6vw, 4rem);
-		line-height: 0.98;
-	}
-
-	.content-post__body {
-		padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1rem, 5vw, 3.4rem) clamp(2rem, 5vw, 3.4rem);
-		font-size: 1.05rem;
-		line-height: 1.7;
-	}
-
-	.content-page {
-		display: grid;
-		gap: 0;
-		background: var(--paper);
-	}
-
-	.content-hero {
-		padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
-		background:
-			radial-gradient(circle at 86% 22%, rgba(255, 105, 184, 0.18), transparent 26%),
-			linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
-	}
-
-	.content-hero h1 {
-		display: block;
-		margin: 0.2rem 0 0.8rem;
-		max-width: none;
-		color: var(--ink);
-		font-family: var(--font-display);
-		font-size: clamp(2.6rem, 7vw, 4.4rem);
-		line-height: 0.95;
-	}
-
-	.content-hero h1 span {
-		display: inline;
-		padding: 0;
-		background: none;
-	}
-
-	.content-hero .lead {
-		max-width: 40rem;
-		margin: 0;
-	}
-
-	.content-list {
-		display: grid;
-		gap: 0;
-		padding: 0 clamp(1rem, 5vw, 3.4rem) clamp(2rem, 5vw, 3.4rem);
-		border-top: 1px solid var(--line);
-	}
-
-	.content-list__item {
-		border-bottom: 1px solid var(--line);
-	}
-
-	.content-list__item a {
-		display: grid;
-		gap: 0.45rem;
-		padding: 1.35rem 0;
-	}
-
-	.content-list__item h2 {
-		margin: 0;
-		max-width: none;
-		font-family: var(--font-display);
-		font-size: clamp(1.55rem, 3vw, 2rem);
-		line-height: 1.1;
-	}
-
-	.content-list__item p {
-		margin: 0;
-		max-width: 42rem;
-		color: var(--muted);
-		line-height: 1.55;
-	}
-
-	.content-list__item a:hover h2,
-	.content-list__item a:focus-visible h2 {
-		color: var(--accent-strong);
-	}
-</style>
+</ReferendumLayout>

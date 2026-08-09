@@ -1,0 +1,22 @@
+<script>
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const nodes = document.querySelectorAll(".referendum-landing [data-reveal]");
+
+	if (reduceMotion || !("IntersectionObserver" in window)) {
+		nodes.forEach((node) => node.classList.add("visible"));
+	} else {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("visible");
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+		);
+
+		nodes.forEach((node) => observer.observe(node));
+	}
+</script>

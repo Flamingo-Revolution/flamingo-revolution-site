@@ -1,0 +1,23 @@
+---
+interface Props {
+	current: "pse-referendum" | "si-nisi" | "pyetje-te-shpeshta";
+}
+
+const { current } = Astro.props;
+
+const links = [
+	{ id: "pse-referendum", href: "/referendum/pse-referendum/", label: "Pse referendum?" },
+	{ id: "si-nisi", href: "/referendum/si-nisi/", label: "Si nisi?" },
+	{ id: "pyetje-te-shpeshta", href: "/referendum/pyetje-te-shpeshta/", label: "Pyetje" }
+] as const;
+---
+
+<nav class="referendum-subnav shell" aria-label="Faqet e nismës">
+	{
+		links.map((link) => (
+			<a href={link.href} aria-current={link.id === current ? "page" : undefined}>
+				{link.label}
+			</a>
+		))
+	}
+</nav>

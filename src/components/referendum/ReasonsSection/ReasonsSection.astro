@@ -1,0 +1,54 @@
+---
+import { reasonEvidenceStrip, referendumReasons } from "../../../data/referendumReasons";
+---
+
+<section class="reasons-section" id="pse-referendum" aria-labelledby="reasons-title">
+	<div class="shell reasons-shell">
+		<header class="reasons-heading" data-reveal>
+			<p class="section-kicker">Pse ky referendum</p>
+			<h2 id="reasons-title">Katër arsye të dokumentuara.</h2>
+			<p>
+				Ligji 21/2024 hoqi ndalimet pothuajse absolute të ndërtimit në zonat e mbrojtura. Rruga
+				gjyqësore u mbyll. Mbetet neni 150 — 50.000 zgjedhës mund të kërkojnë shfuqizim me
+				referendum.
+			</p>
+		</header>
+
+		<ul class="evidence-strip" aria-label="Shifra kyçe" data-reveal>
+			{
+				reasonEvidenceStrip.map((item) => (
+					<li>
+						<strong>
+							{item.value}
+							{item.unit ? <span>{item.unit}</span> : null}
+						</strong>
+						<small>{item.label}</small>
+					</li>
+				))
+			}
+		</ul>
+
+		<nav class="reasons-grid" aria-label="Katër arsyet për referendum">
+			{
+				referendumReasons.map((reason) => (
+					<a href={reason.href} class="reason-card" data-reveal data-reason={reason.n}>
+						<span class="reason-card__n">{reason.n}</span>
+						<div class="reason-card__body">
+							<strong class="reason-card__title">{reason.title}</strong>
+							<p>{reason.claim}</p>
+						</div>
+						<div class="reason-card__stat" aria-hidden="true">
+							<em>{reason.stat.value}</em>
+							<small>{reason.stat.label}</small>
+						</div>
+						<span class="reason-card__go">Lexo arsyen <b aria-hidden="true">→</b></span>
+					</a>
+				))
+			}
+		</nav>
+
+		<p class="reasons-more" data-reveal>
+			<a href="/referendum/pse-referendum/">Lexo analizën e plotë me burime zyrtare</a>
+		</p>
+	</div>
+</section>
