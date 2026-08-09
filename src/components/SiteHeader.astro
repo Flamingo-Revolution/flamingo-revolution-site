@@ -1,31 +1,87 @@
 ---
 import type { Locale, SiteCopy } from "../data/site";
-import LocaleSwitch from "./LocaleSwitch.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+
+type NavPage =
+  | "home"
+  | "protests"
+  | "map"
+  | "pulse"
+  | "diaspora"
+  | "diaspora-reporters"
+  | "documents"
+  | "ideas"
+  | "times"
+  | "dossier"
+  | "about";
 
 interface Props {
   locale: Locale;
   copy: SiteCopy;
-  currentPage: "home" | "documents" | "ideas" | "map" | "pulse" | "contact" | "times" | "blog" | "referendum";
+  currentPage: NavPage;
   localePath?: string;
 }
 
 const { locale, copy, currentPage, localePath = "" } = Astro.props;
-
+const prefix = locale === "sq" ? "" : "/en";
 const homeHref = locale === "sq" ? "/" : "/en/";
-const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
-const ideasHref = locale === "sq" ? "/idete-tuaja/" : "/en/idete-tuaja/";
-const contactHref = locale === "sq" ? "/kontakt/" : "/en/kontakt/";
-const mapHref = locale === "sq" ? "/harta/" : "/en/map/";
-const pulseHref = "/pulsi-protestes/";
-const timesHref = "/flamingo-times/";
-const blogHref = "/blog/";
 
-const mapLabel = locale === "sq" ? "Harta" : "Map";
-const pulseLabel = locale === "sq" ? "Pulsi" : "Pulse";
+type NavItem = {
+  page: NavPage | NavPage[];
+  label: string;
+  href: string;
+  icon?: string;
+  divider?: boolean;
+};
+
+type NavGroup = {
+  id: string;
+  label: string;
+  items: NavItem[];
+};
+
+const navGroups: NavGroup[] = [
+  {
+    id: "lab",
+    label: copy.nav.labLabel,
+    items: [
+      { page: ["ideas", "documents"], label: copy.nav.ideasLabel, href: `${prefix}/idete-tuaja/`, icon: "bulb", divider: true },
+      { page: "times", label: copy.nav.timesLabel, href: `${prefix}/flamingo-times/`, icon: "newspaper" },
+      { page: "dossier", label: copy.nav.dossierLabel, href: `${prefix}/dosjet/`, icon: "folder", divider: true },
+      { page: "map", label: copy.nav.mapLabel, href: `${prefix}/harta/`, icon: "map" },
+      { page: "pulse", label: copy.nav.pulseLabel, href: `${prefix}/pulsi-protestes/`, icon: "pulse", divider: true },
+      { page: "diaspora", label: copy.nav.diasporaLabel, href: `${prefix}/diaspora-zbarkon/`, icon: "calendar" },
+      { page: "diaspora-reporters", label: copy.nav.diasporaReportersLabel, href: `${prefix}/reporteret-e-diaspores/`, icon: "mic" }
+    ]
+  }
+];
+
+const matchesCurrent = (page: NavPage | NavPage[], current: NavPage) =>
+  Array.isArray(page) ? page.includes(current) : page === current;
+
+const socialIcons: Record<string, string> = {
+  Discord:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 5.1A16.2 16.2 0 0 0 15 3.9l-.2.4c1.4.4 2.1 1 2.1 1a13 13 0 0 0-9.8 0s.7-.6 2.2-1L9 3.9A16 16 0 0 0 5.1 5.1C2.6 8.8 1.9 12.4 2.2 16c1.6 1.2 3.2 1.9 4.8 2.4l1-1.7c-.6-.2-1.1-.5-1.6-.8l.4-.3c3.1 1.4 6.4 1.4 9.4 0l.4.3c-.5.3-1 .6-1.6.8l1 1.7c1.6-.5 3.2-1.2 4.8-2.4.4-4.2-.7-7.7-2.9-10.9ZM8.4 13.8c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8S10 11 10 12s-.7 1.8-1.6 1.8Zm7.2 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z"/></svg>'
+};
+const getSocialIcon = (label: string) => socialIcons[label] ?? "";
+
+const navIcons: Record<string, string> = {
+  bulb: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6V16h5.4v-.5c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3Z"/></svg>',
+  newspaper:
+    '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Z"/><path d="M16 8h2a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2"/><path d="M7 9h6"/><path d="M7 12h6"/><path d="M7 15h4"/></svg>',
+  folder:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9a1 1 0 0 1 1-1h4l1.5 1.6H19a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9Z" fill="#f87171" stroke="#b91c1c" stroke-width="1" stroke-linejoin="round" transform="translate(-1,-1.5)"/><path d="M4 9a1 1 0 0 1 1-1h4l1.5 1.6H19a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9Z" fill="#dc2626" stroke="#7f1d1d" stroke-width="1" stroke-linejoin="round"/></svg>',
+  map: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 4 6v14l5-2 6 2 5-2V4l-5 2-6-2Z"/><path d="M9 4v14"/><path d="M15 6v14"/></svg>',
+  pulse:
+    '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>',
+  calendar:
+    '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M3.5 9.5h17"/></svg>',
+  mic: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>'
+};
+const getNavIcon = (icon?: string) => (icon ? navIcons[icon] ?? "" : "");
 ---
 
-<header class="topbar">
+<header class="topbar" data-topbar>
   <a class="brand" href={homeHref} aria-label={copy.nav.homeLabel}>
     <span class="brand__mark">
       <img class="brand__logo brand__logo--light" src="/images/flamingo-wordmark-light.svg" alt={copy.brand.logoAlt} width="419" height="187" />
@@ -50,54 +106,63 @@ const pulseLabel = locale === "sq" ? "Pulsi" : "Pulse";
 
   <div class="topbar__actions" id="topbar-actions" data-menu-actions>
     <nav class="site-menu" aria-label={copy.nav.menuLabel}>
+      <a href={homeHref} aria-current={currentPage === "home" ? "page" : undefined}>{copy.nav.homeLabel}</a>
+      <a href={`${prefix}/protestat/`} aria-current={currentPage === "protests" ? "page" : undefined}>{copy.nav.protestsLabel}</a>
       {
-        currentPage === "referendum" ? (
-          <>
-            <a href={timesHref} target="_blank" rel="noreferrer">{copy.nav.timesLabel}</a>
-            <a href={documentsHref} target="_blank" rel="noreferrer">{copy.nav.documentsLabel}</a>
-            <a href={ideasHref} target="_blank" rel="noreferrer">{copy.nav.ideasLabel}</a>
-            <a href={mapHref} target="_blank" rel="noreferrer">{mapLabel}</a>
-            <a href={pulseHref} target="_blank" rel="noreferrer">{pulseLabel}</a>
-            <a href={contactHref} target="_blank" rel="noreferrer">{copy.nav.contactLabel}</a>
-          </>
-        ) : currentPage === "home" ? (
-          <>
-            <a href={homeHref} aria-current="page">{copy.nav.homeLabel}</a>
-            <a href={timesHref}>{copy.nav.timesLabel}</a>
-            <a href={documentsHref}>{copy.nav.documentsLabel}</a>
-            <a href={ideasHref}>{copy.nav.ideasLabel}</a>
-            <a href={mapHref}>{mapLabel}</a>
-            <a href={pulseHref}>{pulseLabel}</a>
-            <a href={contactHref}>{copy.nav.contactLabel}</a>
-          </>
-        ) : (
-          <>
-            <a href={homeHref} aria-current={currentPage === "home" ? "page" : undefined}>{copy.nav.homeLabel}</a>
-            <a href={timesHref} aria-current={currentPage === "times" ? "page" : undefined}>
-              {copy.nav.timesLabel}
-            </a>
-            <a href={documentsHref} aria-current={currentPage === "documents" ? "page" : undefined}>
-              {copy.nav.documentsLabel}
-            </a>
-            <a href={ideasHref} aria-current={currentPage === "ideas" ? "page" : undefined}>
-              {copy.nav.ideasLabel}
-            </a>
-            <a href={mapHref} aria-current={currentPage === "map" ? "page" : undefined}>
-              {mapLabel}
-            </a>
-            <a href={pulseHref} aria-current={currentPage === "pulse" ? "page" : undefined}>
-              {pulseLabel}
-            </a>
-            <a href={contactHref} aria-current={currentPage === "contact" ? "page" : undefined}>{copy.nav.contactLabel}</a>
-          </>
-        )
+        navGroups.map((group) => {
+          const isActive = group.items.some((item) => matchesCurrent(item.page, currentPage));
+          const menuId = `nav-${group.id}`;
+          return (
+            <div class="nav-group" data-nav-group>
+              <button
+                type="button"
+                class="nav-group__trigger"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls={menuId}
+                data-nav-trigger
+                data-active={isActive ? "true" : undefined}
+              >
+                <span>{group.label}</span>
+                <span class="nav-group__chevron" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </button>
+              <div class="nav-group__menu" id={menuId} data-nav-menu>
+                {group.items.map((item) => (
+                  <Fragment>
+                    <a href={item.href} aria-current={matchesCurrent(item.page, currentPage) ? "page" : undefined}>
+                      {item.icon && (
+                        <span class="nav-group__menu-icon" aria-hidden="true" set:html={getNavIcon(item.icon)} />
+                      )}
+                      <span>{item.label}</span>
+                    </a>
+                    {item.divider && <span class="nav-group__menu-divider" role="separator" aria-hidden="true" />}
+                  </Fragment>
+                ))}
+              </div>
+            </div>
+          );
+        })
       }
+      <a href={`${prefix}/rreth-nesh/`} aria-current={currentPage === "about" ? "page" : undefined}>{copy.nav.aboutLabel}</a>
     </nav>
-    <a class="button button--primary topbar-cta" href={copy.hero.participateLink}>
-      {copy.hero.primaryCta}
-    </a>
-    <LocaleSwitch currentLocale={locale} currentPath={localePath} />
-    <ThemeToggle labels={copy.theme} />
+    <div class="topbar__icons">
+      <nav class="header-socials" aria-label="Social links">
+        {
+          copy.footer.links
+            .filter((link) => link.label === "Discord")
+            .map((link) => (
+              <a class="header-socials__link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+                <Fragment set:html={getSocialIcon(link.label)} />
+              </a>
+            ))
+        }
+      </nav>
+      <ThemeToggle labels={copy.theme} />
+    </div>
   </div>
 </header>
 
@@ -140,10 +205,83 @@ const pulseLabel = locale === "sq" ? "Pulsi" : "Pulse";
     });
   };
 
-  document.addEventListener("astro:page-load", attachHeaderMenu);
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", attachHeaderMenu, { once: true });
-  } else {
+  const attachNavGroups = () => {
+    const groups = Array.from(document.querySelectorAll("[data-nav-group]"));
+
+    const closeGroup = (group) => {
+      const trigger = group.querySelector("[data-nav-trigger]");
+      group.dataset.open = "false";
+      trigger?.setAttribute("aria-expanded", "false");
+    };
+
+    groups.forEach((group) => {
+      const trigger = group.querySelector("[data-nav-trigger]");
+      if (!(trigger instanceof HTMLButtonElement) || trigger.dataset.navBound === "true") return;
+      trigger.dataset.navBound = "true";
+
+      trigger.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const willOpen = trigger.getAttribute("aria-expanded") !== "true";
+        groups.forEach((other) => {
+          if (other !== group) closeGroup(other);
+        });
+        group.dataset.open = willOpen ? "true" : "false";
+        trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      });
+    });
+
+    if (document.body.dataset.navOutsideBound === "true") return;
+    document.body.dataset.navOutsideBound = "true";
+
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      document.querySelectorAll("[data-nav-group]").forEach((group) => {
+        if (group.dataset.open === "true" && !group.contains(event.target)) closeGroup(group);
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      document.querySelectorAll('[data-nav-group][data-open="true"]').forEach(closeGroup);
+    });
+  };
+
+  const attachScrollCompact = () => {
+    const header = document.querySelector("[data-topbar]");
+    if (!(header instanceof HTMLElement) || header.dataset.scrollBound === "true") return;
+    header.dataset.scrollBound = "true";
+
+    const threshold = 24;
+    let ticking = false;
+
+    const update = () => {
+      header.dataset.scrolled = window.scrollY > threshold ? "true" : "false";
+      ticking = false;
+    };
+
+    update();
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      },
+      { passive: true }
+    );
+  };
+
+  const attachAll = () => {
     attachHeaderMenu();
+    attachNavGroups();
+    attachScrollCompact();
+  };
+
+  document.addEventListener("astro:page-load", attachAll);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachAll, { once: true });
+  } else {
+    attachAll();
   }
 </script>

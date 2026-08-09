@@ -12,6 +12,7 @@ interface Props {
 
 const { locale, siteCopy } = Astro.props;
 const copy = ideasPageCopy[locale];
+const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 ---
 
 <BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
@@ -27,6 +28,9 @@ const copy = ideasPageCopy[locale];
           <div class="hero__actions">
             <a class="button button--primary" href="#ideas-compose-input">
               {copy.formLabel}
+            </a>
+            <a class="button button--ghost" href={documentsHref}>
+              {copy.documentsCta}
             </a>
           </div>
         </div>

@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
+import SiteHeader from "./SiteHeader.astro";
+import type { Locale, SiteCopy } from "../data/site";
+
+type NavPage =
+  | "home"
+  | "protest-list"
+  | "map"
+  | "pulse"
+  | "diaspora"
+  | "documents"
+  | "ideas"
+  | "times"
+  | "dossier"
+  | "mission"
+  | "team"
+  | "contact";
+
+interface Props {
+  locale: Locale;
+  siteCopy: SiteCopy;
+  currentPage: NavPage;
+  localePath: string;
+  title: string;
+  description: string;
+  src: string;
+}
+
+const { locale, siteCopy, currentPage, localePath, title, description, src } = Astro.props;
+---
+
+<BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale}>
+  <div class="page-shell">
+    <SiteHeader locale={locale} copy={siteCopy} currentPage={currentPage} localePath={localePath} />
+
+    <main class="embed-page" id="main" tabindex="-1">
+      <section class="embed-frame-section" aria-label={title}>
+        <div class="embed-frame">
+          <iframe src={src} title={title} loading="eager" allowfullscreen></iframe>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter locale={locale} copy={siteCopy} />
+  </div>
+</BaseLayout>

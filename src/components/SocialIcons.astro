@@ -1,0 +1,24 @@
+---
+import { getSocialIcon } from "../data/socialIcons";
+
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  links: Link[];
+}
+
+const { links } = Astro.props;
+---
+
+<nav class="footer-links" aria-label="Social links">
+  {
+    links.map((link) => (
+      <a href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+        <Fragment set:html={getSocialIcon(link.label)} />
+      </a>
+    ))
+  }
+</nav>

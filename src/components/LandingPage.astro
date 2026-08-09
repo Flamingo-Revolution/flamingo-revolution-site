@@ -10,7 +10,6 @@ interface Props {
 
 const { locale, copy } = Astro.props;
 const titleWords = copy.hero.title.split(" ");
-const isExternalLink = (href: string) => href.startsWith("http");
 const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 ---
 
@@ -48,6 +47,25 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 
       </section>
 
+      <section class="section-block stats-block" id="stats">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.stats.kicker}</p>
+          <h2>{copy.stats.title}</h2>
+          <p>{copy.stats.description}</p>
+        </div>
+
+        <div class="stats-grid">
+          {
+            copy.stats.items.map((stat) => (
+              <article class="stat-tile">
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
       <section class="section-block" id="manifesto">
         <div class="section-heading">
           <p class="eyebrow">{copy.manifesto.kicker}</p>
@@ -61,6 +79,24 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
               <article class="info-card">
                 <h3>{card.title}</h3>
                 <p>{card.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block" id="kerkesat">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.hero.demandsKicker}</p>
+          <h2>{copy.hero.demandsTitle}</h2>
+        </div>
+
+        <div class="council-board" aria-label={copy.hero.demandsTitle}>
+          {
+            copy.hero.demands.map((demand, index) => (
+              <article class="council-note">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{demand}</strong>
               </article>
             ))
           }
@@ -86,46 +122,15 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
         </div>
       </section>
 
-      <section class="section-block section-block--council" id="council">
-        <div class="section-heading">
-          <p class="eyebrow">{copy.council.kicker}</p>
-          <h2>{copy.council.title}</h2>
-          <p>{copy.council.description}</p>
-        </div>
-
-        <div class="council-board" aria-label={copy.council.kicker}>
-          {
-            copy.council.notes.map((note, index) => (
-              <article class="council-note">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{note}</strong>
-              </article>
-            ))
-          }
-        </div>
-
-        <div class="hero__actions">
-          <a class="button button--primary" href={copy.council.primaryLink.href}>
-            {copy.council.primaryLink.label}
-          </a>
+      <section class="culture-note" id="culture">
+        <span class="culture-note__mark" aria-hidden="true"></span>
+        <div class="culture-note__content">
+          <p class="eyebrow">{copy.culture.kicker}</p>
+          <h2>{copy.culture.title}</h2>
+          <p>{copy.culture.body}</p>
         </div>
       </section>
 
-      <section class="closing">
-        <blockquote>{copy.closing.quote}</blockquote>
-        <p>{copy.closing.note}</p>
-
-        <div class="hero__actions">
-          <a
-            class="button button--primary"
-            href={copy.closing.primaryLink.href}
-            target={isExternalLink(copy.closing.primaryLink.href) ? "_blank" : undefined}
-            rel={isExternalLink(copy.closing.primaryLink.href) ? "noreferrer" : undefined}
-          >
-            {copy.closing.primaryLink.label}
-          </a>
-        </div>
-      </section>
     </main>
 
   </SiteFrame>
