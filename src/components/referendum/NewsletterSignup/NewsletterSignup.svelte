@@ -38,8 +38,6 @@
 
 	async function onSubmit(event: Event) {
 		event.preventDefault();
-		success = 'U regjistrua. Do të njoftohesh për hapat e ardhshëm të referendumit.';
-		return;
 		if (submitting) return;
 
 		const trimmed = email.trim();
