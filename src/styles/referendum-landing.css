@@ -494,7 +494,8 @@
 }
 
 .referendum-landing .landing-nav__links a:hover,
-.referendum-landing .landing-nav__links a:focus-visible {
+.referendum-landing .landing-nav__links a:focus-visible,
+.referendum-landing .landing-nav__links a[aria-current="true"] {
 	border-color: var(--ink);
 	background: var(--surface);
 	box-shadow: 2px 2px 0 var(--ink);
