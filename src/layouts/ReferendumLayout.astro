@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import { siteCopy } from "../data/site";
+import SiteFooter from "@components/SiteFooter.astro";
 
 interface Props {
 	title: string;
@@ -30,17 +31,6 @@ const copy = siteCopy.sq;
 >
 	<div class:list={["page-shell", "referendum-shell", shellClass]}>
 		<slot />
-		<footer class="footer-note">
-			<p>{copy.footer.text}</p>
-			<nav class="footer-links" aria-label="Social links">
-				{
-					copy.footer.links.map((link) => (
-						<a href={link.href} target="_blank" rel="noreferrer">
-							{link.label}
-						</a>
-					))
-				}
-			</nav>
-		</footer>
+		<SiteFooter locale="sq" {copy} />
 	</div>
 </BaseLayout>
