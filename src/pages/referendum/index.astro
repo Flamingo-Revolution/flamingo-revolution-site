@@ -1,0 +1,254 @@
+---
+import ReferendumLayout from "../../layouts/ReferendumLayout.astro";
+import NewsletterSignup from "../../components/referendum/NewsletterSignup/NewsletterSignup.svelte";
+import ReferendumStatusBar from "../../components/referendum/ReferendumStatusBar/ReferendumStatusBar.astro";
+import ReferendumReveal from "../../components/referendum/ReferendumReveal/ReferendumReveal.astro";
+import LandingNav from "../../components/referendum/LandingNav/LandingNav.svelte";
+import ReasonsSection from "../../components/referendum/ReasonsSection/ReasonsSection.astro";
+import OriginSection from "../../components/referendum/OriginSection/OriginSection.astro";
+import FAQSection from "../../components/referendum/FAQSection/FAQSection.svelte";
+import ReferendumHeader from "../../components/referendum/ReferendumHeader/ReferendumHeader.astro";
+import { getReferendumIndexItems } from "../../data/referendum";
+import { landingFaqs } from "../../data/referendumFaq";
+import { siteCopy } from "../../data/site";
+import "../../styles/referendum-landing.css";
+
+export const prerender = true;
+
+const copy = siteCopy.sq;
+const items = await getReferendumIndexItems();
+
+const title = "Referendumi për Ligjin 21/2024";
+const description =
+	"Nisma qytetare për referendumin për shfuqizimin e Ligjit nr. 21/2024. Regjistrohu për njoftime mbi KQZ-në dhe mbledhjen e firmave.";
+---
+
+<ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
+	<div class="referendum-landing">
+		<ReferendumStatusBar processHref="#procesi" />
+		<LandingNav client:load />
+
+		<main id="main" tabindex="-1">
+			<section class="hero" id="njoftime" aria-labelledby="deklarata-title">
+				<div class="shell hero-center" data-reveal>
+					<ReferendumHeader copy={copy} />
+
+					<div class="hero-split">
+						<div class="hero-copy">
+							<p class="eyebrow"><span></span> Referendum 21/2024</p>
+							<h1 id="deklarata-title">
+								<span class="hero-line">Natyra <span class="slogan-emph">nuk shitet,</span></span>
+								<span class="hero-line">mbrohet,</span>
+								<span class="hero-line">trashëgohet!</span>
+							</h1>
+							<p class="hero-lede">
+								Nisma qytetare kërkon shfuqizimin e Ligjit nr. 21/2024. Lini email-in për t’u treguar gatishmërinë tuaj për të firmosur.
+							</p>
+						</div>
+
+						<div class="hero-aside">
+							<div class="hero-signup">
+								<h2 id="njoftime-title" class="sr-only">Merr njoftime për referendumin</h2>
+								<NewsletterSignup client:load reason="referendum" headingId="njoftime-title" />
+							</div>
+							<div class="hero-metrics" role="group" aria-label="Të dhënat kryesore të nismës">
+								<span><strong>12</strong><small>nismëtarë</small></span>
+								<span><strong>50.000</strong><small>firma të vlefshme</small></span>
+								<span><strong>1</strong><small>vendim qytetar</small></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="statement-section" id="deklarata" aria-labelledby="statement-title">
+				<div class="shell statement-grid" data-reveal>
+					<aside class="statement-meta">
+						<p class="section-kicker">Deklarata publike</p>
+						<span>Tiranë</span>
+						<span>7 Gusht 2026</span>
+						<span>Nismë qytetare · Jopartiake</span>
+					</aside>
+					<article class="statement-copy">
+						<h2 id="statement-title">
+							Për një referendum qytetar mbi shfuqizimin e Ligjit nr. 21/2024
+						</h2>
+						<p class="lead">
+							Ne, qytetarë, aktivistë dhe përfaqësues të shoqërisë civile, kemi nisur procedurën
+							kushtetuese për t’u kërkuar qytetarëve shqiptarë të vendosin mbi të ardhmen e zonave
+							të mbrojtura.
+						</p>
+						<p>
+							Në bazë të nenit 150 të Kushtetutës, grupi nismëtar i është drejtuar zyrtarisht
+							KQZ-së me kërkesën për referendum kombëtar që shfuqizon Ligjin nr. 21/2024 — ndryshimet
+							mbi Ligjin nr. 81/2017 «Për zonat e mbrojtura».
+						</p>
+						<p>
+							Ligji 21/2024 hapi rrugën për projekte turistike e infrastrukturore brenda zonave të
+							mbrojtura. Pasojat janë të pakthyeshme: rrezikohen habitate, specie dhe peizazhe që
+							përbëjnë pasuri të patjetërsueshme të kombit. Kur Kuvendi nuk shfuqizon dhe Gjykata
+							Kushtetuese nuk e rikthen mbrojtjen, mjeti i mbetur është referendumi.
+						</p>
+						<blockquote>
+							Kur një vendim prek pasurinë që u përket të gjithëve, qytetarët duhet të kenë mjetin
+							për të thënë fjalën e tyre.
+						</blockquote>
+						<p>
+							Depozitimi në KQZ ka përfunduar. Mbledhja e 50.000 firmave nuk ka nisur ende — fillon
+							vetëm pasi KQZ-ja të miratojë kërkesën dhe fletët-tip. Deri atëherë ndërtojmë rrjetin e
+							vullnetarëve dhe transparencën publike.
+						</p>
+						<p class="signature-line"><strong>Grupi nismëtar</strong></p>
+					</article>
+				</div>
+			</section>
+
+			<ReasonsSection />
+
+			<section class="process-section" id="procesi" aria-labelledby="process-title">
+				<div class="shell process-center" data-reveal>
+					<p class="section-kicker">Ku jemi tani?</p>
+					<h2 id="process-title">Depozituar në KQZ — firmat nuk kanë nisur ende</h2>
+					<div class="current-step">
+						<span>Gjendja aktuale</span>
+						<strong>02</strong>
+						<h3>Në pritje të konfirmimit nga KQZ-ja</h3>
+						<p>
+							Kërkesa është depozituar. Mbledhja e firmave nis vetëm pasi KQZ-ja të konfirmojë
+							kërkesën dhe të miratojë fletët-tip zyrtare.
+						</p>
+					</div>
+					<ol class="process-list">
+						<li class="done">
+							<span>01</span>
+							<div>
+								<strong>Grupi nismëtar</strong>
+								<small>Të paktën 12 zgjedhës të regjistruar</small>
+							</div>
+						</li>
+						<li class="active" aria-current="step">
+							<span>02</span>
+							<div>
+								<em>Gjendja aktuale</em>
+								<strong>Depozitimi në KQZ</strong>
+								<small>Kërkesa është depozituar · në pritje të konfirmimit</small>
+							</div>
+						</li>
+						<li class="upcoming-signatures">
+							<span>03</span>
+							<div>
+								<strong>50.000+ firma</strong>
+								<small>Nuk ka nisur ende · fillon pas konfirmimit nga KQZ-ja</small>
+							</div>
+						</li>
+						<li>
+							<span>04</span>
+							<div>
+								<strong>Verifikimi nga KQZ</strong>
+								<small>Kontrolli i nënshkrimeve dhe dokumenteve</small>
+							</div>
+						</li>
+						<li>
+							<span>05</span>
+							<div>
+								<strong>Gjykata Kushtetuese</strong>
+								<small>Kontrolli i objektit të referendumit</small>
+							</div>
+						</li>
+						<li>
+							<span>06</span>
+							<div>
+								<strong>Dekreti i Presidentit</strong>
+								<small>Caktimi i datës së referendumit</small>
+							</div>
+						</li>
+						<li>
+							<span>07</span>
+							<div>
+								<strong>Votimi dhe rezultati</strong>
+								<small>Vendimi i qytetarëve</small>
+							</div>
+						</li>
+					</ol>
+					<div class="process-cta">
+						<p>Nëse dëshironi të bëheni vullnetarë në mbledhjen e 50.000 firmave, angazhohuni këtu.</p>
+						<a class="button button-engage" href="https://pershqiperine.netlify.app">
+							Angazhohu <span aria-hidden="true">→</span>
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<OriginSection />
+
+			<section class="docs-section" id="dokumentimi" aria-labelledby="dokumentimi-title">
+				<div class="shell docs-center">
+					<div class="docs-heading" data-reveal>
+						<p class="section-kicker">Dokumentimi</p>
+						<h2 id="dokumentimi-title">Lexo dosjet e nismës</h2>
+						<p>
+							Referenca nga artikujt e publikuar: ligji, shkeljet, mekanizmat dhe deklaratat.
+						</p>
+					</div>
+					<section class="docs-list" aria-label="Faqet e referendumit" data-reveal>
+						{
+							items.map((item) =>
+								item.kind === "page" ? (
+									<article class="docs-list__item">
+										<a href={`/referendum/${item.page.id}/`}>
+											<h3>{item.page.data.title}</h3>
+											{item.page.data.description ? <p>{item.page.data.description}</p> : null}
+										</a>
+									</article>
+								) : (
+									<article class="docs-list__item">
+										<a href={`/referendum/${item.section.id}/`}>
+											<h3>{item.section.title}</h3>
+											<p>{item.section.children.length} dosje</p>
+										</a>
+									</article>
+								)
+							)
+						}
+					</section>
+				</div>
+			</section>
+
+			<FAQSection client:load faqs={landingFaqs} title="Çfarë duhet të dimë?" />
+
+			<section class="times-action" id="vepro">
+				<div class="times-action__demands">
+					<p class="times-label">Çfarë mund të bëni ju?</p>
+					<h2>Fjala juaj ka vlerë.</h2>
+					<p>
+						Nënshkruani peticionin 50,000 firma nevojiten sipas Nenit 150 të Kushtetutës për të
+						kërkuar referendum. Flisni me fëmijët tuaj — ata në diasporë mund të ndikojnë.
+						Dërgojuni këtë faqe. Bisedoni.
+					</p>
+				</div>
+				<aside class="times-action__card">
+					<div class="times-action__brand">
+						<img
+							src="/images/flamingo-wordmark-light.svg"
+							alt="Flamingo Revolution"
+							width="419"
+							height="187"
+						/>
+						<a href="https://flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+							<span>flamingorevolution.eu</span>
+							<img
+								class="times-action__qr"
+								src="/images/qr-code/png/black.png"
+								alt="QR code për flamingorevolution.eu"
+								width="480"
+								height="480"
+							/>
+						</a>
+					</div>
+				</aside>
+			</section>
+		</main>
+	</div>
+
+	<ReferendumReveal />
+</ReferendumLayout>

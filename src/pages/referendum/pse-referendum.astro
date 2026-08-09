@@ -1,0 +1,30 @@
+---
+import ReferendumLayout from "../../layouts/ReferendumLayout.astro";
+import ReferendumStatusBar from "../../components/referendum/ReferendumStatusBar/ReferendumStatusBar.astro";
+import ReferendumSubnav from "../../components/referendum/ReferendumSubnav/ReferendumSubnav.astro";
+import ReferendumReveal from "../../components/referendum/ReferendumReveal/ReferendumReveal.astro";
+import PseReferendumArticle from "../../components/referendum/PseReferendumArticle/PseReferendumArticle.astro";
+import { siteCopy } from "../../data/site";
+import "../../styles/referendum-landing.css";
+
+export const prerender = true;
+
+const copy = siteCopy.sq;
+const title = "Pse referendum?";
+const description =
+	"Pse kërkohet referendumi për shfuqizimin e Ligjit nr. 21/2024 — katër arsye të dokumentuara.";
+---
+
+<ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
+	<div class="referendum-landing referendum-subpage">
+		<ReferendumStatusBar />
+		<main id="main" tabindex="-1">
+			<div class="shell page-return">
+				<a href="/referendum/">← Kthehu në faqen kryesore</a>
+			</div>
+			<ReferendumSubnav current="pse-referendum" />
+			<PseReferendumArticle />
+		</main>
+	</div>
+	<ReferendumReveal />
+</ReferendumLayout>

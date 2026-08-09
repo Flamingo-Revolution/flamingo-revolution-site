@@ -648,6 +648,10 @@
 	height: auto;
 }
 
+html[data-theme='dark'] .times-action__qr {
+	filter: invert(1);
+}
+
 .times-source {
 	display: flex;
 	justify-content: space-between;

@@ -47,6 +47,9 @@ export type SiteCopy = {
     diasporaLabel: string;
     diasporaReportersLabel: string;
     labLabel: string;
+    documentsLabel: string;
+    timesLabel: string;
+    blogLabel: string;
     ideasLabel: string;
     timesLabel: string;
     dossierLabel: string;
@@ -134,6 +137,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       timesLabel: "Flamingo Times",
       dossierLabel: "Flamingo Dossier",
       aboutLabel: "Rreth nesh",
+      blogLabel: "Blog",
+      ideasLabel: "Idete tuaja",
+      contactLabel: "Kontakt",
       menuLabel: "Menuja kryesore"
     },
     theme: {
@@ -315,6 +321,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       timesLabel: "Flamingo Times",
       dossierLabel: "Flamingo Dossier",
       aboutLabel: "About us",
+      blogLabel: "Blog",
+      ideasLabel: "Your ideas",
+      contactLabel: "Contact",
       menuLabel: "Main menu"
     },
     theme: {

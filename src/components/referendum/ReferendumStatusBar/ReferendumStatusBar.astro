@@ -1,0 +1,16 @@
+---
+interface Props {
+	processHref?: string;
+}
+
+const { processHref = "/referendum/#procesi" } = Astro.props;
+---
+
+<div class="status-bar" role="status">
+	<div class="shell status-inner">
+		<span class="status-dot" aria-hidden="true"></span>
+		<strong>Ku jemi tani:</strong>
+		<span>Në pritje të konfirmimit nga KQZ-ja</span>
+		<a href={processHref}>Shiko procesin <span aria-hidden="true">↓</span></a>
+	</div>
+</div>

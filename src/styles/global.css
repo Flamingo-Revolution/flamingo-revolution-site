@@ -116,7 +116,7 @@ img {
 	min-height: 100dvh;
 	margin: 0 auto;
 	background:
-		linear-gradient(180deg, var(--accent) 0 1.3rem, transparent 1.3rem),
+		linear-gradient(180deg, var(--accent) 0 0.3rem, transparent 0.3rem),
 		radial-gradient(circle at 12% 35%, rgba(255, 105, 184, 0.12), transparent 28%),
 		radial-gradient(circle at 82% 68%, rgba(113, 183, 218, 0.18), transparent 25%), var(--paper);
 	box-shadow: var(--shadow);
@@ -1854,7 +1854,7 @@ h3 {
 	line-height: 1.65;
 }
 
-blockquote {
+.closing blockquote {
 	max-width: 18ch;
 	font-family: var(--font-display);
 	font-size: clamp(2.4rem, 6vw, 4.5rem);

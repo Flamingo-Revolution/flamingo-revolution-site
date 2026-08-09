@@ -1,0 +1,130 @@
+---
+import { getEntry, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import ReferendumLayout from "../../layouts/ReferendumLayout.astro";
+import ArticleNav from "../../components/ArticleNav.astro";
+import ReferendumHeader from "../../components/referendum/ReferendumHeader/ReferendumHeader.astro";
+import {
+	getReferendumPages,
+	getReferendumSections,
+	type ReferendumSection
+} from "../../data/referendum";
+import { siteCopy } from "../../data/site";
+import "../../styles/prose.css";
+import "../../styles/referendum-landing.css";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+	const pages = await getReferendumPages();
+	const sections = await getReferendumSections();
+
+	return [
+		...pages.map((page) => ({
+			params: { id: page.id },
+			props: { page, section: null }
+		})),
+		...sections.map((section) => ({
+			params: { id: section.id },
+			props: { page: null, section }
+		}))
+	];
+}
+
+interface Props {
+	page: CollectionEntry<"referendum"> | null;
+	section: ReferendumSection | null;
+}
+
+const { page, section } = Astro.props;
+const copy = siteCopy.sq;
+
+const title = page?.data.title ?? section!.title;
+const description =
+	page?.data.description ??
+	(section ? `Faqet nën ${section.title}.` : undefined) ??
+	copy.meta.description;
+
+const Content = page ? (await render(page)).Content : null;
+
+const publishedPages = await getReferendumPages();
+const pageIds = new Set(publishedPages.map((entry) => entry.id));
+const sectionsById = new Map((await getReferendumSections()).map((entry) => [entry.id, entry]));
+
+const crumbs: { label: string; href?: string }[] = [
+	{ label: "Referendum", href: "/referendum/" }
+];
+const pathId = page?.id ?? section!.id;
+const segments = pathId.split("/");
+let backHref = "/referendum/";
+
+// Walk ancestors only (exclude the current page/section segment).
+for (let i = 0; i < segments.length - 1; i++) {
+	const parentId = segments.slice(0, i + 1).join("/");
+
+	if (pageIds.has(parentId)) {
+		const parentPage = await getEntry("referendum", parentId);
+		if (parentPage && !parentPage.data.draft) {
+			crumbs.push({ label: parentPage.data.title, href: `/referendum/${parentId}/` });
+			backHref = `/referendum/${parentId}/`;
+		}
+		continue;
+	}
+
+	const parentSection = sectionsById.get(parentId);
+	if (parentSection) {
+		crumbs.push({ label: parentSection.title, href: `/referendum/${parentId}/` });
+		backHref = `/referendum/${parentId}/`;
+	}
+}
+
+crumbs.push({ label: title });
+---
+
+<ReferendumLayout
+	title={`${title} | ${copy.meta.title}`}
+	description={description}
+	shellClass={page ? "prose-lg referendum-content" : "referendum-content"}
+>
+	<div class="content-brand">
+		<ReferendumHeader copy={copy} brandHref="/referendum/" />
+	</div>
+	{
+		page && Content ? (
+			<main class="content-post prose prose-sm" id="main" tabindex="-1">
+				<article>
+					<header class="content-post__header">
+						<ArticleNav backHref={backHref} crumbs={crumbs} />
+						<h1>{title}</h1>
+						{page.data.description ? <p class="lead">{page.data.description}</p> : null}
+					</header>
+
+					<div class="content-post__body">
+						<Content />
+					</div>
+				</article>
+			</main>
+		) : (
+			<main class="content-page" id="main" tabindex="-1">
+				<section class="content-hero">
+					<ArticleNav backHref={backHref} crumbs={crumbs} />
+					<h1>
+						<span>{title}</span>
+					</h1>
+					<p class="lead">{description}</p>
+				</section>
+
+				<section class="content-list" aria-label={`Faqet nën ${title}`}>
+					{section!.children.map((child) => (
+						<article class="content-list__item">
+							<a href={`/referendum/${child.id}/`}>
+								<h2>{child.data.title}</h2>
+								{child.data.description ? <p>{child.data.description}</p> : null}
+							</a>
+						</article>
+					))}
+				</section>
+			</main>
+		)
+	}
+</ReferendumLayout>
