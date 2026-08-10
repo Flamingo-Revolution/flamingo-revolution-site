@@ -12,6 +12,18 @@ export type FlamingoTimesIssue = {
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
   {
+    number: 4,
+    date: "Gusht 2026",
+    datetime: "2026-08",
+    title: "Diaspora rizbarkon",
+    category: "Diaspora & qytetaria",
+    excerpt:
+      "Një komb i shpërndarë, një zë i përbashkët. Mbi 280 protesta në më shumë se 70 qytete të botës.",
+    topics: ["diaspora", "protesta", "Zvërneci", "qytetaria", "mërgata"],
+    href: "/flamingo-times/artikujt/botimi-4/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-4.pdf"
+  },
+  {
     number: 3,
     date: "Gusht 2026",
     datetime: "2026-08",
