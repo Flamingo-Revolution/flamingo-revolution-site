@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
+import SiteHeader from "./SiteHeader.astro";
+import type { Locale, SiteCopy } from "../data/site";
+
+type NavPage =
+  | "home"
+  | "protests"
+  | "map"
+  | "pulse"
+  | "diaspora"
+  | "diaspora-reporters"
+  | "documents"
+  | "ideas"
+  | "times"
+  | "dossier"
+  | "about";
+
+interface Props {
+  locale: Locale;
+  siteCopy: SiteCopy;
+  currentPage: NavPage;
+  localePath: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  lead: string;
+}
+
+const { locale, siteCopy, currentPage, localePath, eyebrow, title, description, lead } = Astro.props;
+const homeHref = locale === "sq" ? "/" : "/en/";
+---
+
+<BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale}>
+  <div class="page-shell">
+    <SiteHeader locale={locale} copy={siteCopy} currentPage={currentPage} localePath={localePath} />
+
+    <main class="contact-page" id="main" tabindex="-1">
+      <section class="contact-hero">
+        <div class="contact-hero__intro">
+          <p class="eyebrow">{eyebrow}</p>
+          <h1>
+            <span>{title}</span>
+          </h1>
+          <p class="lead">{lead}</p>
+        </div>
+
+        <article class="contact-card">
+          <p class="contact-card__kicker">{locale === "sq" ? "Se shpejti" : "Coming soon"}</p>
+          <p>
+            {
+              locale === "sq"
+                ? "Kjo faqe eshte ne ndertim e siper. Ndersa e gatisim, na ndiqni ne rrjetet sociale ose na shkruani."
+                : "This page is under construction. While we build it, follow us on social media or get in touch."
+            }
+          </p>
+          <div class="hero__actions">
+            <a class="button button--primary" href={homeHref}>
+              {locale === "sq" ? "Kthehu ne balline" : "Back to home"}
+            </a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <SiteFooter locale={locale} copy={siteCopy} />
+  </div>
+</BaseLayout>

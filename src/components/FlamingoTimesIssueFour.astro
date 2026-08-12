@@ -1,0 +1,258 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-4.pdf";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+---
+
+<BaseLayout
+  title="Diaspora rizbarkon — Flamingo Times, Botimi IV"
+  description="Një komb i shpërndarë, një zë i përbashkët. Mbi 280 protesta të diasporës në më shumë se 70 qytete të botës."
+  locale="sq"
+  socialImagePath="/images/flamingo-times/botimi-4/diaspora-march-hero.jpeg"
+  socialImageAlt="Diaspora shqiptare marshon në Tiranë"
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Gusht 2026</span>
+          <span>Botimi IV</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#levizja">Lëvizja</a>
+        <a href="#kthimi">Kthimi</a>
+        <a href="#vepro">Bashkohu</a>
+      </nav>
+
+      <article class="times-diaspora" id="kryeartikulli">
+        <header class="times-government__hero times-diaspora__hero">
+          <p class="times-label">Mbi 280 protesta në më shumë se 70 qytete</p>
+          <h2>Diaspora rizbarkon</h2>
+          <p class="times-diaspora__intro">
+            Një komb i shpërndarë, një zë i përbashkët. Më 14, 15 dhe 16 gusht,
+            shqiptarët nga diaspora kthehen masivisht në Tiranë - për Zvërnecin,
+            kundër korrupsionit dhe për një Shqipëri të re.
+          </p>
+        </header>
+
+        <figure class="times-diaspora__feature">
+          <img
+            src="/images/flamingo-times/botimi-4/diaspora-march-hero.jpeg"
+            alt="Marshim i diasporës shqiptare me flamuj dhe pankarta në bulevard"
+            width="1280"
+            height="853"
+          />
+          <figcaption>
+            <strong>Kthimi i parë në numra masivë.</strong> Diaspora proteston më 20 qershor në
+            mëmëdhe.
+          </figcaption>
+        </figure>
+
+        <div class="times-diaspora__columns" id="levizja">
+          <section class="times-article-column">
+            <p class="times-dropcap">
+              Mërgata shqiptare nuk është vetëm historia e atyre që ikën. Është edhe historia e
+              atyre që, edhe pasi u larguan, lanë një copë të zemrës në mëmëdhe dhe vazhduan të
+              kthenin kokën. Nga Rilindja Kombëtare te brezat e sotëm, diaspora ka qenë një nga
+              mënyrat me të cilat Shqipëria ka menduar, ka rezistuar dhe është rindërtuar nga larg.
+            </p>
+            <p>
+              Prandaj, kur nisi Revolucioni i Flamingove, diaspora nuk qëndroi spektatore. Njerëz
+              që nuk njihnin njëri-tjetrin u organizuan brenda pak ditësh. Sot numërohen mbi 280
+              protesta në më shumë se 70 qytete të botës, në mbi 15 shtete të Evropës, si dhe në
+              SHBA, Kanada e Australi. Londra, Frankfurti, Berlini, Nju Jorku, Mynihu, Dortmundi,
+              Filadelfia, Milanoja, Athina, Vjena, Torontoja e Melburni janë kthyer, javë pas jave,
+              në sheshe shqiptare.
+            </p>
+          </section>
+
+          <section class="times-article-column">
+            <h3>Një lëvizje qytetare, jo partiake</h3>
+            <p>
+              Nuk ka flamuj partish, nuk ka logo partie. Ka shqiptarë me bindje të ndryshme, breza
+              të ndryshëm dhe një kauzë të përbashkët: mbrojtjen e Zvërnecit dhe të pasurive
+              natyrore, kundër privatizimit të errët dhe korrupsionit që ka kapluar çdo qoshe të
+              shtetit shqiptar. Pikërisht kjo natyrë qytetare ka bërë të mundur që komunitete që
+              më parë rrallë bashkëpunonin të gjejnë një zë të përbashkët. Protesta nisi për
+              mjedisin, por sot kërkesa është ndërtimi i një Shqipërie të re.
+            </p>
+            <h3>Protesta që nuk mbaron në shesh</h3>
+            <p>
+              Pas pankartave qëndron një rrjet i organizuar: takime javore mes qyteteve, fushata të
+              përbashkëta në rrjetet sociale, letra e peticione për institucionet, shkëmbim
+              informacioni dhe logjistikë për udhëtimet drejt Shqipërisë.
+            </p>
+          </section>
+
+          <section class="times-article-column">
+            <blockquote class="times-inline-quote">
+              “Jemi kthyer në mëmëdhe dhe do të vazhdojmë të kthehemi, derisa ky mjekërrosh
+              bardhërosh dhe tarafi i tij kanceroz 36-vjeçar të zhduken njëherë e mirë.”
+            </blockquote>
+            <p>
+              Letrat dhe takimet e kanë çuar çështjen e Zvërnecit deri në Bruksel: eurodeputetët
+              kanë ngritur pyetje pranë Komisionit Evropian; disa kanë folur në protestat e
+              diasporës, ndërsa të tjerë kanë ardhur në Tiranë. Ka kontakte me kongresmenë
+              amerikanë, organizata mjedisore e media të huaja; protestat e presin kryeministrin në
+              çdo takim me ndërkombëtarët. Ndër të tjera, rrjeti mbledh firma kundër TEC-it
+              lundrues dhe mbështet Altin Hilën e arrestuar.
+            </p>
+          </section>
+        </div>
+
+        <section class="times-diaspora__gallery" aria-label="Diaspora në protestë dhe në mërgim">
+          <figure class="times-diaspora__gallery-main">
+            <img
+              src="/images/flamingo-times/botimi-4/diaspora-spain.jpeg"
+              alt="Familje shqiptare me flamuj dhe pankarta në një protestë në Spanjë"
+              width="2048"
+              height="1536"
+            />
+            <figcaption>
+              <strong>Spanjë.</strong> Diaspora ka protestuar rregullisht në mbi 70 qytete të
+              rruzullit tokësor.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="/images/flamingo-times/botimi-4/mergimtari.jpg"
+              alt="Skulpturë e një udhëtari me valixhe, me trupin e zbrazët përgjysmë"
+              width="1950"
+              height="1424"
+            />
+            <figcaption>
+              <strong>Mërgimtari.</strong> Kur nisesh në mërgatë, lë gjithmonë një copë të shpirtit
+              pas.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section class="times-diaspora__return" id="kthimi">
+          <div class="times-article-column">
+            <h3>Larg, por jo të shkëputur</h3>
+            <blockquote class="times-inline-quote">
+              “Protesta ime është një thirrje për një Shqipëri të re, ku ka transparencë,
+              llogaridhënie dhe mbrojtje të interesit të qytetarëve, jo të politikanëve dhe
+              oligarkëve.”
+              <cite>Ledio Çela, inxhinier automatizimi në Berlin</cite>
+            </blockquote>
+            <p>
+              Kur shumë media shqiptare zgjodhën heshtjen ose minimizimin, mediat lokale në vendet
+              ku protestoi diaspora treguan interes të vazhdueshëm. Një lëvizje qytetare e këtyre
+              përmasave nuk mund të zhduket me heshtje, as me propagandë.
+            </p>
+          </div>
+
+          <div class="times-article-column">
+            <h3>14-15-16 gusht: kthimi i tretë</h3>
+            <p>
+              Pas kthimeve të 20 qershorit dhe 4 korrikut, diaspora rizbarkon për herë të tretë,
+              masivisht, më 14, 15 dhe 16 gusht. Vjen për të protestuar për të shkuarën, për të
+              tashmen dhe, mbi të gjitha, për të ardhmen. Takimi është në orën 18:30, te stacioni i
+              trenit, në Bulevardin e Ri.
+            </p>
+          </div>
+
+          <div class="times-article-column">
+            <p>
+              Sepse largësia gjeografike nuk e ka dobësuar lidhjen me Shqipërinë; përkundrazi, e ka
+              shndërruar në një forcë të organizuar, të vazhdueshme dhe me zë ndërkombëtar.
+            </p>
+            <blockquote class="times-inline-quote">
+              “Kam protestuar si një nënë që jeton larg fëmijëve të saj, sepse kjo është një
+              dhimbje që askush nuk duhet ta përjetojë. Shpresa ime është që një ditë asnjë prind
+              të mos jetojë më me mallin e fëmijëve të vet.”
+              <cite>Fiona, nga Gjermania</cite>
+            </blockquote>
+          </div>
+        </section>
+
+        <dl class="times-diaspora__numbers" aria-label="Diaspora në shifra">
+          <div>
+            <dt>280+</dt>
+            <dd>protesta të diasporës</dd>
+          </div>
+          <div>
+            <dt>70+</dt>
+            <dd>qytete në botë</dd>
+          </div>
+          <div>
+            <dt>15+</dt>
+            <dd>shtete të Evropës, si dhe SHBA, Kanada e Australi</dd>
+          </div>
+          <div>
+            <dt>14-16</dt>
+            <dd>gusht: kthimi i tretë në Tiranë</dd>
+          </div>
+        </dl>
+
+        <p class="times-diaspora__slogan">
+          Mërgata: një copë mëmëdheu në mërgim, <span>që rikthehet në shesh.</span>
+        </p>
+      </article>
+
+      <section class="times-action" id="vepro">
+        <div class="times-action__demands">
+          <p class="times-label">14 · 15 · 16 gusht · ora 18:30</p>
+          <h2>NGA MË SHUMË SE 70 QYTETE, NË NJË SHESH TË VETËM.</h2>
+          <p class="times-action__closing">Te stacioni i trenit, Bulevardi i Ri - Tiranë</p>
+          <a class="times-diaspora__campaign-link" href="https://diaspora-zbarkon.com">
+            diaspora-zbarkon.com
+          </a>
+        </div>
+        <aside class="times-action__card">
+          <div class="times-action__brand">
+            <img
+              src="/images/flamingo-wordmark-light.svg"
+              alt="Flamingo Revolution"
+              width="419"
+              height="187"
+            />
+            <a href="https://flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+              <span>flamingorevolution.eu</span>
+              <img
+                class="times-action__qr"
+                src="/images/qr-code/png/black.png"
+                alt="QR code për flamingorevolution.eu"
+                width="480"
+                height="480"
+              />
+            </a>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="times-source">
+        <p>
+          Burimet: harta e protestave në flamingorevolution.eu, të dhënat e vetë protestuesve dhe
+          koordinimi i rrjetit të diasporës. Shifrat janë të gushtit 2026.
+        </p>
+        <strong>FLAMINGO TIMES · Botimi IV · Gusht 2026</strong>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>

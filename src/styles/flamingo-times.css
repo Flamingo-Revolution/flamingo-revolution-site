@@ -649,7 +649,7 @@
 }
 
 html[data-theme='dark'] .times-action__qr {
-	filter: invert(1);
+	filter: none;
 }
 
 .times-source {
@@ -1299,6 +1299,188 @@ html[data-theme='dark'] .times-action__qr {
 	line-height: 1.05;
 }
 
+.times-diaspora {
+	border-bottom: 4px solid #151515;
+}
+
+.times-diaspora__intro {
+	width: 100%;
+	max-width: none;
+	margin: 1rem 0 0;
+	font-family: Georgia, serif;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.6;
+}
+
+.times-diaspora__feature,
+.times-diaspora__gallery figure {
+	margin: 0;
+	background: #151515;
+}
+
+.times-diaspora__feature {
+	width: min(calc(100% - 2rem), 68rem);
+	margin: clamp(1rem, 3vw, 2rem) auto;
+	border: 3px solid #151515;
+}
+
+.times-diaspora__feature img {
+	display: block;
+	width: 100%;
+	height: clamp(11rem, 31vw, 27rem);
+	object-fit: cover;
+	object-position: center 58%;
+}
+
+.times-diaspora__feature figcaption,
+.times-diaspora__gallery figcaption {
+	padding: 0.75rem clamp(1rem, 5vw, 3.4rem);
+	color: #fff8ef;
+	font-size: 0.82rem;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.times-diaspora__columns,
+.times-diaspora__return {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 5vw, 3.4rem);
+}
+
+.times-diaspora__columns {
+	border-bottom: 3px solid #151515;
+}
+
+.times-diaspora__columns > section,
+.times-diaspora__return > div {
+	min-width: 0;
+	padding: 0 clamp(1rem, 2.4vw, 2rem);
+	border-right: 1px solid rgba(21, 21, 21, 0.38);
+}
+
+.times-diaspora__columns > section:first-child,
+.times-diaspora__return > div:first-child {
+	padding-left: 0;
+}
+
+.times-diaspora__columns > section:last-child,
+.times-diaspora__return > div:last-child {
+	padding-right: 0;
+	border-right: 0;
+}
+
+.times-diaspora__columns p + h3 {
+	margin-top: 1.5rem;
+}
+
+.times-diaspora .times-inline-quote cite {
+	display: block;
+	margin-top: 0.65rem;
+	font-family: var(--font-body);
+	font-size: 0.76rem;
+	font-style: normal;
+	font-weight: 800;
+	line-height: 1.35;
+}
+
+.times-diaspora__gallery {
+	display: grid;
+	grid-template-columns: minmax(0, 2.15fr) minmax(17rem, 0.85fr);
+	gap: clamp(1rem, 2vw, 1.5rem);
+	padding: clamp(1rem, 2vw, 1.5rem);
+	background: #f7f1e8;
+}
+
+.times-diaspora__gallery img {
+	display: block;
+	width: 100%;
+	height: clamp(22rem, 42vw, 38rem);
+	object-fit: cover;
+}
+
+.times-diaspora__gallery-main img {
+	object-position: center center;
+}
+
+.times-diaspora__gallery figure:last-child img {
+	object-position: center center;
+}
+
+.times-diaspora__gallery figcaption {
+	padding-right: 1rem;
+	padding-left: 1rem;
+}
+
+.times-diaspora__return {
+	border-bottom: 3px solid #151515;
+	background: #fff8ef;
+}
+
+.times-diaspora__numbers {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	margin: 0;
+	border-bottom: 3px solid #151515;
+}
+
+.times-diaspora__numbers > div {
+	padding: clamp(1rem, 2.4vw, 1.8rem);
+	border-right: 2px solid #151515;
+}
+
+.times-diaspora__numbers > div:last-child {
+	border-right: 0;
+	background: #ffd7e3;
+}
+
+.times-diaspora__numbers dt {
+	font-family: var(--font-display);
+	font-size: clamp(2.6rem, 5vw, 5rem);
+	font-weight: 700;
+	line-height: 0.8;
+	letter-spacing: -0.045em;
+}
+
+.times-diaspora__numbers dd {
+	margin: 0.75rem 0 0;
+	font-size: 0.78rem;
+	font-weight: 800;
+	line-height: 1.3;
+	text-transform: uppercase;
+}
+
+.times-diaspora__slogan {
+	margin: 0;
+	padding: clamp(1.8rem, 5vw, 4rem) clamp(1rem, 5vw, 3.4rem);
+	font-family: var(--font-display);
+	font-size: clamp(2.4rem, 6vw, 6rem);
+	font-weight: 700;
+	line-height: 0.88;
+	letter-spacing: -0.04em;
+	text-transform: uppercase;
+}
+
+.times-diaspora__slogan span {
+	color: #c83e72;
+}
+
+.times-diaspora__campaign-link {
+	display: inline-flex;
+	margin-top: 1.25rem;
+	padding: 0.7rem 0.9rem;
+	border: 2px solid #151515;
+	box-shadow: 4px 4px 0 #151515;
+	font-size: 0.85rem;
+	font-weight: 800;
+}
+
+.times-diaspora__campaign-link:hover,
+.times-diaspora__campaign-link:focus-visible {
+	background: #ffd7e3;
+}
+
 @media (max-width: 1020px) {
 	.times-lead__grid,
 	.times-zvernec,
@@ -1363,6 +1545,18 @@ html[data-theme='dark'] .times-action__qr {
 		column-rule: 0;
 	}
 
+	.times-diaspora__columns,
+	.times-diaspora__return {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.times-diaspora__columns > section:last-child,
+	.times-diaspora__return > div:last-child {
+		grid-column: 1 / -1;
+		margin-top: 1.75rem;
+		padding: 1.75rem 0 0;
+		border-top: 1px solid rgba(21, 21, 21, 0.38);
+	}
 }
 
 @media (max-width: 760px) {
@@ -1439,6 +1633,63 @@ html[data-theme='dark'] .times-action__qr {
 		height: auto;
 		max-height: 31rem;
 		object-fit: cover;
+	}
+
+	.times-diaspora__columns,
+	.times-diaspora__return,
+	.times-diaspora__gallery,
+	.times-diaspora__numbers {
+		grid-template-columns: 1fr;
+	}
+
+	.times-diaspora__columns > section,
+	.times-diaspora__return > div,
+	.times-diaspora__columns > section:first-child,
+	.times-diaspora__return > div:first-child,
+	.times-diaspora__columns > section:last-child,
+	.times-diaspora__return > div:last-child {
+		grid-column: auto;
+		margin: 0;
+		padding: 1.5rem 0;
+		border-top: 0;
+		border-right: 0;
+		border-bottom: 1px solid rgba(21, 21, 21, 0.38);
+	}
+
+	.times-diaspora__columns > section:first-child,
+	.times-diaspora__return > div:first-child {
+		padding-top: 0;
+	}
+
+	.times-diaspora__columns > section:last-child,
+	.times-diaspora__return > div:last-child {
+		padding-bottom: 0;
+		border-bottom: 0;
+	}
+
+	.times-diaspora__return > div,
+	.times-diaspora__return > div:first-child,
+	.times-diaspora__return > div:last-child {
+		padding: 0;
+		border: 0;
+	}
+
+	.times-diaspora__gallery {
+		gap: 1rem;
+	}
+
+	.times-diaspora__gallery img {
+		height: auto;
+		max-height: 30rem;
+	}
+
+	.times-diaspora__numbers > div {
+		border-right: 0;
+		border-bottom: 2px solid #151515;
+	}
+
+	.times-diaspora__numbers > div:last-child {
+		border-bottom: 0;
 	}
 
 	.times-article-card {
