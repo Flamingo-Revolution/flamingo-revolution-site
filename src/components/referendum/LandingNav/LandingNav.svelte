@@ -28,6 +28,7 @@
 	let showSignupCta = $state(false);
 	let hideEngageCta = $state(false);
 	let activeHref = $state<string | null>(null);
+	let linksEl: HTMLDivElement | undefined = $state();
 
 	const slideDuration = $derived(prefersReducedMotion.current ? 0 : 220);
 
@@ -47,6 +48,21 @@
 		}, slideDuration);
 
 		return () => window.clearTimeout(timeout);
+	});
+
+	$effect(() => {
+		const href = activeHref;
+		const container = linksEl;
+		if (!href || !container) return;
+
+		const activeLink = container.querySelector<HTMLAnchorElement>(
+			`a[href="${CSS.escape(href)}"]`
+		);
+		activeLink?.scrollIntoView({
+			behavior: prefersReducedMotion.current ? "instant" : "smooth",
+			inline: "center",
+			block: "nearest"
+		});
 	});
 
 	function scheduleSpyUnlock() {
@@ -156,7 +172,7 @@
 	aria-label="Seksionet e faqes"
 >
 	<div class="shell landing-nav__inner">
-		<div class="landing-nav__links">
+		<div class="landing-nav__links" bind:this={linksEl}>
 			{#each links as link (link.href)}
 				<a
 					href={link.href}
