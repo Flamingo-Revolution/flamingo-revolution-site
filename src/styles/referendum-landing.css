@@ -457,8 +457,7 @@
 	top: 0;
 	z-index: 40;
 	border-bottom: 2px solid var(--ink);
-	background: color-mix(in srgb, var(--surface) 92%, transparent);
-	backdrop-filter: blur(8px);
+	background: var(--surface);
 }
 
 .referendum-landing .landing-nav__inner {
@@ -470,18 +469,14 @@
 }
 
 .referendum-landing .landing-nav__links {
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+.referendum-landing .landing-nav__links-track {
 	display: flex;
 	flex-wrap: nowrap;
 	gap: 0.35rem;
-	min-width: 0;
-	flex: 1 1 auto;
-	overflow-x: auto;
-	scrollbar-width: none;
-	-webkit-overflow-scrolling: touch;
-}
-
-.referendum-landing .landing-nav__links::-webkit-scrollbar {
-	display: none;
 }
 
 .referendum-landing .landing-nav__links a {

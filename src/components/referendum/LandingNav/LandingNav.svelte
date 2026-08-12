@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import { slide } from "svelte/transition";
 	import { MediaQuery } from "svelte/reactivity";
+	import ScrollContainer from "@components/ScrollContainer/ScrollContainer.svelte";
 	import {
 		SCROLL_MARGIN_PX,
 		SPY_UNLOCK_DELAY_MS,
@@ -172,7 +173,12 @@
 	aria-label="Seksionet e faqes"
 >
 	<div class="shell landing-nav__inner">
-		<div class="landing-nav__links" bind:this={linksEl}>
+		<ScrollContainer
+			class="landing-nav__links"
+			viewportClass="landing-nav__links-track"
+			fadeColor="var(--surface)"
+			bind:element={linksEl}
+		>
 			{#each links as link (link.href)}
 				<a
 					href={link.href}
@@ -182,7 +188,7 @@
 					{link.label}
 				</a>
 			{/each}
-		</div>
+		</ScrollContainer>
 
 		<div class="landing-nav__ctas">
 			<a
