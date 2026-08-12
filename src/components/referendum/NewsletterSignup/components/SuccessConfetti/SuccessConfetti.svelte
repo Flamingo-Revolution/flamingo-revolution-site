@@ -8,7 +8,7 @@
 	onMount(() => {
 		const timeout = setTimeout(() => {
 			active = false;
-		}, 5000);
+		}, 7000);
 
 		return () => clearTimeout(timeout);
 	});

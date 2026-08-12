@@ -47,9 +47,11 @@ const description =
 						</div>
 
 						<div class="hero-aside">
-							<div class="hero-signup">
-								<h2 id="njoftime-title" class="sr-only">Merr njoftime për referendumin</h2>
-								<NewsletterSignup client:load reason="referendum" headingId="njoftime-title" />
+							<div class="hero-signup-slot">
+								<div class="hero-signup">
+									<h2 id="njoftime-title" class="sr-only">Merr njoftime për referendumin</h2>
+									<NewsletterSignup client:load reason="referendum" headingId="njoftime-title" />
+								</div>
 							</div>
 							<div class="hero-metrics" role="group" aria-label="Të dhënat kryesore të nismës">
 								<span><strong>12</strong><small>nismëtarë</small></span>
@@ -252,3 +254,28 @@ const description =
 
 	<ReferendumReveal />
 </ReferendumLayout>
+
+<script>
+	const slot = document.querySelector(".hero-signup-slot");
+	const card = slot?.querySelector(".hero-signup");
+
+	if (slot instanceof HTMLElement && card instanceof HTMLElement) {
+		const syncHeight = (animate: boolean) => {
+			const next = `${card.offsetHeight}px`;
+			if (slot.style.height === next) return;
+
+			if (!animate) {
+				slot.style.transition = "none";
+				slot.style.height = next;
+				void slot.offsetHeight;
+				slot.style.transition = "";
+				return;
+			}
+
+			slot.style.height = next;
+		};
+
+		syncHeight(false);
+		new ResizeObserver(() => syncHeight(true)).observe(card);
+	}
+</script>

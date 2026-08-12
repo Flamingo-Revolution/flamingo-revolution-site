@@ -136,7 +136,7 @@
 }
 
 .referendum-landing .referendum-header {
-	margin-bottom: clamp(3.45rem, 8.25vw, 5.55rem);
+	margin-bottom: clamp(3.45rem, 8.25vw, 4.55rem);
 }
 
 .referendum-header .header-socials {
@@ -162,7 +162,7 @@
 .referendum-landing .hero-split {
 	display: grid;
 	gap: clamp(1.75rem, 4vw, 2.5rem);
-	align-items: center;
+	align-items: start;
 	justify-items: center;
 }
 
@@ -223,6 +223,14 @@
 	line-height: 1.5;
 	text-align: center;
 	text-wrap: pretty;
+}
+
+.referendum-landing .hero-signup-slot {
+	display: block;
+	width: 100%;
+	overflow: clip;
+	overflow-clip-margin: 12px;
+	transition: height 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .referendum-landing .hero-signup {
@@ -1480,14 +1488,15 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 		grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
 		padding: 1.75rem 0.75rem 1.75rem 0.25rem;
 		gap: clamp(2.5rem, 6vw, 4.25rem);
-		align-items: center;
+		align-items: start;
 		justify-items: stretch;
 		text-align: left;
 	}
 
 	.referendum-landing .hero-copy {
 		justify-items: start;
-		align-content: center;
+		align-content: start;
+		margin-top: 4rem;
 	}
 
 	.referendum-landing .hero-copy .eyebrow {
@@ -1656,6 +1665,10 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 	.referendum-landing [data-reveal] {
 		opacity: 1;
 		transform: none;
+		transition: none;
+	}
+
+	.referendum-landing .hero-signup-slot {
 		transition: none;
 	}
 }
