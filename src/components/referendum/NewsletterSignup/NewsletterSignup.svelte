@@ -10,14 +10,51 @@
 		initialCount?: number;
 	};
 
+	type SubmissionState = 'idle' | 'submitting' | 'success' | 'error';
+
 	let { reason = 'referendum', headingId = 'njoftime-title', initialCount = 0 }: Props = $props();
 
 	let email = $state('');
-	let submitting = $state(false);
-	let error = $state<string | null>(null);
-	let success = $state<string | null>(null);
+	let submissionState = $state<SubmissionState>('idle');
+	let feedbackMessage = $state<string | null>(null);
 	let count = $state(0);
 	let countLoaded = $state(false);
+	let confettiComponent = $state<Promise<typeof import('./components/SuccessConfetti/SuccessConfetti.svelte')> | null>(
+		null
+	);
+
+	let errorResetTimer: ReturnType<typeof setTimeout> | null = null;
+	let resumeIdleCta = $state(false);
+	const isSubmitting = $derived(submissionState === 'submitting');
+	const isSuccess = $derived(submissionState === 'success');
+	const buttonFace = $derived(
+		isSubmitting ? 'submitting' : resumeIdleCta ? 'idle' : submissionState
+	);
+
+	function clearErrorResetTimer() {
+		if (errorResetTimer !== null) {
+			clearTimeout(errorResetTimer);
+			errorResetTimer = null;
+		}
+	}
+
+	function setError(message: string) {
+		clearErrorResetTimer();
+		resumeIdleCta = false;
+		submissionState = 'error';
+		feedbackMessage = message;
+		errorResetTimer = setTimeout(() => {
+			if (submissionState === 'error') {
+				submissionState = 'idle';
+				feedbackMessage = null;
+			}
+			errorResetTimer = null;
+		}, 3000);
+	}
+
+	function triggerConfetti() {
+		confettiComponent ??= import('./components/SuccessConfetti/SuccessConfetti.svelte');
+	}
 
 	onMount(() => {
 		count = initialCount;
@@ -33,46 +70,64 @@
 
 		return () => {
 			cancelled = true;
+			clearErrorResetTimer();
 		};
 	});
 
+	function onEmailInput() {
+		if (submissionState === 'success' || submissionState === 'error') {
+			resumeIdleCta = true;
+		}
+	}
+
 	async function onSubmit(event: Event) {
 		event.preventDefault();
-		if (submitting) return;
+		if (isSubmitting) return;
 
 		const trimmed = email.trim();
+
 		if (!trimmed) {
-			error = 'Shkruaj email-in tënd.';
-			success = null;
+			setError('Shkruaj email-in tënd.');
 			return;
 		}
 
-		submitting = true;
-		error = null;
-		success = null;
+		clearErrorResetTimer();
+		resumeIdleCta = false;
+		submissionState = 'submitting';
+		feedbackMessage = null;
+		confettiComponent = null;
 
 		const result = await submitNewsletterSignup({ email: trimmed, reason });
-		submitting = false;
 
 		if (!result.ok) {
-			error = result.error;
+			setError(result.error);
 			return;
 		}
 
-		if (result.created) {
-			count += 1;
-			countLoaded = true;
-			success = 'U regjistrua. Do të njoftohesh për hapat e ardhshëm të referendumit.';
-		} else {
-			success = 'Ky email është tashmë i regjistruar për këtë nismë.';
+		if (!result.created) {
+			setError('Ky email është tashmë i regjistruar për këtë nismë.');
+			email = '';
+			return;
 		}
+
+		count += 1;
+		countLoaded = true;
+		submissionState = 'success';
+		feedbackMessage = 'Do të njoftohesh për hapat e ardhshëm të referendumit.';
 		email = '';
+		triggerConfetti();
 	}
 
 	const countCaption = $derived(
 		!countLoaded ? 'Duke ngarkuar firmat…' : count === 1 ? 'firme online ' : 'firma online'
 	);
 </script>
+
+{#if confettiComponent}
+	{#await confettiComponent then { default: SuccessConfetti }}
+		<SuccessConfetti />
+	{/await}
+{/if}
 
 <form class="newsletter-form" onsubmit={onSubmit} aria-labelledby={headingId}>
 	<p class="newsletter-count" aria-live="polite">
@@ -84,7 +139,6 @@
 	<input
 		id="referendum-newsletter-email"
 		class="newsletter-input"
-		class:newsletter-input--submitted={success}
 		name="email"
 		type="email"
 		autocomplete="email"
@@ -92,22 +146,47 @@
 		required
 		placeholder="emri@shembull.com"
 		bind:value={email}
-		disabled={submitting || !!success}
+		oninput={onEmailInput}
+		disabled={isSubmitting}
 	/>
 	<button
 		type="submit"
-		class={'newsletter-submit'}
-		class:newsletter-submit--secondary={success}
-		disabled={submitting || !!success}
-		style="z-index: 10"
+		class={{
+			'newsletter-submit': true,
+			'newsletter-submit--success': buttonFace === 'success',
+			'newsletter-submit--error': buttonFace === 'error'
+		}}
+		disabled={isSubmitting}
 	>
-		{submitting ? 'Duke u ruajtur…' : 'Firmos dhe njoftohu'}
+		{#if buttonFace === 'submitting'}
+			Duke u ruajtur…
+		{:else if buttonFace === 'success'}
+			U regjistrua!
+		{:else if buttonFace === 'error'}
+			Provo përsëri
+		{:else}
+			Firmos dhe njoftohu
+		{/if}
 	</button>
 
-	{#if error}
-		<p class="newsletter-message newsletter-message--error" role="alert">{error}</p>
-	{/if}
-	{#if success}
+	{#if submissionState === 'error' && feedbackMessage}
+		<div
+			class="newsletter-feedback newsletter-feedback--error"
+			role="alert"
+			in:fly={{ duration: 280, easing: quartInOut, y: 12 }}
+		>
+			<span class="newsletter-feedback__icon" aria-hidden="true">!</span>
+			<p>{feedbackMessage}</p>
+		</div>
+	{:else if isSuccess && feedbackMessage}
+		<div
+			class="newsletter-feedback newsletter-feedback--success"
+			role="status"
+			in:fly={{ duration: 340, easing: quartInOut, y: 14 }}
+		>
+			<span class="newsletter-feedback__icon" aria-hidden="true">✓</span>
+			<p>{feedbackMessage}</p>
+		</div>
 		<a in:fly={{ duration: 500, easing: quartInOut, y: -50 }} class="newsletter-home-cta" href="/">
 			Lexo për nismat <span aria-hidden="true" style="margin-right: 4px">→</span>
 		</a>
@@ -191,20 +270,6 @@
 		box-shadow: 7px 7px 0 var(--accent);
 	}
 
-	.newsletter-input--submitted {
-		color: var(--muted);
-		min-height: 4rem;
-		opacity: 50%;
-		text-align: center;
-		border: 3px solid var(--ink);
-		transform: scale(0.95);
-		margin-bottom: -0.5rem;
-		font-size: clamp(0.95rem, 2.4vw, 1.15rem);
-		background: var(--surface);
-		color: color-mix(in srgb, var(--ink), transparent 40%);
-		box-shadow: 2px 2px 0 var(--surface-strong);
-	}
-
 	.newsletter-submit {
 		display: inline-flex;
 		align-items: center;
@@ -223,64 +288,115 @@
 		text-transform: uppercase;
 		cursor: pointer;
 		transition:
-			transform 300ms ease 600ms,
-			box-shadow 300ms ease 600ms,
-			min-height 300ms ease 600ms,
-			background-color 300ms ease,
-			font-size 300ms ease 600ms,
-			height 300ms ease 600ms,
-			padding 300ms ease 600ms,
-			opacity 300ms ease 600ms;
+			transform 120ms ease,
+			box-shadow 120ms ease,
+			background-color 120ms ease,
+			border-color 120ms ease,
+			color 120ms ease,
+			min-height 180ms ease,
+			font-size 180ms ease,
+			padding 180ms ease,
+			opacity 180ms ease;
 	}
 
 	.newsletter-submit:hover:not(:disabled),
 	.newsletter-submit:focus-visible:not(:disabled) {
-		background: var(--surface);
-		transform: translate(-2px, -2px);
-		box-shadow: 9px 9px 0 var(--surface-strong);
+		background: color-mix(in srgb, var(--accent) 55%, var(--accent-strong));
+		transform: translate(-4px, -4px);
+		box-shadow: 12px 12px 0 var(--ink);
 	}
 
-	.newsletter-submit--secondary {
+	.newsletter-submit:active:not(:disabled) {
+		transform: translate(-1px, -1px);
+		box-shadow: 6px 6px 0 var(--ink);
+	}
+
+	.newsletter-submit--success {
 		transform: scale(0.95);
 		min-height: 4.5rem;
-		background: var(--surface-strong);
+		background: var(--accent);
 		border: 3px solid var(--ink);
 		font-size: clamp(0.9rem, 3vw, 1.1rem);
 		padding: 1rem 1rem;
 		margin-bottom: -0.3rem;
+		color: var(--ink);
+		box-shadow: 5px 5px 0 var(--ink);
+		cursor: pointer;
+	}
 
-		color: color-mix(in srgb, var(--ink), transparent 40%);
-		box-shadow: 3px 3px 0 var(--accent);
-		opacity: 0.55;
+	.newsletter-submit--success:hover:not(:disabled),
+	.newsletter-submit--success:focus-visible:not(:disabled) {
+		background: color-mix(in srgb, var(--accent) 45%, var(--accent-strong));
+		transform: translate(-4px, -4px);
+		box-shadow: 12px 12px 0 var(--ink);
+	}
+
+	.newsletter-submit--success:active:not(:disabled) {
+		transform: translate(-1px, -1px);
+		box-shadow: 6px 6px 0 var(--ink);
+	}
+
+	.newsletter-submit--error {
+		background: color-mix(in srgb, var(--accent-strong) 28%, var(--surface-strong));
+		border-color: var(--accent-strong);
+		box-shadow: 7px 7px 0 color-mix(in srgb, var(--accent-strong) 65%, var(--ink));
+	}
+
+	.newsletter-submit--error:hover:not(:disabled),
+	.newsletter-submit--error:focus-visible:not(:disabled) {
+		background: color-mix(in srgb, var(--accent-strong) 18%, var(--surface));
+		box-shadow: 9px 9px 0 color-mix(in srgb, var(--accent-strong) 55%, var(--ink));
+	}
+
+	.newsletter-input:disabled {
+		opacity: 0.72;
 		cursor: default;
 	}
 
-	.newsletter-submit--secondary:hover:not(:disabled),
-	.newsletter-submit--secondary:focus-visible:not(:disabled) {
-		background: var(--surface-strong);
-		box-shadow: 4px 4px 0 var(--ink);
-		opacity: 0.35;
-	}
-
-	.newsletter-input:disabled,
 	.newsletter-submit:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
 
-	.newsletter-message {
+	.newsletter-feedback {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 0.85rem;
 		margin: 0;
-		font-size: 1.05rem;
+		padding: 0.9rem 1rem;
+		border: 3px solid var(--ink);
+		box-shadow: 4px 4px 0 var(--ink);
+	}
+
+	.newsletter-feedback p {
+		margin: 0;
+		font-size: 1rem;
 		font-weight: 700;
-		line-height: 1.45;
+		line-height: 1.35;
 	}
 
-	.newsletter-message--error {
-		color: var(--accent-strong);
+	.newsletter-feedback__icon {
+		display: inline-grid;
+		place-items: center;
+		width: 2rem;
+		height: 2rem;
+		border: 2px solid currentColor;
+		border-radius: 50%;
+		font-size: 1rem;
+		font-weight: 900;
+		line-height: 1;
 	}
 
-	.newsletter-message--success {
+	.newsletter-feedback--success {
+		background: var(--accent-soft);
+		color: var(--ink);
+	}
+
+	.newsletter-feedback--error {
+		background: color-mix(in srgb, var(--accent-strong) 16%, var(--surface-strong));
 		color: var(--accent-strong);
+		box-shadow: 4px 4px 0 color-mix(in srgb, var(--accent-strong) 65%, var(--ink));
 	}
 
 	.newsletter-home-cta {
