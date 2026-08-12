@@ -44,10 +44,6 @@ export const projectDocuments: ProjectDocument[] = [
     summary: {
       sq: "Ky është drafti i parë i projektligjit që përcakton rregullat e posaçme për përgatitjen, administrimin, mbikëqyrjen, shpalljen dhe publikimin e rezultatit të një referendumi.",
       en: "This is the first draft law defining the specific rules for preparing, administering, supervising, announcing and publishing the result of a referendum."
-=======
-    slug: "shqiperi-e-re-permbledhje-ekzekutive",
-    title: "Shqipëri e Re - Përmbledhje ekzekutive",
-    summary: {
       sq: "Përmbledhje e shkurtër e paketës dhe ideve kryesore për ndryshimet e propozuara.",
       en: "A short executive summary of the package and its main proposed changes."
     },
@@ -113,7 +109,9 @@ export const projectDocuments: ProjectDocument[] = [
     title: "Paketa 2 - Prona, mjedisi dhe investimet strategjike",
     summary: {
       sq: "Propozime për pronën, mjedisin, shpronesimet, zonat e mbrojtura dhe trashëgiminë kulturore.",
-      en: "Proposals on property, environment, expropriations, protected areas and cultural heritage."
+      en: "Proposals on property, environment, expropriations, protected areas and cultural heritage."Pa spam. Vetëm njoftime për këtë referendum.
+      
+
     },
     category: "package",
     language: "sq",
@@ -288,7 +286,11 @@ export const documentLibraryCopy: Record<Locale, DocumentLibraryCopy> = {
     },
     kicker: "Biblioteka e dokumenteve",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     title: "Projektligji per t'u lexuar, hapur dhe shkarkuar.",
+=======
+    title: "Projektligje dhe paketa për t'u lexuar, hapur dhe shkarkuar.",
+>>>>>>> Stashed changes
 =======
     title: "Projektligje dhe paketa për t'u lexuar, hapur dhe shkarkuar.",
 >>>>>>> Stashed changes
