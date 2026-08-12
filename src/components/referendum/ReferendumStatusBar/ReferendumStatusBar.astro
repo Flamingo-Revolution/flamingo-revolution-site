@@ -11,6 +11,10 @@ const { processHref = "/referendum/#procesi" } = Astro.props;
 		<span class="status-dot" aria-hidden="true"></span>
 		<strong>Ku jemi tani:</strong>
 		<span>Në pritje të konfirmimit nga KQZ-ja</span>
-		<a href={processHref}>Shiko procesin <span aria-hidden="true">↓</span></a>
+		<a href={processHref}>
+			<span class="status-cta__full">Shiko procesin</span>
+			<span class="status-cta__short">Procesi</span>
+			<span aria-hidden="true">↓</span>
+		</a>
 	</div>
 </div>
