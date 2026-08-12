@@ -81,6 +81,10 @@
 	text-underline-offset: 0.2rem;
 }
 
+.referendum-landing .status-cta__short {
+	display: none;
+}
+
 .referendum-landing .eyebrow,
 .referendum-landing .section-kicker,
 .referendum-landing .times-label {
@@ -1518,6 +1522,34 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 }
 
 @media (max-width: 820px) {
+	.referendum-landing .status-inner {
+		width: 100%;
+		min-height: 0;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.2rem 0.45rem;
+		padding-block: 0.4rem;
+		padding-inline: 0.75rem;
+		font-size: 0.65rem;
+		line-height: 1.2;
+		letter-spacing: 0.03em;
+		text-align: center;
+	}
+
+	.referendum-landing .status-cta__full {
+		display: none;
+	}
+
+	.referendum-landing .status-cta__short {
+		display: inline;
+	}
+
+	.referendum-landing .status-dot {
+		width: 0.45rem;
+		height: 0.45rem;
+		box-shadow: 2px 2px 0 var(--ink);
+	}
+
 	.referendum-landing .times-action {
 		grid-template-columns: 1fr;
 	}
