@@ -477,6 +477,9 @@
 	display: flex;
 	flex-wrap: nowrap;
 	gap: 0.35rem;
+	/* Room for 2px border + 2px offset shadow; pull left back so first link aligns */
+	padding: 2px 4px 4px 2px;
+	margin-left: -2px;
 }
 
 .referendum-landing .landing-nav__links a {
