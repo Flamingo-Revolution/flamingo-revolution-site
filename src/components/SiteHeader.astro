@@ -267,11 +267,19 @@ const externalIcon = navIcons.external;
     if (!(header instanceof HTMLElement) || header.dataset.scrollBound === "true") return;
     header.dataset.scrollBound = "true";
 
-    const threshold = 24;
+    const compactThreshold = 112;
+    const expandThreshold = 8;
     let ticking = false;
 
     const update = () => {
-      header.dataset.scrolled = window.scrollY > threshold ? "true" : "false";
+      const isCompact = header.dataset.scrolled === "true";
+
+      if (!isCompact && window.scrollY > compactThreshold) {
+        header.dataset.scrolled = "true";
+      } else if (isCompact && window.scrollY <= expandThreshold) {
+        header.dataset.scrolled = "false";
+      }
+
       ticking = false;
     };
 
