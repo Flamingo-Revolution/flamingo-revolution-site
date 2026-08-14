@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteFrame from "../../components/SiteFrame.astro";
+import RedaksiaDashboard from "../../components/Redaksia/RedaksiaDashboard.svelte";
+import { siteCopy } from "../../data/site";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Redaksia — Flamingo Times"
+  description="Hapësira e punës për reporterët e miratuar të Flamingo Times."
+  locale="sq"
+  noindex
+>
+  <SiteFrame locale="sq" copy={siteCopy.sq} currentPage="times" localePath="redaksia">
+    <main class="redaksia-page" id="main" tabindex="-1">
+      <RedaksiaDashboard client:only="svelte" />
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .redaksia-page {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+</style>

@@ -10,7 +10,12 @@ export default defineConfig({
 	adapter: cloudflare({
 		prerenderEnvironment: 'node'
 	}),
-	integrations: [svelte(), sitemap()],
+	integrations: [
+		svelte(),
+		sitemap({
+			filter: (page) => !page.includes('/redaksia/')
+		})
+	],
 	i18n: {
 		defaultLocale: 'sq',
 		locales: ['sq', 'en'],

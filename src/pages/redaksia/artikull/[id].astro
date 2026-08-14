@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteFrame from "../../../components/SiteFrame.astro";
+import ArticleEditor from "../../../components/Redaksia/ArticleEditor.svelte";
+import { siteCopy } from "../../../data/site";
+
+export const prerender = false;
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/redaksia/");
+}
+---
+
+<BaseLayout
+  title="Redakto artikullin — Flamingo Times"
+  description="Redaktori i artikujve për reporterët e miratuar të Flamingo Times."
+  locale="sq"
+  noindex
+>
+  <SiteFrame locale="sq" copy={siteCopy.sq} currentPage="times" localePath="redaksia">
+    <main class="redaksia-editor-page" id="main" tabindex="-1">
+      <ArticleEditor client:only="svelte" articleId={id} />
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .redaksia-editor-page {
+    max-width: 54rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+</style>

@@ -7,9 +7,10 @@ interface Props {
   locale: "sq" | "en";
   socialImagePath?: string;
   socialImageAlt?: string;
+  noindex?: boolean;
 }
 
-const { title, description, locale, socialImagePath = "/social-card.jpg?v=20260705", socialImageAlt } = Astro.props;
+const { title, description, locale, socialImagePath = "/social-card.jpg?v=20260705", socialImageAlt, noindex = false } = Astro.props;
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://flamingorevolution.eu";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
@@ -37,7 +38,7 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#edf6ff" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
     <link rel="icon" href={faviconIcoUrl} sizes="any" />

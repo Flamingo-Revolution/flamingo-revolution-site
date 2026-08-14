@@ -38,6 +38,7 @@ The public site is currently Albanian-first. English copy and a small set of Eng
 | `/pulsi-protestes/` | Protest participation overview and external data link |
 | `/rreth-nesh/` | About the movement, partners, contact details, and social links |
 | `/diaspora-zbarkon/` | Diaspora Zbarkon project placeholder |
+| `/redaksia/` | Reporter workspace: login, article dashboard, and editor (noindex, access-key gated) |
 | `/reporteret-e-diaspores/` | Diaspora reporters project placeholder |
 
 `/kontakt/` permanently redirects to `/rreth-nesh/#kontakt`. Legacy pulse routes redirect to `/pulsi-protestes/`.
@@ -50,6 +51,7 @@ The public site is currently Albanian-first. English copy and a small set of Eng
 - [Neon Postgres](https://neon.tech/) and [Prisma](https://www.prisma.io/) for ideas, votes, and newsletter registrations
 - [Cloudflare Workers](https://workers.cloudflare.com/) for hosting and runtime API routes
 - Astro content collections for blog posts, authors, and referendum content
+- [Tiptap](https://tiptap.dev/) for the reporter article editor
 - Sharp for generating favicon and social-card assets
 
 ## Volunteering and Local Development
@@ -169,6 +171,21 @@ Keep each static file below Cloudflare Workers' per-asset size limit. Larger doc
 | `/api/ideas/[id]/vote` | `DELETE` | Remove the current device's vote |
 | `/api/newsletter` | `GET` | Return the signup count for an allowed reason |
 | `/api/newsletter` | `POST` | Register an email address for referendum updates |
+| `/api/reporter/login` | `POST` | Exchange a reporter access key for an HttpOnly session cookie |
+| `/api/reporter/logout` | `POST` | Destroy the current reporter session |
+| `/api/reporter/me` | `GET` | Return the authenticated reporter, or 401 |
+| `/api/reporter/articles` | `GET` / `POST` | List the reporter's articles / create a new draft |
+| `/api/reporter/articles/[id]` | `GET` / `PATCH` / `DELETE` | Load, save, publish (`action: "publish"`), unpublish, or delete an article |
+
+### Flamingo Times Reporters
+
+Article writing is restricted to whitelisted reporters. Create one (or rotate a key) with:
+
+```bash
+pnpm reporter:create --name "Emri Mbiemri"
+```
+
+The command prints the access key once; only its SHA-256 hash is stored. Reporters sign in at `/redaksia/` and write articles in a Tiptap editor. Content is stored as Tiptap JSON in the `articles` table in Neon. Images are referenced by URL for now; an R2-backed upload endpoint can be added later.
 
 For a local end-to-end check:
 
