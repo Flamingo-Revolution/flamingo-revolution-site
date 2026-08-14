@@ -61,9 +61,9 @@ export const documentLibraryCopy: Record<Locale, DocumentLibraryCopy> = {
     kicker: "Biblioteka e dokumenteve",
     title: "Projektligji per t'u lexuar, hapur dhe shkarkuar.",
     description:
-      "Ketu mblidhen dokumentet qe qytetaret mund t'i eksplorojne ne menyre transparente. Cdo karte hap PDF-ne origjinale ne nje tab te ri ose e shkarkon direkt.",
+      "Këtu mblidhen dokumentet që qytetarët mund t'i eksplorojnë në mënyrë transparente. Çdo kartë hap PDF-në origjinale në një tab të ri ose e shkarkon direkt.",
     discussionNote:
-      "Keto jane disa ide te propozuara, te hapura per diskutim dhe rishqyrtim.",
+      "Këto janë disa ide të propozuara, të hapura për diskutim dhe rishqyrtim.",
     discussionCta: "Jepni mendimin tuaj",
     countLabel: "1 dokument",
     searchLabel: "Kerko dokumente",

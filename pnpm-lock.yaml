@@ -44,6 +44,9 @@ importers:
       svelte:
         specifier: ^5.56.6
         version: 5.56.6
+      svelte-confetti:
+        specifier: ^2.3.2
+        version: 2.3.2(svelte@5.56.6)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -2419,6 +2422,11 @@ packages:
   supports-color@10.2.2:
     resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
     engines: {node: '>=18'}
+
+  svelte-confetti@2.3.2:
+    resolution: {integrity: sha512-cfIwoGqMPYWRYDUz2g7mG1uHYWy7VBepelQdzCC3j/M42UrAqaBYmIi9xaoQfow4fbINHO9WuARnTyK2bjjGQg==}
+    peerDependencies:
+      svelte: '>=5.0.0'
 
   svelte2tsx@0.7.58:
     resolution: {integrity: sha512-NXzvlRQ2ZH8mhHOIQURyzGAu2RbbY+rcSNIXs39m2bBo6Fcw3T+EgDHnCKhncupRtzUqhWNaqQnAkfLCDjHrDg==}
@@ -5232,6 +5240,10 @@ snapshots:
       character-entities-legacy: 3.0.0
 
   supports-color@10.2.2: {}
+
+  svelte-confetti@2.3.2(svelte@5.56.6):
+    dependencies:
+      svelte: 5.56.6
 
   svelte2tsx@0.7.58(svelte@5.56.6)(typescript@6.0.3):
     dependencies:
