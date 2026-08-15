@@ -8,3 +8,6 @@ allowBuilds:
 # Pin until pnpm minimumReleaseAge allows newer @cloudflare/vite-plugin deps.
 overrides:
   '@cloudflare/vite-plugin': 1.43.0
+  # workerd 1.20260701 crashes on startup on some Windows machines
+  # (std::terminate, cloudflare/workerd#4668); newer builds fix it.
+  miniflare: 4.20260730.0
