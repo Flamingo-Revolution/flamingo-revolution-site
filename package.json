@@ -30,7 +30,10 @@
 		"@prisma/adapter-neon": "^7.8.0",
 		"@prisma/client": "^7.8.0",
 		"@tiptap/core": "3.30.0",
+		"@tiptap/extension-bubble-menu": "3.30.0",
+		"@tiptap/extension-floating-menu": "3.30.0",
 		"@tiptap/extension-image": "3.30.0",
+		"@tiptap/extension-text-align": "3.30.0",
 		"@tiptap/extensions": "3.30.0",
 		"@tiptap/pm": "3.30.0",
 		"@tiptap/starter-kit": "3.30.0",
@@ -49,5 +52,11 @@
 		"sharp": "^0.35.3",
 		"tsx": "^4.21.0",
 		"wrangler": "^4.107.0"
+	},
+	"allowScripts": {
+		"prisma@7.9.1": true,
+		"workerd@1.20260811.1": true,
+		"@prisma/engines@7.9.1": true,
+		"esbuild@0.28.2": true
 	}
 }
