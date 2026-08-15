@@ -625,7 +625,13 @@
 
 	.editor-bubble-menu,
 	.editor-floating-menu {
+		/* Hidden and unpositioned by default; the Tiptap plugins toggle
+		   visibility and set top/left inline when the menu should appear. */
+		visibility: hidden;
+		opacity: 0;
 		position: absolute;
+		top: 0;
+		left: 0;
 		z-index: 40;
 		display: flex;
 		flex-wrap: wrap;
