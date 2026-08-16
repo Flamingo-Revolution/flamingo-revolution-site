@@ -176,6 +176,8 @@ Keep each static file below Cloudflare Workers' per-asset size limit. Larger doc
 | `/api/reporter/me` | `GET` | Return the authenticated reporter, or 401 |
 | `/api/reporter/articles` | `GET` / `POST` | List the reporter's articles / create a new draft |
 | `/api/reporter/articles/[id]` | `GET` / `PATCH` / `DELETE` | Load, save, publish (`action: "publish"`), unpublish, or delete an article |
+| `/api/reporter/media` | `POST` | Upload an article image (multipart) to the R2 `flamingo-media` bucket |
+| `/media/[key]` | `GET` | Publicly serve uploaded article media from R2 with immutable caching |
 
 ### Flamingo Times Reporters
 
@@ -185,7 +187,9 @@ Article writing is restricted to whitelisted reporters. Create one (or rotate a 
 pnpm reporter:create --name "Emri Mbiemri"
 ```
 
-The command prints the access key once; only its SHA-256 hash is stored. Reporters sign in at `/redaksia/` and write articles in a Tiptap editor. Content is stored as Tiptap JSON in the `articles` table in Neon. Images are referenced by URL for now; an R2-backed upload endpoint can be added later.
+The command prints the access key once; only its SHA-256 hash is stored. Reporters sign in at `/redaksia/` and write articles in a Tiptap editor. Content is stored as Tiptap JSON in the `articles` table in Neon.
+
+Article images upload to the R2 bucket declared in `wrangler.jsonc` (`flamingo-media`) via file picker, paste, or drag-and-drop, and are served through the Worker at `/media/<key>`. Local preview simulates the bucket automatically; in production the bucket must exist in the Cloudflare account (R2 → Create bucket → `flamingo-media`) before deploying. External image URLs are still accepted.
 
 For a local end-to-end check:
 

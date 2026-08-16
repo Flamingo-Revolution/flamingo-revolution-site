@@ -77,6 +77,9 @@ export function parseImageUrl(value: unknown): string | null {
 	const trimmed = value.trim();
 	if (!trimmed || trimmed.length > MAX_IMAGE_URL_LENGTH) return null;
 
+	// Site-relative URLs for R2-backed uploads served from /media/.
+	if (trimmed.startsWith('/media/')) return trimmed;
+
 	try {
 		const url = new URL(trimmed);
 		if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;

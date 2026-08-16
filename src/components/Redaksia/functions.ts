@@ -125,6 +125,21 @@ export async function patchArticle(id: string, patch: ArticlePatch): Promise<Pub
 	return data.article as PublicArticleWithContent;
 }
 
+export async function uploadImage(articleId: string, file: File): Promise<string> {
+	const form = new FormData();
+	form.append('file', file);
+	form.append('articleId', articleId);
+
+	const response = await fetch('/api/reporter/media', { method: 'POST', body: form });
+	const data = await parseJson(response);
+
+	if (!response.ok) {
+		throw new Error(errorMessage(data, 'Imazhi nuk u ngarkua.'));
+	}
+
+	return data.url as string;
+}
+
 export async function deleteArticle(id: string): Promise<void> {
 	const response = await fetch(`/api/reporter/articles/${id}`, { method: 'DELETE' });
 

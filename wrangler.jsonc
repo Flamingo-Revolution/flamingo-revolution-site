@@ -8,6 +8,12 @@
 		"binding": "ASSETS",
 		"directory": "./dist"
 	},
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "flamingo-media"
+		}
+	],
 	"secrets": {
 		"required": ["DATABASE_URL"]
 	},

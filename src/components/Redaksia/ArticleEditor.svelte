@@ -6,7 +6,14 @@
 	import TextAlign from '@tiptap/extension-text-align';
 	import { Placeholder } from '@tiptap/extensions';
 	import LoginForm from './LoginForm.svelte';
-	import { fetchArticle, fetchMe, patchArticle, type PublicArticleWithContent, type PublicReporter } from './functions';
+	import {
+		fetchArticle,
+		fetchMe,
+		patchArticle,
+		uploadImage,
+		type PublicArticleWithContent,
+		type PublicReporter
+	} from './functions';
 
 	type Props = {
 		articleId: string;
@@ -25,8 +32,12 @@
 
 	let editor = $state<Editor | null>(null);
 	let editorElement = $state<HTMLDivElement | null>(null);
+	let imageInput = $state<HTMLInputElement | null>(null);
+	let coverInput = $state<HTMLInputElement | null>(null);
 	/** Bumped on every transaction so toolbar active states stay reactive. */
 	let editorTick = $state(0);
+
+	let uploading = $state(0);
 
 	let dirty = $state(false);
 	let saving = $state(false);
@@ -85,6 +96,27 @@
 				})
 			],
 			content: article.content,
+			editorProps: {
+				handlePaste: (_view, event) => {
+					const files = imageFilesFrom(event.clipboardData?.files);
+					if (files.length === 0) return false;
+
+					event.preventDefault();
+					void uploadAndInsert(files);
+					return true;
+				},
+				handleDrop: (view, event, _slice, moved) => {
+					if (moved) return false;
+
+					const files = imageFilesFrom(event.dataTransfer?.files);
+					if (files.length === 0) return false;
+
+					event.preventDefault();
+					const pos = view.posAtCoords({ left: event.clientX, top: event.clientY })?.pos;
+					void uploadAndInsert(files, pos);
+					return true;
+				}
+			},
 			onTransaction: () => {
 				editorTick += 1;
 			},
@@ -92,6 +124,66 @@
 				markDirty();
 			}
 		});
+	}
+
+	function imageFilesFrom(list: FileList | null | undefined): File[] {
+		return Array.from(list ?? []).filter((file) => file.type.startsWith('image/'));
+	}
+
+	async function uploadAndInsert(files: File[], pos?: number) {
+		if (!editor || !article) return;
+
+		for (const file of files) {
+			uploading += 1;
+
+			try {
+				const url = await uploadImage(article.id, file);
+
+				if (typeof pos === 'number') {
+					editor
+						.chain()
+						.focus()
+						.insertContentAt(pos, { type: 'image', attrs: { src: url } })
+						.run();
+				} else {
+					editor.chain().focus().setImage({ src: url }).run();
+				}
+			} catch (err) {
+				saveError = err instanceof Error ? err.message : 'Imazhi nuk u ngarkua.';
+			} finally {
+				uploading -= 1;
+			}
+		}
+	}
+
+	function openImagePicker() {
+		imageInput?.click();
+	}
+
+	function onImageFilesSelected() {
+		const files = imageFilesFrom(imageInput?.files);
+		if (imageInput) imageInput.value = '';
+		if (files.length > 0) void uploadAndInsert(files);
+	}
+
+	function onCoverFileSelected() {
+		const [file] = imageFilesFrom(coverInput?.files);
+		if (coverInput) coverInput.value = '';
+		if (!file || !article) return;
+
+		uploading += 1;
+
+		void uploadImage(article.id, file)
+			.then((url) => {
+				coverImageUrl = url;
+				markDirty();
+			})
+			.catch((err) => {
+				saveError = err instanceof Error ? err.message : 'Imazhi nuk u ngarkua.';
+			})
+			.finally(() => {
+				uploading -= 1;
+			});
 	}
 
 	function markDirty() {
@@ -273,7 +365,8 @@
 			action: () => chain()?.toggleBlockquote().run(),
 			active: () => isActive('blockquote')
 		},
-		{ label: '🖼', title: 'Imazh nga URL', action: insertImage, active: () => false },
+		{ label: '🖼', title: 'Ngarko imazh', action: openImagePicker, active: () => false },
+		{ label: '🌐', title: 'Imazh nga URL', action: insertImage, active: () => false },
 		{ label: '―', title: 'Vijë ndarëse', action: () => chain()?.setHorizontalRule().run(), active: () => false }
 	];
 </script>
@@ -290,7 +383,9 @@
 			<a class="button button--ghost" href="/redaksia/">← Redaksia</a>
 
 			<div class="editor-topbar__state">
-				{#if saving}
+				{#if uploading > 0}
+					<span>Duke ngarkuar imazhin…</span>
+				{:else if saving}
 					<span>Duke ruajtur…</span>
 				{:else if saveError}
 					<span class="editor-topbar__error" role="alert">{saveError}</span>
@@ -328,8 +423,11 @@
 				maxlength="500"
 				rows="2"></textarea>
 			<label class="editor-cover">
-				<span>Imazhi kryesor (URL)</span>
-				<input type="url" placeholder="https://…" bind:value={coverImageUrl} oninput={markDirty} maxlength="2048" />
+				<span>Imazhi kryesor (URL ose ngarkim)</span>
+				<div class="editor-cover__row">
+					<input type="url" placeholder="https://…" bind:value={coverImageUrl} oninput={markDirty} maxlength="2048" />
+					<button type="button" class="button" onclick={() => coverInput?.click()} disabled={!article}> Ngarko </button>
+				</div>
 			</label>
 			{#if coverImageUrl.trim()}
 				<img class="editor-cover__preview" src={coverImageUrl.trim()} alt="Imazhi kryesor i artikullit" />
@@ -353,6 +451,9 @@
 		</div>
 
 		<div class="editor-canvas" bind:this={editorElement}></div>
+
+		<input type="file" accept="image/*" multiple hidden bind:this={imageInput} onchange={onImageFilesSelected} />
+		<input type="file" accept="image/*" hidden bind:this={coverInput} onchange={onCoverFileSelected} />
 	</section>
 {/if}
 
@@ -458,7 +559,15 @@
 		color: var(--accent-strong);
 	}
 
+	.editor-cover__row {
+		display: flex;
+		gap: 0.7rem;
+		align-items: stretch;
+	}
+
 	.editor-cover input {
+		flex: 1;
+		min-width: 0;
 		height: 2.8rem;
 		padding: 0 0.9rem;
 		font: inherit;
