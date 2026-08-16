@@ -3,12 +3,17 @@
 	import { Confetti } from 'svelte-confetti';
 	import type { Attachment } from 'svelte/attachments';
 
+	type Props = {
+		quick?: boolean;
+	};
+
+	let { quick = false }: Props = $props();
 	let active = $state(true);
 
 	onMount(() => {
 		const timeout = setTimeout(() => {
 			active = false;
-		}, 7000);
+		}, quick ? 4500 : 7000);
 
 		return () => clearTimeout(timeout);
 	});
@@ -29,8 +34,8 @@
 		<Confetti
 			x={[-5, 5]}
 			y={[0, 0.1]}
-			delay={[500, 2000]}
-			duration={5000}
+			delay={quick ? [0, 150] : [500, 2000]}
+			duration={quick ? 3500 : 5000}
 			amount={200}
 			fallDistance="100vh"
 			infinite

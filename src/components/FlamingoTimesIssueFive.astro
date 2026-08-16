@@ -1,0 +1,276 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteCopy } from "../data/site";
+import FlamingoCrossword from "./FlamingoCrossword.svelte";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-5.pdf";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+
+const reforms = [
+  "Kufizim mandatesh për kryeministrin.",
+  "Zgjedhje reale në parti dhe drejtues të zëvendësueshëm.",
+  "Lista të hapura dhe deputetë që japin llogari një më një tek ata që i kanë zgjedhur.",
+  "Administratë profesionale dhe tendera transparentë.",
+  "Drejtësi me të njëjtin standard për të gjithë."
+];
+
+---
+
+<BaseLayout
+  title="Na mungon besimi se mund të ndryshojë sistemi — Flamingo Times, Botimi V"
+  description="Kujt i shërben bindja se «të gjithë do të vidhnin» dhe se Shqipëria nuk mund të bëjë pa ta?"
+  locale="sq"
+  socialImagePath="/images/flamingo-times/botimi-5/dy-rruget-e-jetes.png"
+  socialImageAlt="Dy rrugët e jetës, pikturë nga Kolë Idromeno"
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Gusht 2026</span>
+          <span>Botimi V</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#provat">Provat</a>
+        <a href="#pas-tyre">Pas tyre</a>
+        <a href="#bashkohu">Bashkohu</a>
+        <a href="#fjalekryqi">Fjalëkryqi</a>
+      </nav>
+
+      <article class="times-government times-system" id="kryeartikulli">
+        <header class="times-government__hero times-system__hero">
+          <p class="times-label">Nuk na mungojnë skandalet</p>
+          <h2>Na mungon besimi se mund të ndryshojë sistemi</h2>
+          <p>
+            Kujt i shërben bindja se «të gjithë do të vidhnin» dhe se Shqipëria nuk mund të bëjë
+            pa ta?
+          </p>
+        </header>
+
+        <div class="times-system__page-one">
+          <div class="times-system__page-one-lead">
+            <h3>Kujt i shërben «të gjithë vjedhin»?</h3>
+            <p class="times-dropcap">
+              Kjo fjali duket si realizëm, por në praktikë është mburoja më e fortë e pushtetit.
+              Qeveritari aktual nuk ka nevojë të provojë se është i ndershëm (gjë që duhet të jetë
+              detyra parësore e çdo politikani); mjafton të na bindë se të tjerët do të ishin po aq
+              të pandershëm. Ky është truku i «së keqes më të vogël»: korrupsioni normalizohet dhe
+              standardi ulet nga ndershmëria te krahasimi me kundërshtarin.
+            </p>
+            <p>
+              Standardi nuk është më: «A qeverisi mirë?» Bëhet: «A do të ishte tjetri edhe më keq?»
+              Kështu skandalet prodhojnë lodhje, cinizëm dhe dorëzim, jo përgjegjësi.
+            </p>
+
+            <blockquote class="times-system__quote">
+              «Një shtet serioz nuk ndërtohet duke shpresuar se udhëheqësi do të jetë gjithmonë i
+              mirë. Ndërtohet që edhe një udhëheqës i keq të mos mund të bëjë çfarë të dojë.»
+            </blockquote>
+
+            <p>
+              Nuk na duhen njerëz të përsosur. Na duhen institucione, mandate të kufizuara,
+              transparencë, media të lira, drejtësi dhe kontroll parlamentar.
+            </p>
+
+            <section id="provat" aria-labelledby="evidence-title">
+              <h3 id="evidence-title">Disa prova, i njëjti problem</h3>
+              <p>
+                <strong>Zvërneci.</strong> Kur ligji, toka dhe zonat e mbrojtura bëhen të
+                negociueshme për projektet e botës së errët të krimit, krijohen dy lloje shteti: një
+                i ngadaltë për qytetarin dhe një i shpejtë për të fortin.
+              </p>
+              <p>
+                <strong>Onkologjiku.</strong> Qytetari paguan taksa, sigurime dhe pastaj paguan
+                sërish nën dorë kur sëmuret; përndryshe e nxjerrin prej zhelesh jashtë ose thjesht e
+                lënë të lëngojë në karriget e thyera të spitalit.
+              </p>
+              <p>
+                <strong>Uji.</strong> Në shumë zona ende nuk ka ujë 24 orë dhe, edhe kur vjen,
+                asnjëherë nuk
+              </p>
+            </section>
+          </div>
+
+          <figure class="times-system__painting times-system__page-one-painting">
+            <img
+              src="/images/flamingo-times/botimi-5/dy-rruget-e-jetes.png"
+              alt="Dy rrugët e jetës, pikturë e Kolë Idromenos: një turmë ndjek shtegun e ngushtë drejt dritës, një tjetër rrugën e gjerë drejt zjarrit"
+              width="864"
+              height="695"
+            />
+            <figcaption>
+              <strong>«Dy rrugët e jetës», nga Kolë Idromeno.</strong> Qysh nga themelimi i shtetit
+              shqiptar më 1912, shoqëria jonë qerthullohet rreth njeriut të pazëvendësueshëm; kur
+              do ta tejkalojmë këtë?
+            </figcaption>
+          </figure>
+
+          <div class="times-system__page-one-under times-system__page-one-under--first">
+            <p>
+              konsiderohet i sigurt për t'u pirë. Një familje me katër persona që blen 8–10 litra
+              ujë në ditë mund të shpenzojë rreth 6,700–8,400 lekë në muaj vetëm për ujë të
+              pijshëm. Ndërkohë, qeveria synon anëtarësimin në BE deri në vitin 2030, ndërsa
+              standardet e BE-së kërkojnë që uji i rubinetit të jetë i pastër dhe i sigurt për
+              konsum.
+            </p>
+            <p>
+              <strong>Pensionet dhe prioritetet.</strong> Sipas Bankës Botërore, pensioni mesatar
+              përbën vetëm 32% të pagës kontributive, nivelin më të ulët në rajon. Ndërkohë,
+              qeveria gjeti gati 4 miliardë lekë të vjetra nga fondi rezervë për koncerte tallavaje.
+              Propaganda e qeverisë se ky koncert rrit statusin e Shqipërisë në skenën botërore bie
+              poshtë kur koncertet e këngëtarit janë anuluar ose
+            </p>
+          </div>
+
+          <div class="times-system__page-one-under times-system__page-one-under--second">
+            <p>
+              bllokuar në disa vende europiane për shkak të deklaratave të tij antisemitike dhe
+              raciste. Paratë dhe shpejtësia gjenden kur pushteti e vendos një çështje në prioritet.
+              Si duket, qindra mijëra pensionistë, që do të ishin rrugëve pa mbështetjen e fëmijëve,
+              nuk përbëjnë një prioritet të mjaftueshëm për këtë qeveri.
+            </p>
+            <p class="times-system__money">Paratë ekzistojnë. Pyetja është për kë përdoren.</p>
+            <h3 id="duopoly-title">Rama dhe Berisha, alibia e njëri-tjetrit</h3>
+            <p>
+              Përgjegjësinë për qeverisjen e sotme e ka Edi Rama. Por politikisht, Rama dhe Berisha
+              e mbajnë njëri-tjetrin në qendër.
+            </p>
+          </div>
+
+          <div class="times-system__page-one-third times-system__page-one-third--first">
+            <p>Rama: «Mund të mos më doni mua, por përndryshe kthehet Berisha.»</p>
+            <p>Berisha: «Mund të mos më doni mua, por vetëm unë mund ta largoj Ramën.»</p>
+            <p>
+              Njëri përdor të kaluarën e tjetrit për të shmangur përgjegjësinë për të tashmen.
+              Tjetri përdor dështimet e qeverisë për të shmangur përgjegjësinë për të kaluarën. Të
+              dy tok së bashku ushqejnë
+            </p>
+          </div>
+
+          <div class="times-system__page-one-third times-system__page-one-third--second">
+            <p>një pasion të nxehtë për të mbajtur sa më poshtë një popull të tërë.</p>
+            <h3>Shqipëria nuk shembet pa ta</h3>
+            <p>
+              Shqipëria ka kaluar një nga diktaturat më të egra në kampin lindor, vitin 1997,
+              varfërinë, tërmetin, pandeminë dhe, në mënyrë të përsëritur, emigrimin masiv.
+            </p>
+          </div>
+
+          <div class="times-system__page-one-third times-system__page-one-third--third">
+            <p>
+              Nuk kemi mbijetuar sepse një politikan ishte i pazëvendësueshëm, por sepse njerëzit e
+              kanë mbajtur vendin në këmbë.
+            </p>
+            <p>
+              Pensionet vazhdojnë të paguhen. Shkollat, spitalet, bizneset, bashkitë dhe administrata
+              vazhdojnë punën. Integrimi europian nuk i përket një individi.
+            </p>
+          </div>
+
+          <p class="times-system__plain-truth">
+            Nuk ka shqiptar që sot nuk e di: Shqipërisë jo vetëm që nuk i duhen drejtues të tillë,
+            por në fakt do të lulëzonte pa ta.
+          </p>
+        </div>
+
+        <section class="times-system__reforms" id="pas-tyre" aria-labelledby="reforms-title">
+          <h2 id="reforms-title">Çfarë duhet të vijë pas tyre?</h2>
+          <ol>
+            {reforms.map((reform) => <li>{reform}</li>)}
+          </ol>
+        </section>
+
+        <p class="times-system__slogan">
+          Ata janë të përkohshëm. <span>Populli shqiptar mbetet.</span> Shqipëria vazhdon.
+        </p>
+
+        <section class="times-action" id="bashkohu">
+          <div class="times-action__demands">
+            <p class="times-label">Na u bashko në këto projekte</p>
+            <h2>Mos pyet vetëm kush vjen pas tyre. Pyet veten çfarë sistemi duhet të ndërtojmë.</h2>
+            <ol>
+              <li><a href="/flamingo-times/">Flamingo Times</a></li>
+              <li>
+                <a
+                  href="https://www.instagram.com/flamingotelevision"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Flamingo Television në Instagram"
+                >Flamingo Television</a>
+              </li>
+              <li><a href="/dosjet/">Flamingo Dossier</a></li>
+              <li>
+                <a href="/harta/">Harta e Protestave</a> dhe
+                <a href="/pulsi-protestes/">Pulsi i Protestës</a>
+              </li>
+              <li><a href="/reporteret-e-diaspores/">Reporterët e Diasporës</a></li>
+              <li>
+                <a href="/referendum/">Nisma për Referendum</a> dhe
+                <a href="/idete-tuaja/">Laboratori i ideve</a>
+              </li>
+            </ol>
+          </div>
+          <aside class="times-action__card">
+            <div class="times-action__brand">
+              <img src="/images/flamingo-wordmark-light.svg" alt="Flamingo Revolution" width="419" height="187" />
+              <a href="https://flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+                <span>flamingorevolution.eu</span>
+                <img
+                  class="times-action__qr"
+                  src="/images/qr-code/png/black.png"
+                  alt="QR code për flamingorevolution.eu"
+                  width="480"
+                  height="480"
+                />
+              </a>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          class="times-system__crossword times-system__crossword--playable"
+          id="fjalekryqi"
+          aria-labelledby="crossword-title"
+        >
+          <div>
+            <p class="times-label">Në fund të botimit</p>
+            <h2 id="crossword-title">Fjalëkryqi</h2>
+          </div>
+          <FlamingoCrossword client:load />
+        </section>
+      </article>
+
+      <footer class="times-source">
+        <p>
+          Burimet: Komisioni Europian, Albania Report 2025; Enti Rregullator i Ujit, Raporti i
+          Performancës 2024; Direktiva (BE) 2020/2184; Banka Botërore, Albania Public Finance
+          Review 2025; Banka e Shqipërisë, kursi zyrtar 11.08.2026; Kryeministria, «Shqipëria 2030
+          në BE»; Reuters, 2026; OCCRP.
+        </p>
+        <strong>FLAMINGO TIMES · Botimi V · Gusht 2026</strong>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>
