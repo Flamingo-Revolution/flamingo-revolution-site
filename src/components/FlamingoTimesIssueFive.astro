@@ -197,9 +197,9 @@ const reforms = [
 
         <section class="times-system__reforms" id="pas-tyre" aria-labelledby="reforms-title">
           <h2 id="reforms-title">Çfarë duhet të vijë pas tyre?</h2>
-          <ol>
+          <ul>
             {reforms.map((reform) => <li>{reform}</li>)}
-          </ol>
+          </ul>
         </section>
 
         <p class="times-system__slogan">
@@ -222,13 +222,17 @@ const reforms = [
               </li>
               <li><a href="/dosjet/">Flamingo Dossier</a></li>
               <li>
-                <a href="/harta/">Harta e Protestave</a> dhe
-                <a href="/pulsi-protestes/">Pulsi i Protestës</a>
+                <span class="times-action__link-pair">
+                  <a href="/harta/">Harta e Protestave</a> dhe
+                  <a href="/pulsi-protestes/">Pulsi i Protestës</a>
+                </span>
               </li>
               <li><a href="/reporteret-e-diaspores/">Reporterët e Diasporës</a></li>
               <li>
-                <a href="/referendum/">Nisma për Referendum</a> dhe
-                <a href="/idete-tuaja/">Laboratori i ideve</a>
+                <span class="times-action__link-pair">
+                  <a href="/referendum/">Nisma për Referendum</a> dhe
+                  <a href="/idete-tuaja/">Laboratori i ideve</a>
+                </span>
               </li>
             </ol>
           </div>
