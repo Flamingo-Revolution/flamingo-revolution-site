@@ -11,6 +11,7 @@ export type PublicArticle = {
 	title: string;
 	slug: string | null;
 	excerpt: string;
+	tags: string[];
 	coverImageUrl: string | null;
 	status: 'DRAFT' | 'PUBLISHED';
 	createdAt: string;
@@ -25,6 +26,7 @@ export type PublicArticleWithContent = PublicArticle & {
 export type ArticlePatch = {
 	title?: string;
 	excerpt?: string;
+	tags?: string[];
 	coverImageUrl?: string | null;
 	content?: JSONContent;
 	action?: 'publish' | 'unpublish';

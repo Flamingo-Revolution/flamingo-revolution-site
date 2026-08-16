@@ -99,6 +99,7 @@ model Article {
   title         String        @default("")
   slug          String?       @unique
   excerpt       String        @default("")
+  tags          String[]      @default([])
   coverImageUrl String?       @map("cover_image_url")
   content       Json          @default("{}")
   status        ArticleStatus @default(DRAFT)

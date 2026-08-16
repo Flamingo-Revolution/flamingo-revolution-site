@@ -2,6 +2,8 @@ import type { Article, Prisma } from '@prisma/client';
 
 export const MAX_ARTICLE_TITLE_LENGTH = 200;
 export const MAX_ARTICLE_EXCERPT_LENGTH = 500;
+export const MAX_ARTICLE_TAGS = 8;
+export const MAX_TAG_LENGTH = 32;
 export const MAX_ARTICLE_CONTENT_BYTES = 512 * 1024;
 export const MAX_IMAGE_URL_LENGTH = 2048;
 
@@ -10,6 +12,7 @@ export type PublicArticle = {
 	title: string;
 	slug: string | null;
 	excerpt: string;
+	tags: string[];
 	coverImageUrl: string | null;
 	status: 'DRAFT' | 'PUBLISHED';
 	createdAt: string;
@@ -27,6 +30,7 @@ export function toPublicArticle(article: Article): PublicArticle {
 		title: article.title,
 		slug: article.slug,
 		excerpt: article.excerpt,
+		tags: article.tags,
 		coverImageUrl: article.coverImageUrl,
 		status: article.status,
 		createdAt: article.createdAt.toISOString(),
@@ -69,6 +73,28 @@ export function parseArticleContent(value: unknown): Prisma.InputJsonValue | nul
 	}
 
 	return value as Prisma.InputJsonValue;
+}
+
+/**
+ * Normalize a tags payload: strings only, trimmed, lowercased, deduplicated,
+ * capped in count and length. Returns null when the payload is not an array.
+ */
+export function parseTags(value: unknown): string[] | null {
+	if (!Array.isArray(value)) return null;
+
+	const tags: string[] = [];
+
+	for (const entry of value) {
+		if (typeof entry !== 'string') continue;
+
+		const tag = entry.trim().toLowerCase().slice(0, MAX_TAG_LENGTH);
+		if (!tag || tags.includes(tag)) continue;
+
+		tags.push(tag);
+		if (tags.length >= MAX_ARTICLE_TAGS) break;
+	}
+
+	return tags;
 }
 
 export function parseImageUrl(value: unknown): string | null {

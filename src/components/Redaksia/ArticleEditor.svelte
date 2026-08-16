@@ -29,6 +29,11 @@
 	let title = $state('');
 	let excerpt = $state('');
 	let coverImageUrl = $state('');
+	let tags = $state<string[]>([]);
+	let tagDraft = $state('');
+
+	const MAX_TAGS = 8;
+	const MAX_TAG_LENGTH = 32;
 
 	let editor = $state<Editor | null>(null);
 	let editorElement = $state<HTMLDivElement | null>(null);
@@ -69,6 +74,7 @@
 			title = article.title;
 			excerpt = article.excerpt;
 			coverImageUrl = article.coverImageUrl ?? '';
+			tags = [...article.tags];
 			await tick();
 			initEditor();
 		} catch (err) {
@@ -186,6 +192,39 @@
 			});
 	}
 
+	function addTagsFromDraft() {
+		const candidates = tagDraft
+			.split(',')
+			.map((tag) => tag.trim().toLowerCase().slice(0, MAX_TAG_LENGTH))
+			.filter(Boolean);
+
+		let changed = false;
+
+		for (const tag of candidates) {
+			if (tags.length >= MAX_TAGS) break;
+			if (tags.includes(tag)) continue;
+			tags = [...tags, tag];
+			changed = true;
+		}
+
+		tagDraft = '';
+		if (changed) markDirty();
+	}
+
+	function removeTag(tag: string) {
+		tags = tags.filter((item) => item !== tag);
+		markDirty();
+	}
+
+	function onTagKeydown(event: KeyboardEvent) {
+		if (event.key === 'Enter' || event.key === ',') {
+			event.preventDefault();
+			addTagsFromDraft();
+		} else if (event.key === 'Backspace' && !tagDraft && tags.length > 0) {
+			removeTag(tags[tags.length - 1]);
+		}
+	}
+
 	function markDirty() {
 		dirty = true;
 		saveError = null;
@@ -203,6 +242,7 @@
 			const updated = await patchArticle(article.id, {
 				title: title.trim(),
 				excerpt: excerpt.trim(),
+				tags,
 				coverImageUrl: coverImageUrl.trim() || null,
 				content: editor.getJSON()
 			});
@@ -228,6 +268,7 @@
 			const updated = await patchArticle(article.id, {
 				title: title.trim(),
 				excerpt: excerpt.trim(),
+				tags,
 				coverImageUrl: coverImageUrl.trim() || null,
 				content: editor.getJSON(),
 				action: isPublished ? 'unpublish' : 'publish'
@@ -422,6 +463,35 @@
 				oninput={markDirty}
 				maxlength="500"
 				rows="2"></textarea>
+			<div class="editor-tags">
+				<label class="editor-tags__label" for="editor-tag-input">Etiketat (deri në {MAX_TAGS})</label>
+				<div class="editor-tags__box">
+					{#each tags as tag (tag)}
+						<span class="editor-tags__chip">
+							{tag}
+							<button
+								type="button"
+								class="editor-tags__remove"
+								onclick={() => removeTag(tag)}
+								aria-label={`Hiq etiketën ${tag}`}
+							>
+								×
+							</button>
+						</span>
+					{/each}
+					<input
+						id="editor-tag-input"
+						type="text"
+						placeholder={tags.length >= MAX_TAGS ? 'Kufiri u arrit' : 'p.sh. protesta, diaspora…'}
+						bind:value={tagDraft}
+						onkeydown={onTagKeydown}
+						onblur={addTagsFromDraft}
+						maxlength={MAX_TAG_LENGTH}
+						disabled={tags.length >= MAX_TAGS}
+					/>
+				</div>
+			</div>
+
 			<label class="editor-cover">
 				<span>Imazhi kryesor (URL ose ngarkim)</span>
 				<div class="editor-cover__row">
@@ -543,6 +613,73 @@
 	.editor-cover input:focus-visible {
 		outline: 3px solid var(--accent);
 		outline-offset: 2px;
+	}
+
+	.editor-tags {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.editor-tags__label {
+		font-size: 0.78rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--accent-strong);
+	}
+
+	.editor-tags__box {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.4rem;
+		min-height: 2.8rem;
+		padding: 0.35rem 0.6rem;
+		background: var(--surface);
+		border: 2px solid var(--ink);
+		box-shadow: 4px 4px 0 var(--ink);
+	}
+
+	.editor-tags__chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.15rem 0.3rem 0.15rem 0.55rem;
+		font-size: 0.82rem;
+		font-weight: 800;
+		text-transform: lowercase;
+		background: var(--accent-soft);
+		border: 2px solid var(--ink);
+	}
+
+	.editor-tags__remove {
+		padding: 0 0.25rem;
+		font: inherit;
+		font-weight: 800;
+		color: var(--text);
+		background: transparent;
+		border: none;
+		cursor: pointer;
+	}
+
+	.editor-tags__remove:hover,
+	.editor-tags__remove:focus-visible {
+		color: var(--accent-strong);
+	}
+
+	.editor-tags__box input {
+		flex: 1;
+		min-width: 10rem;
+		border: none;
+		background: transparent;
+		font: inherit;
+		color: var(--text);
+		outline: none;
+	}
+
+	.editor-tags__box input::placeholder {
+		color: var(--muted);
 	}
 
 	.editor-cover {

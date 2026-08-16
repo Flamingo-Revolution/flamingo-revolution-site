@@ -11,6 +11,7 @@ import {
 	MAX_ARTICLE_TITLE_LENGTH,
 	parseArticleContent,
 	parseImageUrl,
+	parseTags,
 	slugifyTitle,
 	toPublicArticleWithContent
 } from '@lib/articles';
@@ -111,6 +112,16 @@ export const PATCH = async (context: APIContext) => {
 
 		if ('coverImageUrl' in body) {
 			data.coverImageUrl = body.coverImageUrl === null ? null : parseImageUrl(body.coverImageUrl);
+		}
+
+		if ('tags' in body) {
+			const tags = parseTags(body.tags);
+
+			if (!tags) {
+				return jsonResponse({ error: 'Etiketat janë të pavlefshme.' }, 400);
+			}
+
+			data.tags = tags;
 		}
 
 		if ('content' in body) {

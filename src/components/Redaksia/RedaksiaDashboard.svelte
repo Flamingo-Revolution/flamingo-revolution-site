@@ -120,6 +120,13 @@
 							{#if article.excerpt}
 								<p class="article-card__excerpt">{article.excerpt}</p>
 							{/if}
+							{#if article.tags.length > 0}
+								<p class="article-card__tags">
+									{#each article.tags as tag (tag)}
+										<span class="article-card__tag">{tag}</span>
+									{/each}
+								</p>
+							{/if}
 							<p class="article-card__meta">Përditësuar: {formatDate(article.updatedAt)}</p>
 						</div>
 						<div class="article-card__actions">
@@ -243,6 +250,22 @@
 		margin: 0;
 		font-size: 0.85rem;
 		color: var(--muted);
+	}
+
+	.article-card__tags {
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+	}
+
+	.article-card__tag {
+		padding: 0.1rem 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 800;
+		text-transform: lowercase;
+		background: var(--accent-soft);
+		border: 2px solid var(--ink);
 	}
 
 	.article-card__actions {
