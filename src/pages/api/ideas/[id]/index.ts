@@ -41,7 +41,7 @@ export const PATCH = async (context: IdeaContext) => {
 	}
 
 	if (!name) {
-		return jsonResponse({ error: 'Emri eshte i detyrueshem per kete veprim.' }, 400);
+		return jsonResponse({ error: 'Emri është i detyrueshëm për këtë veprim.' }, 400);
 	}
 
 	const prisma = createPrisma(databaseUrl);
@@ -54,7 +54,7 @@ export const PATCH = async (context: IdeaContext) => {
 		}
 
 		if (existing.submitterHash !== fingerprint) {
-			return jsonResponse({ error: 'Nuk ke te drejte te perditesosh kete ide.' }, 403);
+			return jsonResponse({ error: 'Nuk ke të drejtë të përditësosh këtë ide.' }, 403);
 		}
 
 		const idea = await prisma.idea.update({
@@ -65,7 +65,7 @@ export const PATCH = async (context: IdeaContext) => {
 		return jsonResponse({ idea: toPublicIdea(idea) });
 	} catch (error) {
 		console.error('Idea PATCH error:', error);
-		return jsonResponse({ error: 'Ideja nuk u perditesua.' }, 500);
+		return jsonResponse({ error: 'Ideja nuk u përditësua.' }, 500);
 	} finally {
 		await prisma.$disconnect();
 	}

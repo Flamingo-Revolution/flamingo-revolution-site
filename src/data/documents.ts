@@ -56,20 +56,20 @@ export const documentLibraryCopy: Record<Locale, DocumentLibraryCopy> = {
     meta: {
       title: "Projektligj | Revolucioni Flamingo",
       description:
-        "Projektligji per referendumet ne Republiken e Shqiperise."
+        "Projektligji për referendumet në Republikën e Shqipërisë."
     },
     kicker: "Biblioteka e dokumenteve",
-    title: "Projektligji per t'u lexuar, hapur dhe shkarkuar.",
+    title: "Projektligji për t'u lexuar, hapur dhe shkarkuar.",
     description:
-      "Ketu mblidhen dokumentet qe qytetaret mund t'i eksplorojne ne menyre transparente. Cdo karte hap PDF-ne origjinale ne nje tab te ri ose e shkarkon direkt.",
+      "Këtu mblidhen dokumentet që qytetarët mund t'i eksplorojnë në mënyrë transparente. Çdo kartë hap PDF-në origjinale në një tab të ri ose e shkarkon direkt.",
     discussionNote:
-      "Keto jane disa ide te propozuara, te hapura per diskutim dhe rishqyrtim.",
+      "Këto janë disa ide të propozuara, të hapura për diskutim dhe rishqyrtim.",
     discussionCta: "Jepni mendimin tuaj",
     countLabel: "1 dokument",
-    searchLabel: "Kerko dokumente",
-    searchPlaceholder: "Kerko sipas titullit, temes ose kategorise...",
-    allCategoriesLabel: "Te gjitha",
-    noResults: "Nuk u gjet asnje dokument me kete kerkim.",
+    searchLabel: "Kërko dokumente",
+    searchPlaceholder: "Kërko sipas titullit, temës ose kategorisë...",
+    allCategoriesLabel: "Të gjitha",
+    noResults: "Nuk u gjet asnjë dokument me këtë kërkim.",
     openLabel: "Hap PDF",
     downloadLabel: "Shkarko",
     languageLabel: "Shqip",

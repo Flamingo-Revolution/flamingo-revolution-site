@@ -18,6 +18,7 @@ type ManifestoCard = {
 type Pillar = {
   title: string;
   body: string;
+  image?: { src: string; alt: string };
 };
 
 type Council = {
@@ -41,7 +42,8 @@ export type SiteCopy = {
   };
   nav: {
     homeLabel: string;
-    protestsLabel: string;
+    protestsMovementLabel: string;
+    protestsMomentsLabel: string;
     mapLabel: string;
     pulseLabel: string;
     diasporaLabel: string;
@@ -55,6 +57,8 @@ export type SiteCopy = {
     dossierLabel: string;
     aboutLabel: string;
     menuLabel: string;
+    joinLabel: string;
+    externalLabel: string;
   };
   theme: {
     button: string;
@@ -73,6 +77,7 @@ export type SiteCopy = {
     caption: string;
     demandsKicker: string;
     demandsTitle: string;
+    demandsTeaser: string;
     triggerTitle: string;
     triggerText: string;
     demands: string[];
@@ -82,7 +87,10 @@ export type SiteCopy = {
     kicker: string;
     title: string;
     description: string;
-    items: Metric[];
+    movementLabel: string;
+    movementItems: Metric[];
+    groupLabel: string;
+    groupItems: Metric[];
   };
   manifesto: {
     kicker: string;
@@ -93,6 +101,7 @@ export type SiteCopy = {
   pillars: {
     kicker: string;
     title: string;
+    teaser: string;
     items: Pillar[];
   };
   council: Council;
@@ -118,33 +127,35 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     meta: {
       title: "Revolucioni Flamingo",
       description:
-        "Portal per te mbledhur ne menyre transparente problematika, ide dhe propozime ne sherbim te protestes dhe interesit publik."
+        "Portal për të mbledhur në mënyrë transparente problematika, ide dhe propozime në shërbim të protestës dhe interesit publik."
     },
     brand: {
       name: "Revolucioni Flamingo",
-      tagline: "Shqiperi e re.",
-      logoAlt: "Logoja e Revolucioni Flamingo"
+      tagline: "Shqipëri e re.",
+      logoAlt: "Logoja e Revolucionit Flamingo"
     },
     nav: {
       homeLabel: "Ballina",
-      protestsLabel: "Protestat",
+      protestsMovementLabel: "Protestat",
+      protestsMomentsLabel: "Momente",
       mapLabel: "Harta e Protestave",
-      pulseLabel: "Pulsi i Protestes",
+      pulseLabel: "Pulsi i Protestës",
       diasporaLabel: "Diaspora zbarkon",
-      diasporaReportersLabel: "Reporteret e Diaspores",
+      diasporaReportersLabel: "Reporterët e Diasporës",
       labLabel: "Projekte",
-      ideasLabel: "Ide > Projektligje",
       referendumLabel: "Referendum",
+      documentsLabel: "Projektligjet",
       timesLabel: "Flamingo Times",
       dossierLabel: "Flamingo Dossier",
       aboutLabel: "Rreth nesh",
       blogLabel: "Blog",
-      ideasLabel: "Idete tuaja",
-      contactLabel: "Kontakt",
-      menuLabel: "Menuja kryesore"
+      ideasLabel: "Idetë tuaja",
+      menuLabel: "Menuja kryesore",
+      joinLabel: "Bashkohu",
+      externalLabel: "(hapet në një faqe tjetër)"
     },
     theme: {
-      button: "Nderro temen",
+      button: "Ndërro temën",
       light: "Light mode",
       dark: "Dark mode"
     },
@@ -152,19 +163,20 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "Nga 23 maji 2026",
       title: "Revolucioni Flamingo",
       description:
-        "Misioni yne eshte te mbledhim ne menyre transparente zerin e qytetareve, problematikat qe prekin komunitetet dhe propozimet qe mund te kthehen ne pune konkrete. Revolucioni Flamingo eshte nje hapesire ku pjesemarrja, llogaridhenia dhe mbrojtja e interesit publik vendosen ne qender.",
+        "Jemi një nëngrup i pavarur i lëvizjes Revolucioni Flamingo, i nisur nga komunikime në platformat Reddit dhe Discord. E mbështesim lëvizjen dhe kërkesat e saj me ide, projekte konkrete, dhe dokumentim.",
       primaryCta: "Jepni mendimin tuaj",
       documentsCta: "Ide dhe projektligje",
       secondaryCta: "Pse nisi",
-      tertiaryCta: "Si u perhap",
+      tertiaryCta: "Si u përhap",
       participateLink: "/idete-tuaja/",
       caption:
-        "(Nje simbol per te mbledhur zera, probleme dhe propozime.)",
-      demandsKicker: "Kerkesat",
-      demandsTitle: "Kerkesat kryesore",
-      triggerTitle: "Shkrepja qe e ndezi",
+        "(Një simbol për të mbledhur zëra, probleme dhe propozime.)",
+      demandsKicker: "Kërkesat",
+      demandsTitle: "Kërkesat kryesore",
+      demandsTeaser: "Nga dorëheqja e qeverisë te shfuqizimi i ligjeve që hapën zonat e mbrojtura.",
+      triggerTitle: "Shkrepja që e ndezi",
       triggerText:
-        "Me 30 maj 2026, nje protestues u terhoq zvarre nga anetare te sigurise private ne Zvërnec, nderkohe qe Policia e Shtetit ishte e pranishme dhe nuk nderhyri. Pamjet u bene nje nga shkendijat kryesore te mobilizimit me te gjere.",
+        "Më 30 maj 2026, një protestues u tërhoq zvarrë nga anëtarë të sigurisë private në Zvërnec, ndërkohë që Policia e Shtetit ishte e pranishme dhe nuk ndërhyu. Pamjet u bënë një nga shkëndijat kryesore të mobilizimit më të gjerë.",
       demands: [
         "Dorëheqja e qeverisë",
         "Shfuqizimi i statusit dhe i kuadrit ligjor që lidhet me investitorët strategjikë",
@@ -174,111 +186,148 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       ],
       metrics: [
         {
-          value: "Zeri qytetar",
-          label: "Mbledhje e hapur e shqetesimeve dhe ideve"
+          value: "Zëri qytetar",
+          label: "Mbledhje të hapura, kulturë transparente"
         },
         {
-          value: "Transparence",
-          label: "Problematika te renditura qarte dhe publikisht"
+          value: "Projekte",
+          label: "Ide dhe mjete konkrete për lëvizjen dhe protestuesit"
         },
         {
-          value: "Pjesemarrje",
-          label: "Nga formulari te propozimet dhe organizimi"
+          value: "Dokumentim",
+          label: "Ruajmë informacione që mesazhi të mos dëmtohet"
         }
       ]
     },
     stats: {
       kicker: "Numrat",
-      title: "Angazhimi ne shifra",
+      title: "Angazhimi në shifra",
       description:
-        "Nje pamje e shpejte e asaj qe eshte ndertuar deri tani nga bashkesia e Revolucionit Flamingo.",
-      items: [
-        { value: "8+", label: "Projekte" },
-        { value: "20+", label: "Kontribues aktive" },
-        { value: "60+", label: "Dite aktivitet" },
-        { value: "300+", label: "Dite protestash" },
-        { value: "10+", label: "Qytete ne Shqiperi" },
-        { value: "70+", label: "Qytete ne diaspore" }
+        "Një pamje e shpejtë e asaj që është ndërtuar deri tani nga bashkësia e Revolucionit Flamingo.",
+      movementLabel: "Lëvizja Revolucioni Flamingo",
+      movementItems: [
+        { value: "300+", label: "Ditë protestash" },
+        { value: "10+", label: "Qytete në Shqipëri" },
+        { value: "70+", label: "Qytete në diasporë" }
+      ],
+      groupLabel: "Kontributi ynë",
+      groupItems: [
+        { value: "10+", label: "Projekte" },
+        { value: "50+", label: "Kontribues aktivë" },
+        { value: "75+", label: "Ditë aktivitet" },
+        { value: "20+", label: "Takime me 10+ grupe të tjera" },
+        { value: "400+", label: "Anëtarë në Discord" },
+        { value: "15k+", label: "Kopje Flamingo Times ndarë" }
       ]
     },
     manifesto: {
-      kicker: "Cfare ishte",
-      title: "Nje reagim kunder ndertimeve ne zona te mbrojtura dhe kunder menyres si merreshin vendimet.",
+      kicker: "Çfarë është?",
+      title: "Një reagim ndaj arrogancës së pushtetit.",
       description:
-        "Sipas burimeve te lidhura, protestat u nisen nga kundershtimi ndaj projekteve ne Portonovo, ishullin e Sazanit dhe Baks-Rrjoll, por u zgjeruan ne nje akuze me te gjere ndaj mungeses se transparences, kapjes se shtetit dhe shitjes se interesit publik.",
+        "Sipas burimeve të lidhura, protestat u nisën nga kundërshtimi ndaj projekteve në Portonovo, ishullin e Sazanit dhe Baks-Rrjoll, por u zgjeruan në një akuzë më të gjerë ndaj mungesës së transparencës, kapjes së shtetit dhe shitjes së interesit publik.",
       cards: [
         {
           title: "Shkaku",
-          body: "Ne qender ishin resorti i planifikuar ne Zvërnec/Sazan, punimet ne zona te mbrojtura dhe frika se bregdeti po jepej pa transparence te plote."
+          body: "Në qendër ishin resorti i planifikuar në Zvërnec/Sazan, punimet në zona të mbrojtura dhe frika se bregdeti po jepej pa transparencë të plotë."
         },
         {
           title: "Simboli",
-          body: "Flamingoja u be shenja me e dallueshme e levizjes, shpesh duke zevendesuar shqiponjen ne imazhe me sfond blu si reference ndaj lagunave dhe detit."
+          body: "Flamingoja u bë shenja më e dallueshme e lëvizjes, shpesh duke zëvendësuar shqiponjën në imazhe me sfond blu si referencë ndaj lagunave dhe detit."
         },
         {
-          title: "Kerkesat",
-          body: "Mes kerkesave te artikuluara ishin doreheqja e qeverise, shfuqizimi i statusit dhe i kuadrit ligjor per investitoret strategjike, shfuqizimi i Paketes se Maleve, anulimi i ndryshimeve ne Ligjin per Zonat e Mbrojtura dhe anulimi i ndryshimeve ne Ligjin per Trashegimine Kulturore."
+          title: "Kërkesat",
+          body: "Mes kërkesave të artikuluara ishin dorëheqja e qeverisë, shfuqizimi i statusit dhe i kuadrit ligjor për investitorët strategjikë, shfuqizimi i Paketës së Maleve, anulimi i ndryshimeve në Ligjin për Zonat e Mbrojtura dhe anulimi i ndryshimeve në Ligjin për Trashëgiminë Kulturore."
         }
       ]
     },
     pillars: {
-      kicker: "Si u perhap",
-      title: "Nga nje perplasje lokale ne nje vale me te gjere qytetare.",
+      kicker: "Kush proteston",
+      title: "Një lëvizje, shumë profile.",
+      teaser: "Nga bankat e shkollës te mosha e pensionit: protesta bashkon profile shoqërore që rrallë dalin bashkë në rrugë.",
       items: [
         {
-          title: "Zvërneci",
-          body: "Pas protestes se 30 majit dhe raportimeve per perplasje e sprej me piper, ngjarja u kthye ne pike kthese per mobilizimin publik."
+          title: "Aktivistët",
+          body: "Krijuesit e simboleve të protestës: nga flamingoja fluturues te busulla dhe flamuri i mbajtur çdo ditë.",
+          image: { src: "/images/protests/aktivistet.jpg", alt: "Kolazh me simbolet e protestës: flamingoja, busulla dhe flamurtari" }
         },
         {
-          title: "Tirana",
-          body: "Me 31 maj marshimi u zhvendos ne kryeqytet, nga Drejtoria e Policise te Ministria e Brendshme dhe me pas te Kryeministria."
+          title: "Nëpunësit",
+          body: "Punonjës zyre që mbyllin ditën e punës dhe shkojnë drejt e në protestë, ende me çantën e punës në krah.",
+          image: { src: "/images/protests/fundi-sesionit.jpg", alt: "Protestues përballë kordonit policor jashtë Kuvendit" }
         },
         {
-          title: "Rinia",
-          body: "Protestat u pershkruan edhe si nje levizje me rol te dukshem te gjenerates Z, e pranishme ne organizim, simbolike dhe komunikim."
+          title: "Fëmijët",
+          body: "Në cepin e tyre në bulevard, vizatojnë flamingo dhe mesazhe, duke i dhënë sheshit një dinamikë tjetër.",
+          image: { src: "/images/protests/femijet.jpg", alt: "Fëmijë duke vizatuar në trotuar, rrethuar nga prindërit, gjatë protestës" }
+        },
+        {
+          title: "Studentët",
+          body: "Dalin me togë universitare në shenjë proteste, duke denoncuar se vendet e punës shkojnë te të tjerë, jo te merita.",
+          image: { src: "/images/protests/studentet.jpg", alt: "Studentë me togë universitare mbajnë pankarta në protestë" }
+        },
+        {
+          title: "Profesionistët",
+          body: "Avokatë, mjekë, inxhinierë e arkitektë që lidhin çështjen e Nartës me gjendjen e profesionit dhe shtetin e së drejtës.",
+          image: { src: "/images/protests/vala-kombetare.jpg", alt: "Turmë protestuesish me pankarta para Kryeministrisë në Tiranë" }
+        },
+        {
+          title: "Familjarët",
+          body: "Prindër që sjellin fëmijët me vete çdo mbrëmje, duke e kthyer bulevardin në një hapësirë familjare.",
+          image: { src: "/images/protests/java-e-21.jpg", alt: "Protestuesit natën në bulevardin e Tiranës, me flamuj kuq e zi" }
+        },
+        {
+          title: "Të moshuarit",
+          body: "Pensionistë që dalin krah për krah me brezat e rinj, duke kujtuar se çështja e kësaj toke i përket të gjithëve.",
+          image: { src: "/images/protests/vazhdimi.jpg", alt: "Protestuesit natën para Kryeministrisë, me flamuj shqiptarë" }
         },
         {
           title: "Diaspora",
-          body: "Solidariteti u shtri ne qytete te shumta jashte Shqiperise, duke e kthyer protesten ne nje jehone me te gjere se vendngjarja fillestare."
+          body: "Shqiptarë kudo në botë që marshojnë çdo javë, nga Berlini e Milano te New York, duke i dhënë protestës jehonë ndërkombëtare.",
+          image: { src: "/images/protests/diaspora.jpg", alt: "Protestues me flamuj shqiptarë në një marshim të diasporës në Cyrih" }
+        },
+        {
+          title: "Ndërkombëtarët",
+          body: "Eurodeputetë dhe aleatë të huaj që vizituan Zvërnecin dhe u shprehën publikisht kundër shkatërrimit të zonës së mbrojtur.",
+          image: { src: "/images/protests/nderkombetaret.jpg", alt: "Delegacioni i eurodeputetëve mbi gjirin e Zvërnecit dhe Portonovës" }
         }
       ]
     },
     council: {
-      kicker: "Keshilli",
+      kicker: "Këshilli",
       title: "Nga reagimi publik te propozimet e organizuara.",
       description:
-        "Keshilli mund te sherbeje si vendi ku idete, dokumentet dhe propozimet mblidhen, renditen dhe kthehen ne pune konkrete. Qellimi eshte qe energjia e protestes te mos mbetet vetem ne komente, por te kthehet ne pjesemarrje.",
+        "Këshilli mund të shërbejë si vendi ku idetë, dokumentet dhe propozimet mblidhen, renditen dhe kthehen në punë konkrete. Qëllimi është që energjia e protestës të mos mbetet vetëm në komente, por të kthehet në pjesëmarrje.",
       primaryLink: {
         label: "Jepni mendimin tuaj",
         href: "/idete-tuaja/"
       },
       secondaryLink: {
-        label: "Shiko si u perhap",
+        label: "Shiko si u përhap",
         href: "#pillars"
       },
-      notes: ["Mblidh ide", "Rendit propozime", "Pjesemarrje"]
+      notes: ["Mblidh ide", "Rendit propozime", "Pjesëmarrje"]
     },
     culture: {
       kicker: "Kultura",
-      title: "Nje kulture bashkepunimi e decentralizuar",
-      body: "Revolucioni Flamingo funksionon si nje bashkesi e hapur, jo si nje strukture hierarkike. Bashkepunimi organizohet sipas normave qe njihen mire nga Reddit dhe Discord: kontribut i orientuar nga detyra, mbeshtetje reciproke midis pjesemarresve dhe vendimmarrje e shperndare, pa nje qender te vetme kontrolli."
+      title: "Një kulturë bashkëpunimi e decentralizuar",
+      body: "Një bashkësi e hapur dhe jo hierarkike, me vendimmarrje të shpërndarë sipas normave të njohura nga Reddit dhe Discord."
     },
     closing: {
       quote:
-        "\"Shqiperia nuk shitet.\"",
+        "\"Shqipëria nuk shitet.\"",
       note:
-        "Ne keto protesta u lidhen mbrojtja e mjedisit, prona publike dhe kerkesa per llogaridhenie politike ne nje gjuhe te perbashket qytetare.",
+        "Në këto protesta u lidhën mbrojtja e mjedisit, prona publike dhe kërkesa për llogaridhënie politike në një gjuhë të përbashkët qytetare.",
       primaryLink: {
         label: "Jepni mendimin tuaj",
         href: "/idete-tuaja/"
       },
       secondaryLink: {
-        label: "Lexo artikullin ne shqip",
+        label: "Lexo artikullin në shqip",
         href: "https://sq.wikipedia.org/wiki/Protestat_n%C3%AB_Zv%C3%ABrnec,_2026"
       }
     },
     footer: {
-      text: "Zeri qytetar, problematikat dhe propozimet e mbledhura hapur nga Revolucioni Flamingo.",
+      text: "Zëri qytetar, problematikat dhe propozimet e mbledhura hapur nga Revolucioni Flamingo.",
       links: [
         {
           label: "Discord",
@@ -307,26 +356,28 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     brand: {
       name: "Flamingo Revolution",
-      tagline: "Shqiperi e re.",
+      tagline: "Shqipëri e re.",
       logoAlt: "Flamingo Revolution logo"
     },
     nav: {
       homeLabel: "Home",
-      protestsLabel: "Protests",
+      protestsMovementLabel: "Which protests?",
+      protestsMomentsLabel: "Moments from the protests",
       mapLabel: "Protest Map",
       pulseLabel: "Protest pulse",
       diasporaLabel: "Diaspora lands",
       diasporaReportersLabel: "Diaspora Reporters",
       labLabel: "Projects",
-      ideasLabel: "Ideas > Draft laws",
       referendumLabel: "Referendum",
+      documentsLabel: "Draft Laws",
       timesLabel: "Flamingo Times",
       dossierLabel: "Flamingo Dossier",
       aboutLabel: "About us",
       blogLabel: "Blog",
       ideasLabel: "Your ideas",
-      contactLabel: "Contact",
-      menuLabel: "Main menu"
+      menuLabel: "Main menu",
+      joinLabel: "Join us",
+      externalLabel: "(opens on another site)"
     },
     theme: {
       button: "Toggle theme",
@@ -337,7 +388,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "Since May 23, 2026",
       title: "Flamingo Revolution",
       description:
-        "Our mission is to transparently collect people's voices, the problems affecting communities and the proposals that can become concrete work. Flamingo Revolution is a space where participation, accountability and the public interest stay at the center.",
+        "We're a subgroup of the Flamingo Revolution movement, not the movement itself. We support it with projects, ideas and by spreading its message.",
       primaryCta: "Share your opinion",
       documentsCta: "Ideas and draft laws",
       secondaryCta: "Why it began",
@@ -347,6 +398,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         "(A symbol for collecting voices, problems and proposals.)",
       demandsKicker: "Demands",
       demandsTitle: "Core demands",
+      demandsTeaser: "From the government's resignation to repealing the laws that opened the protected areas.",
       triggerTitle: "What triggered it",
       triggerText:
         "On May 30, 2026, a protester in Zvërnec was dragged by private security personnel while State Police officers were present and did not intervene. Footage of the incident became one of the main sparks for the wider mobilization.",
@@ -359,16 +411,16 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       ],
       metrics: [
         {
+          value: "Projects",
+          label: "Ideas and concrete tools for the movement"
+        },
+        {
           value: "Civic voice",
-          label: "Open collection of concerns and ideas"
+          label: "Open, transparent collection"
         },
         {
-          value: "Transparency",
-          label: "Problems organized clearly and publicly"
-        },
-        {
-          value: "Participation",
-          label: "From the form to proposals and organizing"
+          value: "Amplification",
+          label: "Carrying the message and demands forward"
         }
       ]
     },
@@ -377,13 +429,20 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       title: "The movement in numbers",
       description:
         "A quick snapshot of what the Flamingo Revolution community has built so far.",
-      items: [
-        { value: "8+", label: "Projects" },
-        { value: "20+", label: "Active contributors" },
-        { value: "60+", label: "Days of activity" },
+      movementLabel: "The Flamingo Revolution movement",
+      movementItems: [
         { value: "300+", label: "Protest days" },
         { value: "10+", label: "Cities in Albania" },
         { value: "70+", label: "Cities in the diaspora" }
+      ],
+      groupLabel: "Our contribution",
+      groupItems: [
+        { value: "10+", label: "Projects" },
+        { value: "50+", label: "Active contributors" },
+        { value: "75+", label: "Days of activity" },
+        { value: "20+", label: "Meetings with 10+ other groups" },
+        { value: "400+", label: "Discord members" },
+        { value: "15k+", label: "Flamingo Times copies shared" }
       ]
     },
     manifesto: {
@@ -407,31 +466,76 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       ]
     },
     pillars: {
-      kicker: "How it spread",
-      title: "From a local confrontation to a wider civic wave.",
+      kicker: "Who's protesting",
+      title: "One movement, many profiles.",
+      teaser: "From students to pensioners: the protest brings together social groups that rarely share the same street.",
       items: [
         {
-          title: "Zvërnec",
-          body: "After the May 30 protest and reports of clashes and pepper spray, the confrontation became a turning point for broader mobilization."
+          title: "Activists",
+          body: "The people behind the protest's symbols: the floating flamingo, the compass, and the flag carried every day.",
+          image: { src: "/images/protests/aktivistet.jpg", alt: "Collage of the protest's symbols: the flamingo, the compass, and the flag-bearer" }
         },
         {
-          title: "Tirana",
-          body: "On May 31 the march moved to the capital, passing from the police directorate to the interior ministry and then to the prime minister's office."
+          title: "Civil servants",
+          body: "Office workers who clock out and head straight to the protest, still carrying their work bag.",
+          image: { src: "/images/protests/fundi-sesionit.jpg", alt: "Protesters facing a police cordon outside Parliament" }
         },
         {
-          title: "Youth",
-          body: "The protests were also described as a Gen Z-led movement, with younger participants shaping organization, symbolism and online visibility."
+          title: "Children",
+          body: "In their own corner of the boulevard, drawing flamingos and messages, giving the square a different rhythm.",
+          image: { src: "/images/protests/femijet.jpg", alt: "Children drawing on the pavement, surrounded by parents, during the protest" }
+        },
+        {
+          title: "Students",
+          body: "Graduates marching in cap and gown, protesting that jobs go to connections, not merit.",
+          image: { src: "/images/protests/studentet.jpg", alt: "Students in graduation gowns hold signs at a protest" }
+        },
+        {
+          title: "Professionals",
+          body: "Lawyers, doctors, engineers and architects linking the Narta case to the state of their professions and the rule of law.",
+          image: { src: "/images/protests/vala-kombetare.jpg", alt: "Crowd of protesters holding banners outside the prime minister's office in Tirana" }
+        },
+        {
+          title: "Families",
+          body: "Parents who bring their children along every evening, turning the boulevard into a family space.",
+          image: { src: "/images/protests/java-e-21.jpg", alt: "Protesters at night on Tirana's boulevard, carrying red-and-black flags" }
+        },
+        {
+          title: "The elderly",
+          body: "Pensioners marching alongside younger generations, a reminder that this land belongs to everyone.",
+          image: { src: "/images/protests/vazhdimi.jpg", alt: "Protesters at night outside the prime minister's office, carrying Albanian flags" }
         },
         {
           title: "Diaspora",
-          body: "Solidarity actions appeared in many cities outside Albania, extending the protest beyond its original physical setting."
+          body: "Albanians around the world marching every week, from Berlin and Zurich to Stockholm, giving the protest an international echo.",
+          image: { src: "/images/protests/diaspora.jpg", alt: "Protesters with Albanian flags at a diaspora march in Zurich" }
+        },
+        {
+          title: "Internationals",
+          body: "MEPs and foreign allies who visited Zvërnec and spoke out publicly against the destruction of the protected area.",
+          image: { src: "/images/protests/nderkombetaret.jpg", alt: "The delegation of MEPs above the Zvërnec and Portonovo bay" }
         }
       ]
+    },
+    council: {
+      kicker: "Council",
+      title: "From public reaction to organized proposals.",
+      description:
+        "The Council can serve as the place where ideas, documents and proposals are gathered, ranked and turned into concrete work. The goal is for the protest's energy not to remain just comments, but to turn into participation.",
+      primaryLink: {
+        label: "Share your opinion",
+        href: "/idete-tuaja/"
+      },
+      secondaryLink: {
+        label: "See how it spread",
+        href: "#pillars"
+      },
+      notes: ["Gather ideas", "Rank proposals", "Participation"]
     },
     culture: {
       kicker: "Culture",
       title: "A decentralized culture of collaboration",
-      body: "Flamingo Revolution works as an open community, not a hierarchy. Collaboration follows norms familiar from Reddit and Discord: task-oriented contribution, mutual support between participants, and decentralized decision-making with no single point of control."
+      body: "An open, non-hierarchical community, with decentralized decision-making following norms familiar from Reddit and Discord."
     },
     closing: {
       quote:
