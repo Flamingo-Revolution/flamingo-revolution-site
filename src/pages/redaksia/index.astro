@@ -21,9 +21,9 @@ export const prerender = true;
 </BaseLayout>
 
 <style>
+  /* Match the topbar's horizontal rhythm so the dashboard spans the full shell. */
   .redaksia-page {
-    max-width: 62rem;
-    margin: 0 auto;
-    padding: 2.5rem 1.25rem 4rem;
+    width: 100%;
+    padding: 2.5rem clamp(1rem, 5vw, 3.4rem) 4rem;
   }
 </style>

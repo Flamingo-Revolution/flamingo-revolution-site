@@ -27,9 +27,9 @@ if (!id) {
 </BaseLayout>
 
 <style>
+  /* Match the topbar's horizontal rhythm so the editor spans the full shell. */
   .redaksia-editor-page {
-    max-width: 78rem;
-    margin: 0 auto;
-    padding: 2rem 1.5rem 4rem;
+    width: 100%;
+    padding: 2rem clamp(1rem, 5vw, 3.4rem) 4rem;
   }
 </style>
