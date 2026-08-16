@@ -1,7 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import type { Locale, SiteCopy } from "../data/site";
+import { protestsPageCopy } from "../data/protests";
+import { getNavIcon } from "../data/navIcons";
+import { splitTitleLines } from "../utils/text";
 import SiteFrame from "./SiteFrame.astro";
+import SectionMedia from "./SectionMedia.astro";
+import CardSlider from "./CardSlider.astro";
+import type { CardSliderItem } from "./CardSlider.astro";
 
 interface Props {
   locale: Locale;
@@ -9,8 +15,85 @@ interface Props {
 }
 
 const { locale, copy } = Astro.props;
-const titleWords = copy.hero.title.split(" ");
-const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
+const titleWords = splitTitleLines(copy.hero.title);
+const prefix = locale === "sq" ? "" : "/en";
+const documentsHref = `${prefix}/projektligje/`;
+const protestsHref = `${prefix}/protestat/`;
+const protestsCopy = protestsPageCopy[locale];
+const discordHref = copy.footer.links.find((link) => link.label === "Discord")?.href ?? "#";
+const photoPlaceholder = protestsCopy.photoPlaceholderLabel;
+
+// Every collection-shaped block on the page (stats, protest highlights,
+// demands, projects, timeline) feeds the same CardSlider, so the page reads
+// as one system instead of several one-off layouts. Each card can optionally
+// carry a picture — the "who's protesting" pillars each have a real photo
+// (see copy.pillars.items in site.ts); other collections without one fall
+// back to the shared "coming soon" placeholder, and text-only blocks
+// (stats, demands) simply skip the picture slot.
+const pillarCards: CardSliderItem[] = copy.pillars.items.map((item) => ({
+  title: item.title,
+  description: item.body,
+  ...(item.image ? { image: item.image } : { imagePlaceholder: photoPlaceholder })
+}));
+
+const projectCards: CardSliderItem[] = [
+  {
+    title: copy.nav.ideasLabel,
+    href: `${prefix}/idete-tuaja/`,
+    icon: getNavIcon("bulb"),
+    description: "Ndani një ide apo problematikë qytetare.",
+    image: { src: "/images/projects/idete.png", alt: "Lista e ideve qytetare të dorëzuara, me vota dhe komente" }
+  },
+  {
+    title: copy.nav.documentsLabel,
+    href: `${prefix}/projektligje/`,
+    icon: getNavIcon("document"),
+    description: "Projektligjet e propozuara, gati për t'u lexuar dhe shkarkuar.",
+    image: { src: "/images/projects/ligjet.png", alt: "Faqe nga një projektligj, gati për t'u lexuar" }
+  },
+  {
+    title: copy.nav.timesLabel,
+    href: `${prefix}/flamingo-times/`,
+    icon: getNavIcon("newspaper"),
+    description: "Gazeta e lëvizjes, botim pas botimi.",
+    image: { src: "/images/projects/ftimes.png", alt: "Faqja e Flamingo Times, botimet e fundit" }
+  },
+  {
+    title: copy.nav.dossierLabel,
+    href: `${prefix}/dosjet/`,
+    icon: getNavIcon("folder"),
+    description: "Dokumente dhe hetime të mbledhura.",
+    image: { src: "/images/projects/dossier.webp", alt: "Harta e lidhjeve në Flamingo Dossier, mes dosjeve, institucioneve dhe personave" }
+  },
+  {
+    title: copy.nav.mapLabel,
+    href: `${prefix}/harta/`,
+    icon: getNavIcon("map"),
+    description: "Ku dhe kur ndodhen protestat.",
+    image: { src: "/images/projects/harta.png", alt: "Harta e protestave në Evropë, me protestat aktuale dhe të ardhshme" }
+  },
+  {
+    title: copy.nav.pulseLabel,
+    href: `${prefix}/pulsi-protestes/`,
+    icon: getNavIcon("pulse"),
+    description: "Gjendja e gjallë e mobilizimit.",
+    image: { src: "/images/projects/pulsi.png", alt: "Grafiku i Pulsit të Protestës, pjesëmarrja ditore ndër javë" }
+  },
+  {
+    title: copy.nav.diasporaLabel,
+    href: `${prefix}/diaspora-zbarkon/`,
+    icon: getNavIcon("calendar"),
+    description: "Aksionet e diasporës anembanë botës.",
+    image: { src: "/images/projects/diaspora-zbarkon.png", alt: "Faqja e marshimit të diasporës, 14-16 Gusht 2026" }
+  },
+  {
+    title: copy.nav.diasporaReportersLabel,
+    href: `${prefix}/reporteret-e-diaspores/`,
+    icon: getNavIcon("mic"),
+    description: "Zërat që dokumentojnë nga jashtë.",
+    image: { src: "/images/flamingo-times/botimi-4/mergimtari.jpg", alt: copy.nav.diasporaReportersLabel }
+  }
+];
 ---
 
 <BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
@@ -24,14 +107,6 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
           </h1>
           <p class="lead">{copy.hero.description}</p>
 
-          <div class="hero__actions">
-            <a class="button button--primary" href={copy.hero.participateLink}>
-              {copy.hero.primaryCta}
-            </a>
-            <a class="button button--ghost" href={documentsHref}>
-              {copy.hero.documentsCta}
-            </a>
-          </div>
 
           <ul class="metrics">
             {
@@ -44,19 +119,70 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
             }
           </ul>
         </div>
-
       </section>
 
-      <section class="section-block stats-block" id="stats">
+      <section class="section-block section-block--accent" id="protestat">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.pillars.kicker}</p>
+          <h2>Ne, flamingot, këmbëngulim!</h2>
+          <p>{copy.pillars.teaser}</p>
+        </div>
+
+        <CardSlider items={pillarCards} ariaLabel={copy.pillars.title} />
+
+        <div class="hero__actions">
+          <a class="button button--primary" href={protestsHref}>Shiko protestat</a>
+        </div>
+      </section>
+
+      <section class="section-block" id="projektet">
+        <div class="section-heading">
+          <p class="eyebrow">Projektet</p>
+          <h2>Nismat që krijojnë ndryshim</h2>
+          <p>
+            Nga mbledhja e ideve tek harta e protestave dhe zërat e diasporës: këto janë hapësirat ku energjia
+            qytetare kthehet në punë konkrete.
+          </p>
+        </div>
+
+        <CardSlider
+          items={projectCards}
+          ariaLabel="Projektet"
+          prevLabel="Projektet e mëparshme"
+          nextLabel="Projektet e ardhshme"
+        />
+      </section>
+
+
+      <section class="section-block section-block--accent stats-block" id="stats">
         <div class="section-heading">
           <p class="eyebrow">{copy.stats.kicker}</p>
           <h2>{copy.stats.title}</h2>
           <p>{copy.stats.description}</p>
         </div>
 
+        <div class="stats-divider" role="separator">
+          <span>{copy.stats.movementLabel}</span>
+        </div>
+
         <div class="stats-grid">
           {
-            copy.stats.items.map((stat) => (
+            copy.stats.movementItems.map((stat) => (
+              <article class="stat-tile">
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="stats-divider" role="separator">
+          <span>{copy.stats.groupLabel}</span>
+        </div>
+
+        <div class="stats-grid">
+          {
+            copy.stats.groupItems.map((stat) => (
               <article class="stat-tile">
                 <strong>{stat.value}</strong>
                 <span>{stat.label}</span>
@@ -66,71 +192,22 @@ const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
         </div>
       </section>
 
-      <section class="section-block" id="manifesto">
-        <div class="section-heading">
-          <p class="eyebrow">{copy.manifesto.kicker}</p>
-          <h2>{copy.manifesto.title}</h2>
-          <p>{copy.manifesto.description}</p>
-        </div>
 
-        <div class="card-grid">
-          {
-            copy.manifesto.cards.map((card) => (
-              <article class="info-card">
-                <h3>{card.title}</h3>
-                <p>{card.body}</p>
-              </article>
-            ))
-          }
+      <section class="section-block" id="culture">
+        <div class="section-intro">
+          <div class="section-heading">
+            <p class="eyebrow">{copy.culture.kicker}</p>
+            <h2>{copy.culture.title}</h2>
+            <p>{copy.culture.body}</p>
+            <div class="hero__actions">
+              <a class="button button--primary" href={discordHref} target="_blank" rel="noreferrer">
+                {copy.nav.joinLabel}
+              </a>
+            </div>
+          </div>
+          <SectionMedia src="/images/distributed.png" alt="Serveri i Discord-it të Revolucionit Flamingo, me kanale për çdo projekt e temë" />
         </div>
       </section>
-
-      <section class="section-block" id="kerkesat">
-        <div class="section-heading">
-          <p class="eyebrow">{copy.hero.demandsKicker}</p>
-          <h2>{copy.hero.demandsTitle}</h2>
-        </div>
-
-        <div class="council-board" aria-label={copy.hero.demandsTitle}>
-          {
-            copy.hero.demands.map((demand, index) => (
-              <article class="council-note">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{demand}</strong>
-              </article>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="section-block section-block--accent" id="pillars">
-        <div class="section-heading">
-          <p class="eyebrow">{copy.pillars.kicker}</p>
-          <h2>{copy.pillars.title}</h2>
-        </div>
-
-        <div class="pillar-grid">
-          {
-            copy.pillars.items.map((pillar, index) => (
-              <article class="pillar-card">
-                <span class="pillar-card__index">{String(index + 1).padStart(2, "0")}</span>
-                <h3>{pillar.title}</h3>
-                <p>{pillar.body}</p>
-              </article>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="culture-note" id="culture">
-        <span class="culture-note__mark" aria-hidden="true"></span>
-        <div class="culture-note__content">
-          <p class="eyebrow">{copy.culture.kicker}</p>
-          <h2>{copy.culture.title}</h2>
-          <p>{copy.culture.body}</p>
-        </div>
-      </section>
-
     </main>
 
   </SiteFrame>

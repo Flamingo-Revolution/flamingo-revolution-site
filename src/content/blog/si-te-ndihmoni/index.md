@@ -1,12 +1,12 @@
 ---
-title: Si te ndihmoni
-description: Hapa konkrete per te ndare ide, problematika dhe propozime me Revolucionin Flamingo.
+title: Si të ndihmoni
+description: Hapa konkrete për të ndarë ide, problematika dhe propozime me Revolucionin Flamingo.
 pubDate: 2026-07-15
 author: reporter
 ---
 
-Nese deshironi te kontribuoni, filloni nga e thjeshta: ndani ate qe dini, ate qe keni pare dhe ate qe mendoni se duhet te ndryshoje.
+Nëse dëshironi të kontribuoni, filloni nga e thjeshta: ndani atë që dini, atë që keni parë dhe atë që mendoni se duhet të ndryshojë.
 
-Mund te dergoni ide dhe problematika ne faqen e ideve, te lexoni projektligjet e publikuara, ose te bashkoheni ne Discord per koordinim.
+Mund të dërgoni ide dhe problematika në faqen e ideve, të lexoni projektligjet e publikuara, ose të bashkoheni në [Discord](https://discord.gg/B8cQW9aqqb) për koordinim.
 
-Qellimi nuk eshte vetem reagimi. Qellimi eshte qe energjia e protestes te kthehet ne pjesemarrje te qarte, te dokumentuar dhe te dobishme per interesin publik.
+Qëllimi nuk është vetëm reagimi. Qëllimi është që energjia e protestës të kthehet në pjesëmarrje të qartë, të dokumentuar dhe të dobishme për interesin publik.

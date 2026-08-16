@@ -77,7 +77,7 @@ export const GET = async (context: IdeasContext) => {
 			{
 				ideas: [],
 				stats: { approved: 0 },
-				error: 'Burimi i te dhenave nuk eshte i disponueshem.'
+				error: 'Burimi i të dhënave nuk është i disponueshëm.'
 			},
 			502
 		);
@@ -113,11 +113,11 @@ export const POST = async (context: IdeasContext) => {
 	const name = typeof body.name === 'string' ? body.name.trim().slice(0, MAX_NAME_LENGTH) : '';
 
 	if (!content) {
-		return jsonResponse({ error: 'Ideja eshte e detyrueshme.' }, 400);
+		return jsonResponse({ error: 'Ideja është e detyrueshme.' }, 400);
 	}
 
 	if (content.length > MAX_IDEA_LENGTH) {
-		return jsonResponse({ error: `Ideja nuk mund te jete me e gjate se ${MAX_IDEA_LENGTH} karaktere.` }, 400);
+		return jsonResponse({ error: `Ideja nuk mund të jetë më e gjatë se ${MAX_IDEA_LENGTH} karaktere.` }, 400);
 	}
 
 	if (!fingerprint) {

@@ -1,0 +1,58 @@
+---
+// A framed image slot for a landing-page block. Pass `src` once a real photo
+// exists; until then it renders the same dashed "coming soon" placeholder
+// treatment already used for the protest/partner galleries, so every block
+// gets a consistent picture slot without faking photography we don't have.
+interface Props {
+  src?: string;
+  alt?: string;
+  placeholderLabel?: string;
+}
+
+const { src, alt = "", placeholderLabel = "Foto se shpejti" } = Astro.props;
+---
+
+{
+  src ? (
+    <figure class="section-media">
+      <img src={src} alt={alt} loading="lazy" />
+    </figure>
+  ) : (
+    <div class="section-media section-media--placeholder" aria-hidden="true">
+      <span>{placeholderLabel}</span>
+    </div>
+  )
+}
+
+<style>
+  .section-media {
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+    margin: 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    overflow: hidden;
+  }
+
+  .section-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .section-media--placeholder {
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    border-style: dashed;
+    background: var(--paper-cool);
+    box-shadow: none;
+    color: var(--muted);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+</style>

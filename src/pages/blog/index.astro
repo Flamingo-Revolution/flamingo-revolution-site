@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import { siteCopy } from "../../data/site";
+import { splitTitleLines } from "../../utils/text";
 
 export const prerender = true;
 
@@ -12,7 +13,9 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
 );
 
 const title = "Blog";
+const heading = "Blogu i Flamingove";
 const description = "Artikuj dhe përditësime nga Revolucioni Flamingo.";
+const headingWords = splitTitleLines(heading);
 
 const months = [
 	"janar",
@@ -39,7 +42,9 @@ const formatDate = (date: Date) =>
 		<main class="blog-page" id="main" tabindex="-1">
 			<section class="blog-hero">
 				<p class="eyebrow">Përditësime</p>
-				<h1><span>{title}</span></h1>
+				<h1>
+					{headingWords.map((word) => <span>{word}</span>)}
+				</h1>
 				<p class="lead">{description}</p>
 			</section>
 
