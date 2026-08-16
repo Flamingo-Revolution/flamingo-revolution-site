@@ -32,4 +32,10 @@ if (!id) {
     width: 100%;
     padding: 2rem clamp(1rem, 5vw, 3.4rem) 4rem;
   }
+
+  /* The editor has its own sticky topbar; keep the site navbar static here
+     so the two never overlap while scrolling. */
+  :global(.topbar) {
+    position: static;
+  }
 </style>

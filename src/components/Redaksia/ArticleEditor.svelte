@@ -4,8 +4,6 @@
 	import StarterKit from '@tiptap/starter-kit';
 	import Image from '@tiptap/extension-image';
 	import TextAlign from '@tiptap/extension-text-align';
-	import { BubbleMenu } from '@tiptap/extension-bubble-menu';
-	import { FloatingMenu } from '@tiptap/extension-floating-menu';
 	import { Placeholder } from '@tiptap/extensions';
 	import LoginForm from './LoginForm.svelte';
 	import { fetchArticle, fetchMe, patchArticle, type PublicArticleWithContent, type PublicReporter } from './functions';
@@ -13,10 +11,6 @@
 	type Props = {
 		articleId: string;
 	};
-
-	type EditorMode = 'simple' | 'notion';
-
-	const MODE_STORAGE_KEY = 'redaksia-editor-mode';
 
 	let { articleId }: Props = $props();
 
@@ -29,12 +23,8 @@
 	let excerpt = $state('');
 	let coverImageUrl = $state('');
 
-	let mode = $state<EditorMode>('simple');
-
 	let editor = $state<Editor | null>(null);
 	let editorElement = $state<HTMLDivElement | null>(null);
-	let bubbleMenuElement = $state<HTMLDivElement | null>(null);
-	let floatingMenuElement = $state<HTMLDivElement | null>(null);
 	/** Bumped on every transaction so toolbar active states stay reactive. */
 	let editorTick = $state(0);
 
@@ -48,13 +38,6 @@
 	const isPublished = $derived(article?.status === 'PUBLISHED');
 
 	onMount(() => {
-		try {
-			const stored = window.localStorage.getItem(MODE_STORAGE_KEY);
-			if (stored === 'notion' || stored === 'simple') mode = stored;
-		} catch {
-			// localStorage unavailable; keep default.
-		}
-
 		void init();
 	});
 
@@ -62,16 +45,6 @@
 		if (autosaveTimer) clearTimeout(autosaveTimer);
 		editor?.destroy();
 	});
-
-	function toggleMode() {
-		mode = mode === 'simple' ? 'notion' : 'simple';
-
-		try {
-			window.localStorage.setItem(MODE_STORAGE_KEY, mode);
-		} catch {
-			// Ignore storage failures.
-		}
-	}
 
 	async function init() {
 		reporter = await fetchMe();
@@ -93,7 +66,7 @@
 	}
 
 	function initEditor() {
-		if (!editorElement || !bubbleMenuElement || !floatingMenuElement || !article) return;
+		if (!editorElement || !article) return;
 
 		editor = new Editor({
 			element: editorElement,
@@ -109,22 +82,6 @@
 				}),
 				Placeholder.configure({
 					placeholder: 'Shkruani artikullin këtu… Zgjidhni tekst për ta formatuar.'
-				}),
-				BubbleMenu.configure({
-					element: bubbleMenuElement,
-					pluginKey: 'redaksiaBubbleMenu',
-					shouldShow: ({ editor: current, state }) =>
-						mode === 'notion' && current.isEditable && !state.selection.empty && !current.isActive('image')
-				}),
-				FloatingMenu.configure({
-					element: floatingMenuElement,
-					pluginKey: 'redaksiaFloatingMenu',
-					shouldShow: ({ editor: current, state }) => {
-						if (mode !== 'notion' || !current.isEditable || !state.selection.empty) return false;
-
-						const anchor = state.selection.$anchor;
-						return anchor.parent.type.name === 'paragraph' && anchor.parent.content.size === 0;
-					}
 				})
 			],
 			content: article.content,
@@ -239,7 +196,7 @@
 		labelClass?: string;
 	};
 
-	const markButtons: ToolbarButton[] = [
+	const toolbarButtons: ToolbarButton[] = [
 		{ label: 'B', title: 'Tekst i trashë', action: () => chain()?.toggleBold().run(), active: () => isActive('bold') },
 		{
 			label: 'I',
@@ -261,10 +218,7 @@
 			active: () => isActive('strike'),
 			labelClass: 'is-strike'
 		},
-		{ label: '🔗', title: 'Lidhje', action: setLink, active: () => isActive('link') }
-	];
-
-	const headingButtons: ToolbarButton[] = [
+		{ label: '🔗', title: 'Lidhje', action: setLink, active: () => isActive('link') },
 		{
 			label: 'H2',
 			title: 'Titull seksioni',
@@ -276,10 +230,7 @@
 			title: 'Nëntitull',
 			action: () => chain()?.toggleHeading({ level: 3 }).run(),
 			active: () => isActive('heading', { level: 3 })
-		}
-	];
-
-	const alignButtons: ToolbarButton[] = [
+		},
 		{
 			label: 'L',
 			title: 'Rreshtim majtas',
@@ -303,10 +254,7 @@
 			title: 'Rreshtim i plotë',
 			action: () => chain()?.setTextAlign('justify').run(),
 			active: () => isAlignActive('justify')
-		}
-	];
-
-	const blockButtons: ToolbarButton[] = [
+		},
 		{
 			label: '•',
 			title: 'Listë me pika',
@@ -328,25 +276,7 @@
 		{ label: '🖼', title: 'Imazh nga URL', action: insertImage, active: () => false },
 		{ label: '―', title: 'Vijë ndarëse', action: () => chain()?.setHorizontalRule().run(), active: () => false }
 	];
-
-	const toolbarButtons: ToolbarButton[] = [...markButtons, ...headingButtons, ...alignButtons, ...blockButtons];
-	const bubbleButtons: ToolbarButton[] = [...markButtons, ...headingButtons, ...alignButtons];
-	const floatingButtons: ToolbarButton[] = [...headingButtons, ...blockButtons];
 </script>
-
-{#snippet menuButton(tool: ToolbarButton)}
-	<button
-		type="button"
-		class="editor-toolbar__button"
-		class:is-active={tool.active()}
-		title={tool.title}
-		aria-label={tool.title}
-		onclick={tool.action}
-		disabled={!editor}
-	>
-		<span class={tool.labelClass}>{tool.label}</span>
-	</button>
-{/snippet}
 
 {#if !checked}
 	<p class="status">Duke verifikuar sesionin…</p>
@@ -374,14 +304,6 @@
 			</div>
 
 			<div class="editor-topbar__actions">
-				<button
-					class="button button--ghost"
-					onclick={toggleMode}
-					title="Ndërro mënyrën e redaktimit"
-					aria-pressed={mode === 'notion'}
-				>
-					{mode === 'notion' ? '✍ Notion' : '☰ I thjeshtë'}
-				</button>
 				<button class="button" onclick={() => void save()} disabled={saving || !article}>Ruaj</button>
 				<button class="button button--primary" onclick={togglePublish} disabled={publishing || !article}>
 					{publishing ? 'Duke punuar…' : isPublished ? 'Hiq nga publikimi' : 'Publiko'}
@@ -414,32 +336,23 @@
 			{/if}
 		</div>
 
-		{#if mode === 'simple'}
-			<div class="editor-toolbar" role="toolbar" aria-label="Formatimi i tekstit">
-				{#each toolbarButtons as tool (tool.title)}
-					{@render menuButton(tool)}
-				{/each}
-			</div>
-		{:else}
-			<p class="editor-hint">
-				Mënyra Notion: zgjidhni tekst për ta formatuar, ose qëndroni në një rresht bosh për të shtuar blloqe.
-			</p>
-		{/if}
-
-		<div class="editor-canvas" class:editor-canvas--notion={mode === 'notion'} bind:this={editorElement}></div>
-
-		<div class="editor-bubble-menu" bind:this={bubbleMenuElement} role="toolbar" aria-label="Formatimi i përzgjedhjes">
-			{#each bubbleButtons as tool (tool.title)}
-				{@render menuButton(tool)}
+		<div class="editor-toolbar" role="toolbar" aria-label="Formatimi i tekstit">
+			{#each toolbarButtons as tool (tool.title)}
+				<button
+					type="button"
+					class="editor-toolbar__button"
+					class:is-active={tool.active()}
+					title={tool.title}
+					aria-label={tool.title}
+					onclick={tool.action}
+					disabled={!editor}
+				>
+					<span class={tool.labelClass}>{tool.label}</span>
+				</button>
 			{/each}
 		</div>
 
-		<div class="editor-floating-menu" bind:this={floatingMenuElement} role="toolbar" aria-label="Shto bllok">
-			<span class="editor-floating-menu__plus">+</span>
-			{#each floatingButtons as tool (tool.title)}
-				{@render menuButton(tool)}
-			{/each}
-		</div>
+		<div class="editor-canvas" bind:this={editorElement}></div>
 	</section>
 {/if}
 
@@ -563,14 +476,6 @@
 		box-shadow: 6px 6px 0 var(--ink);
 	}
 
-	.editor-hint {
-		margin: 0;
-		font-family: var(--font-display);
-		font-style: italic;
-		font-size: 1.02rem;
-		color: var(--muted);
-	}
-
 	.editor-toolbar {
 		position: sticky;
 		top: 4.6rem;
@@ -623,43 +528,12 @@
 		cursor: not-allowed;
 	}
 
-	.editor-bubble-menu,
-	.editor-floating-menu {
-		/* Hidden and unpositioned by default; the Tiptap plugins toggle
-		   visibility and set top/left inline when the menu should appear. */
-		visibility: hidden;
-		opacity: 0;
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 40;
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.3rem;
-		max-width: 32rem;
-		padding: 0.4rem;
-		background: var(--surface-strong);
-		border: 2px solid var(--ink);
-		box-shadow: 5px 5px 0 var(--ink);
-	}
-
-	.editor-floating-menu__plus {
-		padding: 0 0.3rem;
-		font-weight: 800;
-		color: var(--accent-strong);
-	}
-
 	.editor-canvas {
 		min-height: 28rem;
 		padding: 1.4rem 1.6rem;
 		background: var(--surface-strong);
 		border: 2px solid var(--ink);
 		box-shadow: 8px 8px 0 var(--ink);
-	}
-
-	.editor-canvas--notion {
-		padding: 1.6rem clamp(1.6rem, 6vw, 4rem);
 	}
 
 	.editor-canvas :global(.tiptap) {
