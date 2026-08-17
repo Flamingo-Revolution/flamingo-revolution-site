@@ -2740,8 +2740,7 @@ html[data-theme='dark'] .times-action__qr {
 		border-top: 0;
 	}
 
-	.times-system__page-one-under--first > p:last-child,
-	.times-system__page-one-third--first > p:last-child {
+	.times-system__page-one-under--first > p:last-child {
 		margin-bottom: 0;
 	}
 
