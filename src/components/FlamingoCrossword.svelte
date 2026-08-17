@@ -1,12 +1,9 @@
 <script lang="ts">
 	import SuccessConfetti from "./referendum/NewsletterSignup/components/SuccessConfetti/SuccessConfetti.svelte";
 
-	type Direction = "across" | "down";
-
 	type Entry = {
 		id: string;
 		number: number;
-		direction: Direction;
 		row: number;
 		col: number;
 		answer: string;
@@ -22,63 +19,58 @@
 		number?: number;
 	};
 
-	const rowCount = 12;
-	const colCount = 15;
+	const rowCount = 6;
+	const colCount = 20;
+	const highlightedCol = 7;
 
 	const entries: Entry[] = [
 		{
-			id: "taulant",
+			id: "ilir",
 			number: 1,
-			direction: "down",
 			row: 0,
-			col: 11,
-			answer: "TAULANTBALLA",
-			clue: "Cili deputet u përfshi në dosjen «Toyota Yaris» dhe përgjimet 26/1?"
+			col: 0,
+			answer: "ILIRMETA",
+			clue: "Cili ish-President u arrestua për korrupsion dhe pastrim parash (afera CEZ-DIA)?"
+		},
+		{
+			id: "arben",
+			number: 2,
+			row: 1,
+			col: 6,
+			answer: "ARBENAHMETAJ",
+			clue: "Cili ish-zv/kryeministër është në arrati për inceneratorët dhe «Buka»?"
 		},
 		{
 			id: "monika",
-			number: 2,
-			direction: "across",
-			row: 1,
+			number: 3,
+			row: 2,
 			col: 0,
 			answer: "MONIKAKRYEMADHI",
 			clue: "Cila ish-zonjë e parë e opozitës u pandeh bashkë me bashkëshortin?"
 		},
 		{
-			id: "arben",
-			number: 3,
-			direction: "across",
-			row: 4,
-			col: 1,
-			answer: "ARBENAHMETAJ",
-			clue: "Cili ish-zv/kryeministër është në arrati për inceneratorët dhe «Buka»?"
-		},
-		{
-			id: "ilir",
-			number: 4,
-			direction: "across",
-			row: 6,
-			col: 5,
-			answer: "ILIRMETA",
-			clue: "Cili ish-President u arrestua për korrupsion dhe pastrim parash (afera CEZ-DIA)?"
-		},
-		{
 			id: "belinda",
-			number: 5,
-			direction: "across",
-			row: 9,
-			col: 1,
+			number: 4,
+			row: 3,
+			col: 6,
 			answer: "BELINDABALLUKU",
 			clue: "Cila zv/kryeministre u akuzua për shkelje barazie në tendera?"
 		},
 		{
 			id: "vangjush",
-			number: 6,
-			direction: "across",
-			row: 11,
-			col: 2,
+			number: 5,
+			row: 4,
+			col: 1,
 			answer: "VANGJUSHDAKO",
 			clue: "Cili ish-kryebashkiak i Durrësit u dënua për shpërdorim detyre?"
+		},
+		{
+			id: "taulant",
+			number: 6,
+			row: 5,
+			col: 7,
+			answer: "TAULANTBALLA",
+			clue: "Cili deputet u përfshi në dosjen «Toyota Yaris» dhe përgjimet 26/1?"
 		}
 	];
 
@@ -86,12 +78,9 @@
 	const cellMap = new Map<string, Cell>();
 
 	for (const entry of entries) {
-		const rowStep = entry.direction === "down" ? 1 : 0;
-		const colStep = entry.direction === "across" ? 1 : 0;
-
 		for (let index = 0; index < entry.answer.length; index += 1) {
-			const row = entry.row + rowStep * index;
-			const col = entry.col + colStep * index;
+			const row = entry.row;
+			const col = entry.col + index;
 			const key = `${row}-${col}`;
 			const existing = cellMap.get(key);
 
@@ -116,11 +105,9 @@
 		return { row, col, cell: cellMap.get(`${row}-${col}`) };
 	});
 	const cells = [...cellMap.values()];
-	const acrossEntries = entries.filter((entry) => entry.direction === "across");
-	const downEntries = entries.filter((entry) => entry.direction === "down");
 
 	let values = $state<Record<string, string>>({});
-	let activeEntryId = $state("taulant");
+	let activeEntryId = $state("ilir");
 	let focusedKey = $state<string | null>(null);
 	let checked = $state(false);
 	let celebrated = $state(false);
@@ -137,7 +124,7 @@
 
 		celebrate();
 		checked = true;
-		status = "Bravo! Fjalëkryqi u plotësua saktë.";
+		status = "Bravo! Fjalëkryqi u plotësua saktë. Fjala vertikale është «ARREST».";
 	});
 
 	function celebrate() {
@@ -146,10 +133,8 @@
 	}
 
 	function cellsForEntry(entry: Entry) {
-		const rowStep = entry.direction === "down" ? 1 : 0;
-		const colStep = entry.direction === "across" ? 1 : 0;
 		return Array.from({ length: entry.answer.length }, (_, index) =>
-			cellMap.get(`${entry.row + rowStep * index}-${entry.col + colStep * index}`)
+			cellMap.get(`${entry.row}-${entry.col + index}`)
 		).filter((cell): cell is Cell => Boolean(cell));
 	}
 
@@ -163,7 +148,7 @@
 
 		activeEntryId = entry.id;
 		checked = false;
-		status = `${entry.number} ${entry.direction === "across" ? "horizontal" : "vertikal"}: ${entry.clue}`;
+		status = `${entry.number} horizontal: ${entry.clue}`;
 
 		if (shouldFocus) {
 			const entryCells = cellsForEntry(entry);
@@ -185,6 +170,17 @@
 
 		const next = entryCells[index + step];
 		if (next) focusCell(next);
+	}
+
+	function moveBetweenRows(cell: Cell, step: number) {
+		for (let row = cell.row + step; row >= 0 && row < rowCount; row += step) {
+			const next = cellMap.get(`${row}-${cell.col}`);
+			if (!next) continue;
+
+			activeEntryId = next.entryIds[0];
+			focusCell(next);
+			return;
+		}
 	}
 
 	function handleInput(event: Event, cell: Cell) {
@@ -223,32 +219,13 @@
 			return;
 		}
 
-		if (event.key === "Enter" || event.key === " ") {
-			if (cell.entryIds.length > 1) {
-				event.preventDefault();
-				const nextEntry = cell.entryIds.find((entryId) => entryId !== activeEntryId);
-				if (nextEntry) selectEntry(nextEntry, false);
-			}
-			return;
+		if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+			event.preventDefault();
+			moveWithinEntry(cell, event.key === "ArrowLeft" ? -1 : 1);
+		} else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+			event.preventDefault();
+			moveBetweenRows(cell, event.key === "ArrowUp" ? -1 : 1);
 		}
-
-		const arrowDirection: Record<string, { direction: Direction; step: number }> = {
-			ArrowLeft: { direction: "across", step: -1 },
-			ArrowRight: { direction: "across", step: 1 },
-			ArrowUp: { direction: "down", step: -1 },
-			ArrowDown: { direction: "down", step: 1 }
-		};
-		const movement = arrowDirection[event.key];
-		if (!movement) return;
-
-		const matchingEntryId = cell.entryIds.find(
-			(entryId) => entryById.get(entryId)?.direction === movement.direction
-		);
-		if (!matchingEntryId) return;
-
-		event.preventDefault();
-		activeEntryId = matchingEntryId;
-		moveWithinEntry(cell, movement.step);
 	}
 
 	function checkPuzzle() {
@@ -256,7 +233,7 @@
 		const wrong = cells.filter((cell) => values[cell.key] !== cell.answer).length;
 
 		if (wrong === 0) {
-			status = "Bravo! Fjalëkryqi u plotësua saktë.";
+			status = "Bravo! Fjalëkryqi u plotësua saktë. Fjala vertikale është «ARREST».";
 			celebrate();
 		} else if (filledCount < cells.length) {
 			status = `Kanë mbetur ${cells.length - filledCount} kuti bosh. Shkronjat e pasakta janë shënuar.`;
@@ -267,7 +244,7 @@
 
 	function resetPuzzle() {
 		values = {};
-		activeEntryId = "taulant";
+		activeEntryId = "ilir";
 		focusedKey = null;
 		checked = false;
 		celebrated = false;
@@ -288,40 +265,43 @@
 			<strong>{filledCount}/{cells.length}</strong>
 		</div>
 
-		<div
-			class="crossword-board"
-			role="group"
-			aria-label="Fjalëkryqi i Botimit V, 12 rreshta me 15 kolona"
-		>
-			{#each board as square (`${square.row}-${square.col}`)}
-				{#if square.cell}
-					{@const cell = square.cell}
-					<label
-						class="crossword-cell"
-						class:crossword-cell--active={cell.entryIds.includes(activeEntryId)}
-						class:crossword-cell--wrong={checked && values[cell.key] !== cell.answer}
-						class:crossword-cell--right={(checked || celebrated) && values[cell.key] === cell.answer}
-					>
-						{#if cell.number}<span>{cell.number}</span>{/if}
-						<input
-							id={`crossword-cell-${cell.key}`}
-							type="text"
-							inputmode="text"
-							maxlength="1"
-							autocomplete="off"
-							spellcheck="false"
-							value={values[cell.key] ?? ""}
-							aria-label={`Rreshti ${cell.row + 1}, kolona ${cell.col + 1}`}
-							onfocus={() => selectCell(cell)}
-							onclick={() => selectCell(cell)}
-							oninput={(event) => handleInput(event, cell)}
-							onkeydown={(event) => handleKeydown(event, cell)}
-						/>
-					</label>
-				{:else}
-					<span class="crossword-block" aria-hidden="true"></span>
-				{/if}
-			{/each}
+		<div class="crossword-board-shell">
+			<div
+				class="crossword-board"
+				role="group"
+				aria-label="Fjalëkryqi i Botimit V, gjashtë përgjigje horizontale dhe një kolonë vertikale e theksuar"
+			>
+				{#each board as square (`${square.row}-${square.col}`)}
+					{#if square.cell}
+						{@const cell = square.cell}
+						<label
+							class="crossword-cell"
+							class:crossword-cell--active={cell.entryIds.includes(activeEntryId)}
+							class:crossword-cell--highlighted={cell.col === highlightedCol}
+							class:crossword-cell--wrong={checked && values[cell.key] !== cell.answer}
+							class:crossword-cell--right={(checked || celebrated) && values[cell.key] === cell.answer}
+						>
+							{#if cell.number}<span>{cell.number}</span>{/if}
+							<input
+								id={`crossword-cell-${cell.key}`}
+								type="text"
+								inputmode="text"
+								maxlength="1"
+								autocomplete="off"
+								spellcheck="false"
+								value={values[cell.key] ?? ""}
+								aria-label={`Rreshti ${cell.row + 1}, kolona ${cell.col + 1}${cell.col === highlightedCol ? ", kuti e theksuar" : ""}`}
+								onfocus={() => selectCell(cell)}
+								onclick={() => selectCell(cell)}
+								oninput={(event) => handleInput(event, cell)}
+								onkeydown={(event) => handleKeydown(event, cell)}
+							/>
+						</label>
+					{:else}
+						<span class="crossword-block" aria-hidden="true"></span>
+					{/if}
+				{/each}
+			</div>
 		</div>
 
 		<div class="crossword-game__controls">
@@ -330,8 +310,8 @@
 		</div>
 		<p class="crossword-game__status" aria-live="polite">{status}</p>
 		<p class="crossword-game__hint">
-			Shkruaj me tastierë. Përdor shigjetat për të lëvizur dhe Enter në kryqëzime për të
-			ndërruar drejtim.
+			Plotëso përgjigjet horizontalisht. Shkronjat në kolonën e theksuar zbulojnë fjalën
+			përfundimtare.
 		</p>
 	</div>
 
@@ -339,25 +319,7 @@
 		<section aria-labelledby="crossword-across-title">
 			<h3 id="crossword-across-title">Horizontal</h3>
 			<ol>
-				{#each acrossEntries as entry (entry.id)}
-					<li value={entry.number}>
-						<button
-							type="button"
-							class:crossword-clue--active={activeEntryId === entry.id}
-							aria-pressed={activeEntryId === entry.id}
-							onclick={() => selectEntry(entry.id)}
-						>
-							{entry.clue}
-						</button>
-					</li>
-				{/each}
-			</ol>
-		</section>
-
-		<section aria-labelledby="crossword-down-title">
-			<h3 id="crossword-down-title">Vertikal</h3>
-			<ol>
-				{#each downEntries as entry (entry.id)}
+				{#each entries as entry (entry.id)}
 					<li value={entry.number}>
 						<button
 							type="button"
@@ -411,11 +373,18 @@
 		transition: width 160ms ease;
 	}
 
+	.crossword-board-shell {
+		overflow-x: auto;
+		padding: 0 0.45rem 0.55rem 0;
+		scrollbar-color: #c83e72 #fff8ef;
+	}
+
 	.crossword-board {
 		display: grid;
-		grid-template-columns: repeat(15, minmax(0, 1fr));
-		width: min(100%, 39rem);
-		aspect-ratio: 15 / 12;
+		grid-template-columns: repeat(20, minmax(0, 1fr));
+		width: 100%;
+		min-width: 40rem;
+		aspect-ratio: 20 / 6;
 		border: 3px solid #151515;
 		background: #151515;
 		box-shadow: 0.45rem 0.45rem 0 #c83e72;
@@ -436,6 +405,24 @@
 
 	.crossword-cell--active {
 		background: #ffd7e3;
+	}
+
+	.crossword-cell--highlighted {
+		background: #ffe172;
+	}
+
+	.crossword-cell--highlighted::after {
+		position: absolute;
+		z-index: 2;
+		inset: 0;
+		border-right: 2px solid #c83e72;
+		border-left: 2px solid #c83e72;
+		content: "";
+		pointer-events: none;
+	}
+
+	.crossword-cell--active.crossword-cell--highlighted {
+		background: #ffc9dc;
 	}
 
 	.crossword-cell--wrong {
@@ -585,9 +572,6 @@
 			margin: 0 auto;
 		}
 
-		.crossword-clues {
-			grid-template-columns: 1fr 1fr;
-		}
 	}
 
 	@media (max-width: 560px) {
@@ -597,10 +581,6 @@
 
 		.crossword-board {
 			box-shadow: 0.3rem 0.3rem 0 #c83e72;
-		}
-
-		.crossword-clues {
-			grid-template-columns: 1fr;
 		}
 
 		.crossword-game__hint {
