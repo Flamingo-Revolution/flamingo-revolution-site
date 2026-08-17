@@ -15,7 +15,7 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
     number: 5,
     date: "Gusht 2026",
     datetime: "2026-08",
-    title: "Na mungon besimi se mund të ndryshojë sistemi",
+    title: "Na mungon sistemi që mund të sjellë ndryshim",
     category: "Institucionet & llogaridhënia",
     excerpt:
       "Kujt i shërben bindja se «të gjithë do të vidhnin» dhe se Shqipëria nuk mund të bëjë pa ta?",
