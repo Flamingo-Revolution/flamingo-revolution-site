@@ -579,7 +579,15 @@
 			gap: 2rem;
 		}
 
+		.crossword-board-shell {
+			overflow-x: visible;
+			padding-right: 0.3rem;
+		}
+
 		.crossword-board {
+			width: 94%;
+			min-width: 0;
+			margin: 0 auto;
 			box-shadow: 0.3rem 0.3rem 0 #c83e72;
 		}
 
