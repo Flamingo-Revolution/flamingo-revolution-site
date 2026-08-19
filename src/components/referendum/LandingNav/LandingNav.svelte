@@ -12,7 +12,7 @@
 		scrollToSignup as scrollToSignupTarget
 	} from "./functions";
 
-	const ENGAGE_HREF = "https://pershqiperine.netlify.app";
+	const ENGAGE_HREF = "https://portal.referendum21.org";
 
 	const links = [
 		{ href: "#deklarata", label: "Deklarata" },
