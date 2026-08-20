@@ -96,7 +96,11 @@ const projectCards: CardSliderItem[] = [
 ];
 ---
 
-<BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
+<BaseLayout
+  title={locale === "sq" ? "Revolucioni Flamingo | Lëvizje qytetare në Shqipëri" : "Flamingo Revolution | Civic movement in Albania"}
+  description={copy.meta.description}
+  locale={locale}
+>
   <SiteFrame {locale} {copy} currentPage="home">
     <main class="landing" id="main" tabindex="-1">
       <section class="hero">

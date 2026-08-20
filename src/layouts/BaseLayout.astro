@@ -7,11 +7,25 @@ interface Props {
   locale: "sq" | "en";
   socialImagePath?: string;
   socialImageAlt?: string;
+  pageType?: "WebPage" | "Article" | "BlogPosting";
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  authorName?: string;
 }
 
-const { title, description, locale, socialImagePath = "/social-card.jpg?v=20260705", socialImageAlt } = Astro.props;
+const {
+  title,
+  description,
+  locale,
+  socialImagePath = "/social-card.jpg?v=20260705",
+  socialImageAlt,
+  pageType = "WebPage",
+  publishedTime,
+  modifiedTime,
+  authorName
+} = Astro.props;
 
-const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://flamingorevolution.eu";
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://www.flamingorevolution.eu";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const socialImageUrl = new URL(socialImagePath, siteUrl).toString();
 const socialImageType = socialImagePath.toLowerCase().split("?")[0].endsWith(".png") ? "image/png" : "image/jpeg";
@@ -26,6 +40,64 @@ const imageAlt = socialImageAlt ??
     ? "Logoja e Revolucionit Flamingo"
     : "Flamingo Revolution logo";
 const ogLocale = locale === "sq" ? "sq_AL" : "en_US";
+const language = locale === "sq" ? "sq-AL" : "en";
+const isArticle = pageType === "Article" || pageType === "BlogPosting";
+
+const organizationId = `${siteUrl}/#organization`;
+const websiteId = `${siteUrl}/#website`;
+const webpageId = `${canonicalUrl}#webpage`;
+const structuredData: Record<string, unknown>[] = [
+  {
+    "@type": pageType,
+    "@id": webpageId,
+    url: canonicalUrl,
+    name: title,
+    description,
+    inLanguage: language,
+    isPartOf: { "@id": websiteId },
+    about: { "@id": organizationId },
+    ...(isArticle
+      ? {
+          headline: title,
+          image: socialImageUrl,
+          datePublished: publishedTime?.toISOString(),
+          dateModified: (modifiedTime ?? publishedTime)?.toISOString(),
+          author: authorName ? { "@type": "Person", name: authorName } : { "@id": organizationId },
+          publisher: { "@id": organizationId }
+        }
+      : {})
+  }
+];
+
+if (Astro.url.pathname === "/") {
+  structuredData.push(
+    {
+      "@type": "Organization",
+      "@id": organizationId,
+      name: siteName,
+      alternateName: locale === "sq" ? "Flamingo Revolution" : "Revolucioni Flamingo",
+      url: `${siteUrl}/`,
+      logo: new URL("/icon-192.png", siteUrl).toString(),
+      sameAs: [
+        "https://www.youtube.com/@flamingotelevision",
+        "https://www.instagram.com/flamingotelevision",
+        "https://x.com/Flamingo_TV"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: `${siteUrl}/`,
+      name: siteName,
+      alternateName: locale === "sq" ? "Flamingo Revolution" : "Revolucioni Flamingo",
+      description,
+      inLanguage: language,
+      publisher: { "@id": organizationId }
+    }
+  );
+}
+
+const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": structuredData }).replace(/</g, "\\u003c");
 
 const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.env;
 ---
@@ -48,7 +120,7 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <link rel="apple-touch-icon" href={appleTouchIconUrl} sizes="180x180" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content={ogLocale} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={isArticle ? "article" : "website"} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -63,6 +135,9 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
     <meta name="twitter:image:alt" content={imageAlt} />
+    {isArticle && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+    {isArticle && <meta property="article:modified_time" content={(modifiedTime ?? publishedTime)?.toISOString()} />}
+    <script type="application/ld+json" set:html={jsonLd} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
