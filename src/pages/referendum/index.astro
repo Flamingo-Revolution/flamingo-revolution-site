@@ -7,7 +7,7 @@ import LandingNav from "../../components/referendum/LandingNav/LandingNav.svelte
 import ReasonsSection from "../../components/referendum/ReasonsSection/ReasonsSection.astro";
 import OriginSection from "../../components/referendum/OriginSection/OriginSection.astro";
 import FAQSection from "../../components/referendum/FAQSection/FAQSection.svelte";
-import ReferendumHeader from "../../components/referendum/ReferendumHeader/ReferendumHeader.astro";
+import GroupHighlights from "../../components/referendum/GroupHighlights/GroupHighlights.astro";
 import { getReferendumIndexItems } from "../../data/referendum";
 import { landingFaqs } from "../../data/referendumFaq";
 import { siteCopy } from "../../data/site";
@@ -31,8 +31,6 @@ const description =
 		<main id="main" tabindex="-1">
 			<section class="hero" id="njoftime" aria-labelledby="deklarata-title">
 				<div class="shell hero-center" data-reveal>
-					<ReferendumHeader copy={copy} />
-
 					<div class="hero-split">
 						<div class="hero-copy">
 							<p class="eyebrow"><span></span> Referendum 21/2024</p>
@@ -44,6 +42,8 @@ const description =
 							<p class="hero-lede">
 								Nisma qytetare kërkon shfuqizimin e Ligjit nr. 21/2024. Lini email-in për të treguar gatishmërinë tuaj për të firmosur
 							</p>
+
+							<GroupHighlights />
 						</div>
 
 						<div class="hero-aside">

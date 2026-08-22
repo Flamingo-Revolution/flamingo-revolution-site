@@ -3,6 +3,7 @@
 	import { slide } from "svelte/transition";
 	import { MediaQuery } from "svelte/reactivity";
 	import ScrollContainer from "@components/ScrollContainer/ScrollContainer.svelte";
+	import { siteCopy } from "../../../data/site";
 	import {
 		SCROLL_MARGIN_PX,
 		SPY_UNLOCK_DELAY_MS,
@@ -13,6 +14,8 @@
 	} from "./functions";
 
 	const ENGAGE_HREF = "https://portal.referendum21.org";
+	const THEME_KEY = "flamingo-theme";
+	const themeLabels = siteCopy.sq.theme;
 
 	const links = [
 		{ href: "#deklarata", label: "Deklarata" },
@@ -28,6 +31,7 @@
 
 	let showSignupCta = $state(false);
 	let hideEngageCta = $state(false);
+	let themePressed = $state(false);
 	let activeHref = $state<string | null>(null);
 	let linksEl: HTMLDivElement | undefined = $state();
 
@@ -103,8 +107,25 @@
 		scrollToSignupTarget(prefersReducedMotion.current);
 	}
 
+	function applyTheme(theme: "light" | "dark") {
+		document.documentElement.dataset.theme = theme;
+		document.body?.setAttribute("data-theme", theme);
+		const themeMeta = document.querySelector('meta[name="theme-color"]');
+		if (themeMeta instanceof HTMLMetaElement) {
+			themeMeta.content = theme === "dark" ? "#08131d" : "#edf6ff";
+		}
+		themePressed = theme === "dark";
+	}
+
+	function toggleTheme() {
+		const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+		localStorage.setItem(THEME_KEY, nextTheme);
+		applyTheme(nextTheme);
+	}
+
 	onMount(() => {
 		const cleanups: Array<() => void> = [];
+		themePressed = document.documentElement.dataset.theme === "dark";
 
 		const signupTarget = getSignupTarget();
 		if (signupTarget) {
@@ -191,6 +212,32 @@
 		</ScrollContainer>
 
 		<div class="landing-nav__ctas">
+			<button
+				class="theme-toggle"
+				type="button"
+				aria-label={themeLabels.button}
+				title={themeLabels.button}
+				aria-pressed={themePressed ? "true" : "false"}
+				onclick={toggleTheme}
+			>
+				<span class="theme-toggle__icon" aria-hidden="true">
+					<svg class="theme-toggle__icon-sun" viewBox="0 0 24 24">
+						<circle cx="12" cy="12" r="4.6" fill="currentColor" />
+						<g stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+							<path
+								d="M12 2.5v2.6M12 18.9v2.6M4.2 12H1.6M22.4 12h-2.6M5.4 5.4l1.8 1.8M16.8 16.8l1.8 1.8M18.6 5.4l-1.8 1.8M7.2 16.8l-1.8 1.8"
+							/>
+						</g>
+					</svg>
+					<svg class="theme-toggle__icon-moon" viewBox="0 0 24 24">
+						<path
+							fill="currentColor"
+							d="M20.6 14.7A8.6 8.6 0 1 1 9.3 3.4a7 7 0 1 0 11.3 11.3Z"
+						/>
+					</svg>
+				</span>
+			</button>
+
 			<a
 				class="landing-nav__cta landing-nav__cta--engage"
 				href={ENGAGE_HREF}
