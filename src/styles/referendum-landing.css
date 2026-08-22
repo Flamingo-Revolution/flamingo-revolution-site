@@ -1698,6 +1698,10 @@ html[data-theme='dark'] .referendum-landing .times-action__qr {
 }
 
 @media (max-width: 1100px) {
+	.referendum-landing .hero {
+		padding-top: clamp(3.75rem, 9vw, 5.25rem);
+	}
+
 	.referendum-landing .referendum-header {
 		margin-bottom: 4rem;
 	}

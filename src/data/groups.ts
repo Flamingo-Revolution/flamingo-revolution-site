@@ -101,8 +101,8 @@ export const groups = [
 			// 	primary: "/images/groups/udacn/logo/primary.png"
 			// },
 			logo: {
-				black: '/images/groups/udacn/logo/primary.png',
-				white: '/images/groups/udacn/logo/primary.png',
+				black: '/images/groups/udacn/logo/black.png',
+				white: '/images/groups/udacn/logo/white.png',
 				primary: '/images/groups/udacn/logo/primary.png'
 			}
 		}
