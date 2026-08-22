@@ -1,5 +1,15 @@
 ---
 import "../styles/global.css";
+import {
+  buildOrganizationStructuredData,
+  buildWebPageStructuredData,
+  buildWebSiteStructuredData,
+  buildBreadcrumbStructuredData,
+  getSiteOrigin,
+  serializeJsonLd,
+  type BreadcrumbItem
+} from "../lib/seo/structuredData";
+import { siteCopy } from "../data/site";
 
 interface Props {
   title: string;
@@ -7,10 +17,13 @@ interface Props {
   locale: "sq" | "en";
   socialImagePath?: string;
   socialImageAlt?: string;
-  pageType?: "WebPage" | "Article" | "BlogPosting";
+  pageType?: "WebPage" | "AboutPage" | "CollectionPage" | "Article" | "BlogPosting" | "NewsArticle";
   publishedTime?: Date;
   modifiedTime?: Date;
   authorName?: string;
+  noindex?: boolean;
+  jsonLdExtra?: object[];
+  breadcrumbs?: BreadcrumbItem[];
 }
 
 const {
@@ -22,12 +35,15 @@ const {
   pageType = "WebPage",
   publishedTime,
   modifiedTime,
-  authorName
+  authorName,
+  noindex = false,
+  jsonLdExtra = [],
+  breadcrumbs
 } = Astro.props;
 
-const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://www.flamingorevolution.eu";
-const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const socialImageUrl = new URL(socialImagePath, siteUrl).toString();
+const siteUrl = getSiteOrigin(Astro.site);
+const canonicalUrl = new URL(Astro.url.pathname, `${siteUrl}/`).toString();
+const socialImageUrl = new URL(socialImagePath, `${siteUrl}/`).toString();
 const socialImageType = socialImagePath.toLowerCase().split("?")[0].endsWith(".png") ? "image/png" : "image/jpeg";
 const faviconIcoUrl = "/favicon.ico";
 const faviconUrl = "/favicon.svg?v=20260705";
@@ -40,64 +56,30 @@ const imageAlt = socialImageAlt ??
     ? "Logoja e Revolucionit Flamingo"
     : "Flamingo Revolution logo";
 const ogLocale = locale === "sq" ? "sq_AL" : "en_US";
-const language = locale === "sq" ? "sq-AL" : "en";
-const isArticle = pageType === "Article" || pageType === "BlogPosting";
+const isArticle = pageType === "Article" || pageType === "BlogPosting" || pageType === "NewsArticle";
 
-const organizationId = `${siteUrl}/#organization`;
-const websiteId = `${siteUrl}/#website`;
-const webpageId = `${canonicalUrl}#webpage`;
-const structuredData: Record<string, unknown>[] = [
-  {
-    "@type": pageType,
-    "@id": webpageId,
+const structuredData: object[] = [
+  buildOrganizationStructuredData({ origin: siteUrl, locale }),
+  buildWebSiteStructuredData({ origin: siteUrl, locale, description: siteCopy[locale].meta.description }),
+  buildWebPageStructuredData({
+    type: pageType,
+    origin: siteUrl,
     url: canonicalUrl,
     name: title,
     description,
-    inLanguage: language,
-    isPartOf: { "@id": websiteId },
-    about: { "@id": organizationId },
-    ...(isArticle
-      ? {
-          headline: title,
-          image: socialImageUrl,
-          datePublished: publishedTime?.toISOString(),
-          dateModified: (modifiedTime ?? publishedTime)?.toISOString(),
-          author: authorName ? { "@type": "Person", name: authorName } : { "@id": organizationId },
-          publisher: { "@id": organizationId }
-        }
-      : {})
-  }
+    locale,
+    image: socialImageUrl,
+    publishedTime,
+    modifiedTime,
+    authorName
+  }),
+  ...(breadcrumbs && breadcrumbs.length > 0
+    ? [buildBreadcrumbStructuredData(siteUrl, breadcrumbs)]
+    : []),
+  ...jsonLdExtra
 ];
 
-if (Astro.url.pathname === "/") {
-  structuredData.push(
-    {
-      "@type": "Organization",
-      "@id": organizationId,
-      name: siteName,
-      alternateName: locale === "sq" ? "Flamingo Revolution" : "Revolucioni Flamingo",
-      url: `${siteUrl}/`,
-      logo: new URL("/icon-192.png", siteUrl).toString(),
-      sameAs: [
-        "https://www.youtube.com/@flamingotelevision",
-        "https://www.instagram.com/flamingotelevision",
-        "https://x.com/Flamingo_TV"
-      ]
-    },
-    {
-      "@type": "WebSite",
-      "@id": websiteId,
-      url: `${siteUrl}/`,
-      name: siteName,
-      alternateName: locale === "sq" ? "Flamingo Revolution" : "Revolucioni Flamingo",
-      description,
-      inLanguage: language,
-      publisher: { "@id": organizationId }
-    }
-  );
-}
-
-const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": structuredData }).replace(/</g, "\\u003c");
+const jsonLd = serializeJsonLd({ "@context": "https://schema.org", "@graph": structuredData });
 
 const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.env;
 ---
@@ -109,7 +91,7 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#edf6ff" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
     <link rel="icon" href={faviconIcoUrl} sizes="any" />

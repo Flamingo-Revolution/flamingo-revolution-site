@@ -8,6 +8,8 @@ export type FlamingoTimesIssue = {
   topics: string[];
   href: string;
   pdfHref: string;
+  imageSrc?: string;
+  imageAlt?: string;
 };
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
@@ -21,7 +23,9 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
       "Kujt i shërben bindja se «të gjithë do të vidhnin» dhe se Shqipëria nuk mund të bëjë pa ta?",
     topics: ["institucionet", "korrupsioni", "llogaridhënia", "mandatet", "drejtësia"],
     href: "/flamingo-times/artikujt/botimi-5/",
-    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-5.pdf"
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-5.pdf",
+    imageSrc: "/images/flamingo-times/botimi-5/dy-rruget-e-jetes.png",
+    imageAlt: "Dy rrugët e jetës, pikturë nga Kolë Idromeno"
   },
   {
     number: 4,
@@ -33,7 +37,9 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
       "Një komb i shpërndarë, një zë i përbashkët. Mbi 280 protesta në më shumë se 70 qytete të botës.",
     topics: ["diaspora", "protesta", "Zvërneci", "qytetaria", "mërgata"],
     href: "/flamingo-times/artikujt/botimi-4/",
-    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-4.pdf"
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-4.pdf",
+    imageSrc: "/images/flamingo-times/botimi-4/diaspora-march-hero.jpeg",
+    imageAlt: "Diaspora shqiptare marshon në Tiranë"
   },
   {
     number: 3,
@@ -72,3 +78,15 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
     pdfHref: "/documents/flamingo-times/flamingo-times-botimi-i.pdf"
   }
 ];
+
+export function toRomanIssue(number: number): string {
+  return ["", "I", "II", "III", "IV", "V"][number] ?? String(number);
+}
+
+export function issuePublishedDate(issue: FlamingoTimesIssue): Date {
+  return new Date(`${issue.datetime}-01T00:00:00.000Z`);
+}
+
+export function issuePageTitle(issue: FlamingoTimesIssue): string {
+  return `${issue.title} | Flamingo Times`;
+}

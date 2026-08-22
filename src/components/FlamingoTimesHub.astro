@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { flamingoTimesIssues, toRomanIssue } from "../data/flamingoTimes";
+import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+
+const copy = siteCopy.sq;
+const [latest, ...earlier] = flamingoTimesIssues;
+const title = "Flamingo Times — gazeta e lëvizjes | Revolucioni Flamingo";
+const description =
+  "Lexo botimin e fundit dhe arkivin e Flamingo Times: institucione, protesta dhe llogaridhënie.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale="sq"
+  pageType="CollectionPage"
+  socialImagePath={latest?.imageSrc ?? "/flamingo-times-social.png?v=20260805"}
+  socialImageAlt={latest?.imageAlt ?? "Flamingo Times"}
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Flamingo Times", path: "/flamingo-times/" }
+  ]}
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page times-hub" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Gazeta qytetare</span>
+          <span>{flamingoTimesIssues.length} botime</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Institucione, protesta dhe llogaridhënie — botim pas botimi.</p>
+          <a class="times-download" href="/flamingo-times/artikujt/">Hap arkivin</a>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current="hub" />
+
+      {
+        latest && (
+          <section class="times-hub__latest" aria-labelledby="latest-title">
+            <p class="times-label">Botimi më i fundit</p>
+            <article class="times-article-card times-article-card--latest">
+              <div class="times-article-card__meta">
+                <span>Botimi {toRomanIssue(latest.number)}</span>
+                <time datetime={latest.datetime}>Tiranë, {latest.date}</time>
+                <strong>Më i fundit</strong>
+              </div>
+              <div class="times-article-card__body">
+                <p class="times-label">{latest.category}</p>
+                <h2 id="latest-title">
+                  <a href={latest.href}>{latest.title}</a>
+                </h2>
+                <p>{latest.excerpt}</p>
+                <ul aria-label="Temat">
+                  {latest.topics.map((topic) => (
+                    <li>{topic}</li>
+                  ))}
+                </ul>
+              </div>
+              <div class="times-article-card__actions">
+                <a class="times-article-card__read" href={latest.href}>
+                  Lexo artikullin <span aria-hidden="true">→</span>
+                </a>
+                <a href={latest.pdfHref} download>
+                  Shkarko PDF
+                </a>
+              </div>
+            </article>
+          </section>
+        )
+      }
+
+      <section class="times-hub__archive" aria-labelledby="issues-title">
+        <header class="times-archive__intro">
+          <p class="times-label">Botimet e mëparshme</p>
+          <h2 id="issues-title">Lexo gazetën</h2>
+          <p>Çdo botim mbetet në arkiv, me titullin e tij dhe PDF-në për shkarkim.</p>
+        </header>
+
+        <div class="times-article-cards">
+          {earlier.map((issue) => (
+            <article class="times-article-card">
+              <div class="times-article-card__meta">
+                <span>Botimi {toRomanIssue(issue.number)}</span>
+                <time datetime={issue.datetime}>Tiranë, {issue.date}</time>
+              </div>
+              <div class="times-article-card__body">
+                <p class="times-label">{issue.category}</p>
+                <h3>
+                  <a href={issue.href}>{issue.title}</a>
+                </h3>
+                <p>{issue.excerpt}</p>
+              </div>
+              <div class="times-article-card__actions">
+                <a class="times-article-card__read" href={issue.href}>
+                  Lexo artikullin <span aria-hidden="true">→</span>
+                </a>
+                <a href={issue.pdfHref} download>
+                  Shkarko PDF
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
+  </SiteFrame>
+</BaseLayout>

@@ -15,7 +15,16 @@ const copy = ideasPageCopy[locale];
 const documentsHref = locale === "sq" ? "/projektligje/" : "/en/projektligje/";
 ---
 
-<BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
+<BaseLayout
+  title={copy.meta.title}
+  description={copy.meta.description}
+  locale={locale}
+  pageType="CollectionPage"
+  breadcrumbs={[
+    { name: locale === "sq" ? "Ballina" : "Home", path: locale === "sq" ? "/" : "/en/" },
+    { name: copy.title.join(" "), path: locale === "sq" ? "/idete-tuaja/" : "/en/idete-tuaja/" }
+  ]}
+>
   <SiteFrame {locale} copy={siteCopy} currentPage="ideas" localePath="idete-tuaja">
     <main class="ideas-page" id="main" tabindex="-1">
       <section class="ideas-hero">

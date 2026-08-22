@@ -38,6 +38,13 @@ const pillarCards: CardSliderItem[] = copy.pillars.items.map((item) => ({
 
 const projectCards: CardSliderItem[] = [
   {
+    title: copy.nav.referendumLabel,
+    href: `${prefix}/referendum/`,
+    icon: getNavIcon("ballot"),
+    description: "Nisma qytetare për shfuqizimin e Ligjit nr. 21/2024.",
+    image: { src: "/referendum/flamingo-cover.png", alt: "Kopertina e nismës për referendum mbi Ligjin 21/2024" }
+  },
+  {
     title: copy.nav.ideasLabel,
     href: `${prefix}/idete-tuaja/`,
     icon: getNavIcon("bulb"),
@@ -100,6 +107,9 @@ const projectCards: CardSliderItem[] = [
   title={locale === "sq" ? "Revolucioni Flamingo | Lëvizje qytetare në Shqipëri" : "Flamingo Revolution | Civic movement in Albania"}
   description={copy.meta.description}
   locale={locale}
+  breadcrumbs={[
+    { name: locale === "sq" ? "Ballina" : "Home", path: locale === "sq" ? "/" : "/en/" }
+  ]}
 >
   <SiteFrame {locale} {copy} currentPage="home">
     <main class="landing" id="main" tabindex="-1">

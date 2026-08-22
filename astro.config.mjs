@@ -4,6 +4,17 @@ import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
 
 const redirectOnlyPaths = new Set(['/kerkesat/', '/kontakt/', '/pulsi-i-protestes/', '/pulsi/']);
+const noindexPaths = new Set(['/diaspora-zbarkon/', '/reporteret-e-diaspores/']);
+
+const highPriorityPaths = new Map([
+	['/', 1],
+	['/referendum/', 0.9],
+	['/idete-tuaja/', 0.9],
+	['/flamingo-times/', 0.9],
+	['/dosjet/', 0.9],
+	['/rreth-nesh/', 0.9],
+	['/protestat/', 0.9]
+]);
 
 export default defineConfig({
 	// Production redirects the apex domain to www, so every canonical signal
@@ -17,8 +28,18 @@ export default defineConfig({
 	integrations: [
 		svelte(),
 		sitemap({
-			// Redirect targets belong in the sitemap, not their legacy aliases.
-			filter: (page) => !redirectOnlyPaths.has(new URL(page).pathname)
+			filter: (page) => {
+				const pathname = new URL(page).pathname;
+				return !redirectOnlyPaths.has(pathname) && !noindexPaths.has(pathname);
+			},
+			serialize(item) {
+				const pathname = new URL(item.url).pathname;
+				const priority = highPriorityPaths.get(pathname);
+				if (priority !== undefined) {
+					item.priority = priority;
+				}
+				return item;
+			}
 		})
 	],
 	i18n: {

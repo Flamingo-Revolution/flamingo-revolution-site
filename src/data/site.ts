@@ -127,7 +127,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     meta: {
       title: "Revolucioni Flamingo",
       description:
-        "Revolucioni Flamingo është një lëvizje qytetare në Shqipëri që dokumenton protestat dhe mbledh ide e propozime për interesin publik."
+        "Lëvizje qytetare në Shqipëri: protestat, referendumi për Ligjin 21/2024, Flamingo Times dhe idetë tuaja për interesin publik."
     },
     brand: {
       name: "Revolucioni Flamingo",

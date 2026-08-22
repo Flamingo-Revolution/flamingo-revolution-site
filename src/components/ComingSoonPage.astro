@@ -36,7 +36,7 @@ const homeHref = locale === "sq" ? "/" : "/en/";
 const headingWords = splitTitleLines(heading ?? title);
 ---
 
-<BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale}>
+<BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale} noindex>
   <div class="page-shell">
     <SiteHeader locale={locale} copy={siteCopy} currentPage={currentPage} localePath={localePath} />
 

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { flamingoTimesIssues, issuePageTitle, issuePublishedDate } from "../data/flamingoTimes";
 import { siteCopy } from "../data/site";
 import FlamingoTimesNav from "./FlamingoTimesNav.astro";
 import SiteFrame from "./SiteFrame.astro";
@@ -7,20 +8,23 @@ import "../styles/flamingo-times.css";
 
 const copy = siteCopy.sq;
 const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-3.pdf";
-
-interface Props {
-  isLatest?: boolean;
-}
-
-const { isLatest = false } = Astro.props;
+const issue = flamingoTimesIssues.find((entry) => entry.number === 3)!;
+const publishedTime = issuePublishedDate(issue);
 ---
 
 <BaseLayout
-  title="Fajin nuk e ka sportelisti — Flamingo Times, Botimi III"
-  description="Administrata është pasqyra e qeverisë. Një analizë e qeverisjes nga poshtë-lart — Flamingo Times, Botimi III."
+  title={issuePageTitle(issue)}
+  description={issue.excerpt}
   locale="sq"
+  pageType="NewsArticle"
+  publishedTime={publishedTime}
   socialImagePath="/flamingo-times-social.png?v=20260805"
   socialImageAlt="Flamingo Times — Fajin nuk e ka sportelisti"
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Flamingo Times", path: "/flamingo-times/" },
+    { name: issue.title, path: issue.href }
+  ]}
 >
   <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
     <main class="times-page" id="main" tabindex="-1">
@@ -39,7 +43,7 @@ const { isLatest = false } = Astro.props;
         </div>
       </section>
 
-      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+      <FlamingoTimesNav current="archive" />
 
       <nav class="times-sections" aria-label="Seksionet e gazetës">
         <a href="#analiza">Analiza</a>

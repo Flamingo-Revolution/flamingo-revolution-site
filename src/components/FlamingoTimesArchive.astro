@@ -1,21 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { flamingoTimesIssues } from "../data/flamingoTimes";
+import { flamingoTimesIssues, toRomanIssue } from "../data/flamingoTimes";
 import { siteCopy } from "../data/site";
 import FlamingoTimesNav from "./FlamingoTimesNav.astro";
 import SiteFrame from "./SiteFrame.astro";
 import "../styles/flamingo-times.css";
 
 const copy = siteCopy.sq;
-const toRoman = (number: number) => ["", "I", "II", "III", "IV", "V"][number] ?? String(number);
 ---
 
 <BaseLayout
-  title="Arkivi i artikujve — Flamingo Times"
-  description="Kërkoni dhe lexoni të gjitha botimet e Flamingo Times."
+  title="Arkivi i botimeve | Flamingo Times"
+  description="Kërko dhe lexo të gjitha botimet e Flamingo Times: titujt, temat dhe PDF-të e gazetës qytetare."
   locale="sq"
+  pageType="CollectionPage"
   socialImagePath="/flamingo-times-social.png?v=20260805"
   socialImageAlt="Arkivi i Flamingo Times"
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Flamingo Times", path: "/flamingo-times/" },
+    { name: "Arkivi", path: "/flamingo-times/artikujt/" }
+  ]}
 >
   <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
     <main class="times-page times-archive" id="main" tabindex="-1">
@@ -25,7 +30,7 @@ const toRoman = (number: number) => ["", "I", "II", "III", "IV", "V"][number] ??
           <span>{flamingoTimesIssues.length} botime</span>
         </div>
         <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
-        <h1 id="archive-title">Flamingo <em>Times</em></h1>
+        <h1 id="archive-title">Arkivi i <em>botimeve</em></h1>
         <div class="times-masthead__rule">
           <p>Artikujt, analizat dhe botimet tona</p>
           <a class="times-download" href="/flamingo-times/">Lexo më të fundit</a>
@@ -58,7 +63,7 @@ const toRoman = (number: number) => ["", "I", "II", "III", "IV", "V"][number] ??
               data-search={`${issue.title} ${issue.category} ${issue.excerpt} ${issue.topics.join(" ")}`.toLocaleLowerCase("sq")}
             >
               <div class="times-article-card__meta">
-                <span>Botimi {toRoman(issue.number)}</span>
+                <span>Botimi {toRomanIssue(issue.number)}</span>
                 <time datetime={issue.datetime}>Tiranë, {issue.date}</time>
                 {index === 0 && <strong>Më i fundit</strong>}
               </div>

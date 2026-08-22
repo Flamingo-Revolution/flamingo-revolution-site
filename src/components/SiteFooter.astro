@@ -8,15 +8,43 @@ interface Props {
 }
 
 const { locale, copy } = Astro.props;
-const linksLabel = locale === "sq" ? "Lidhje" : "Links";
+const prefix = locale === "sq" ? "" : "/en";
+const linksLabel = locale === "sq" ? "Rrjetet sociale" : "Social links";
+const pagesLabel = locale === "sq" ? "Faqet kryesore" : "Main pages";
 const email = "info@flamingorevolution.eu";
 const githubHref = "https://github.com/Flamingo-Revolution";
 const currentYear = new Date().getFullYear();
+
+const pageLinks =
+	locale === "sq"
+		? [
+				{ href: `${prefix}/referendum/`, label: "Referendum për Ligjin 21/2024" },
+				{ href: `${prefix}/idete-tuaja/`, label: "Idetë tuaja" },
+				{ href: `${prefix}/flamingo-times/`, label: "Flamingo Times" },
+				{ href: `${prefix}/dosjet/`, label: "Flamingo Dossier" },
+				{ href: `${prefix}/rreth-nesh/`, label: "Rreth nesh" },
+				{ href: `${prefix}/protestat/`, label: "Protestat" }
+			]
+		: [
+				{ href: `${prefix}/referendum/`, label: "Referendum on Law 21/2024" },
+				{ href: `${prefix}/idete-tuaja/`, label: "Your ideas" },
+				{ href: `${prefix}/flamingo-times/`, label: "Flamingo Times" },
+				{ href: `${prefix}/dosjet/`, label: "Flamingo Dossier" },
+				{ href: `${prefix}/rreth-nesh/`, label: "About us" },
+				{ href: `${prefix}/protestat/`, label: "Protests" }
+			];
 ---
 
 <footer class="footer-note">
 	<div class="footer-note__copy">
 		<p>{copy.footer.text}</p>
+		<nav class="footer-nav" aria-label={pagesLabel}>
+			{
+				pageLinks.map((link) => (
+					<a href={link.href}>{link.label}</a>
+				))
+			}
+		</nav>
 		<p class="footer-note__meta">
 			<span>© {currentYear} {copy.brand.name}</span>
 			<a href={`mailto:${email}`}>{email}</a>

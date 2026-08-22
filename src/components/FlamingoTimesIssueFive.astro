@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { flamingoTimesIssues, issuePageTitle, issuePublishedDate } from "../data/flamingoTimes";
 import { siteCopy } from "../data/site";
 import FlamingoCrossword from "./FlamingoCrossword.svelte";
 import FlamingoTimesNav from "./FlamingoTimesNav.astro";
@@ -8,12 +9,8 @@ import "../styles/flamingo-times.css";
 
 const copy = siteCopy.sq;
 const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-5.pdf";
-
-interface Props {
-  isLatest?: boolean;
-}
-
-const { isLatest = false } = Astro.props;
+const issue = flamingoTimesIssues.find((entry) => entry.number === 5)!;
+const publishedTime = issuePublishedDate(issue);
 
 const reforms = [
   "Kufizim mandatesh për kryeministrin.",
@@ -26,11 +23,18 @@ const reforms = [
 ---
 
 <BaseLayout
-  title="Na mungon sistemi që mund të sjellë ndryshim — Flamingo Times, Botimi V"
-  description="Kujt i shërben bindja se «të gjithë do të vidhnin» dhe se Shqipëria nuk mund të bëjë pa ta?"
+  title={issuePageTitle(issue)}
+  description={issue.excerpt}
   locale="sq"
-  socialImagePath="/images/flamingo-times/botimi-5/dy-rruget-e-jetes.png"
-  socialImageAlt="Dy rrugët e jetës, pikturë nga Kolë Idromeno"
+  pageType="NewsArticle"
+  publishedTime={publishedTime}
+  socialImagePath={issue.imageSrc}
+  socialImageAlt={issue.imageAlt}
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Flamingo Times", path: "/flamingo-times/" },
+    { name: issue.title, path: issue.href }
+  ]}
 >
   <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
     <main class="times-page" id="main" tabindex="-1">
@@ -49,7 +53,7 @@ const reforms = [
         </div>
       </section>
 
-      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+      <FlamingoTimesNav current="archive" />
 
       <nav class="times-sections" aria-label="Seksionet e gazetës">
         <a href="#kryeartikulli">Kryeartikulli</a>

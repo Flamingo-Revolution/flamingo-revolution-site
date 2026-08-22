@@ -6,7 +6,7 @@ import type { Locale, SiteCopy } from "../data/site";
 
 type NavPage =
   | "home"
-  | "protest-list"
+  | "protests"
   | "map"
   | "pulse"
   | "diaspora"
@@ -14,9 +14,7 @@ type NavPage =
   | "ideas"
   | "times"
   | "dossier"
-  | "mission"
-  | "team"
-  | "contact";
+  | "about";
 
 interface Props {
   locale: Locale;
@@ -26,19 +24,60 @@ interface Props {
   title: string;
   description: string;
   src: string;
+  heading?: string;
+  lead?: string;
+  links?: { label: string; href: string }[];
 }
 
-const { locale, siteCopy, currentPage, localePath, title, description, src } = Astro.props;
+const {
+  locale,
+  siteCopy,
+  currentPage,
+  localePath,
+  title,
+  description,
+  src,
+  heading = title,
+  lead,
+  links = []
+} = Astro.props;
+
+const pageType = currentPage === "dossier" ? "CollectionPage" : "WebPage";
 ---
 
-<BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale}>
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  pageType={pageType}
+  breadcrumbs={[
+    { name: locale === "sq" ? "Ballina" : "Home", path: locale === "sq" ? "/" : "/en/" },
+    { name: heading, path: `/${localePath}/` }
+  ]}
+>
   <div class="page-shell">
     <SiteHeader locale={locale} copy={siteCopy} currentPage={currentPage} localePath={localePath} />
 
     <main class="embed-page" id="main" tabindex="-1">
-      <section class="embed-frame-section" aria-label={title}>
+      {
+        lead && (
+          <section class="embed-intro">
+            <p class="eyebrow">{locale === "sq" ? "Projekte" : "Projects"}</p>
+            <h1>{heading}</h1>
+            <p class="lead">{lead}</p>
+            {links.length > 0 && (
+              <nav class="embed-intro__links" aria-label={locale === "sq" ? "Lidhje të lidhura" : "Related links"}>
+                {links.map((link) => (
+                  <a href={link.href}>{link.label}</a>
+                ))}
+              </nav>
+            )}
+          </section>
+        )
+      }
+      <section class="embed-frame-section" aria-label={heading}>
         <div class="embed-frame">
-          <iframe src={src} title={title} loading="eager" allowfullscreen></iframe>
+          <iframe src={src} title={heading} loading="eager" allowfullscreen></iframe>
         </div>
       </section>
     </main>

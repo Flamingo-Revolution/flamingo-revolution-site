@@ -45,8 +45,9 @@ type IdeasPageCopy = {
 export const ideasPageCopy: Record<Locale, IdeasPageCopy> = {
   sq: {
     meta: {
-      title: "Idetë tuaja | Revolucioni Flamingo",
-      description: "Ide qytetare të publikuara në Revolucionin Flamingo."
+      title: "Idetë tuaja — propozime qytetare | Revolucioni Flamingo",
+      description:
+        "Dërgo, lexo dhe voto ide për interesin publik. Laboratori i hapur i Revolucionit Flamingo."
     },
     kicker: "Zëri qytetar",
     title: ["Idetë", "tuaja"],
