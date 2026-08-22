@@ -6,39 +6,45 @@ interface Props {
 	copy: SiteCopy;
 	brandHref?: string;
 	brandExternal?: boolean;
+	showBrand?: boolean;
 }
 
 const {
 	copy,
 	brandHref = "https://flamingorevolution.eu",
-	brandExternal = brandHref.startsWith("http")
+	brandExternal = brandHref.startsWith("http"),
+	showBrand = true
 } = Astro.props;
 ---
 
-<div class="referendum-header">
-	<a
-		class="referendum-header__brand"
-		href={brandHref}
-		target={brandExternal ? "_blank" : undefined}
-		rel={brandExternal ? "noreferrer" : undefined}
-		aria-label={copy.nav.homeLabel}
-	>
-		<img
-			class="brand__logo brand__logo--light"
-			src="/images/flamingo-wordmark-light.svg"
-			alt={copy.brand.logoAlt}
-			width="419"
-			height="187"
-		/>
-		<img
-			class="brand__logo brand__logo--dark"
-			src="/images/flamingo-wordmark-dark.svg"
-			alt=""
-			width="426"
-			height="187"
-			aria-hidden="true"
-		/>
-	</a>
+<div class:list={["referendum-header", !showBrand && "referendum-header--no-brand"]}>
+	{
+		showBrand ? (
+			<a
+				class="referendum-header__brand"
+				href={brandHref}
+				target={brandExternal ? "_blank" : undefined}
+				rel={brandExternal ? "noreferrer" : undefined}
+				aria-label={copy.nav.homeLabel}
+			>
+				<img
+					class="brand__logo brand__logo--light"
+					src="/images/flamingo-wordmark-light.svg"
+					alt={copy.brand.logoAlt}
+					width="419"
+					height="187"
+				/>
+				<img
+					class="brand__logo brand__logo--dark"
+					src="/images/flamingo-wordmark-dark.svg"
+					alt=""
+					width="426"
+					height="187"
+					aria-hidden="true"
+				/>
+			</a>
+		) : null
+	}
 
 	<ThemeToggle labels={copy.theme} />
 </div>
