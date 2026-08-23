@@ -668,22 +668,9 @@ html[data-theme='dark'] .times-action__qr {
 	margin: 0;
 }
 
-.times-archive__content,
-.times-hub__latest,
-.times-hub__archive {
-	padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 5vw, 3.4rem);
-}
-
 .times-archive__content {
+	padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 5vw, 3.4rem);
 	min-height: 38rem;
-}
-
-.times-hub__latest {
-	padding-bottom: 0;
-}
-
-.times-hub__latest > .times-label {
-	margin-bottom: 1rem;
 }
 
 .times-archive__intro {

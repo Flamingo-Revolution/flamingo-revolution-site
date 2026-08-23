@@ -2,9 +2,11 @@ import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
+import { flamingoTimesIssues } from './src/data/flamingoTimes';
 
 const redirectOnlyPaths = new Set(['/kerkesat/', '/kontakt/', '/pulsi-i-protestes/', '/pulsi/']);
 const noindexPaths = new Set(['/diaspora-zbarkon/', '/reporteret-e-diaspores/']);
+const latestTimesIssuePath = flamingoTimesIssues[0]?.href;
 
 const highPriorityPaths = new Map([
 	['/', 1],
@@ -30,7 +32,11 @@ export default defineConfig({
 		sitemap({
 			filter: (page) => {
 				const pathname = new URL(page).pathname;
-				return !redirectOnlyPaths.has(pathname) && !noindexPaths.has(pathname);
+				return (
+					!redirectOnlyPaths.has(pathname) &&
+					!noindexPaths.has(pathname) &&
+					pathname !== latestTimesIssuePath
+				);
 			},
 			serialize(item) {
 				const pathname = new URL(item.url).pathname;

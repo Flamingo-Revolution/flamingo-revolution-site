@@ -1,16 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { flamingoTimesIssues, issuePageTitle, issuePublishedDate } from "../data/flamingoTimes";
+import { flamingoTimesIssues, isLatestIssue, issuePageTitle, issuePublishedDate } from "../data/flamingoTimes";
 import { siteCopy } from "../data/site";
 import FlamingoCrossword from "./FlamingoCrossword.svelte";
 import FlamingoTimesNav from "./FlamingoTimesNav.astro";
 import SiteFrame from "./SiteFrame.astro";
 import "../styles/flamingo-times.css";
 
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+
 const copy = siteCopy.sq;
 const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-5.pdf";
 const issue = flamingoTimesIssues.find((entry) => entry.number === 5)!;
 const publishedTime = issuePublishedDate(issue);
+const canonicalPath = isLatest || isLatestIssue(issue) ? "/flamingo-times/" : undefined;
 
 const reforms = [
   "Kufizim mandatesh për kryeministrin.",
@@ -28,13 +35,21 @@ const reforms = [
   locale="sq"
   pageType="NewsArticle"
   publishedTime={publishedTime}
+  canonicalPath={canonicalPath}
   socialImagePath={issue.imageSrc}
   socialImageAlt={issue.imageAlt}
-  breadcrumbs={[
-    { name: "Ballina", path: "/" },
-    { name: "Flamingo Times", path: "/flamingo-times/" },
-    { name: issue.title, path: issue.href }
-  ]}
+  breadcrumbs={
+    isLatest
+      ? [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" }
+        ]
+      : [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" },
+          { name: issue.title, path: issue.href }
+        ]
+  }
 >
   <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
     <main class="times-page" id="main" tabindex="-1">
@@ -53,7 +68,7 @@ const reforms = [
         </div>
       </section>
 
-      <FlamingoTimesNav current="archive" />
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
 
       <nav class="times-sections" aria-label="Seksionet e gazetës">
         <a href="#kryeartikulli">Kryeartikulli</a>

@@ -90,3 +90,11 @@ export function issuePublishedDate(issue: FlamingoTimesIssue): Date {
 export function issuePageTitle(issue: FlamingoTimesIssue): string {
   return `${issue.title} | Flamingo Times`;
 }
+
+export function isLatestIssue(issue: FlamingoTimesIssue): boolean {
+  return flamingoTimesIssues[0]?.number === issue.number;
+}
+
+export function issueReadHref(issue: FlamingoTimesIssue): string {
+  return isLatestIssue(issue) ? "/flamingo-times/" : issue.href;
+}

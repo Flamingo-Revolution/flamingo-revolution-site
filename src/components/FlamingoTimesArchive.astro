@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { flamingoTimesIssues, toRomanIssue } from "../data/flamingoTimes";
+import { flamingoTimesIssues, issueReadHref, toRomanIssue } from "../data/flamingoTimes";
 import { siteCopy } from "../data/site";
 import FlamingoTimesNav from "./FlamingoTimesNav.astro";
 import SiteFrame from "./SiteFrame.astro";
@@ -69,14 +69,14 @@ const copy = siteCopy.sq;
               </div>
               <div class="times-article-card__body">
                 <p class="times-label">{issue.category}</p>
-                <h3><a href={issue.href}>{issue.title}</a></h3>
+                <h3><a href={issueReadHref(issue)}>{issue.title}</a></h3>
                 <p>{issue.excerpt}</p>
                 <ul aria-label="Temat">
                   {issue.topics.map((topic) => <li>{topic}</li>)}
                 </ul>
               </div>
               <div class="times-article-card__actions">
-                <a class="times-article-card__read" href={issue.href}>Lexo artikullin <span aria-hidden="true">→</span></a>
+                <a class="times-article-card__read" href={issueReadHref(issue)}>Lexo artikullin <span aria-hidden="true">→</span></a>
                 <a href={issue.pdfHref} download>Shkarko PDF</a>
               </div>
             </article>
