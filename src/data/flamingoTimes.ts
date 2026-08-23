@@ -51,7 +51,9 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
       "Administrata është pasqyra e qeverisë. Kur dështimet përsëriten, përgjegjësia fillon te sistemi që i prodhon.",
     topics: ["administrata", "qeverisja", "korrupsioni", "meritokracia"],
     href: "/flamingo-times/artikujt/botimi-3/",
-    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-3.pdf"
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-3.pdf",
+    imageSrc: "/images/flamingo-times/botimi-3/img-1.png",
+    imageAlt: "Administrata shtetërore dhe qeverisja — ilustrim Flamingo Times"
   },
   {
     number: 2,
@@ -63,7 +65,9 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
       "Nga Dhjetori 1990 te Qershori 2026: tri breza studentësh, një traditë guximi dhe pjesëmarrjeje qytetare.",
     topics: ["studentët", "rinia", "protesta", "demokracia", "historia"],
     href: "/flamingo-times/artikujt/botimi-2/",
-    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-2.pdf"
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-2.pdf",
+    imageSrc: "/images/flamingo-times/botimi-2/img-1.jpg",
+    imageAlt: "Studentë në protestë — Revolucioni Flamingo"
   },
   {
     number: 1,

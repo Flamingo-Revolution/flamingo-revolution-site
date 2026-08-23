@@ -11,6 +11,7 @@ const { locale, copy } = Astro.props;
 const prefix = locale === "sq" ? "" : "/en";
 const linksLabel = locale === "sq" ? "Rrjetet sociale" : "Social links";
 const pagesLabel = locale === "sq" ? "Faqet kryesore" : "Main pages";
+const legalLabel = locale === "sq" ? "Ligjore" : "Legal";
 const email = "info@flamingorevolution.eu";
 const githubHref = "https://github.com/Flamingo-Revolution";
 const currentYear = new Date().getFullYear();
@@ -18,20 +19,39 @@ const currentYear = new Date().getFullYear();
 const pageLinks =
 	locale === "sq"
 		? [
+				{ href: `${prefix}/protestat/`, label: "Protestat" },
 				{ href: `${prefix}/referendum/`, label: "Referendum për Ligjin 21/2024" },
-				{ href: `${prefix}/idete-tuaja/`, label: "Idetë tuaja" },
+				{ href: `${prefix}/harta/`, label: "Harta e protestave" },
+				{ href: `${prefix}/pulsi-protestes/`, label: "Pulsi i protestës" },
 				{ href: `${prefix}/flamingo-times/`, label: "Flamingo Times" },
+				{ href: `${prefix}/projektligje/`, label: "Projektligjet" },
+				{ href: `${prefix}/blog/`, label: "Blog" },
+				{ href: `${prefix}/idete-tuaja/`, label: "Idetë tuaja" },
 				{ href: `${prefix}/dosjet/`, label: "Flamingo Dossier" },
-				{ href: `${prefix}/rreth-nesh/`, label: "Rreth nesh" },
-				{ href: `${prefix}/protestat/`, label: "Protestat" }
+				{ href: `${prefix}/rreth-nesh/`, label: "Rreth nesh" }
 			]
 		: [
+				{ href: `${prefix}/protestat/`, label: "Protests" },
 				{ href: `${prefix}/referendum/`, label: "Referendum on Law 21/2024" },
-				{ href: `${prefix}/idete-tuaja/`, label: "Your ideas" },
+				{ href: `${prefix}/map/`, label: "Protest map" },
+				{ href: `${prefix}/pulse/`, label: "Protest pulse" },
 				{ href: `${prefix}/flamingo-times/`, label: "Flamingo Times" },
+				{ href: `${prefix}/projektligje/`, label: "Draft laws" },
+				{ href: `${prefix}/blog/`, label: "Blog" },
+				{ href: `${prefix}/idete-tuaja/`, label: "Your ideas" },
 				{ href: `${prefix}/dosjet/`, label: "Flamingo Dossier" },
-				{ href: `${prefix}/rreth-nesh/`, label: "About us" },
-				{ href: `${prefix}/protestat/`, label: "Protests" }
+				{ href: `${prefix}/rreth-nesh/`, label: "About us" }
+			];
+
+const legalLinks =
+	locale === "sq"
+		? [
+				{ href: `${prefix}/privatesia/`, label: "Privatësia" },
+				{ href: `${prefix}/redaksia/`, label: "Redaksia" }
+			]
+		: [
+				{ href: `${prefix}/privatesia/`, label: "Privacy" },
+				{ href: `${prefix}/redaksia/`, label: "Editorial policy" }
 			];
 ---
 
@@ -41,6 +61,13 @@ const pageLinks =
 		<nav class="footer-nav" aria-label={pagesLabel}>
 			{
 				pageLinks.map((link) => (
+					<a href={link.href}>{link.label}</a>
+				))
+			}
+		</nav>
+		<nav class="footer-nav footer-nav--legal" aria-label={legalLabel}>
+			{
+				legalLinks.map((link) => (
 					<a href={link.href}>{link.label}</a>
 				))
 			}
@@ -63,3 +90,10 @@ const pageLinks =
 		</a>
 	</nav>
 </footer>
+
+<style>
+	.footer-nav--legal {
+		margin-top: 0.5rem;
+		opacity: 0.85;
+	}
+</style>

@@ -22,6 +22,7 @@ export default defineConfig({
 	// Production redirects the apex domain to www, so every canonical signal
 	// (HTML, sitemap, robots.txt and internal absolute links) must use www too.
 	site: 'https://www.flamingorevolution.eu',
+	trailingSlash: 'always',
 	output: 'server',
 	// Prerendered content collections fail in workerd during `astro dev`.
 	adapter: cloudflare({

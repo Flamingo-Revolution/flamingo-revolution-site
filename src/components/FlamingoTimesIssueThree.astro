@@ -18,8 +18,8 @@ const publishedTime = issuePublishedDate(issue);
   locale="sq"
   pageType="NewsArticle"
   publishedTime={publishedTime}
-  socialImagePath="/flamingo-times-social.png?v=20260805"
-  socialImageAlt="Flamingo Times — Fajin nuk e ka sportelisti"
+  socialImagePath={issue.imageSrc}
+  socialImageAlt={issue.imageAlt}
   breadcrumbs={[
     { name: "Ballina", path: "/" },
     { name: "Flamingo Times", path: "/flamingo-times/" },
