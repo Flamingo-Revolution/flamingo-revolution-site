@@ -8,6 +8,8 @@ import ReasonsSection from "../../components/referendum/ReasonsSection/ReasonsSe
 import OriginSection from "../../components/referendum/OriginSection/OriginSection.astro";
 import FAQSection from "../../components/referendum/FAQSection/FAQSection.svelte";
 import GroupHighlights from "../../components/referendum/GroupHighlights/GroupHighlights.astro";
+import FinalCta from "../../components/referendum/FinalCta/FinalCta.svelte";
+import ReferendumHeader from "../../components/referendum/ReferendumHeader/ReferendumHeader.astro";
 import { getReferendumIndexItems } from "../../data/referendum";
 import { landingFaqs } from "../../data/referendumFaq";
 import { buildFaqPageStructuredData } from "../../lib/seo/structuredData";
@@ -258,6 +260,8 @@ const description =
 					</div>
 				</aside>
 			</section>
+
+			<FinalCta client:idle />
 		</main>
 	</div>
 
