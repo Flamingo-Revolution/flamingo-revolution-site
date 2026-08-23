@@ -625,77 +625,145 @@
 	position: relative;
 	min-width: 0;
 	z-index: 1;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1rem;
-	flex-wrap: wrap;
-	padding: 1.1rem clamp(1rem, 5vw, 3.4rem) 1.35rem;
+	padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1rem, 5vw, 3.4rem) 1.35rem;
 	color: var(--ink-reverse);
 	background: var(--ink);
-}
-
-.footer-note p {
-	color: var(--muted);
-	line-height: 1.65;
-	overflow-wrap: anywhere;
 }
 
 .footer-note p {
 	margin: 0;
 	color: inherit;
 	font-size: 0.92rem;
+	line-height: 1.65;
+	overflow-wrap: anywhere;
 }
 
-.footer-note__copy {
+.footer-note__main {
 	display: grid;
-	gap: 0.75rem;
+	grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 2fr);
+	gap: clamp(2.5rem, 7vw, 7rem);
+	padding-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
-.footer-nav {
+.footer-note__brand {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 0.45rem 1.15rem;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 1rem;
 }
 
-.footer-nav a {
+.footer-note__brand-name {
+	max-width: 12ch;
 	color: var(--ink-reverse);
+	font-family: var(--font-display);
+	font-size: clamp(1.8rem, 3vw, 2.6rem);
+	font-weight: 800;
+	line-height: 0.95;
+}
+
+.footer-note__brand-name:hover,
+.footer-note__brand-name:focus-visible {
+	color: var(--accent);
+}
+
+.footer-note__brand p {
+	max-width: 30rem;
+	opacity: 0.78;
+}
+
+.footer-note__email {
+	color: var(--accent);
 	font-size: 0.82rem;
 	font-weight: 800;
 	text-decoration: underline;
 	text-decoration-thickness: 0.12rem;
-	text-underline-offset: 0.2rem;
+	text-underline-offset: 0.22rem;
 }
 
-.footer-nav a:hover,
-.footer-nav a:focus-visible {
+.footer-note__email:hover,
+.footer-note__email:focus-visible {
+	color: var(--ink-reverse);
+}
+
+.footer-nav {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.footer-nav__section h2 {
+	margin: 0 0 1.15rem;
 	color: var(--accent);
+	font-family: var(--font-body);
+	font-size: 0.78rem;
+	font-weight: 900;
+	letter-spacing: 0.13em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.footer-nav__section ul {
+	display: grid;
+	gap: 0.68rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.footer-nav__section a {
+	color: var(--ink-reverse);
+	font-size: 0.9rem;
+	font-weight: 650;
+	line-height: 1.35;
+	text-decoration: none;
+}
+
+.footer-nav__section a:hover,
+.footer-nav__section a:focus-visible {
+	color: var(--accent);
+	text-decoration: underline;
+	text-decoration-thickness: 0.1rem;
+	text-underline-offset: 0.22rem;
+}
+
+.footer-note__bottom {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.45rem 1rem;
+	flex-wrap: wrap;
+	padding-top: 1.25rem;
+	border-top: 1px solid color-mix(in srgb, var(--ink-reverse) 24%, transparent);
 }
 
 .footer-note__meta {
-	display: flex;
-	align-items: center;
-	gap: 0.45rem 1rem;
-	flex-wrap: wrap;
-	margin-top: 1rem;
-}
-
-.footer-note__meta span,
-.footer-note__meta a {
+	opacity: 0.72;
 	font-size: 0.78rem;
 	font-weight: 800;
 }
 
-.footer-note__meta a {
-	color: var(--accent);
+.footer-note__utility,
+.footer-legal {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem 1.2rem;
+	flex-wrap: wrap;
+}
+
+.footer-legal a {
+	color: var(--ink-reverse);
+	font-size: 0.78rem;
+	font-weight: 800;
+	opacity: 0.72;
 	text-decoration: underline;
-	text-decoration-thickness: 0.12rem;
+	text-decoration-thickness: 0.08rem;
 	text-underline-offset: 0.2rem;
 }
 
-.footer-note__meta a:hover,
-.footer-note__meta a:focus-visible {
-	color: var(--ink-reverse);
+.footer-legal a:hover,
+.footer-legal a:focus-visible {
+	color: var(--accent);
+	opacity: 1;
 }
 
 .footer-links {
@@ -751,6 +819,11 @@
 	.document-filters {
 		justify-content: flex-start;
 	}
+
+	.footer-note__main {
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
 }
 
 @media (max-width: 760px) {
@@ -764,13 +837,26 @@
 	}
 
 	.footer-note {
-		align-items: stretch;
+		padding-top: 2.5rem;
+	}
+
+	.footer-nav {
+		grid-template-columns: 1fr;
+		gap: 2.25rem;
+	}
+
+	.footer-note__bottom {
+		align-items: flex-start;
+		flex-direction: column-reverse;
+	}
+
+	.footer-note__utility {
+		align-items: flex-start;
 		flex-direction: column;
-		text-align: left;
 	}
 
 	.footer-links a {
-		flex: 1 1 auto;
+		flex: 0 0 auto;
 	}
 
 	.document-card {
