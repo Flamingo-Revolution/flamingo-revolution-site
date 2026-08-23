@@ -4,18 +4,25 @@ import ReferendumStatusBar from "../../components/referendum/ReferendumStatusBar
 import ReferendumSubnav from "../../components/referendum/ReferendumSubnav/ReferendumSubnav.astro";
 import ReferendumReveal from "../../components/referendum/ReferendumReveal/ReferendumReveal.astro";
 import PseReferendumArticle from "../../components/referendum/PseReferendumArticle/PseReferendumArticle.astro";
-import { siteCopy } from "../../data/site";
 import "../../styles/referendum-landing.css";
 
 export const prerender = true;
 
-const copy = siteCopy.sq;
-const title = "Pse referendum?";
+const title = "Pse referendum për Ligjin 21/2024 | Revolucioni Flamingo";
 const description =
-	"Pse kërkohet referendumi për shfuqizimin e Ligjit nr. 21/2024 — katër arsye të dokumentuara.";
+	"Katër arsye të dokumentuara për shfuqizimin e Ligjit nr. 21/2024: Zvërneci, Narta, Vjosa dhe nisma qytetare.";
 ---
 
-<ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
+<ReferendumLayout
+	title={title}
+	description={description}
+	pageType="Article"
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: "Referendum", path: "/referendum/" },
+		{ name: "Pse referendum?", path: "/referendum/pse-referendum/" }
+	]}
+>
 	<div class="referendum-landing referendum-subpage">
 		<ReferendumStatusBar />
 		<main id="main" tabindex="-1">

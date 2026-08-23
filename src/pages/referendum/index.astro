@@ -10,6 +10,7 @@ import FAQSection from "../../components/referendum/FAQSection/FAQSection.svelte
 import GroupHighlights from "../../components/referendum/GroupHighlights/GroupHighlights.astro";
 import { getReferendumIndexItems } from "../../data/referendum";
 import { landingFaqs } from "../../data/referendumFaq";
+import { buildFaqPageStructuredData } from "../../lib/seo/structuredData";
 import { siteCopy } from "../../data/site";
 import "../../styles/referendum-landing.css";
 
@@ -18,12 +19,20 @@ export const prerender = true;
 const copy = siteCopy.sq;
 const items = await getReferendumIndexItems();
 
-const title = "Referendumi për Ligjin 21/2024";
+const title = "Referendum për shfuqizimin e Ligjit 21/2024 | Revolucioni Flamingo";
 const description =
-	"Nisma qytetare për referendumin për shfuqizimin e Ligjit nr. 21/2024. Regjistrohu për njoftime mbi KQZ-në dhe mbledhjen e firmave.";
+	"Nisma qytetare për referendum: firmat, KQZ, faktet ligjore dhe njoftimet për Ligjin nr. 21/2024.";
 ---
 
-<ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
+<ReferendumLayout
+	title={title}
+	description={description}
+	jsonLdExtra={[buildFaqPageStructuredData(landingFaqs)]}
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: "Referendum", path: "/referendum/" }
+	]}
+>
 	<div class="referendum-landing">
 		<ReferendumStatusBar processHref="#procesi" />
 		<LandingNav client:load />

@@ -519,7 +519,7 @@ html[data-theme="dark"] .theme-toggle__icon-moon {
   }
 
   .embed-frame {
-    height: calc(100dvh - 13rem);
+    height: calc(100dvh - 8rem);
     min-height: 540px;
   }
 

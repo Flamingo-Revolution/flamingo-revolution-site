@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { flamingoTimesIssues, issuePageTitle, issuePublishedDate } from "../data/flamingoTimes";
 import { siteCopy } from "../data/site";
 import FlamingoTimesNav from "./FlamingoTimesNav.astro";
 import SiteFrame from "./SiteFrame.astro";
@@ -7,6 +8,8 @@ import "../styles/flamingo-times.css";
 
 const copy = siteCopy.sq;
 const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-i.pdf";
+const issue = flamingoTimesIssues.find((entry) => entry.number === 1)!;
+const publishedTime = issuePublishedDate(issue);
 
 const steps = [
   "Investitori paraqet projekt me mbi 5 milionë euro. Qeveria e shpall “strategjik” — pa votim, pa referendum.",
@@ -17,11 +20,18 @@ const steps = [
 ---
 
 <BaseLayout
-  title="Flamingo Times — Botimi I"
-  description="Shteti ta merr tokën dhe ja jep investitorit strategjik — Flamingo Times, Botimi I."
+  title={issuePageTitle(issue)}
+  description={issue.excerpt}
   locale="sq"
+  pageType="NewsArticle"
+  publishedTime={publishedTime}
   socialImagePath="/flamingo-times-social.png?v=20260805"
   socialImageAlt="Ballina e Flamingo Times për ligjin e investimeve strategjike"
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Flamingo Times", path: "/flamingo-times/" },
+    { name: issue.title, path: issue.href }
+  ]}
 >
   <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
     <main class="times-page" id="main" tabindex="-1">

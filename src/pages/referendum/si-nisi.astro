@@ -4,17 +4,25 @@ import ReferendumStatusBar from "../../components/referendum/ReferendumStatusBar
 import ReferendumSubnav from "../../components/referendum/ReferendumSubnav/ReferendumSubnav.astro";
 import ReferendumReveal from "../../components/referendum/ReferendumReveal/ReferendumReveal.astro";
 import SiNisiContent from "../../components/referendum/SiNisiContent/SiNisiContent.astro";
-import { siteCopy } from "../../data/site";
 import "../../styles/referendum-landing.css";
 
 export const prerender = true;
 
-const copy = siteCopy.sq;
-const title = "Si nisi?";
-const description = "Historia e formimit të nismës qytetare për referendumin.";
+const title = "Si nisi nisma e referendumit | Revolucioni Flamingo";
+const description =
+	"Historia e grupit nismëtar për referendumin qytetar mbi shfuqizimin e Ligjit nr. 21/2024.";
 ---
 
-<ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
+<ReferendumLayout
+	title={title}
+	description={description}
+	pageType="Article"
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: "Referendum", path: "/referendum/" },
+		{ name: "Si nisi?", path: "/referendum/si-nisi/" }
+	]}
+>
 	<div class="referendum-landing referendum-subpage">
 		<ReferendumStatusBar />
 		<main id="main" tabindex="-1">

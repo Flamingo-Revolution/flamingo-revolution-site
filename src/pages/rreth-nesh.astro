@@ -20,7 +20,16 @@ const teamColumns = Array.from({ length: TEAM_WALL_COLUMNS }, (_, col) =>
 ).filter((column) => column.length > 0);
 ---
 
-<BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
+<BaseLayout
+  title={copy.meta.title}
+  description={copy.meta.description}
+  locale={locale}
+  pageType="AboutPage"
+  breadcrumbs={[
+    { name: locale === "sq" ? "Ballina" : "Home", path: "/" },
+    { name: copy.hero.title, path: "/rreth-nesh/" }
+  ]}
+>
   <SiteFrame locale={locale} copy={siteCopyLocale} currentPage="about" localePath="rreth-nesh">
     <main class="about-page" id="main" tabindex="-1">
       <PageHero

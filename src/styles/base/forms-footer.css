@@ -649,7 +649,27 @@
 
 .footer-note__copy {
 	display: grid;
-	gap: 0.5rem;
+	gap: 0.75rem;
+}
+
+.footer-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem 1.15rem;
+}
+
+.footer-nav a {
+	color: var(--ink-reverse);
+	font-size: 0.82rem;
+	font-weight: 800;
+	text-decoration: underline;
+	text-decoration-thickness: 0.12rem;
+	text-underline-offset: 0.2rem;
+}
+
+.footer-nav a:hover,
+.footer-nav a:focus-visible {
+	color: var(--accent);
 }
 
 .footer-note__meta {
@@ -657,6 +677,7 @@
 	align-items: center;
 	gap: 0.45rem 1rem;
 	flex-wrap: wrap;
+	margin-top: 1rem;
 }
 
 .footer-note__meta span,
