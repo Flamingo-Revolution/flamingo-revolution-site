@@ -677,6 +677,7 @@
 	align-items: center;
 	gap: 0.45rem 1rem;
 	flex-wrap: wrap;
+	margin-top: 1rem;
 }
 
 .footer-note__meta span,

@@ -61,7 +61,7 @@ export const aboutPageCopy: Record<Locale, AboutPageCopy> = {
     meta: {
       title: "Rreth nesh — misioni dhe ekipi | Revolucioni Flamingo",
       description:
-        "Kush e bën Revolucionin Flamingo: misioni vullnetar, rregullorja, partnerët dhe kontakti."
+        "Misioni, partnerët dhe kontaktet e Revolucionit Flamingo, të mbledhura në një faqe të vetme."
     },
     hero: {
       eyebrow: "Rreth nesh",
