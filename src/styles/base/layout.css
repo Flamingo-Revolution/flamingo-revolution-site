@@ -490,41 +490,6 @@ html[data-theme="dark"] .theme-toggle__icon-moon {
   background: var(--paper);
 }
 
-.embed-intro {
-  display: grid;
-  gap: 0.75rem;
-  padding: 1.6rem clamp(1rem, 5vw, 3.4rem) 1.35rem;
-  border-bottom: 4px solid var(--line);
-  background: var(--paper-warm);
-}
-
-.embed-intro h1 {
-  margin: 0;
-  max-width: 18ch;
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 6vw, 4.4rem);
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-
-.embed-intro .lead {
-  max-width: 46rem;
-  margin: 0;
-}
-
-.embed-intro__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem 1.1rem;
-}
-
-.embed-intro__links a {
-  font-weight: 800;
-  text-decoration: underline;
-  text-decoration-thickness: 0.14rem;
-  text-underline-offset: 0.22rem;
-}
-
 .embed-frame-section {
   padding: 0;
 }
@@ -554,7 +519,7 @@ html[data-theme="dark"] .theme-toggle__icon-moon {
   }
 
   .embed-frame {
-    height: calc(100dvh - 13rem);
+    height: calc(100dvh - 8rem);
     min-height: 540px;
   }
 
