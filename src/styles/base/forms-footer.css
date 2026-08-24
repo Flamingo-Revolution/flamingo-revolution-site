@@ -652,18 +652,29 @@
 	gap: 1rem;
 }
 
-.footer-note__brand-name {
-	max-width: 12ch;
-	color: var(--ink-reverse);
-	font-family: var(--font-display);
-	font-size: clamp(1.8rem, 3vw, 2.6rem);
-	font-weight: 800;
-	line-height: 0.95;
+.footer-note__brand-logo {
+	display: inline-flex;
+	align-items: center;
 }
 
-.footer-note__brand-name:hover,
-.footer-note__brand-name:focus-visible {
-	color: var(--accent);
+.footer-note__logo {
+	display: block;
+	width: clamp(10.5rem, 18vw, 13.5rem);
+	height: auto;
+	filter: saturate(1.08) contrast(1.08);
+	transform: rotate(-2deg);
+}
+
+.footer-note__logo--theme-dark {
+	display: none;
+}
+
+html[data-theme='dark'] .footer-note__logo--theme-light {
+	display: none;
+}
+
+html[data-theme='dark'] .footer-note__logo--theme-dark {
+	display: block;
 }
 
 .footer-note__brand p {

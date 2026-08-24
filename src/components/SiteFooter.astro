@@ -103,7 +103,24 @@ const legalLinks: FooterLink[] =
 <footer class="footer-note">
 	<div class="footer-note__main">
 		<div class="footer-note__brand">
-			<a class="footer-note__brand-name" href={homeHref}>{copy.brand.name}</a>
+			<a class="footer-note__brand-logo" href={homeHref} aria-label={copy.brand.name}>
+				<img
+					class="footer-note__logo footer-note__logo--theme-light"
+					src="/images/flamingo-wordmark-dark.svg"
+					alt=""
+					width="426"
+					height="187"
+					aria-hidden="true"
+				/>
+				<img
+					class="footer-note__logo footer-note__logo--theme-dark"
+					src="/images/flamingo-wordmark-light.svg"
+					alt=""
+					width="419"
+					height="187"
+					aria-hidden="true"
+				/>
+			</a>
 			<p>{copy.footer.text}</p>
 			<a class="footer-note__email" href={`mailto:${email}`}>{email}</a>
 		</div>
