@@ -46,9 +46,12 @@ async function notifyDiscord(content: string, name: string | null) {
 		});
 
 		if (!response.ok) {
+			const responseBody = await response.text();
+
 			console.error('Discord webhook error:', {
 				status: response.status,
-				statusText: response.statusText
+				statusText: response.statusText,
+				responseBody: responseBody.slice(0, 4000)
 			});
 		}
 	} catch (error) {
