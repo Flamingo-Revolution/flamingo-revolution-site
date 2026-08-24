@@ -1,7 +1,7 @@
 export const prerender = false;
 
 import { createPrisma } from '@lib/db';
-import { getDatabaseUrl } from '@lib/env/server';
+import { getDatabaseUrl, getDiscordWebhookUrl } from '@lib/env/server';
 import {
 	IDEA_SORT_ORDER_BY,
 	isRecord,
@@ -15,7 +15,47 @@ import {
 
 type IdeasContext = {
 	request: Request;
+	locals: App.Locals;
 };
+
+async function notifyDiscord(content: string, name: string | null) {
+	const webhookUrl = getDiscordWebhookUrl();
+	if (!webhookUrl) return;
+
+	const author = name?.trim() || 'Anonymous';
+
+	try {
+		const url = new URL(webhookUrl);
+		url.searchParams.set('wait', 'true');
+
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				embeds: [
+					{
+						title: 'New idea submitted',
+						description: content.slice(0, 4096),
+						color: 0x5865f2,
+						fields: [{ name: 'Author', value: author, inline: true }],
+						timestamp: new Date().toISOString()
+					}
+				],
+				allowed_mentions: { parse: [] }
+			})
+		});
+
+		if (!response.ok) {
+			console.error('Discord webhook error:', {
+				status: response.status,
+				statusText: response.statusText
+			});
+		}
+	} catch (error) {
+		// A Discord failure must never break an idea submission.
+		console.error('Discord webhook error:', error);
+	}
+}
 
 function resolveFingerprint(request: Request) {
 	const url = new URL(request.url);
@@ -134,6 +174,8 @@ export const POST = async (context: IdeasContext) => {
 				submitterName: name || null
 			}
 		});
+
+		context.locals.cfContext.waitUntil(notifyDiscord(idea.content, idea.submitterName));
 
 		return jsonResponse({ idea: toPublicIdea(idea) }, 201);
 	} catch (error) {

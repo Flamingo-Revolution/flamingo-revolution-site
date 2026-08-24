@@ -9,7 +9,7 @@
 		"directory": "./dist"
 	},
 	"secrets": {
-		"required": ["DATABASE_URL"]
+		"required": ["DATABASE_URL", "DISCORD_WEBHOOK_URL"]
 	},
 	"observability": {
 		"enabled": true

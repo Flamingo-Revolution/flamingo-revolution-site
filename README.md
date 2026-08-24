@@ -70,6 +70,7 @@ The Astro development server usually opens at `http://localhost:4321`. `pnpm dev
 |----------|-------|---------|
 | `DIRECT_URL` | Local `.env` or CI | Direct Neon connection used by Prisma CLI commands |
 | `DATABASE_URL` | Local `.env` and Cloudflare secret | Pooled Neon connection used by runtime API routes |
+| `DISCORD_WEBHOOK_URL` | Local `.env` and Cloudflare secret | Discord incoming webhook notified after a new idea is saved |
 | `PUBLIC_UMAMI_SCRIPT` | Local/deployment environment | Optional Umami script URL |
 | `PUBLIC_UMAMI_DATA_WEBSITE_ID` | Local/deployment environment | Optional Umami website identifier |
 | `PUBLIC_FLAMINGO_BOT_URL` | Local/Cloudflare build environment | Optional public override for the deployed Flamingo Bot service origin; no runtime secret is required |
@@ -189,10 +190,11 @@ pnpm cf:preview
 
 ## Cloudflare Deployment
 
-`wrangler.jsonc` configures the Worker, static asset binding, Node.js compatibility, and observability. Store the pooled database URL as an encrypted Worker secret before deploying:
+`wrangler.jsonc` configures the Worker, static asset binding, Node.js compatibility, and observability. Store the pooled database URL and Discord webhook URL as encrypted Worker secrets before deploying:
 
 ```bash
 pnpm exec wrangler secret put DATABASE_URL
+pnpm exec wrangler secret put DISCORD_WEBHOOK_URL
 pnpm cf:deploy
 ```
 
