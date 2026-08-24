@@ -23,9 +23,24 @@ async function notifyDiscord(content: string, name: string | null) {
 	if (!webhookUrl) return;
 
 	const author = name?.trim() || 'Anonymous';
+	let url: URL;
 
 	try {
-		const url = new URL(webhookUrl);
+		url = new URL(webhookUrl);
+	} catch {
+		console.error('Discord webhook configuration error: invalid URL.');
+		return;
+	}
+
+	const isDiscordHost = url.hostname === 'discord.com' || url.hostname === 'discordapp.com';
+	const isWebhookPath = /^\/api(?:\/v\d+)?\/webhooks\/\d+\/[^/]+\/?$/.test(url.pathname);
+
+	if (webhookUrl.includes('\\') || url.protocol !== 'https:' || !isDiscordHost || !isWebhookPath) {
+		console.error('Discord webhook configuration error: expected a standard Discord incoming webhook URL.');
+		return;
+	}
+
+	try {
 		url.searchParams.set('wait', 'true');
 
 		const response = await fetch(url, {
@@ -46,17 +61,16 @@ async function notifyDiscord(content: string, name: string | null) {
 		});
 
 		if (!response.ok) {
-			const responseBody = await response.text();
-
 			console.error('Discord webhook error:', {
 				status: response.status,
-				statusText: response.statusText,
-				responseBody: responseBody.slice(0, 4000)
+				statusText: response.statusText
 			});
 		}
 	} catch (error) {
 		// A Discord failure must never break an idea submission.
-		console.error('Discord webhook error:', error);
+		console.error('Discord webhook request failed:', {
+			errorName: error instanceof Error ? error.name : 'UnknownError'
+		});
 	}
 }
 
