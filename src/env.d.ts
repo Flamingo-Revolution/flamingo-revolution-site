@@ -7,13 +7,14 @@ interface ImportMetaEnv {
 	readonly APPS_SCRIPT_API_URL: string;
 	readonly PUBLIC_UMAMI_SCRIPT: string;
 	readonly PUBLIC_UMAMI_DATA_WEBSITE_ID: string;
+	readonly PUBLIC_FLAMINGO_BOT_URL?: string;
 }
 
 interface ImportMeta {
-  readonly env: ImportMetaEnv;
+	readonly env: ImportMetaEnv;
 }
 
-declare module "cloudflare:workers" {
+declare module 'cloudflare:workers' {
 	const env: {
 		readonly DATABASE_URL?: string;
 	};

@@ -1,0 +1,363 @@
+---
+const defaultBotOrigin = 'https://flamingo-bot-949711463853.europe-west3.run.app';
+const configuredUrl = import.meta.env.PUBLIC_FLAMINGO_BOT_URL?.trim() || defaultBotOrigin;
+const developmentProxyBase = '/api/flamingo-bot';
+
+function resolveBotOrigin(value: string | undefined): string | undefined {
+	if (!value) return undefined;
+
+	let url: URL;
+	try {
+		url = new URL(value);
+	} catch {
+		throw new Error('PUBLIC_FLAMINGO_BOT_URL must be an absolute URL.');
+	}
+
+	const isLocalDevelopmentUrl =
+		import.meta.env.DEV &&
+		url.protocol === 'http:' &&
+		(url.hostname === 'localhost' || url.hostname === '127.0.0.1');
+
+	if (url.protocol !== 'https:' && !isLocalDevelopmentUrl) {
+		throw new Error('PUBLIC_FLAMINGO_BOT_URL must use HTTPS outside local development.');
+	}
+
+	return url.origin;
+}
+
+const botOrigin = resolveBotOrigin(configuredUrl);
+const widgetScriptUrl = botOrigin
+	? import.meta.env.DEV
+		? `${developmentProxyBase}/widget/flamingo-chat.js`
+		: new URL('/widget/flamingo-chat.js', botOrigin).href
+	: undefined;
+const clientApiBase = import.meta.env.DEV ? developmentProxyBase : botOrigin;
+const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` : undefined;
+---
+
+{
+	botOrigin && widgetScriptUrl && (
+		<>
+			<script is:inline type="module" src={widgetScriptUrl}></script>
+			<flamingo-chat
+				api-base={clientApiBase}
+				asset-base={assetBase}
+				button-label="Ask Flamingo"
+			></flamingo-chat>
+			<script is:inline>
+				(() => {
+					const themeStyles = `
+						:host {
+							--flamingo-accent: var(--site-bot-accent) !important;
+							--flamingo-ink: var(--site-bot-text) !important;
+							--flamingo-muted: var(--site-bot-muted) !important;
+							--flamingo-paper: var(--site-bot-surface) !important;
+							color-scheme: inherit !important;
+							color: var(--site-bot-text) !important;
+							font-family: var(--site-bot-font-body) !important;
+						}
+
+						button:focus-visible,
+						textarea:focus-visible,
+						a:focus-visible {
+							outline-color: var(--site-bot-accent) !important;
+						}
+
+						.launcher,
+						article.user {
+							background: var(--site-bot-ink) !important;
+							color: var(--site-bot-ink-reverse) !important;
+						}
+
+						.launcher {
+							box-shadow: var(--site-bot-shadow) !important;
+						}
+
+						.mark {
+							border: 1px solid var(--site-bot-line) !important;
+							background-color: var(--site-bot-surface-strong) !important;
+							background-image: url('/favicon-32x32.png') !important;
+							background-position: center !important;
+							background-repeat: no-repeat !important;
+							background-size: 22px 22px !important;
+							font-size: 0 !important;
+						}
+
+						.composer button {
+							align-self: center !important;
+							width: 38px !important;
+							height: 38px !important;
+							border: 2px solid var(--site-bot-ink) !important;
+							border-radius: 0 !important;
+							background: var(--site-bot-ink) !important;
+							box-shadow: 3px 3px 0 var(--site-bot-accent) !important;
+							color: var(--site-bot-ink-reverse) !important;
+							transition:
+								box-shadow 160ms ease,
+								transform 160ms ease !important;
+						}
+
+						.composer button span {
+							display: block !important;
+							width: 18px !important;
+							height: 18px !important;
+							background: currentColor !important;
+							font-size: 0 !important;
+							-webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M2.01%2021%2023%2012%202.01%203%202%2010l15%202-15%202z'/%3E%3C/svg%3E") center / contain no-repeat !important;
+							mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M2.01%2021%2023%2012%202.01%203%202%2010l15%202-15%202z'/%3E%3C/svg%3E") center / contain no-repeat !important;
+						}
+
+						.composer button:hover:not(:disabled) {
+							background: var(--site-bot-ink) !important;
+							box-shadow: 5px 5px 0 var(--site-bot-accent) !important;
+							transform: translate(-1px, -1px) !important;
+						}
+
+						.composer button:active:not(:disabled) {
+							box-shadow: 1px 1px 0 var(--site-bot-accent) !important;
+							transform: translate(1px, 1px) !important;
+						}
+
+						.composer button:focus-visible {
+							outline: 2px solid var(--site-bot-accent) !important;
+							outline-offset: 4px !important;
+						}
+
+						.composer button:disabled {
+							border-color: var(--site-bot-ink) !important;
+							background: var(--site-bot-ink) !important;
+							box-shadow: 3px 3px 0 var(--site-bot-accent) !important;
+							color: var(--site-bot-ink-reverse) !important;
+							cursor: wait !important;
+							opacity: 0.65 !important;
+						}
+
+						.identity h2 {
+							font-family: var(--site-bot-font-display) !important;
+						}
+
+						.dialog {
+							border-color: var(--site-bot-line) !important;
+							background: var(--site-bot-surface) !important;
+							box-shadow: var(--site-bot-shadow) !important;
+							color: var(--site-bot-text) !important;
+						}
+
+						.header,
+						.disclosure,
+						form {
+							border-color: var(--site-bot-line) !important;
+						}
+
+						.header,
+						.messages {
+							background: var(--site-bot-surface) !important;
+							color: var(--site-bot-text) !important;
+						}
+
+						.messages {
+							scrollbar-color: var(--site-bot-muted) var(--site-bot-surface) !important;
+						}
+
+						.avatar {
+							background: var(--site-bot-surface-strong) !important;
+						}
+
+						article.assistant {
+							background: var(--site-bot-surface-strong) !important;
+							color: var(--site-bot-text) !important;
+						}
+
+						.reset {
+							border-color: var(--site-bot-line) !important;
+							background: var(--site-bot-surface) !important;
+							color: var(--site-bot-muted) !important;
+						}
+
+						.reset:hover:not(:disabled) {
+							border-color: var(--site-bot-accent) !important;
+							background: var(--site-bot-surface-strong) !important;
+							color: var(--site-bot-accent) !important;
+						}
+
+						.close {
+							color: var(--site-bot-text) !important;
+						}
+
+						.close:hover {
+							background: var(--site-bot-surface-strong) !important;
+						}
+
+						.disclosure {
+							background: var(--site-bot-accent-soft) !important;
+							color: var(--site-bot-text) !important;
+						}
+
+						.citations {
+							border-color: var(--site-bot-line) !important;
+						}
+
+						.citations a,
+						.citations li > span {
+							color: var(--site-bot-text) !important;
+						}
+
+						.citations small,
+						.identity p {
+							color: var(--site-bot-muted) !important;
+						}
+
+						form {
+							background: var(--site-bot-paper) !important;
+							color: var(--site-bot-text) !important;
+						}
+
+						.composer {
+							border-color: var(--site-bot-line) !important;
+							background: var(--site-bot-surface-strong) !important;
+							box-shadow: 0 0 0 0 transparent !important;
+							transition:
+								border-color 140ms ease,
+								box-shadow 140ms ease !important;
+						}
+
+						.composer:focus-within {
+							border-color: var(--site-bot-accent) !important;
+							box-shadow: 0 0 0 3px var(--site-bot-accent-soft) !important;
+						}
+
+						textarea {
+							color: var(--site-bot-text) !important;
+							caret-color: var(--site-bot-accent) !important;
+						}
+
+						textarea:focus,
+						textarea:focus-visible {
+							outline: none !important;
+						}
+
+						textarea::placeholder {
+							color: var(--site-bot-muted) !important;
+						}
+
+						.error {
+							color: var(--site-bot-error) !important;
+						}
+					`;
+
+					const palettes = {
+						light: {
+							accent: '#ff69b8',
+							accentSoft: '#ffd7e3',
+							error: '#b71950',
+							ink: '#050505',
+							inkReverse: '#fff3df',
+							line: 'rgba(20, 20, 20, 0.18)',
+							muted: '#5a514b',
+							paper: '#f1ece6',
+							shadow: '0 28px 70px rgba(0, 0, 0, 0.24)',
+							surface: '#fff8ef',
+							surfaceStrong: '#ffffff',
+							text: '#141414'
+						},
+						dark: {
+							accent: '#ff72bd',
+							accentSoft: 'rgba(255, 114, 189, 0.2)',
+							error: '#ff9fc1',
+							ink: '#fff0dc',
+							inkReverse: '#06080b',
+							line: 'rgba(255, 240, 220, 0.18)',
+							muted: '#cbbfb1',
+							paper: '#121b22',
+							shadow: '0 28px 80px rgba(0, 0, 0, 0.55)',
+							surface: '#10171d',
+							surfaceStrong: '#18232c',
+							text: '#fff0dc'
+						}
+					};
+
+					const syncWidgetTheme = (widget) => {
+						const theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+						const palette = palettes[theme];
+						widget.dataset.siteTheme = theme;
+
+						const properties = {
+							'--flamingo-accent': palette.accent,
+							'--flamingo-ink': palette.text,
+							'--flamingo-muted': palette.muted,
+							'--flamingo-paper': palette.surface,
+							'--site-bot-accent': palette.accent,
+							'--site-bot-accent-soft': palette.accentSoft,
+							'--site-bot-error': palette.error,
+							'--site-bot-ink': palette.ink,
+							'--site-bot-ink-reverse': palette.inkReverse,
+							'--site-bot-line': palette.line,
+							'--site-bot-muted': palette.muted,
+							'--site-bot-paper': palette.paper,
+							'--site-bot-shadow': palette.shadow,
+							'--site-bot-surface': palette.surface,
+							'--site-bot-surface-strong': palette.surfaceStrong,
+							'--site-bot-text': palette.text
+						};
+
+						Object.entries(properties).forEach(([property, value]) => {
+							widget.style.setProperty(property, value, 'important');
+						});
+					};
+
+					const installThemeBridge = async () => {
+						await customElements.whenDefined('flamingo-chat');
+						await new Promise((resolve) => {
+							requestAnimationFrame(() => requestAnimationFrame(resolve));
+						});
+
+						document.querySelectorAll('flamingo-chat').forEach((widget) => {
+							syncWidgetTheme(widget);
+							const root = widget.shadowRoot;
+							if (!root) return;
+
+							const existingStyle = root.querySelector('style[data-flamingo-site-theme]');
+							const style = existingStyle ?? document.createElement('style');
+							if (!existingStyle) style.dataset.flamingoSiteTheme = '';
+							style.textContent = themeStyles;
+							// Re-appending also moves an existing bridge after the widget's own styles.
+							root.append(style);
+						});
+					};
+
+					void installThemeBridge();
+					document.addEventListener('astro:page-load', installThemeBridge);
+					new MutationObserver(() => {
+						document.querySelectorAll('flamingo-chat').forEach(syncWidgetTheme);
+					}).observe(document.documentElement, {
+						attributes: true,
+						attributeFilter: ['data-theme']
+					});
+				})();
+			</script>
+		</>
+	)
+}
+
+<style is:global>
+	flamingo-chat {
+		--flamingo-accent: var(--accent);
+		--flamingo-ink: var(--text);
+		--flamingo-muted: var(--muted);
+		--flamingo-paper: var(--surface);
+		--site-bot-accent: var(--accent);
+		--site-bot-accent-soft: var(--accent-soft);
+		--site-bot-error: var(--accent-strong);
+		--site-bot-ink: var(--ink);
+		--site-bot-ink-reverse: var(--ink-reverse);
+		--site-bot-line: var(--line);
+		--site-bot-muted: var(--muted);
+		--site-bot-paper: var(--paper);
+		--site-bot-shadow: var(--shadow);
+		--site-bot-surface: var(--surface);
+		--site-bot-surface-strong: var(--surface-strong);
+		--site-bot-text: var(--text);
+		--site-bot-font-body: var(--font-body);
+		--site-bot-font-display: var(--font-display);
+	}
+</style>

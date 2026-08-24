@@ -72,8 +72,17 @@ The Astro development server usually opens at `http://localhost:4321`. `pnpm dev
 | `DATABASE_URL` | Local `.env` and Cloudflare secret | Pooled Neon connection used by runtime API routes |
 | `PUBLIC_UMAMI_SCRIPT` | Local/deployment environment | Optional Umami script URL |
 | `PUBLIC_UMAMI_DATA_WEBSITE_ID` | Local/deployment environment | Optional Umami website identifier |
+| `PUBLIC_FLAMINGO_BOT_URL` | Local/Cloudflare build environment | Optional public override for the deployed Flamingo Bot service origin; no runtime secret is required |
 
 Copy `.env.example` and replace its placeholders with real values. Neon connection strings should include `?sslmode=require`; use the direct host for `DIRECT_URL` and the pooled host for `DATABASE_URL`.
+
+### Flamingo Bot
+
+The site integrates the independently deployed [`flamingo_bot`](https://github.com/Flamingo-Revolution/flamingo_bot) custom element through `src/components/FlamingoBot.astro`. By default it uses `https://flamingo-bot-949711463853.europe-west3.run.app`; `PUBLIC_FLAMINGO_BOT_URL` can override that origin for local development or another deployment. The component loads `/widget/flamingo-chat.js` from the selected origin and uses the same origin for chat requests.
+
+The component bridges the site's existing design tokens into the widget's open shadow root. Light and dark theme changes therefore update the launcher, dialog surfaces, text, borders, focus rings, and fonts without copying or rebuilding the bot repository. The bot service must allow the site's exact origin through `FLAMINGO_ALLOWED_ORIGINS` as described in its widget integration runbook.
+
+During local development, the site relays only the widget bundle, avatar media, and chat endpoint through `/api/flamingo-bot/`. This keeps the production bot's origin allowlist narrow while allowing the local preview to use the real service. The relay returns `404` in production builds.
 
 ## Scripts
 
