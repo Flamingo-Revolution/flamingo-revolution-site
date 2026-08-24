@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import FlamingoBot from "../components/FlamingoBot.astro";
 import {
   buildOrganizationStructuredData,
   buildWebPageStructuredData,
@@ -204,5 +205,6 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
   <body>
     <a class="skip-link" href="#main">Kalo te permbajtja</a>
     <slot />
+    <FlamingoBot />
   </body>
 </html>
