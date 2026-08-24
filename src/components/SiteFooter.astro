@@ -7,93 +7,162 @@ interface Props {
 	copy: SiteCopy;
 }
 
+type FooterLink = {
+	href: string;
+	label: string;
+};
+
+type FooterSection = {
+	title: string;
+	links: FooterLink[];
+};
+
 const { locale, copy } = Astro.props;
 const prefix = locale === "sq" ? "" : "/en";
+const homeHref = locale === "sq" ? "/" : "/en/";
 const linksLabel = locale === "sq" ? "Rrjetet sociale" : "Social links";
-const pagesLabel = locale === "sq" ? "Faqet kryesore" : "Main pages";
-const legalLabel = locale === "sq" ? "Ligjore" : "Legal";
+const footerLabel = locale === "sq" ? "Lidhje në fund të faqes" : "Footer links";
+const legalLabel = locale === "sq" ? "Informacion ligjor dhe redaksional" : "Legal and editorial information";
 const email = "info@flamingorevolution.eu";
 const githubHref = "https://github.com/Flamingo-Revolution";
 const currentYear = new Date().getFullYear();
 
-const pageLinks =
+const footerSections: FooterSection[] =
 	locale === "sq"
 		? [
-				{ href: `${prefix}/protestat/`, label: "Protestat" },
-				{ href: `${prefix}/referendum/`, label: "Referendum për Ligjin 21/2024" },
-				{ href: `${prefix}/harta/`, label: "Harta e protestave" },
-				{ href: `${prefix}/pulsi-protestes/`, label: "Pulsi i protestës" },
-				{ href: `${prefix}/flamingo-times/`, label: "Flamingo Times" },
-				{ href: `${prefix}/projektligje/`, label: "Projektligjet" },
-				{ href: `${prefix}/blog/`, label: "Blog" },
-				{ href: `${prefix}/idete-tuaja/`, label: "Idetë tuaja" },
-				{ href: `${prefix}/dosjet/`, label: "Flamingo Dossier" },
-				{ href: `${prefix}/rreth-nesh/`, label: "Rreth nesh" }
+				{
+					title: "Projektet",
+					links: [
+						{ href: `${prefix}/idete-tuaja/`, label: "Idetë tuaja" },
+						{ href: `${prefix}/projektligje/`, label: "Projektligjet" },
+						{ href: `${prefix}/flamingo-times/`, label: "Flamingo Times" },
+						{ href: `${prefix}/dosjet/`, label: "Flamingo Dossier" },
+						{ href: `${prefix}/harta/`, label: "Harta e protestave" },
+						{ href: `${prefix}/pulsi-protestes/`, label: "Pulsi i protestës" }
+					]
+				},
+				{
+					title: "Referendumi",
+					links: [
+						{ href: `${prefix}/referendum/`, label: "Referendumi 21/2024" },
+						{ href: `${prefix}/referendum/pse-referendum/`, label: "Pse referendum?" },
+						{ href: `${prefix}/referendum/si-nisi/`, label: "Si nisi nisma?" },
+						{ href: `${prefix}/referendum/pyetje-te-shpeshta/`, label: "Pyetje të shpeshta" },
+						{ href: `${prefix}/referendum/#njoftime`, label: "Merr njoftime" }
+					]
+				},
+				{
+					title: "Rreth nesh",
+					links: [
+						{ href: `${prefix}/rreth-nesh/`, label: "Kush jemi" },
+						{ href: `${prefix}/protestat/`, label: "Protestat" },
+						{ href: `${prefix}/rreth-nesh/#kontakt`, label: "Kontakt" },
+						{ href: `${prefix}/redaksia/`, label: "Redaksia" }
+					]
+				}
 			]
 		: [
-				{ href: `${prefix}/protestat/`, label: "Protests" },
-				{ href: `${prefix}/referendum/`, label: "Referendum on Law 21/2024" },
-				{ href: `${prefix}/map/`, label: "Protest map" },
-				{ href: `${prefix}/pulse/`, label: "Protest pulse" },
-				{ href: `${prefix}/flamingo-times/`, label: "Flamingo Times" },
-				{ href: `${prefix}/projektligje/`, label: "Draft laws" },
-				{ href: `${prefix}/blog/`, label: "Blog" },
-				{ href: `${prefix}/idete-tuaja/`, label: "Your ideas" },
-				{ href: `${prefix}/dosjet/`, label: "Flamingo Dossier" },
-				{ href: `${prefix}/rreth-nesh/`, label: "About us" }
+				{
+					title: "Projects",
+					links: [
+						{ href: `${prefix}/idete-tuaja/`, label: "Your ideas" },
+						{ href: `${prefix}/projektligje/`, label: "Draft laws" },
+						{ href: `${prefix}/flamingo-times/`, label: "Flamingo Times" },
+						{ href: `${prefix}/dosjet/`, label: "Flamingo Dossier" },
+						{ href: `${prefix}/map/`, label: "Protest map" },
+						{ href: `${prefix}/pulse/`, label: "Protest pulse" }
+					]
+				},
+				{
+					title: "Referendum",
+					links: [
+						{ href: `${prefix}/referendum/`, label: "Referendum 21/2024" },
+						{ href: `${prefix}/referendum/pse-referendum/`, label: "Why a referendum?" },
+						{ href: `${prefix}/referendum/si-nisi/`, label: "How it started" },
+						{ href: `${prefix}/referendum/pyetje-te-shpeshta/`, label: "Frequently asked questions" },
+						{ href: `${prefix}/referendum/#njoftime`, label: "Get updates" }
+					]
+				},
+				{
+					title: "About us",
+					links: [
+						{ href: `${prefix}/rreth-nesh/`, label: "Who we are" },
+						{ href: `${prefix}/protestat/`, label: "Protests" },
+						{ href: `${prefix}/rreth-nesh/#kontakt`, label: "Contact" },
+						{ href: `${prefix}/redaksia/`, label: "Editorial policy" }
+					]
+				}
 			];
 
-const legalLinks =
+const legalLinks: FooterLink[] =
 	locale === "sq"
-		? [
-				{ href: `${prefix}/privatesia/`, label: "Privatësia" },
-				{ href: `${prefix}/redaksia/`, label: "Redaksia" }
-			]
-		: [
-				{ href: `${prefix}/privatesia/`, label: "Privacy" },
-				{ href: `${prefix}/redaksia/`, label: "Editorial policy" }
-			];
+		? [{ href: `${prefix}/privatesia/`, label: "Privatësia" }]
+		: [{ href: `${prefix}/privatesia/`, label: "Privacy" }];
 ---
 
 <footer class="footer-note">
-	<div class="footer-note__copy">
-		<p>{copy.footer.text}</p>
-		<nav class="footer-nav" aria-label={pagesLabel}>
-			{
-				pageLinks.map((link) => (
-					<a href={link.href}>{link.label}</a>
-				))
-			}
-		</nav>
-		<nav class="footer-nav footer-nav--legal" aria-label={legalLabel}>
-			{
-				legalLinks.map((link) => (
-					<a href={link.href}>{link.label}</a>
-				))
-			}
-		</nav>
-		<p class="footer-note__meta">
-			<span>© {currentYear} {copy.brand.name}</span>
-			<a href={`mailto:${email}`}>{email}</a>
-		</p>
-	</div>
-	<nav class="footer-links" aria-label={linksLabel}>
-		{
-			copy.footer.links.map((link) => (
-				<a href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
-					<SocialIcon label={link.label} />
-				</a>
-			))
-		}
-		<a href={githubHref} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
-			<SocialIcon label="GitHub" />
-		</a>
-	</nav>
-</footer>
+	<div class="footer-note__main">
+		<div class="footer-note__brand">
+			<a class="footer-note__brand-logo" href={homeHref} aria-label={copy.brand.name}>
+				<img
+					class="footer-note__logo footer-note__logo--theme-light"
+					src="/images/flamingo-wordmark-dark.svg"
+					alt=""
+					width="426"
+					height="187"
+					aria-hidden="true"
+				/>
+				<img
+					class="footer-note__logo footer-note__logo--theme-dark"
+					src="/images/flamingo-wordmark-light.svg"
+					alt=""
+					width="419"
+					height="187"
+					aria-hidden="true"
+				/>
+			</a>
+			<p>{copy.footer.text}</p>
+			<a class="footer-note__email" href={`mailto:${email}`}>{email}</a>
+		</div>
 
-<style>
-	.footer-nav--legal {
-		margin-top: 0.5rem;
-		opacity: 0.85;
-	}
-</style>
+		<nav class="footer-nav" aria-label={footerLabel}>
+			{
+				footerSections.map((section) => (
+					<section class="footer-nav__section">
+						<h2>{section.title}</h2>
+						<ul>
+							{section.links.map((link) => (
+								<li><a href={link.href}>{link.label}</a></li>
+							))}
+						</ul>
+					</section>
+				))
+			}
+		</nav>
+	</div>
+
+	<div class="footer-note__bottom">
+		<div class="footer-note__utility">
+			<p class="footer-note__meta">© {currentYear} {copy.brand.name}</p>
+			<nav class="footer-legal" aria-label={legalLabel}>
+				{
+					legalLinks.map((link) => (
+						<a href={link.href}>{link.label}</a>
+					))
+				}
+			</nav>
+		</div>
+		<nav class="footer-links" aria-label={linksLabel}>
+			{
+				copy.footer.links.map((link) => (
+					<a href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+						<SocialIcon label={link.label} />
+					</a>
+				))
+			}
+			<a href={githubHref} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
+				<SocialIcon label="GitHub" />
+			</a>
+		</nav>
+	</div>
+</footer>
