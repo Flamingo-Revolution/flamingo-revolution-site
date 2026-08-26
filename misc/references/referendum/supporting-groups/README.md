@@ -6,7 +6,7 @@ https://reinforcesustainability.com/our-team/
 LUMI – Movement for Water, Environment, and Integration
 https://lumi.al
 
-United Diaspora for Albania Civic Network (UDACN)
+Albanian Diaspora Civic Network (ADCN)
 https://albaniandiasporacivicnetwork.com/en/
 
 AlbNatyra
