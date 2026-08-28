@@ -1,15 +1,15 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import SiteFrame from "../../../components/SiteFrame.astro";
-import ArticleEditor from "../../../components/Redaksia/ArticleEditor.svelte";
-import { siteCopy } from "../../../data/site";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import SiteFrame from "../../../../components/SiteFrame.astro";
+import ArticleEditor from "../../../../components/Redaksia/ArticleEditor.svelte";
+import { siteCopy } from "../../../../data/site";
 
 export const prerender = false;
 
 const { id } = Astro.params;
 
 if (!id) {
-  return Astro.redirect("/redaksia/");
+  return Astro.redirect("/redaksia/panel/");
 }
 ---
 

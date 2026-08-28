@@ -421,7 +421,7 @@
 {:else}
 	<section class="editor-shell">
 		<header class="editor-topbar">
-			<a class="button button--ghost" href="/redaksia/">← Redaksia</a>
+			<a class="button button--ghost" href="/redaksia/panel/">← Redaksia</a>
 
 			<div class="editor-topbar__state">
 				{#if uploading > 0}

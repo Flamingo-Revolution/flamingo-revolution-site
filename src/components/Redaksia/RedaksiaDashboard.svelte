@@ -53,7 +53,7 @@
 
 		try {
 			const article = await createArticle();
-			window.location.href = `/redaksia/artikull/${article.id}/`;
+			window.location.href = `/redaksia/panel/artikull/${article.id}/`;
 		} catch (err) {
 			error = err instanceof Error ? err.message : 'Artikulli nuk u krijua.';
 			creating = false;
@@ -114,7 +114,7 @@
 							<span class="article-card__status" data-status={article.status}>
 								{article.status === 'PUBLISHED' ? 'I publikuar' : 'Draft'}
 							</span>
-							<a class="article-card__title" href={`/redaksia/artikull/${article.id}/`}>
+							<a class="article-card__title" href={`/redaksia/panel/artikull/${article.id}/`}>
 								{article.title || 'Pa titull'}
 							</a>
 							{#if article.excerpt}
@@ -135,7 +135,7 @@
 									Shiko
 								</a>
 							{/if}
-							<a class="button" href={`/redaksia/artikull/${article.id}/`}>Redakto</a>
+							<a class="button" href={`/redaksia/panel/artikull/${article.id}/`}>Redakto</a>
 							<button class="button button--ghost" onclick={() => onDelete(article)}>Fshi</button>
 						</div>
 					</li>

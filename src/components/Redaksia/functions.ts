@@ -46,7 +46,7 @@ function errorMessage(data: Record<string, unknown>, fallback: string): string {
 }
 
 export async function fetchMe(): Promise<PublicReporter | null> {
-	const response = await fetch('/api/reporter/me');
+	const response = await fetch('/api/reporter/me/');
 	if (!response.ok) return null;
 
 	const data = await parseJson(response);
@@ -54,7 +54,7 @@ export async function fetchMe(): Promise<PublicReporter | null> {
 }
 
 export async function login(accessKey: string): Promise<PublicReporter> {
-	const response = await fetch('/api/reporter/login', {
+	const response = await fetch('/api/reporter/login/', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ accessKey })
@@ -70,11 +70,11 @@ export async function login(accessKey: string): Promise<PublicReporter> {
 }
 
 export async function logout(): Promise<void> {
-	await fetch('/api/reporter/logout', { method: 'POST' });
+	await fetch('/api/reporter/logout/', { method: 'POST' });
 }
 
 export async function fetchArticles(): Promise<PublicArticle[]> {
-	const response = await fetch('/api/reporter/articles');
+	const response = await fetch('/api/reporter/articles/');
 	const data = await parseJson(response);
 
 	if (!response.ok) {
@@ -85,7 +85,7 @@ export async function fetchArticles(): Promise<PublicArticle[]> {
 }
 
 export async function createArticle(title = ''): Promise<PublicArticle> {
-	const response = await fetch('/api/reporter/articles', {
+	const response = await fetch('/api/reporter/articles/', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ title })
@@ -101,7 +101,7 @@ export async function createArticle(title = ''): Promise<PublicArticle> {
 }
 
 export async function fetchArticle(id: string): Promise<PublicArticleWithContent> {
-	const response = await fetch(`/api/reporter/articles/${id}`);
+	const response = await fetch(`/api/reporter/articles/${id}/`);
 	const data = await parseJson(response);
 
 	if (!response.ok) {
@@ -112,7 +112,7 @@ export async function fetchArticle(id: string): Promise<PublicArticleWithContent
 }
 
 export async function patchArticle(id: string, patch: ArticlePatch): Promise<PublicArticleWithContent> {
-	const response = await fetch(`/api/reporter/articles/${id}`, {
+	const response = await fetch(`/api/reporter/articles/${id}/`, {
 		method: 'PATCH',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(patch)
@@ -132,7 +132,7 @@ export async function uploadImage(articleId: string, file: File): Promise<string
 	form.append('file', file);
 	form.append('articleId', articleId);
 
-	const response = await fetch('/api/reporter/media', { method: 'POST', body: form });
+	const response = await fetch('/api/reporter/media/', { method: 'POST', body: form });
 	const data = await parseJson(response);
 
 	if (!response.ok) {
@@ -143,7 +143,7 @@ export async function uploadImage(articleId: string, file: File): Promise<string
 }
 
 export async function deleteArticle(id: string): Promise<void> {
-	const response = await fetch(`/api/reporter/articles/${id}`, { method: 'DELETE' });
+	const response = await fetch(`/api/reporter/articles/${id}/`, { method: 'DELETE' });
 
 	if (!response.ok) {
 		const data = await parseJson(response);

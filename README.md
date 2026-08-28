@@ -40,7 +40,7 @@ The public site is currently Albanian-first. English copy and a small set of Eng
 | `/diaspora-zbarkon/` | Diaspora Zbarkon project placeholder |
 | `/news/` | Published Flamingo Times articles, filterable by tag |
 | `/news/<slug>/` | A single published article |
-| `/redaksia/` | Reporter workspace: login, article dashboard, and editor (noindex, access-key gated) |
+| `/redaksia/panel/` | Reporter workspace: login, article dashboard, and editor (noindex, access-key gated) |
 | `/reporteret-e-diaspores/` | Diaspora reporters project placeholder |
 
 `/kontakt/` permanently redirects to `/rreth-nesh/#kontakt`. Legacy pulse routes redirect to `/pulsi-protestes/`.
@@ -199,7 +199,7 @@ Article writing is restricted to whitelisted reporters. Create one (or rotate a 
 pnpm reporter:create --name "Emri Mbiemri"
 ```
 
-The command prints the access key once; only its SHA-256 hash is stored. Reporters sign in at `/redaksia/` and write articles in a Tiptap editor. Content is stored as Tiptap JSON in the `articles` table in Neon.
+The command prints the access key once; only its SHA-256 hash is stored. Reporters sign in at `/redaksia/panel/` and write articles in a Tiptap editor. Content is stored as Tiptap JSON in the `articles` table in Neon.
 
 Published articles appear at `/news/`, rendered server-side from the stored Tiptap JSON by `src/lib/articles/render.ts`, which only emits an allowlisted set of tags, marks and URL schemes. Drafts are never exposed.
 
