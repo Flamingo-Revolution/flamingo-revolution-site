@@ -38,7 +38,7 @@ The public site is currently Albanian-first. English copy and a small set of Eng
 | `/pulsi-protestes/` | Protest participation overview and external data link |
 | `/rreth-nesh/` | About the movement, partners, contact details, and social links |
 | `/diaspora-zbarkon/` | Diaspora Zbarkon project placeholder |
-| `/news/` | Published Flamingo Times articles, filterable by tag |
+| `/news/` | Published Flamingo News articles, filterable by tag |
 | `/news/<slug>/` | A single published article |
 | `/redaksia/panel/` | Reporter workspace: login, article dashboard, and editor (noindex, access-key gated) |
 | `/reporteret-e-diaspores/` | Diaspora reporters project placeholder |
@@ -191,7 +191,7 @@ Keep each static file below Cloudflare Workers' per-asset size limit. Larger doc
 | `/api/reporter/media` | `POST` | Upload an article image (multipart) to the R2 `flamingo-media` bucket |
 | `/media/[key]` | `GET` | Publicly serve uploaded article media from R2 with immutable caching |
 
-### Flamingo Times Reporters
+### Flamingo News Reporters
 
 Article writing is restricted to whitelisted reporters. Create one (or rotate a key) with:
 

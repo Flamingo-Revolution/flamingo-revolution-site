@@ -12,7 +12,7 @@ import { summarize } from "@lib/articles/render";
 export const prerender = false;
 
 const title = "Lajme";
-const description = "Artikujt më të fundit të shkruar nga reporterët e Flamingo Times.";
+const description = "Artikujt më të fundit të shkruar nga reporterët e Flamingo News.";
 
 let articles: NewsCard[] = [];
 let loadFailed = false;
@@ -63,7 +63,7 @@ if (!databaseUrl) {
 	<SiteFrame locale="sq" copy={siteCopy.sq} currentPage="times" localePath="news">
 		<main class="news-page" id="main" tabindex="-1">
 			<section class="news-hero">
-				<p class="eyebrow">Flamingo Times</p>
+				<p class="eyebrow">Flamingo News</p>
 				<h1><span>{title}</span></h1>
 				<p class="lead">{description}</p>
 			</section>

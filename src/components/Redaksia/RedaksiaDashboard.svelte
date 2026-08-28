@@ -87,7 +87,7 @@
 	<section class="dashboard">
 		<header class="dashboard__header">
 			<div>
-				<p class="dashboard__eyebrow">Redaksia e Flamingo Times</p>
+				<p class="dashboard__eyebrow">Redaksia e Flamingo News</p>
 				<h2>Mirë se erdhe, {reporter.name}</h2>
 			</div>
 			<div class="dashboard__actions">

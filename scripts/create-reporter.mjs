@@ -1,5 +1,5 @@
 /**
- * Create (or re-key) a whitelisted Flamingo Times reporter.
+ * Create (or re-key) a whitelisted Flamingo News reporter.
  *
  * Usage:
  *   node scripts/create-reporter.mjs --name "Emri Mbiemri" [--slug emri-mbiemri]
