@@ -53,6 +53,13 @@
 
 	const isPublished = $derived(article?.status === 'PUBLISHED');
 
+	/** Media URLs need a trailing slash to match the router. */
+	const coverPreviewUrl = $derived(
+		coverImageUrl.trim().startsWith('/media/') && !coverImageUrl.trim().endsWith('/')
+			? `${coverImageUrl.trim()}/`
+			: coverImageUrl.trim()
+	);
+
 	onMount(() => {
 		void init();
 	});
@@ -502,8 +509,8 @@
 					<button type="button" class="button" onclick={() => coverInput?.click()} disabled={!article}> Ngarko </button>
 				</div>
 			</label>
-			{#if coverImageUrl.trim()}
-				<img class="editor-cover__preview" src={coverImageUrl.trim()} alt="Imazhi kryesor i artikullit" />
+			{#if coverPreviewUrl}
+				<img class="editor-cover__preview" src={coverPreviewUrl} alt="Imazhi kryesor i artikullit" />
 			{/if}
 		</div>
 

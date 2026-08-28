@@ -8,6 +8,7 @@ import { createPrisma } from "@lib/db";
 import { getDatabaseUrl } from "@lib/env/server";
 import { formatArticleDate } from "@lib/articles/format";
 import { summarize } from "@lib/articles/render";
+import { normalizeMediaUrl } from "@lib/media";
 
 export const prerender = false;
 
@@ -36,7 +37,7 @@ if (!databaseUrl) {
 			title: article.title || "Pa titull",
 			excerpt: article.excerpt || summarize(article.content, 160),
 			tags: article.tags,
-			coverImageUrl: article.coverImageUrl,
+			coverImageUrl: article.coverImageUrl ? normalizeMediaUrl(article.coverImageUrl) : null,
 			publishedAt: article.publishedAt?.toISOString() ?? null,
 			publishedLabel: formatArticleDate(article.publishedAt),
 			author: article.reporter.name

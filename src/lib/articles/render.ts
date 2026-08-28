@@ -128,8 +128,11 @@ function renderNode(node: JsonNode): string {
 			return '<br />';
 
 		case 'image': {
-			const src = safeUrl(node.attrs?.src);
-			if (!src) return '';
+			const raw = safeUrl(node.attrs?.src);
+			if (!raw) return '';
+
+			// Media URLs need the trailing slash the router expects.
+			const src = raw.startsWith('/media/') && !raw.endsWith('/') ? `${raw}/` : raw;
 
 			const alt = typeof node.attrs?.alt === 'string' ? node.attrs.alt : '';
 			const title = typeof node.attrs?.title === 'string' ? ` title="${escapeHtml(node.attrs.title)}"` : '';

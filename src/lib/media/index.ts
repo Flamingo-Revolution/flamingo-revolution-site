@@ -19,6 +19,17 @@ export function buildMediaKey(articleId: string, contentType: string): string | 
 	return `articles/${articleId}/${crypto.randomUUID()}.${extension}`;
 }
 
+/**
+ * The site runs with `trailingSlash: 'always'`, so the media route only
+ * matches the slashed form. Media URLs must carry the trailing slash or the
+ * request 404s.
+ */
 export function mediaUrlForKey(key: string): string {
-	return `/media/${key}`;
+	return `/media/${key}/`;
+}
+
+/** Add the required trailing slash to media URLs stored before that rule. */
+export function normalizeMediaUrl(url: string): string {
+	if (!url.startsWith('/media/') || url.endsWith('/')) return url;
+	return `${url}/`;
 }

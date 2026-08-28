@@ -7,6 +7,7 @@ import { createPrisma } from "@lib/db";
 import { getDatabaseUrl } from "@lib/env/server";
 import { formatArticleDate } from "@lib/articles/format";
 import { renderArticleHtml, summarize } from "@lib/articles/render";
+import { normalizeMediaUrl } from "@lib/media";
 
 export const prerender = false;
 
@@ -47,6 +48,7 @@ if (!article) {
 }
 
 const body = renderArticleHtml(article.content);
+const coverImageUrl = article.coverImageUrl ? normalizeMediaUrl(article.coverImageUrl) : null;
 const description = article.excerpt || summarize(article.content, 160) || siteCopy.sq.meta.description;
 const publishedLabel = formatArticleDate(article.publishedAt);
 const updatedLabel =
@@ -63,8 +65,8 @@ const updatedLabel =
 	publishedTime={article.publishedAt ?? undefined}
 	modifiedTime={article.updatedAt}
 	authorName={article.reporter.name}
-	socialImagePath={article.coverImageUrl ?? undefined}
-	socialImageAlt={article.coverImageUrl ? article.title : undefined}
+	socialImagePath={coverImageUrl ?? undefined}
+	socialImageAlt={coverImageUrl ? article.title : undefined}
 	breadcrumbs={[
 		{ name: "Ballina", path: "/" },
 		{ name: "Lajme", path: "/news/" },
@@ -96,8 +98,8 @@ const updatedLabel =
 			</header>
 
 			{
-				article.coverImageUrl && (
-					<img class="news-article__cover" src={article.coverImageUrl} alt={article.title} decoding="async" />
+				coverImageUrl && (
+					<img class="news-article__cover" src={coverImageUrl} alt={article.title} decoding="async" />
 				)
 			}
 
