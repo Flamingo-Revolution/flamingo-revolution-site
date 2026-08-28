@@ -32,5 +32,11 @@ export const GET = async (context: APIContext) => {
 		headers.set('Cache-Control', 'public, max-age=31536000, immutable');
 	}
 
+	// Uploaded files are user content: never let one execute as a document
+	// (an SVG can carry scripts) and never let a browser sniff a new type.
+	headers.set('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'; sandbox");
+	headers.set('X-Content-Type-Options', 'nosniff');
+	headers.set('Content-Disposition', 'inline');
+
 	return new Response(object.body, { headers });
 };

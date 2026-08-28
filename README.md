@@ -38,6 +38,8 @@ The public site is currently Albanian-first. English copy and a small set of Eng
 | `/pulsi-protestes/` | Protest participation overview and external data link |
 | `/rreth-nesh/` | About the movement, partners, contact details, and social links |
 | `/diaspora-zbarkon/` | Diaspora Zbarkon project placeholder |
+| `/news/` | Published Flamingo Times articles, filterable by tag |
+| `/news/<slug>/` | A single published article |
 | `/redaksia/` | Reporter workspace: login, article dashboard, and editor (noindex, access-key gated) |
 | `/reporteret-e-diaspores/` | Diaspora reporters project placeholder |
 
@@ -188,6 +190,8 @@ pnpm reporter:create --name "Emri Mbiemri"
 ```
 
 The command prints the access key once; only its SHA-256 hash is stored. Reporters sign in at `/redaksia/` and write articles in a Tiptap editor. Content is stored as Tiptap JSON in the `articles` table in Neon.
+
+Published articles appear at `/news/`, rendered server-side from the stored Tiptap JSON by `src/lib/articles/render.ts`, which only emits an allowlisted set of tags, marks and URL schemes. Drafts are never exposed.
 
 Article images upload to the R2 bucket declared in `wrangler.jsonc` (`flamingo-media`) via file picker, paste, or drag-and-drop, and are served through the Worker at `/media/<key>`. Local preview simulates the bucket automatically; in production the bucket must exist in the Cloudflare account (R2 → Create bucket → `flamingo-media`) before deploying. External image URLs are still accepted.
 

@@ -440,6 +440,9 @@
 			</div>
 
 			<div class="editor-topbar__actions">
+				{#if isPublished && article?.slug}
+					<a class="button button--ghost" href={`/news/${article.slug}/`} target="_blank" rel="noopener">Shiko</a>
+				{/if}
 				<button class="button" onclick={() => void save()} disabled={saving || !article}>Ruaj</button>
 				<button class="button button--primary" onclick={togglePublish} disabled={publishing || !article}>
 					{publishing ? 'Duke punuar…' : isPublished ? 'Hiq nga publikimi' : 'Publiko'}

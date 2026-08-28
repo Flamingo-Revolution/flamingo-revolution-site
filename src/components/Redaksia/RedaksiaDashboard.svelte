@@ -130,6 +130,11 @@
 							<p class="article-card__meta">Përditësuar: {formatDate(article.updatedAt)}</p>
 						</div>
 						<div class="article-card__actions">
+							{#if article.status === 'PUBLISHED' && article.slug}
+								<a class="button button--ghost" href={`/news/${article.slug}/`} target="_blank" rel="noopener">
+									Shiko
+								</a>
+							{/if}
 							<a class="button" href={`/redaksia/artikull/${article.id}/`}>Redakto</a>
 							<button class="button button--ghost" onclick={() => onDelete(article)}>Fshi</button>
 						</div>
