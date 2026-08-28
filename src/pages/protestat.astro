@@ -1,132 +1,213 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteFrame from "../components/SiteFrame.astro";
+import PageHero from "../components/PageHero.astro";
+import CardSlider from "../components/CardSlider.astro";
+import type { CardSliderItem } from "../components/CardSlider.astro";
+import SectionMedia from "../components/SectionMedia.astro";
 import { siteCopy } from "../data/site";
 import { protestsPageCopy } from "../data/protests";
+import { demandsV2 } from "../data/demands";
 
 const locale = "sq";
 const siteCopyLocale = siteCopy[locale];
 const copy = protestsPageCopy[locale];
+
+// Merged from the former /protestat/ + /kerkesat/ pages into one reading
+// order: why it started, the habitat, other reasons, chronology, demands,
+// way out. /kerkesat/ now just redirects to #kerkesat below.
+
+// Each timeline card links to its source via "Lexo lajmin (hostname) →",
+// with the hostname read straight off the href so it can't drift.
+const newsSourceHost = (href: string) => {
+  try {
+    return new URL(href).hostname.replace(/^www\./, "");
+  } catch {
+    return undefined;
+  }
+};
+
+const historikuCards: CardSliderItem[] = copy.historiku.timeline.map((item) => {
+  const host = item.href ? newsSourceHost(item.href) : undefined;
+  return {
+    href: item.href,
+    linkLabel: item.href ? `${copy.newsLinkLabel}${host ? ` (${host})` : ""} →` : undefined,
+    badge: item.env ? copy.historiku.envBadgeLabel : undefined,
+    eyebrow: item.date,
+    title: item.title,
+    description: item.body,
+    meta: `${item.location} · ${item.status}`,
+    ...(item.image ? { image: item.image } : { imagePlaceholder: copy.photoPlaceholderLabel })
+  };
+});
+
+const speciesItems: CardSliderItem[] = copy.speciesCards.map((card) => ({
+  title: card.title,
+  eyebrow: card.meta,
+  description: card.description,
+  image: card.image
+}));
+
+// v1 reuses the landing page's short list, v2 reuses demandsV2 — one
+// source of truth instead of copies that can drift.
+const kerkesatV1 = siteCopyLocale.hero.demands;
+const kerkesatV2 = demandsV2;
 ---
 
 <BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
   <SiteFrame locale={locale} copy={siteCopyLocale} currentPage="protests" localePath="protestat">
     <main class="protests-page" id="main" tabindex="-1">
-      <section class="protests-hero">
-        <div class="protests-hero__content">
-          <p class="eyebrow">{copy.hero.eyebrow}</p>
-          <h1><span>{copy.hero.title}</span></h1>
-          <p class="lead">{copy.hero.lead}</p>
-          <div class="hero__actions">
-            <a class="button button--primary" href={siteCopyLocale.hero.participateLink}>
-              {copy.hero.primaryCta}
-            </a>
-            <a class="button button--ghost" href="#historiku">
-              {copy.hero.secondaryCta}
-            </a>
-          </div>
+      <PageHero
+        eyebrow={copy.hero.eyebrow}
+        title={copy.hero.title}
+        lead={copy.hero.lead}
+        primaryCta={{ label: copy.hero.primaryCta, href: siteCopyLocale.hero.participateLink }}
+        secondaryCta={{ label: copy.hero.secondaryCta, href: "/harta/" }}
+        panelTitle={copy.hero.panelTitle}
+        panelLinks={copy.hero.panelLinks}
+      />
+      
+      <section class="section-block section-block--accent" id="specie">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.speciesSection.kicker}</p>
+          <h2>{copy.speciesSection.title}</h2>
+          <p>{copy.speciesSection.description}</p>
         </div>
 
-        <nav class="protests-hero__panel" aria-label={copy.hero.panelTitle}>
-          <h2>{copy.hero.panelTitle}</h2>
-          <ul>
-            {
-              copy.hero.panelLinks.map((link) => (
-                <li>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
+        <CardSlider items={speciesItems} ariaLabel={copy.speciesSection.title} cardWidth="min(80vw, 260px)" />
+        <p class="media-credit">{copy.speciesCredit}</p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="https://ppnea.org/save-vjosa-narta/?lang=en" target="_blank" rel="noreferrer">
+            {copy.speciesSection.sourceLabel}
+          </a>
+        </div>
       </section>
 
-      <section class="section-block" id="historiku">
+      <section class="section-block" id="arsyet-tjera">
+        <div class="section-intro">
+          <div class="section-heading">
+            <p class="eyebrow">{copy.arsyetTjera.kicker}</p>
+            <h2>{copy.arsyetTjera.title}</h2>
+            <p>{copy.arsyetTjera.description}</p>
+            <div class="hero__actions">
+              <a class="button button--primary" href="/dosjet/">{copy.arsyetTjera.dossierLabel}</a>
+            </div>
+          </div>
+          <SectionMedia src={copy.arsyetTjera.image.src} alt={copy.arsyetTjera.image.alt} />
+        </div>
+
+        <ul class="topics-grid">
+          {copy.arsyetTjera.topics.map((topic) => <li class="topic-card">{topic}</li>)}
+        </ul>
+      </section>
+
+      <section class="section-block section-block--accent" id="historiku">
         <div class="section-heading">
           <p class="eyebrow">{copy.historiku.kicker}</p>
           <h2>{copy.historiku.title}</h2>
           <p>{copy.historiku.description}</p>
         </div>
 
-        <div class="pillar-grid protests-timeline">
-          {
-            copy.historiku.timeline.map((item) => (
-              <article class="pillar-card">
-                <span class="pillar-card__index">{item.date}</span>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </article>
-            ))
-          }
-        </div>
-
-        <div class="section-heading protests-subheading">
-          <p class="eyebrow">{copy.historiku.backgroundKicker}</p>
-          <h3>{copy.historiku.backgroundTitle}</h3>
-        </div>
-
-        <div class="card-grid">
-          {
-            siteCopyLocale.manifesto.cards.map((card) => (
-              <article class="info-card">
-                <h3>{card.title}</h3>
-                <p>{card.body}</p>
-              </article>
-            ))
-          }
+        <CardSlider items={historikuCards} ariaLabel={copy.historiku.title} cardWidth="min(82vw, 300px)" />
+        <p class="media-credit">{copy.photoCredit}</p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="/harta/">{copy.mapReferenceLabel}</a>
         </div>
       </section>
 
-      <section class="section-block section-block--accent" id="lista-e-protestave">
+      <section class="section-block" id="kerkesat">
         <div class="section-heading">
-          <p class="eyebrow">{copy.list.kicker}</p>
-          <h2>{copy.list.title}</h2>
-          <p>{copy.list.description}</p>
+          <p class="eyebrow">{copy.kerkesat.kicker}</p>
+          <h2>{copy.kerkesat.title}</h2>
+          <p>{copy.kerkesat.description}</p>
         </div>
 
-        <div class="protest-register">
-          {
-            copy.list.entries.map((entry) => (
-              <article class="protest-entry">
-                <span class="protest-entry__status">{entry.status}</span>
-                <span class="protest-entry__date">{entry.date}</span>
-                <h3>{entry.title}</h3>
-                <p class="protest-entry__location">{entry.location}</p>
-                <p>{entry.body}</p>
-              </article>
-            ))
-          }
-        </div>
+        <details class="kerkesat-dropdown">
+          <summary>
+            <div>
+              <h3><span class="kerkesat-dropdown__version">v1</span>{copy.kerkesat.versioni1Title}</h3>
+              <p>{copy.kerkesat.versioni1Description}</p>
+            </div>
+            <span class="kerkesat-dropdown__chevron" aria-hidden="true" />
+          </summary>
+          <div class="kerkesat-dropdown__body">
+            <ol class="demand-grid">
+              {
+                kerkesatV1.map((item, index) => (
+                  <li class="demand-card">
+                    <span class="demand-card__index">{String(index + 1).padStart(2, "0")}</span>
+                    <p>{item}</p>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
+        </details>
 
-        <div class="protests-note">
-          <p>{copy.list.note}</p>
-          <a class="button button--ghost" href={siteCopyLocale.hero.participateLink}>
-            {copy.list.ctaLabel}
-          </a>
-        </div>
-      </section>
-
-      <section class="section-block" id="foto-galeri">
-        <div class="section-heading">
-          <p class="eyebrow">{copy.gallery.kicker}</p>
-          <h2>{copy.gallery.title}</h2>
-          <p>{copy.gallery.description}</p>
-        </div>
-
-        <div class="gallery-grid">
-          {
-            Array.from({ length: 8 }).map(() => (
-              <div class="gallery-tile" aria-hidden="true">
-                <span>{copy.gallery.placeholderLabel}</span>
-              </div>
-            ))
-          }
-        </div>
+        <details class="kerkesat-dropdown">
+          <summary>
+            <div>
+              <h3><span class="kerkesat-dropdown__version">v2</span>{copy.kerkesat.versioni2Title}</h3>
+              <p>{copy.kerkesat.versioni2Description}</p>
+            </div>
+            <span class="kerkesat-dropdown__chevron" aria-hidden="true" />
+          </summary>
+          <div class="kerkesat-dropdown__body">
+            <ol class="demand-list">
+              {
+                kerkesatV2.map((item, index) => (
+                  <li class="demand-block">
+                    <span class="demand-block__index">{index + 1}</span>
+                    <div class="demand-block__body">
+                      <p>{item.text}</p>
+                      {item.subitems && (
+                        <ul class="demand-sublist">
+                          {item.subitems.map((sub) => (
+                            <li>{sub}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
+        </details>
 
         <div class="hero__actions">
-          <a class="button button--primary" href={copy.gallery.ctaHref}>
-            {copy.gallery.ctaLabel}
-          </a>
+          <a class="button button--primary" href={siteCopyLocale.hero.participateLink}>{siteCopyLocale.hero.primaryCta}</a>
+        </div>
+      </section>
+
+      <section class="section-block section-block--accent" id="rrugedalja">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.waySection.kicker}</p>
+          <h2>{copy.waySection.title}</h2>
+          <p>{copy.waySection.description}</p>
+        </div>
+
+        <ol class="way-list">
+          {
+            copy.wayCards.map((card, index) => (
+              <li class="way-card">
+                <span class="way-card__index">{index + 1}</span>
+                <div class="way-card__body">
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                  {card.href && (
+                    <a class="info-card__link" href={card.href}>
+                      {card.linkLabel ?? "Lexo më shumë"}
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="hero__actions">
+          <a class="button button--primary" href="/referendum/">{copy.waySection.referendumLabel}</a>
         </div>
       </section>
     </main>
@@ -134,188 +215,284 @@ const copy = protestsPageCopy[locale];
 </BaseLayout>
 
 <style>
-  .protests-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.7fr);
-    gap: clamp(1.5rem, 4vw, 3.4rem);
-    align-items: start;
-    padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
-    background: linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
-    border-top: 1px solid var(--line);
-    border-bottom: 4px solid var(--line);
+  .media-credit {
+    margin: 0.15rem 0 0;
+    color: var(--muted);
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-align: right;
   }
 
-  .protests-hero__content {
-    width: min(100%, 760px);
-    min-width: 0;
+  .info-card__link {
+    display: inline-block;
+    margin-top: 0.7rem;
+    color: var(--accent-strong);
+    font-weight: 700;
+    text-decoration: underline;
   }
 
-  .protests-hero__panel {
+  .info-card__link:hover,
+  .info-card__link:focus-visible {
+    color: var(--ink);
+  }
+
+  .topics-grid {
     display: grid;
-    gap: 0.75rem;
-    height: fit-content;
-    min-width: 0;
-    padding: clamp(1rem, 3vw, 1.4rem);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 1.8rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .topic-card {
+    padding: 0.9rem 1.1rem;
     border: 2px solid var(--ink);
     background: var(--surface);
-    box-shadow: 7px 7px 0 var(--ink);
-    transform: rotate(-1deg);
+    box-shadow: 4px 4px 0 var(--ink);
+    font-weight: 700;
+    line-height: 1.4;
   }
 
-  .protests-hero__panel h2 {
-    margin: 0;
-    color: var(--accent-strong);
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
+  .topic-card:nth-child(3n+2) {
+    background: var(--paper-cool);
+    transform: rotate(0.6deg);
   }
 
-  .protests-hero__panel ul {
-    display: grid;
-    gap: 0.55rem;
-    margin: 0;
-    padding: 0;
+  .topic-card:nth-child(3n) {
+    background: var(--accent-soft);
+    transform: rotate(-0.5deg);
+  }
+
+  @media (max-width: 1020px) {
+    .topics-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .topics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .kerkesat-dropdown {
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+
+  .kerkesat-dropdown + .kerkesat-dropdown {
+    margin-top: 1.1rem;
+  }
+
+  .kerkesat-dropdown summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.4rem;
+    cursor: pointer;
     list-style: none;
   }
 
-  .protests-hero__panel a {
-    display: inline-flex;
+  .kerkesat-dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .kerkesat-dropdown summary h3 {
+    display: flex;
     align-items: center;
-    padding-bottom: 0.12rem;
-    border-bottom: 0.14rem solid var(--accent);
-    color: var(--text);
+    gap: 0.6rem;
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.4rem, 3vw, 1.85rem);
+    line-height: 1.1;
+  }
+
+  .kerkesat-dropdown__version {
+    flex-shrink: 0;
+    padding: 0.15rem 0.55rem;
+    border: 2px solid var(--ink);
+    background: var(--accent-strong);
+    color: var(--ink-reverse, #fff);
+    font-size: 0.85rem;
     font-weight: 800;
-    text-decoration: none;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
 
-  .protests-hero__panel a:hover,
-  .protests-hero__panel a:focus-visible {
-    color: var(--accent-strong);
+  .kerkesat-dropdown summary p {
+    margin: 0;
+    color: var(--muted);
   }
 
-  .protests-timeline {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+  .kerkesat-dropdown__chevron {
+    flex-shrink: 0;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-right: 0.3rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg);
+    transition: transform 150ms ease;
   }
 
-  .protests-subheading {
-    margin-top: clamp(2rem, 5vw, 2.8rem);
+  .kerkesat-dropdown[open] .kerkesat-dropdown__chevron {
+    transform: rotate(-135deg);
   }
 
-  .protest-register {
+  .kerkesat-dropdown__body {
+    padding: 0 1.4rem 1.4rem;
+  }
+
+  .demand-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  .protest-entry {
+  .demand-card {
     position: relative;
+    padding: 1.15rem;
+    padding-top: 3rem;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .demand-card:nth-child(2) {
+    background: var(--paper-cool);
+    transform: rotate(0.75deg);
+  }
+
+  .demand-card:nth-child(3) {
+    background: var(--accent-soft);
+    transform: rotate(-0.65deg);
+  }
+
+  .demand-card:nth-child(5) {
+    background: var(--paper-cool);
+    transform: rotate(-0.5deg);
+  }
+
+  .demand-card__index {
+    position: absolute;
+    top: 1rem;
+    left: 1.1rem;
+    color: var(--accent-strong);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+  }
+
+  .demand-card p {
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .demand-list {
+    display: grid;
+    gap: 0.9rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .demand-block {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    padding: 1.15rem;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .demand-block__index {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: var(--ink-reverse);
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+
+  .demand-block__body p {
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.55;
+  }
+
+  .demand-sublist {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.75rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--muted);
+    font-weight: 600;
+    line-height: 1.55;
+  }
+
+  .way-list {
+    display: grid;
+    gap: 0.9rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .way-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
     padding: 1.15rem;
     border: 2px solid var(--ink);
     background: var(--surface);
     box-shadow: 5px 5px 0 var(--ink);
   }
 
-  .protest-entry:nth-child(2) {
-    background: var(--paper-cool);
-    transform: rotate(0.65deg);
-  }
-
-  .protest-entry:nth-child(3) {
-    background: var(--accent-soft);
-    transform: rotate(-0.5deg);
-  }
-
-  .protest-entry__status {
-    display: inline-block;
-    margin-bottom: 0.6rem;
-    padding: 0.2rem 0.5rem;
-    border: 1.5px solid var(--ink);
-    background: var(--paper);
-    color: var(--accent-strong);
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .protest-entry__date {
-    display: block;
-    margin-bottom: 0.35rem;
-    color: var(--accent-strong);
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-  }
-
-  .protest-entry h3 {
-    margin: 0 0 0.3rem;
-  }
-
-  .protest-entry__location {
-    margin: 0 0 0.5rem;
-    color: var(--muted);
-    font-size: 0.85rem;
-    font-weight: 700;
-  }
-
-  .protests-note {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.9rem;
-    margin-top: 1.6rem;
-  }
-
-  .protests-note p {
-    margin: 0;
-    color: var(--muted);
-    font-weight: 700;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.85rem;
-    margin-bottom: 1.7rem;
-  }
-
-  .gallery-tile {
+  .way-card__index {
     display: grid;
     place-items: center;
-    aspect-ratio: 4 / 3;
-    padding: 0.5rem;
-    border: 2px dashed var(--ink);
-    background: var(--paper-cool);
-    color: var(--muted);
-    font-size: 0.76rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 2px solid var(--ink);
+    background: var(--accent-strong);
+    color: var(--ink-reverse);
     font-weight: 800;
-    letter-spacing: 0.05em;
-    text-align: center;
-    text-transform: uppercase;
+    font-size: 1.1rem;
+  }
+
+  .way-card__body h3 {
+    margin: 0 0 0.4rem;
+  }
+
+  .way-card__body p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
   }
 
   @media (max-width: 1020px) {
-    .protests-hero {
-      grid-template-columns: 1fr;
-    }
-
-    .protests-timeline {
-      grid-template-columns: 1fr;
-    }
-
-    .protest-register {
+    .demand-grid {
       grid-template-columns: 1fr;
     }
   }
 
   @media (max-width: 760px) {
-    .gallery-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .demand-block,
+    .way-card {
+      grid-template-columns: 1fr;
     }
 
-    .protest-entry,
-    .protests-hero__panel {
+    .demand-card {
       transform: none !important;
     }
   }

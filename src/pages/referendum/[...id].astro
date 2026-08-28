@@ -84,7 +84,15 @@ crumbs.push({ label: title });
 <ReferendumLayout
 	title={`${title} | ${copy.meta.title}`}
 	description={description}
+	pageType={page ? "Article" : "WebPage"}
 	shellClass={page ? "prose-lg referendum-content" : "referendum-content"}
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		...crumbs
+			.filter((crumb): crumb is { label: string; href: string } => Boolean(crumb.href))
+			.map((crumb) => ({ name: crumb.label, path: crumb.href })),
+		{ name: title, path: Astro.url.pathname }
+	]}
 >
 	<div class="content-brand">
 		<ReferendumHeader copy={copy} brandHref="/referendum/" />

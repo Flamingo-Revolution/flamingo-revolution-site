@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFrame from "../components/SiteFrame.astro";
+import { siteCopy } from "../data/site";
+
+export const prerender = true;
+
+const locale = "sq";
+const copy = siteCopy[locale];
+const title = "Politika e privatësisë | Revolucioni Flamingo";
+const description =
+	"Si mblidhen dhe përdoren të dhënat në faqen e Revolucionit Flamingo: newsletter, idetë qytetare, analitika dhe kontakt.";
+---
+
+<BaseLayout
+	{title}
+	{description}
+	{locale}
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: "Privatësia", path: "/privatesia/" }
+	]}
+>
+	<SiteFrame {locale} copy={copy} currentPage="about" localePath="privatesia">
+		<main class="legal-page" id="main" tabindex="-1">
+			<article class="legal-page__content">
+				<header class="legal-page__header">
+					<p class="eyebrow">Transparencë</p>
+					<h1>Politika e privatësisë</h1>
+					<p class="lead">Përditësuar: gusht 2026</p>
+				</header>
+
+				<section>
+					<h2>Çfarë mbledhim</h2>
+					<p>
+						Revolucioni Flamingo mbledh vetëm të dhëna të nevojshme për funksionimin e
+						faqes dhe pjesëmarrjen qytetare:
+					</p>
+					<ul>
+						<li>
+							<strong>Newsletter:</strong> adresa e email-it kur regjistroheni për njoftime mbi
+							referendumin ose lëvizjen.
+						</li>
+						<li>
+							<strong>Idetë tuaja:</strong> teksti i ideve, emri i shfaqur (opsional) dhe një
+							identifikues i vëllazërimit në pajisje (fingerprint) për të parandaluar vota të
+							përsëritura — jo emri i plotë, adresa IP ose llogari përdoruesi.
+						</li>
+						<li>
+							<strong>Analitika:</strong> statistika agregate vizitash përmes Umami (pa cookies
+							tracking, pa shitje të dhënash te palë të treta).
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Si i përdorim</h2>
+					<p>
+						Të dhënat përdoren vetëm për funksionimin e shërbimeve të faqes, njoftime mbi
+						aktivitetet e lëvizjes dhe mbrojtjen e integritetit të votimit në faqen e ideve.
+						Nuk i shesim, nuk i qiramarrim dhe nuk i ndajmë me palë të treta për marketing.
+					</p>
+				</section>
+
+				<section>
+					<h2>Ruajtja</h2>
+					<p>
+						Email-et e newsletter-it dhe idetë e dorëzuara ruhen në një bazë të dhënash të
+						sigurt. Identifikuesi i pajisjes për votat ruhet vetëm sa nevojitet për të
+						mos lejuar abuzim.
+					</p>
+				</section>
+
+				<section>
+					<h2>Të drejtat tuaja</h2>
+					<p>
+						Mund të kërkoni fshirjen e email-it tuaj nga newsletter-i ose korrigjimin e të
+						dhënave duke na shkruar te{" "}
+						<a href="mailto:info@flamingorevolution.eu">info@flamingorevolution.eu</a>.
+					</p>
+				</section>
+
+				<section>
+					<h2>Palët e treta</h2>
+					<p>
+						Faqja strehohet në Cloudflare Workers dhe përdor Neon Postgres për të dhënat
+						e aplikacionit. Harta e protestave dhe Flamingo Dossier ngarkohen si aplikacione
+						të jashtme; kur i hapni, zbatohen politikat e atyre faqeve.
+					</p>
+				</section>
+			</article>
+		</main>
+	</SiteFrame>
+</BaseLayout>
+
+<style>
+	.legal-page {
+		width: min(44rem, 100%);
+		margin: 0 auto;
+		padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 5vw, 2rem);
+	}
+
+	.legal-page__header {
+		margin-bottom: 2rem;
+	}
+
+	.legal-page__header h1 {
+		margin: 0.4rem 0 0;
+		color: var(--text);
+		font-size: clamp(2rem, 5vw, 2.8rem);
+		line-height: 1.05;
+	}
+
+	.legal-page__content section {
+		margin-top: 1.75rem;
+	}
+
+	.legal-page__content h2 {
+		margin: 0 0 0.75rem;
+		font-size: 1.15rem;
+	}
+
+	.legal-page__content p,
+	.legal-page__content li {
+		color: var(--muted);
+		line-height: 1.65;
+	}
+
+	.legal-page__content ul {
+		margin: 0.75rem 0 0;
+		padding-left: 1.25rem;
+	}
+
+	.legal-page__content li + li {
+		margin-top: 0.5rem;
+	}
+
+	.legal-page__content a {
+		color: var(--accent-strong);
+		font-weight: 700;
+	}
+</style>

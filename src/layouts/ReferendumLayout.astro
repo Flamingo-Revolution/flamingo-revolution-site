@@ -2,6 +2,7 @@
 import BaseLayout from "./BaseLayout.astro";
 import { siteCopy } from "../data/site";
 import SiteFooter from "@components/SiteFooter.astro";
+import type { BreadcrumbItem } from "../lib/seo/structuredData";
 
 interface Props {
 	title: string;
@@ -9,6 +10,9 @@ interface Props {
 	socialImagePath?: string;
 	socialImageAlt?: string;
 	shellClass?: string;
+	pageType?: "WebPage" | "Article";
+	jsonLdExtra?: object[];
+	breadcrumbs?: BreadcrumbItem[];
 }
 
 const {
@@ -16,7 +20,10 @@ const {
 	description,
 	socialImagePath = "/referendum/flamingo-cover.png",
 	socialImageAlt = "Flamingo Revolution — referendumi për Ligjin 21/2024",
-	shellClass = ""
+	shellClass = "",
+	pageType = "WebPage",
+	jsonLdExtra,
+	breadcrumbs
 } = Astro.props;
 
 const copy = siteCopy.sq;
@@ -26,8 +33,11 @@ const copy = siteCopy.sq;
 	title={title}
 	description={description}
 	locale="sq"
+	pageType={pageType}
 	socialImagePath={socialImagePath}
 	socialImageAlt={socialImageAlt}
+	jsonLdExtra={jsonLdExtra}
+	breadcrumbs={breadcrumbs}
 >
 	<div class:list={["page-shell", "referendum-shell", shellClass]}>
 		<slot />

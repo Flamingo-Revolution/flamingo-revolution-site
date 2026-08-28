@@ -1,7 +1,7 @@
 export const prerender = false;
 
 import { createPrisma } from '@lib/db';
-import { getDatabaseUrl } from '@lib/env/server';
+import { getDatabaseUrl, getDiscordWebhookUrl } from '@lib/env/server';
 import {
 	IDEA_SORT_ORDER_BY,
 	isRecord,
@@ -15,7 +15,65 @@ import {
 
 type IdeasContext = {
 	request: Request;
+	locals: App.Locals;
 };
+
+async function notifyDiscord(content: string, name: string | null) {
+	const webhookUrl = getDiscordWebhookUrl();
+	if (!webhookUrl) return;
+
+	const author = name?.trim() || 'Anonymous';
+	let url: URL;
+
+	try {
+		url = new URL(webhookUrl);
+	} catch {
+		console.error('Discord webhook configuration error: invalid URL.');
+		return;
+	}
+
+	const isDiscordHost = url.hostname === 'discord.com' || url.hostname === 'discordapp.com';
+	const isWebhookPath = /^\/api(?:\/v\d+)?\/webhooks\/\d+\/[^/]+\/?$/.test(url.pathname);
+
+	if (webhookUrl.includes('\\') || url.protocol !== 'https:' || !isDiscordHost || !isWebhookPath) {
+		console.error('Discord webhook configuration error: expected a standard Discord incoming webhook URL.');
+		return;
+	}
+
+	try {
+		url.searchParams.set('wait', 'true');
+
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				embeds: [
+					{
+						title: 'New idea submitted',
+						url: 'https://flamingorevolution.eu/idete-tuaja',
+						description: content.slice(0, 4096),
+						color: 0x5865f2,
+						fields: [{ name: 'Author', value: author, inline: true }],
+						timestamp: new Date().toISOString()
+					}
+				],
+				allowed_mentions: { parse: [] }
+			})
+		});
+
+		if (!response.ok) {
+			console.error('Discord webhook error:', {
+				status: response.status,
+				statusText: response.statusText
+			});
+		}
+	} catch (error) {
+		// A Discord failure must never break an idea submission.
+		console.error('Discord webhook request failed:', {
+			errorName: error instanceof Error ? error.name : 'UnknownError'
+		});
+	}
+}
 
 function resolveFingerprint(request: Request) {
 	const url = new URL(request.url);
@@ -77,7 +135,7 @@ export const GET = async (context: IdeasContext) => {
 			{
 				ideas: [],
 				stats: { approved: 0 },
-				error: 'Burimi i te dhenave nuk eshte i disponueshem.'
+				error: 'Burimi i të dhënave nuk është i disponueshëm.'
 			},
 			502
 		);
@@ -113,11 +171,11 @@ export const POST = async (context: IdeasContext) => {
 	const name = typeof body.name === 'string' ? body.name.trim().slice(0, MAX_NAME_LENGTH) : '';
 
 	if (!content) {
-		return jsonResponse({ error: 'Ideja eshte e detyrueshme.' }, 400);
+		return jsonResponse({ error: 'Ideja është e detyrueshme.' }, 400);
 	}
 
 	if (content.length > MAX_IDEA_LENGTH) {
-		return jsonResponse({ error: `Ideja nuk mund te jete me e gjate se ${MAX_IDEA_LENGTH} karaktere.` }, 400);
+		return jsonResponse({ error: `Ideja nuk mund të jetë më e gjatë se ${MAX_IDEA_LENGTH} karaktere.` }, 400);
 	}
 
 	if (!fingerprint) {
@@ -134,6 +192,8 @@ export const POST = async (context: IdeasContext) => {
 				submitterName: name || null
 			}
 		});
+
+		context.locals.cfContext.waitUntil(notifyDiscord(idea.content, idea.submitterName));
 
 		return jsonResponse({ idea: toPublicIdea(idea) }, 201);
 	} catch (error) {

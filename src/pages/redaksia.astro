@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFrame from "../components/SiteFrame.astro";
+import { siteCopy } from "../data/site";
+
+export const prerender = true;
+
+const locale = "sq";
+const copy = siteCopy[locale];
+const title = "Politika redaksionale | Revolucioni Flamingo";
+const description =
+	"Si dokumentojmë, verifikojmë burimet dhe publikojmë përmbajtje në Flamingo Times, dosjet publike dhe faqen e lëvizjes.";
+---
+
+<BaseLayout
+	{title}
+	{description}
+	{locale}
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: "Redaksia", path: "/redaksia/" }
+	]}
+>
+	<SiteFrame {locale} copy={copy} currentPage="about" localePath="redaksia">
+		<main class="legal-page" id="main" tabindex="-1">
+			<article class="legal-page__content">
+				<header class="legal-page__header">
+					<p class="eyebrow">Transparencë</p>
+					<h1>Politika redaksionale</h1>
+					<p class="lead">Përditësuar: gusht 2026</p>
+				</header>
+
+				<section>
+					<h2>Misioni</h2>
+					<p>
+						Revolucioni Flamingo është një lëvizje qytetare vullnetare. Publikojmë
+						dokumentim, analiza dhe burime publike për protestat, referendumin dhe çështje
+						të interesit publik në Shqipëri. Qëllimi është informim i saktë dhe i verifikueshëm,
+						jo propagandë partiake.
+					</p>
+				</section>
+
+				<section>
+					<h2>Burimet</h2>
+					<p>Para publikimit, materiali mbështetet te burime që lexuesi mund t’i kontrollojë:</p>
+					<ul>
+						<li>akte zyrtare, vendime gjyqësore dhe dokumente institucionale;</li>
+						<li>raporte publike, media dhe regjistra të hapura;</li>
+						<li>dëshmi të dokumentuara nga protesta dhe terren.</li>
+					</ul>
+					<p>
+						Kur një pretendim nuk është i verifikuar plotësisht, e shënojmë si të tillë ose e
+						lidhim me burimin primar.
+					</p>
+				</section>
+
+				<section>
+					<h2>Flamingo Times dhe blogu</h2>
+					<p>
+						Artikujt editorialë shprehin analizën e redaksisë së lëvizjes, por ndërtohen mbi
+						fakte të cituara. Autorët identifikohen; draftet e papërfunduara nuk publikohen.
+					</p>
+				</section>
+
+				<section>
+					<h2>Flamingo Dossier</h2>
+					<p>
+						Dosjet paraqesin lidhje mes personave, institucioneve dhe çështjeve të
+						dokumentuara. Ato nuk janë vendime gjyqësore: lexuesi duhet t’i vlerësojë pretendimet
+						kundrejt burimeve të cituara dhe rekordeve zyrtare.
+					</p>
+				</section>
+
+				<section>
+					<h2>Idetë e vizitorëve</h2>
+					<p>
+						Faqja e ideve publikon propozime të dorëzuara nga publiku. Përmbajtja nuk
+						përfaqëson domosdoshmërisht qëndrimin zyrtar të lëvizjes; moderimi heq spam-in dhe
+						materialin që shkel ligjin.
+					</p>
+				</section>
+
+				<section>
+					<h2>Korrigjime</h2>
+					<p>
+						Nëse gjeni një gabim faktik, na shkruani te{" "}
+						<a href="mailto:info@flamingorevolution.eu">info@flamingorevolution.eu</a> me
+						burimin e saktë. Korrigjimet e rëndësishme shënohen në faqe kur është e mundur.
+					</p>
+				</section>
+			</article>
+		</main>
+	</SiteFrame>
+</BaseLayout>
+
+<style>
+	.legal-page {
+		width: min(44rem, 100%);
+		margin: 0 auto;
+		padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 5vw, 2rem);
+	}
+
+	.legal-page__header {
+		margin-bottom: 2rem;
+	}
+
+	.legal-page__header h1 {
+		margin: 0.4rem 0 0;
+		color: var(--text);
+		font-size: clamp(2rem, 5vw, 2.8rem);
+		line-height: 1.05;
+	}
+
+	.legal-page__content section {
+		margin-top: 1.75rem;
+	}
+
+	.legal-page__content h2 {
+		margin: 0 0 0.75rem;
+		font-size: 1.15rem;
+	}
+
+	.legal-page__content p,
+	.legal-page__content li {
+		color: var(--muted);
+		line-height: 1.65;
+	}
+
+	.legal-page__content ul {
+		margin: 0.75rem 0 0;
+		padding-left: 1.25rem;
+	}
+
+	.legal-page__content li + li {
+		margin-top: 0.5rem;
+	}
+
+	.legal-page__content a {
+		color: var(--accent-strong);
+		font-weight: 700;
+	}
+</style>

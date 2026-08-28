@@ -43,7 +43,15 @@ const formatDate = (date: Date) =>
 	`${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 ---
 
-<BaseLayout title={`${post.data.title} | ${copy.meta.title}`} description={post.data.description} locale="sq">
+<BaseLayout
+	title={`${post.data.title} | ${copy.meta.title}`}
+	description={post.data.description}
+	locale="sq"
+	pageType="BlogPosting"
+	publishedTime={post.data.pubDate}
+	modifiedTime={post.data.updatedDate}
+	authorName={author?.data.name}
+>
 	<div class="page-shell">
 		<SiteHeader locale="sq" copy={copy} currentPage="blog" localePath="blog" />
 

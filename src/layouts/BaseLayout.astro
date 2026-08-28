@@ -1,5 +1,16 @@
 ---
 import "../styles/global.css";
+import FlamingoBot from "../components/FlamingoBot.astro";
+import {
+  buildOrganizationStructuredData,
+  buildWebPageStructuredData,
+  buildWebSiteStructuredData,
+  buildBreadcrumbStructuredData,
+  getSiteOrigin,
+  serializeJsonLd,
+  type BreadcrumbItem
+} from "../lib/seo/structuredData";
+import { siteCopy } from "../data/site";
 
 interface Props {
   title: string;
@@ -7,14 +18,35 @@ interface Props {
   locale: "sq" | "en";
   socialImagePath?: string;
   socialImageAlt?: string;
+  pageType?: "WebPage" | "AboutPage" | "CollectionPage" | "Article" | "BlogPosting" | "NewsArticle";
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  authorName?: string;
   noindex?: boolean;
+  canonicalPath?: string;
+  jsonLdExtra?: object[];
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-const { title, description, locale, socialImagePath = "/social-card.jpg?v=20260705", socialImageAlt, noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  locale,
+  socialImagePath = "/social-card.jpg?v=20260705",
+  socialImageAlt,
+  pageType = "WebPage",
+  publishedTime,
+  modifiedTime,
+  authorName,
+  noindex = false,
+  canonicalPath,
+  jsonLdExtra = [],
+  breadcrumbs
+} = Astro.props;
 
-const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://flamingorevolution.eu";
-const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const socialImageUrl = new URL(socialImagePath, siteUrl).toString();
+const siteUrl = getSiteOrigin(Astro.site);
+const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, `${siteUrl}/`).toString();
+const socialImageUrl = new URL(socialImagePath, `${siteUrl}/`).toString();
 const socialImageType = socialImagePath.toLowerCase().split("?")[0].endsWith(".png") ? "image/png" : "image/jpeg";
 const faviconIcoUrl = "/favicon.ico";
 const faviconUrl = "/favicon.svg?v=20260705";
@@ -27,6 +59,30 @@ const imageAlt = socialImageAlt ??
     ? "Logoja e Revolucionit Flamingo"
     : "Flamingo Revolution logo";
 const ogLocale = locale === "sq" ? "sq_AL" : "en_US";
+const isArticle = pageType === "Article" || pageType === "BlogPosting" || pageType === "NewsArticle";
+
+const structuredData: object[] = [
+  buildOrganizationStructuredData({ origin: siteUrl, locale }),
+  buildWebSiteStructuredData({ origin: siteUrl, locale, description: siteCopy[locale].meta.description }),
+  buildWebPageStructuredData({
+    type: pageType,
+    origin: siteUrl,
+    url: canonicalUrl,
+    name: title,
+    description,
+    locale,
+    image: socialImageUrl,
+    publishedTime,
+    modifiedTime,
+    authorName
+  }),
+  ...(breadcrumbs && breadcrumbs.length > 0
+    ? [buildBreadcrumbStructuredData(siteUrl, breadcrumbs)]
+    : []),
+  ...jsonLdExtra
+];
+
+const jsonLd = serializeJsonLd({ "@context": "https://schema.org", "@graph": structuredData });
 
 const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.env;
 ---
@@ -38,7 +94,7 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#edf6ff" />
-    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
     <link rel="icon" href={faviconIcoUrl} sizes="any" />
@@ -49,7 +105,7 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <link rel="apple-touch-icon" href={appleTouchIconUrl} sizes="180x180" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content={ogLocale} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={isArticle ? "article" : "website"} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -64,6 +120,9 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
     <meta name="twitter:image:alt" content={imageAlt} />
+    {isArticle && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+    {isArticle && <meta property="article:modified_time" content={(modifiedTime ?? publishedTime)?.toISOString()} />}
+    <script type="application/ld+json" set:html={jsonLd} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -146,5 +205,6 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
   <body>
     <a class="skip-link" href="#main">Kalo te permbajtja</a>
     <slot />
+    <FlamingoBot />
   </body>
 </html>

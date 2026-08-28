@@ -1,19 +1,31 @@
 # Flamingo Revolution
 
-> Flamingo Revolution is a civic website for transparently collecting public concerns, ideas, and proposals in service of the protest and the public interest.
+> Flamingo Revolution (Revolucioni Flamingo) is an independent, volunteer-led Albanian civic movement and public-interest platform. The site documents protests, publishes reporting and research, collects civic proposals, and provides tools for public participation in Albania and the Albanian diaspora.
 
-## Primary Language
+## Language and Geographic Scope
 
-Albanian (sq).
+The primary language is Albanian (`sq`). The site covers events in Albania and Flamingo Revolution activities involving Albanian communities around the world.
 
-## Site
+## Main Sections
 
-- Home: https://flamingorevolution.eu/
-- Ideas and draft laws: https://flamingorevolution.eu/projektligje/
-- Your ideas: https://flamingorevolution.eu/idete-tuaja/
-- Contact: https://flamingorevolution.eu/kontakt/
-- Sitemap: https://flamingorevolution.eu/sitemap-index.xml
+- [Home](https://www.flamingorevolution.eu/): An introduction to Flamingo Revolution, its civic mission, main demands, projects, and ways to participate.
+- [Protests](https://www.flamingorevolution.eu/protestat/): Background, causes, chronology, demands, environmental concerns, and documented moments from the Flamingo Revolution protests.
+- [Protest Map](https://www.flamingorevolution.eu/harta/): An interactive worldwide map of active and past Flamingo Revolution protests, events, and participating cities in Albania and the diaspora.
+- [Protest Pulse](https://www.flamingorevolution.eu/pulsi-protestes/): A data-oriented view of documented protest participation, activity, and important moments in the movement.
+- [Flamingo Dossier](https://www.flamingorevolution.eu/dosjet/): Public-interest dossiers about reported government scandals and public officials, including documented matters connected to open or closed legal and institutional proceedings. Individual claims should be evaluated against the cited sources and official records.
+- [Flamingo Times](https://www.flamingorevolution.eu/flamingo-times/): The civic newspaper of Flamingo Revolution. This URL shows the latest issue in full. Earlier editions live under `/flamingo-times/artikujt/botimi-N/`. Coverage includes institutions, protests, public accountability, and developments in Albania.
+- [Flamingo Times Article Archive](https://www.flamingorevolution.eu/flamingo-times/artikujt/): Searchable archive of Flamingo Times web articles and downloadable newspaper PDFs.
+- [Referendum Initiative](https://www.flamingorevolution.eu/referendum/): Citizen-led referendum to repeal Law no. 21/2024, including KQZ process, signatures, legal facts, and FAQs.
+- [Ideas and Draft Laws](https://www.flamingorevolution.eu/projektligje/): Civic proposals, draft legislation, constitutional packages, and supporting documents developed or collected by the movement.
+- [Community Ideas](https://www.flamingorevolution.eu/idete-tuaja/): A participatory area where visitors can submit, discuss, and support ideas for the movement and the public interest.
+- [Blog](https://www.flamingorevolution.eu/blog/): Updates, explainers, and practical information from Flamingo Revolution.
+- [About Flamingo Revolution](https://www.flamingorevolution.eu/rreth-nesh/): The movement's mission, volunteer team, working principles, transparency commitments, partner categories, and official contact information.
+
+## Contact and Discovery
+
+- Official contact: `info@flamingorevolution.eu`
+- XML sitemap: https://www.flamingorevolution.eu/sitemap-index.xml
 
 ## Crawling
 
-Public pages and static documents may be crawled and indexed. Please respect the sitemap and avoid excessive request rates.
+Public pages and static documents may be crawled and indexed. Please use the XML sitemap for URL discovery and avoid excessive request rates.

@@ -1,0 +1,358 @@
+---
+// Shared horizontal slider-of-cards used across the landing page (protest
+// highlights, demands, projects, timeline, ...) so every block reads as the
+// same system. Each card can optionally show a picture (falling back to the
+// dashed "coming soon" placeholder look) and/or an icon chip, or neither —
+// the picture slot only renders when `image` or `imagePlaceholder` is given.
+export interface CardSliderItem {
+  href?: string;
+  // When set alongside href, the card itself stays non-interactive (a div)
+  // and this text renders as its own link at the bottom instead — used for
+  // cards whose href points to an external source (e.g. a news article)
+  // rather than to another page on this site. Without linkLabel, href makes
+  // the whole card clickable as before.
+  linkLabel?: string;
+  // Arbitrary grouping key rendered as data-tag on the <li>, so a filter
+  // control elsewhere on the page (see protestat.astro) can show/hide a
+  // subset of cards without a separate slider.
+  tag?: string;
+  // Small chip overlaid on the card (e.g. "Mjedisor") to flag which group
+  // it belongs to at a glance, independent of the filter above.
+  badge?: string;
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  meta?: string;
+  icon?: string;
+  image?: { src: string; alt: string };
+  imagePlaceholder?: string;
+}
+
+interface Props {
+  items: CardSliderItem[];
+  ariaLabel: string;
+  prevLabel?: string;
+  nextLabel?: string;
+  cardWidth?: string;
+}
+
+const {
+  items,
+  ariaLabel,
+  prevLabel = "Kartat e mëparshme",
+  nextLabel = "Kartat pasuese",
+  cardWidth
+} = Astro.props;
+---
+
+<div class="card-slider" data-slider-wrap style={cardWidth ? `--card-slider-width: ${cardWidth}` : undefined}>
+  <button type="button" class="card-slider__nav card-slider__nav--prev" data-slider-prev aria-label={prevLabel}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+  </button>
+
+  <ul class="card-slider__track" data-slider aria-label={ariaLabel}>
+    {
+      items.map((item) => {
+        const hasMedia = Boolean(item.image || item.imagePlaceholder);
+        const hasOwnLink = Boolean(item.href && item.linkLabel);
+        const Tag = item.href && !hasOwnLink ? "a" : "div";
+
+        return (
+          <li class="card-slider__item" data-slider-item data-tag={item.tag}>
+            <Tag class="card-slider__card" href={hasOwnLink ? undefined : item.href}>
+              {item.badge && <span class="card-slider__badge">{item.badge}</span>}
+              {hasMedia && (
+                <span class="card-slider__media">
+                  {item.image ? (
+                    <img src={item.image.src} alt={item.image.alt} loading="lazy" />
+                  ) : (
+                    <span class="card-slider__media-placeholder">{item.imagePlaceholder}</span>
+                  )}
+                </span>
+              )}
+              {item.icon && (
+                <span class="card-slider__icon" aria-hidden="true" set:html={item.icon} />
+              )}
+              {item.eyebrow && <span class="card-slider__eyebrow">{item.eyebrow}</span>}
+              <span class="card-slider__title">{item.title}</span>
+              {item.description && <span class="card-slider__desc">{item.description}</span>}
+              {item.meta && <span class="card-slider__meta">{item.meta}</span>}
+              {hasOwnLink && (
+                <a class="card-slider__link" href={item.href} target="_blank" rel="noreferrer">
+                  {item.linkLabel}
+                </a>
+              )}
+            </Tag>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <button type="button" class="card-slider__nav card-slider__nav--next" data-slider-next aria-label={nextLabel}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+  </button>
+</div>
+
+<style>
+  .card-slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .card-slider__track {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0.25rem 0.1rem 1rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-strong) var(--paper-cool);
+  }
+
+  .card-slider__track::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .card-slider__track::-webkit-scrollbar-track {
+    background: var(--paper-cool);
+    border: 1px solid var(--line);
+  }
+
+  .card-slider__track::-webkit-scrollbar-thumb {
+    background: var(--accent-strong);
+    border: 1px solid var(--ink);
+  }
+
+  .card-slider__item {
+    flex: 0 0 auto;
+    width: var(--card-slider-width, min(80vw, 280px));
+    scroll-snap-align: start;
+    --card-rotate: 0deg;
+  }
+
+  .card-slider__item:nth-child(3n+2) {
+    --card-rotate: 0.6deg;
+  }
+
+  .card-slider__item:nth-child(3n) {
+    --card-rotate: -0.5deg;
+  }
+
+  .card-slider__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    height: 100%;
+    padding: 1.15rem;
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 5px 5px 0 var(--ink);
+    color: var(--text);
+    text-decoration: none;
+    transform: rotate(var(--card-rotate));
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .card-slider__badge {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 1;
+    padding: 0.2rem 0.5rem;
+    border: 2px solid var(--ink);
+    background: var(--accent-strong);
+    color: var(--ink-reverse, #fff);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .card-slider__item:nth-child(3n+2) .card-slider__card {
+    background: var(--paper-cool);
+  }
+
+  .card-slider__item:nth-child(3n) .card-slider__card {
+    background: var(--accent-soft);
+  }
+
+  a.card-slider__card:hover,
+  a.card-slider__card:focus-visible {
+    transform: translate(-2px, -2px) rotate(var(--card-rotate));
+    box-shadow: 7px 7px 0 var(--ink);
+  }
+
+  .card-slider__media {
+    display: block;
+    margin: -1.15rem -1.15rem 0.15rem;
+    aspect-ratio: 4 / 3;
+    border-bottom: 2px solid var(--ink);
+    overflow: hidden;
+  }
+
+  .card-slider__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-slider__media-placeholder {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    padding: 0.75rem;
+    border-bottom: 2px dashed var(--ink);
+    background: var(--paper-cool);
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .card-slider__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 2px solid var(--ink);
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+  }
+
+  .card-slider__icon :global(svg) {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .card-slider__eyebrow {
+    color: var(--accent-strong);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .card-slider__title {
+    font-weight: 800;
+    font-size: 1.02rem;
+    line-height: 1.25;
+  }
+
+  .card-slider__desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .card-slider__meta {
+    color: var(--muted);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .card-slider__link {
+    align-self: start;
+    margin-top: auto;
+    padding-top: 0.15rem;
+    color: var(--accent-strong);
+    font-weight: 700;
+    font-size: 0.86rem;
+    text-decoration: underline;
+  }
+
+  .card-slider__link:hover,
+  .card-slider__link:focus-visible {
+    color: var(--ink);
+  }
+
+  .card-slider__nav {
+    display: inline-grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    flex-shrink: 0;
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .card-slider__nav svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .card-slider__nav:hover,
+  .card-slider__nav:focus-visible {
+    color: var(--ink-reverse);
+    background: var(--ink);
+    transform: translate(-1px, -1px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  @media (max-width: 760px) {
+    .card-slider__nav {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const attachCardSliders = () => {
+    document.querySelectorAll("[data-slider]").forEach((slider) => {
+      if (!(slider instanceof HTMLElement) || slider.dataset.sliderBound === "true") return;
+      slider.dataset.sliderBound = "true";
+
+      const wrap = slider.closest("[data-slider-wrap]");
+      if (!wrap) return;
+
+      const prevBtn = wrap.querySelector("[data-slider-prev]");
+      const nextBtn = wrap.querySelector("[data-slider-next]");
+
+      const scrollByCard = (direction: number) => {
+        const card = slider.querySelector("[data-slider-item]");
+        const distance = card ? card.getBoundingClientRect().width + 16 : 260;
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+        // Loop around instead of stopping dead at either end: past the
+        // last card, "next" wraps to the start; before the first, "prev"
+        // wraps to the end.
+        if (direction > 0 && slider.scrollLeft >= maxScroll - 4) {
+          slider.scrollTo({ left: 0, behavior: "smooth" });
+        } else if (direction < 0 && slider.scrollLeft <= 4) {
+          slider.scrollTo({ left: maxScroll, behavior: "smooth" });
+        } else {
+          slider.scrollBy({ left: distance * direction, behavior: "smooth" });
+        }
+      };
+
+      prevBtn?.addEventListener("click", () => scrollByCard(-1));
+      nextBtn?.addEventListener("click", () => scrollByCard(1));
+    });
+  };
+
+  document.addEventListener("astro:page-load", attachCardSliders);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachCardSliders, { once: true });
+  } else {
+    attachCardSliders();
+  }
+</script>

@@ -35,12 +35,13 @@
 		"@tiptap/extensions": "3.30.0",
 		"@tiptap/pm": "3.30.0",
 		"@tiptap/starter-kit": "3.30.0",
-		"astro": "^7.0.0",
+		"astro": "^7.0.8",
 		"dotenv": "^17.4.2",
 		"prettier-plugin-svelte": "^4.1.1",
 		"prettier-plugin-tailwindcss": "^0.8.1",
 		"prismjs": "^1.30.0",
 		"svelte": "^5.56.6",
+		"svelte-confetti": "^2.3.2",
 		"typescript": "^6.0.3"
 	},
 	"devDependencies": {

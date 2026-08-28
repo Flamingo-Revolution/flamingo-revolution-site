@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteFooter from "./SiteFooter.astro";
 import SiteHeader from "./SiteHeader.astro";
 import type { Locale, SiteCopy } from "../data/site";
+import { splitTitleLines } from "../utils/text";
 
 type NavPage =
   | "home"
@@ -24,15 +25,18 @@ interface Props {
   localePath: string;
   eyebrow: string;
   title: string;
+  /** Visible page heading, if it should differ from the <title> text (e.g. to keep it to two words). */
+  heading?: string;
   description: string;
   lead: string;
 }
 
-const { locale, siteCopy, currentPage, localePath, eyebrow, title, description, lead } = Astro.props;
+const { locale, siteCopy, currentPage, localePath, eyebrow, title, heading, description, lead } = Astro.props;
 const homeHref = locale === "sq" ? "/" : "/en/";
+const headingWords = splitTitleLines(heading ?? title);
 ---
 
-<BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale}>
+<BaseLayout title={`${title} | ${siteCopy.meta.title}`} description={description} locale={locale} noindex>
   <div class="page-shell">
     <SiteHeader locale={locale} copy={siteCopy} currentPage={currentPage} localePath={localePath} />
 
@@ -41,23 +45,23 @@ const homeHref = locale === "sq" ? "/" : "/en/";
         <div class="contact-hero__intro">
           <p class="eyebrow">{eyebrow}</p>
           <h1>
-            <span>{title}</span>
+            {headingWords.map((word) => <span>{word}</span>)}
           </h1>
           <p class="lead">{lead}</p>
         </div>
 
         <article class="contact-card">
-          <p class="contact-card__kicker">{locale === "sq" ? "Se shpejti" : "Coming soon"}</p>
+          <p class="contact-card__kicker">{locale === "sq" ? "Së shpejti" : "Coming soon"}</p>
           <p>
             {
               locale === "sq"
-                ? "Kjo faqe eshte ne ndertim e siper. Ndersa e gatisim, na ndiqni ne rrjetet sociale ose na shkruani."
+                ? "Kjo faqe është në ndërtim e sipër. Ndërsa e gatisim, na ndiqni në rrjetet sociale ose na shkruani."
                 : "This page is under construction. While we build it, follow us on social media or get in touch."
             }
           </p>
           <div class="hero__actions">
             <a class="button button--primary" href={homeHref}>
-              {locale === "sq" ? "Kthehu ne balline" : "Back to home"}
+              {locale === "sq" ? "Kthehu në ballinë" : "Back to home"}
             </a>
           </div>
         </article>

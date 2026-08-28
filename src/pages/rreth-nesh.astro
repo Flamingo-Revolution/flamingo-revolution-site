@@ -1,45 +1,46 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteFrame from "../components/SiteFrame.astro";
+import PageHero from "../components/PageHero.astro";
 import { siteCopy } from "../data/site";
 import { aboutPageCopy } from "../data/about";
 
 const locale = "sq";
 const siteCopyLocale = siteCopy[locale];
 const copy = aboutPageCopy[locale];
+
+// Ekipi mund të rritet shumë (300+ kontribues). Në vend të fshehim shumicën
+// pas një "+N kontribues" statik, i shfaqim TË GJITHË në një mur me kolona
+// që lëvizin pafund (CSS-only, pa timer JS) — kështu lista mund të rritet
+// pa u bërë e ngjeshur apo pa fshehur njeri.
+const TEAM_WALL_COLUMNS = 5;
+const shuffledMembers = [...copy.ekipi.members].sort(() => Math.random() - 0.5);
+const teamColumns = Array.from({ length: TEAM_WALL_COLUMNS }, (_, col) =>
+  shuffledMembers.filter((_, i) => i % TEAM_WALL_COLUMNS === col)
+).filter((column) => column.length > 0);
 ---
 
-<BaseLayout title={copy.meta.title} description={copy.meta.description} locale={locale}>
+<BaseLayout
+  title={copy.meta.title}
+  description={copy.meta.description}
+  locale={locale}
+  pageType="AboutPage"
+  breadcrumbs={[
+    { name: locale === "sq" ? "Ballina" : "Home", path: "/" },
+    { name: copy.hero.title, path: "/rreth-nesh/" }
+  ]}
+>
   <SiteFrame locale={locale} copy={siteCopyLocale} currentPage="about" localePath="rreth-nesh">
     <main class="about-page" id="main" tabindex="-1">
-      <section class="protests-hero">
-        <div class="protests-hero__content">
-          <p class="eyebrow">{copy.hero.eyebrow}</p>
-          <h1><span>{copy.hero.title}</span></h1>
-          <p class="lead">{copy.hero.lead}</p>
-          <div class="hero__actions">
-            <a class="button button--primary" href={siteCopyLocale.hero.participateLink}>
-              {copy.hero.primaryCta}
-            </a>
-            <a class="button button--ghost" href="#misioni">
-              {copy.hero.secondaryCta}
-            </a>
-          </div>
-        </div>
-
-        <nav class="protests-hero__panel" aria-label={copy.hero.panelTitle}>
-          <h2>{copy.hero.panelTitle}</h2>
-          <ul>
-            {
-              copy.hero.panelLinks.map((link) => (
-                <li>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </section>
+      <PageHero
+        eyebrow={copy.hero.eyebrow}
+        title={copy.hero.title}
+        lead={copy.hero.lead}
+        primaryCta={{ label: copy.hero.primaryCta, href: siteCopyLocale.hero.participateLink }}
+        secondaryCta={{ label: copy.hero.secondaryCta, href: "#misioni" }}
+        panelTitle={copy.hero.panelTitle}
+        panelLinks={copy.hero.panelLinks}
+      />
 
       <section class="section-block mission-section" id="misioni">
         <div class="section-heading">
@@ -55,28 +56,78 @@ const copy = aboutPageCopy[locale];
         </div>
       </section>
 
-      <section class="section-block section-block--accent" id="partneret">
+      <section class="section-block section-block--accent mission-section" id="rregullorja">
         <div class="section-heading">
-          <p class="eyebrow">{copy.partneret.kicker}</p>
-          <h2>{copy.partneret.title}</h2>
-          <p>{copy.partneret.description}</p>
+          <p class="eyebrow">{copy.rregullorja.kicker}</p>
+          <h2>{copy.rregullorja.title}</h2>
         </div>
 
-        <div class="gallery-grid">
+        <div class="mission-section__content">
+          <p>{copy.rregullorja.description}</p>
+          <p class="mission-section__principle">
+            {copy.rregullorja.rules.map((rule, index) => <span>{index + 1}. {rule}</span>)}
+          </p>
+        </div>
+      </section>
+
+      <section class="section-block" id="ekipi">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.ekipi.kicker}</p>
+          <h2>{copy.ekipi.title}</h2>
+          <p>{copy.ekipi.description}</p>
+        </div>
+
+        <div class="team-wall" aria-hidden="true">
           {
-            Array.from({ length: 4 }).map(() => (
-              <div class="gallery-tile" aria-hidden="true">
-                <span>{copy.partneret.placeholderLabel}</span>
+            teamColumns.map((names, colIndex) => (
+              <div class="team-wall__col" style={`--team-wall-duration: ${22 + colIndex * 4}s`}>
+                <div class="team-wall__track">
+                  <div class="team-wall__group">
+                    {names.map((name) => (
+                      <span class="team-wall__name">{name}</span>
+                    ))}
+                  </div>
+                  <div class="team-wall__group">
+                    {names.map((name) => (
+                      <span class="team-wall__name">{name}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))
           }
         </div>
+        <p class="sr-only">
+          {copy.ekipi.members.join(", ")}. {copy.ekipi.moreLabel}.
+        </p>
+        <p class="team-wall__more">{copy.ekipi.moreLabel}</p>
+      </section>
 
-        <div class="protests-note">
-          <p>{copy.partneret.note}</p>
-          <a class="button button--ghost" href="#kontakt">
-            {copy.partneret.ctaLabel}
-          </a>
+      <section class="section-block section-block--accent mission-section" id="transparenca">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.transparenca.kicker}</p>
+          <h2>{copy.transparenca.title}</h2>
+        </div>
+
+        <div class="mission-section__content">
+          <p>{copy.transparenca.description}</p>
+          <p class="mission-section__principle">
+            {copy.transparenca.points.map((point) => <span>{point}</span>)}
+          </p>
+        </div>
+      </section>
+
+      <section class="section-block mission-section" id="partneret">
+        <div class="section-heading">
+          <p class="eyebrow">{copy.partneret.kicker}</p>
+          <h2>{copy.partneret.title}</h2>
+        </div>
+
+        <div class="mission-section__content">
+          <p>{copy.partneret.description}</p>
+          <p class="mission-section__principle">
+            {copy.partneret.categories.map((category) => <span>{category}</span>)}
+          </p>
         </div>
       </section>
 
@@ -98,94 +149,11 @@ const copy = aboutPageCopy[locale];
           </div>
         </article>
       </section>
-
-      <section class="contact-details" aria-label={copy.kontakt.title}>
-        <article class="contact-panel">
-          <h2>{copy.kontakt.ideasTitle}</h2>
-          <p>{copy.kontakt.ideasText}</p>
-          <a class="button button--ghost" href={siteCopyLocale.hero.participateLink}>
-            {siteCopyLocale.hero.primaryCta}
-          </a>
-        </article>
-
-        <article class="contact-panel contact-panel--social">
-          <h2>{copy.kontakt.socialTitle}</h2>
-          <div class="contact-socials">
-            {
-              siteCopyLocale.footer.links.map((link) => (
-                <a href={link.href} target="_blank" rel="noreferrer">
-                  {link.label}
-                </a>
-              ))
-            }
-          </div>
-        </article>
-      </section>
     </main>
   </SiteFrame>
 </BaseLayout>
 
 <style>
-  .protests-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.7fr);
-    gap: clamp(1.5rem, 4vw, 3.4rem);
-    align-items: start;
-    padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
-    background: linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
-    border-top: 1px solid var(--line);
-    border-bottom: 4px solid var(--line);
-  }
-
-  .protests-hero__content {
-    width: min(100%, 760px);
-    min-width: 0;
-  }
-
-  .protests-hero__panel {
-    display: grid;
-    gap: 0.75rem;
-    height: fit-content;
-    min-width: 0;
-    padding: clamp(1rem, 3vw, 1.4rem);
-    border: 2px solid var(--ink);
-    background: var(--surface);
-    box-shadow: 7px 7px 0 var(--ink);
-    transform: rotate(-1deg);
-  }
-
-  .protests-hero__panel h2 {
-    margin: 0;
-    color: var(--accent-strong);
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-
-  .protests-hero__panel ul {
-    display: grid;
-    gap: 0.55rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .protests-hero__panel a {
-    display: inline-flex;
-    align-items: center;
-    padding-bottom: 0.12rem;
-    border-bottom: 0.14rem solid var(--accent);
-    color: var(--text);
-    font-weight: 800;
-    text-decoration: none;
-  }
-
-  .protests-hero__panel a:hover,
-  .protests-hero__panel a:focus-visible {
-    color: var(--accent-strong);
-  }
-
   .mission-section {
     display: grid;
     grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
@@ -223,45 +191,97 @@ const copy = aboutPageCopy[locale];
     display: block;
   }
 
-  .protests-note {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.9rem;
-    margin-top: 1.6rem;
+  /* Muri i kontribuesve: kolona vertikale që lëvizin pafund (CSS-only).
+     Çdo kolonë përmban listën e vet dyfishuar (.team-wall__group x2) dhe
+     lëviz translateY(-50%) — pikërisht sa një kopje, kështu lakohet pa u
+     ndjerë ndërprerja. Drejtimi alternon çift/tek dhe kohëzgjatja ndryshon
+     pak nga kolona në kolonë (--team-wall-duration), që të mos lëvizin në
+     unison dhe të duket më organike. */
+  .team-wall {
+    height: 300px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.65rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
   }
 
-  .protests-note p {
-    margin: 0;
+  .team-wall__col {
+    overflow: hidden;
+  }
+
+  .team-wall__track {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    animation: team-wall-scroll linear infinite;
+    animation-duration: var(--team-wall-duration, 24s);
+  }
+
+  .team-wall__col:nth-child(even) .team-wall__track {
+    animation-direction: reverse;
+  }
+
+  .team-wall__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  @keyframes team-wall-scroll {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  .team-wall:hover .team-wall__track {
+    animation-play-state: paused;
+  }
+
+  .team-wall__name {
+    padding: 0.55rem 0.5rem;
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 800;
+    font-size: 0.82rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .team-wall__col:nth-child(3n+2) .team-wall__name {
+    background: var(--paper-cool);
+  }
+
+  .team-wall__col:nth-child(3n) .team-wall__name {
+    background: var(--accent-soft);
+  }
+
+  .team-wall__more {
+    margin: 1rem 0 0;
     color: var(--muted);
     font-weight: 700;
   }
 
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.85rem;
-    margin-bottom: 1.7rem;
-  }
+  @media (prefers-reduced-motion: reduce) {
+    .team-wall {
+      height: auto;
+      overflow: visible;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
 
-  .gallery-tile {
-    display: grid;
-    place-items: center;
-    aspect-ratio: 4 / 3;
-    padding: 0.5rem;
-    border: 2px dashed var(--ink);
-    background: var(--paper-cool);
-    color: var(--muted);
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    text-align: center;
-    text-transform: uppercase;
-  }
+    .team-wall__track {
+      animation: none;
+    }
 
-  @media (max-width: 1020px) {
-    .protests-hero {
-      grid-template-columns: 1fr;
+    .team-wall__group:nth-child(2) {
+      display: none;
     }
   }
 
@@ -271,12 +291,16 @@ const copy = aboutPageCopy[locale];
       gap: 1.25rem;
     }
 
-    .gallery-grid {
+    .team-wall {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      height: 220px;
     }
 
-    .protests-hero__panel {
-      transform: none !important;
+    /* Only 2 of the 5 desktop columns fit without clipping at this width;
+       hide the rest instead of letting the grid wrap them into a row that
+       gets cut off by the fixed height + overflow: hidden above. */
+    .team-wall__col:nth-child(n + 3) {
+      display: none;
     }
   }
 </style>

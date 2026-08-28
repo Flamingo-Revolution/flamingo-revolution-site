@@ -7,9 +7,12 @@ import LandingNav from "../../components/referendum/LandingNav/LandingNav.svelte
 import ReasonsSection from "../../components/referendum/ReasonsSection/ReasonsSection.astro";
 import OriginSection from "../../components/referendum/OriginSection/OriginSection.astro";
 import FAQSection from "../../components/referendum/FAQSection/FAQSection.svelte";
+import GroupHighlights from "../../components/referendum/GroupHighlights/GroupHighlights.astro";
+import FinalCta from "../../components/referendum/FinalCta/FinalCta.svelte";
 import ReferendumHeader from "../../components/referendum/ReferendumHeader/ReferendumHeader.astro";
 import { getReferendumIndexItems } from "../../data/referendum";
 import { landingFaqs } from "../../data/referendumFaq";
+import { buildFaqPageStructuredData } from "../../lib/seo/structuredData";
 import { siteCopy } from "../../data/site";
 import "../../styles/referendum-landing.css";
 
@@ -18,12 +21,20 @@ export const prerender = true;
 const copy = siteCopy.sq;
 const items = await getReferendumIndexItems();
 
-const title = "Referendumi për Ligjin 21/2024";
+const title = "Referendum për shfuqizimin e Ligjit 21/2024 | Revolucioni Flamingo";
 const description =
-	"Nisma qytetare për referendumin për shfuqizimin e Ligjit nr. 21/2024. Regjistrohu për njoftime mbi KQZ-në dhe mbledhjen e firmave.";
+	"Nisma qytetare për referendum: firmat, KQZ, faktet ligjore dhe njoftimet për Ligjin nr. 21/2024.";
 ---
 
-<ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
+<ReferendumLayout
+	title={title}
+	description={description}
+	jsonLdExtra={[buildFaqPageStructuredData(landingFaqs)]}
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: "Referendum", path: "/referendum/" }
+	]}
+>
 	<div class="referendum-landing">
 		<ReferendumStatusBar processHref="#procesi" />
 		<LandingNav client:load />
@@ -31,8 +42,6 @@ const description =
 		<main id="main" tabindex="-1">
 			<section class="hero" id="njoftime" aria-labelledby="deklarata-title">
 				<div class="shell hero-center" data-reveal>
-					<ReferendumHeader copy={copy} />
-
 					<div class="hero-split">
 						<div class="hero-copy">
 							<p class="eyebrow"><span></span> Referendum 21/2024</p>
@@ -42,14 +51,18 @@ const description =
 								<span class="hero-line">trashëgohet!</span>
 							</h1>
 							<p class="hero-lede">
-								Nisma qytetare kërkon shfuqizimin e Ligjit nr. 21/2024. Lini email-in për t’u treguar gatishmërinë tuaj për të firmosur.
+								Nisma qytetare kërkon shfuqizimin e Ligjit nr. 21/2024. Lini email-in për të treguar gatishmërinë tuaj për të firmosur
 							</p>
+
+							<GroupHighlights />
 						</div>
 
 						<div class="hero-aside">
-							<div class="hero-signup">
-								<h2 id="njoftime-title" class="sr-only">Merr njoftime për referendumin</h2>
-								<NewsletterSignup client:load reason="referendum" headingId="njoftime-title" />
+							<div class="hero-signup-slot">
+								<div class="hero-signup">
+									<h2 id="njoftime-title" class="sr-only">Merr njoftime për referendumin</h2>
+									<NewsletterSignup client:load reason="referendum" headingId="njoftime-title" />
+								</div>
 							</div>
 							<div class="hero-metrics" role="group" aria-label="Të dhënat kryesore të nismës">
 								<span><strong>12</strong><small>nismëtarë</small></span>
@@ -75,7 +88,7 @@ const description =
 						</h2>
 						<p class="lead">
 							Ne, qytetarë, aktivistë dhe përfaqësues të shoqërisë civile, kemi nisur procedurën
-							kushtetuese për t’u kërkuar qytetarëve shqiptarë të vendosin mbi të ardhmen e zonave
+							kushtetuese për t’u kërkuar shtetasve shqiptarë të vendosin mbi të ardhmen e zonave
 							të mbrojtura.
 						</p>
 						<p>
@@ -108,14 +121,14 @@ const description =
 			<section class="process-section" id="procesi" aria-labelledby="process-title">
 				<div class="shell process-center" data-reveal>
 					<p class="section-kicker">Ku jemi tani?</p>
-					<h2 id="process-title">Depozituar në KQZ — firmat nuk kanë nisur ende</h2>
+					<h2 id="process-title">KQZ-ja e miratoi kërkesën — firmat nisin së shpejti</h2>
 					<div class="current-step">
 						<span>Gjendja aktuale</span>
-						<strong>02</strong>
-						<h3>Në pritje të konfirmimit nga KQZ-ja</h3>
+						<strong>03</strong>
+						<h3>Mbledhja e firmave</h3>
 						<p>
-							Kërkesa është depozituar. Mbledhja e firmave nis vetëm pasi KQZ-ja të konfirmojë
-							kërkesën dhe të miratojë fletët-tip zyrtare.
+							Kërkesa u miratua nga KQZ-ja. Mbledhja e firmave niset së shpejti në Tiranë, te
+							Kryeministria, gjatë protestës së hënë, 24 gusht, ora 20:00 – 22:00.
 						</p>
 					</div>
 					<ol class="process-list">
@@ -126,19 +139,19 @@ const description =
 								<small>Të paktën 12 zgjedhës të regjistruar</small>
 							</div>
 						</li>
-						<li class="active" aria-current="step">
+						<li class="done">
 							<span>02</span>
 							<div>
-								<em>Gjendja aktuale</em>
 								<strong>Depozitimi në KQZ</strong>
-								<small>Kërkesa është depozituar · në pritje të konfirmimit</small>
+								<small>Kërkesa u miratua nga KQZ-ja</small>
 							</div>
 						</li>
-						<li class="upcoming-signatures">
+						<li class="active" aria-current="step">
 							<span>03</span>
 							<div>
-								<strong>50.000+ firma</strong>
-								<small>Nuk ka nisur ende · fillon pas konfirmimit nga KQZ-ja</small>
+								<em>Gjendja aktuale</em>
+								<strong>Mbledhja e firmave</strong>
+								<small>Nis në Tiranë me protestën te Kryeministria · E hënë, 24 gusht · 20:00 – 22:00</small>
 							</div>
 						</li>
 						<li>
@@ -172,7 +185,7 @@ const description =
 					</ol>
 					<div class="process-cta">
 						<p>Nëse dëshironi të bëheni vullnetarë në mbledhjen e 50.000 firmave, angazhohuni këtu.</p>
-						<a class="button button-engage" href="https://pershqiperine.netlify.app">
+						<a class="button button-engage" href="https://portal.referendum21.org">
 							Angazhohu <span aria-hidden="true">→</span>
 						</a>
 					</div>
@@ -247,8 +260,35 @@ const description =
 					</div>
 				</aside>
 			</section>
+
+			<FinalCta client:idle />
 		</main>
 	</div>
 
 	<ReferendumReveal />
 </ReferendumLayout>
+
+<script>
+	const slot = document.querySelector(".hero-signup-slot");
+	const card = slot?.querySelector(".hero-signup");
+
+	if (slot instanceof HTMLElement && card instanceof HTMLElement) {
+		const syncHeight = (animate: boolean) => {
+			const next = `${card.offsetHeight}px`;
+			if (slot.style.height === next) return;
+
+			if (!animate) {
+				slot.style.transition = "none";
+				slot.style.height = next;
+				void slot.offsetHeight;
+				slot.style.transition = "";
+				return;
+			}
+
+			slot.style.height = next;
+		};
+
+		syncHeight(false);
+		new ResizeObserver(() => syncHeight(true)).observe(card);
+	}
+</script>

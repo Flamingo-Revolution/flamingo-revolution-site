@@ -4,17 +4,27 @@ import ReferendumStatusBar from "../../components/referendum/ReferendumStatusBar
 import ReferendumSubnav from "../../components/referendum/ReferendumSubnav/ReferendumSubnav.astro";
 import ReferendumReveal from "../../components/referendum/ReferendumReveal/ReferendumReveal.astro";
 import FaqPage from "../../components/referendum/FAQSection/components/FaqPage/FaqPage.svelte";
-import { siteCopy } from "../../data/site";
+import { frequentlyAskedQuestions } from "../../data/referendumFaq";
+import { buildFaqPageStructuredData } from "../../lib/seo/structuredData";
 import "../../styles/referendum-landing.css";
 
 export const prerender = true;
 
-const copy = siteCopy.sq;
-const title = "Pyetje të shpeshta";
-const description = "Pyetje dhe përgjigje për firmat, KQZ-në dhe procesin e referendumit.";
+const title = "Pyetje të shpeshta për referendumin | Revolucioni Flamingo";
+const description =
+	"Përgjigje për firmat, KQZ-në, diasporën dhe procesin e referendumit për shfuqizimin e Ligjit nr. 21/2024.";
 ---
 
-<ReferendumLayout title={`${title} | ${copy.meta.title}`} description={description}>
+<ReferendumLayout
+	title={title}
+	description={description}
+	jsonLdExtra={[buildFaqPageStructuredData(frequentlyAskedQuestions)]}
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: "Referendum", path: "/referendum/" },
+		{ name: "Pyetje të shpeshta", path: "/referendum/pyetje-te-shpeshta/" }
+	]}
+>
 	<div class="referendum-landing referendum-subpage">
 		<ReferendumStatusBar />
 		<main id="main" tabindex="-1">

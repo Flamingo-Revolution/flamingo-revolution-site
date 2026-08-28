@@ -1,12 +1,12 @@
 ---
 title: Pse nisi protesta
-description: Si u kthye mbrojtja e zonave te mbrojtura ne nje kerkese me te gjere per transparence dhe llogaridhenie.
+description: Si u kthye mbrojtja e zonave të mbrojtura në një kërkesë më të gjerë për transparencë dhe llogaridhënie.
 pubDate: 2026-05-31
 author: redaksia
 ---
 
-Protestat e Revolucionit Flamingo nuk filluan si nje debati abstrakt. Filluan nga frika konkrete se bregdeti dhe zonat e mbrojtura po jepeshin pa transparence te plote.
+Protestat e Revolucionit Flamingo nuk filluan si një debat abstrakt, por nga frika konkrete se bregdeti dhe zonat e mbrojtura po dhuroheshin pa asnjë lloj transparence.
 
-Zvërneci u be pika e kthese. Pamjet e perplasjes dhe mungesa e nderhyrjes se qarte e kthyen nje konflikt lokal ne nje valë me te gjere qytetare.
+Zvërneci u bë pika e kthesës. Pamjet e përplasjes me forcat e sigurisë private dhe mungesa e ndërhyrjes së Policisë së Shtetit e kthyen këtë konflikt lokal në një valë më të gjerë qytetare.
 
-Kerkesat u zgjeruan shpejt: nga ndalimi i punimeve te shfuqizimi i ligjeve qe e bejne te mundur dhënien e tokës publike dhe private investitorëve të favorizuar.
+Kërkesat u zgjeruan shpejt: nga ndalimi i punimeve te shfuqizimi i ligjeve, që e bëjnë të mundur dhënien e tokës publike dhe private tek investitorët e favorizuar.

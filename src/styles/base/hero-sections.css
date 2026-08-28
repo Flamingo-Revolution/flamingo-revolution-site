@@ -1,0 +1,234 @@
+/*
+  Hero-style banners used at the top of pages: the landing hero plus the
+  documents/contact/ideas two-column hero variants and their side panels.
+*/
+
+.hero {
+	padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem) clamp(2rem, 5vw, 3.6rem);
+	background: linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+	border-top: 1px solid var(--line);
+	border-bottom: 4px solid var(--line);
+}
+
+.documents-hero,
+.contact-hero {
+	display: grid;
+	grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1fr);
+	gap: clamp(1.5rem, 4vw, 3.4rem);
+	align-items: end;
+	padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
+	background:
+		radial-gradient(circle at 86% 22%, rgba(255, 105, 184, 0.24), transparent 26%),
+		linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+	border-top: 1px solid var(--line);
+	border-bottom: 4px solid var(--line);
+}
+
+.ideas-hero {
+	display: grid;
+	grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1fr);
+	gap: clamp(1.5rem, 4vw, 3.4rem);
+	align-items: stretch;
+	padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
+	background: linear-gradient(135deg, var(--paper-cool), var(--paper-warm));
+	border-top: 1px solid var(--line);
+	border-bottom: 4px solid var(--line);
+}
+
+.contact-hero {
+	align-items: center;
+	background:
+		radial-gradient(circle at 86% 22%, rgba(255, 105, 184, 0.18), transparent 26%),
+		linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+}
+
+.contact-hero__intro {
+	align-self: center;
+	min-width: 0;
+}
+
+.contact-hero__intro .lead {
+	max-width: 46rem;
+}
+
+.hero__content {
+	width: min(100%, 760px);
+	min-width: 0;
+}
+
+.documents-hero__copy {
+	display: grid;
+	gap: 1rem;
+	min-width: 0;
+	padding: clamp(1rem, 3vw, 1.4rem);
+	border: 2px solid var(--ink);
+	background: var(--surface);
+	box-shadow: 7px 7px 0 var(--ink);
+	transform: rotate(0.6deg);
+}
+
+.ideas-hero__panel {
+	display: grid;
+	height: fit-content;
+	width: fit-content;
+	align-content: space-between;
+	gap: 0.75rem;
+	min-width: 0;
+	max-width: clamp(16srem, 100%, 24rem);
+	padding: clamp(1rem, 3vw, 1.4rem);
+	border: 2px solid var(--ink);
+	background: var(--surface);
+	box-shadow: 7px 7px 0 var(--ink);
+	transform: rotate(-1deg);
+}
+
+.contact-card {
+	display: grid;
+	gap: 0.95rem;
+	min-width: 0;
+	padding: clamp(1rem, 3vw, 1.45rem);
+	border: 3px solid var(--ink);
+	background: var(--surface);
+	box-shadow: 7px 7px 0 var(--ink);
+	transform: rotate(0.45deg);
+}
+
+.contact-card__kicker {
+	margin: 0;
+	color: var(--accent-strong);
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+
+.contact-card__email {
+	display: inline-block;
+	width: fit-content;
+	max-width: 100%;
+	color: var(--text);
+	font-size: clamp(1.35rem, 2.6vw, 2.15rem);
+	font-weight: 800;
+	line-height: 1.08;
+	text-decoration: underline;
+	text-decoration-color: var(--accent);
+	text-decoration-thickness: 0.18rem;
+	text-underline-offset: 0.28rem;
+	overflow-wrap: anywhere;
+}
+
+.contact-card p:not(.contact-card__kicker) {
+	margin: 0;
+	color: var(--muted);
+	line-height: 1.55;
+}
+
+.contact-card .hero__actions {
+	margin-top: 0.25rem;
+}
+
+.contact-card .button--primary {
+	color: var(--ink-reverse);
+	background: var(--ink);
+}
+
+.documents-hero__copy h2 {
+	max-width: 18ch;
+	font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.ideas-hero__panel h2 {
+	font-size: 1.4rem;
+}
+
+.documents-hero__copy p {
+	margin: 0;
+	color: var(--muted);
+	font-size: 1.05rem;
+	line-height: 1.6;
+}
+
+.ideas-hero__panel p {
+	margin: 0;
+	color: var(--muted);
+	font-size: 0.9rem;
+	line-height: 1.6;
+}
+
+.documents-note {
+	display: grid;
+	gap: 0.75rem;
+	padding: 0.95rem;
+	border-left: 0.45rem solid var(--accent);
+	background: var(--paper-cool);
+}
+
+.documents-note p {
+	color: var(--text);
+	font-weight: 800;
+	font-size: 1rem;
+}
+
+.documents-note .button {
+	justify-self: start;
+	min-height: 2.75rem;
+	padding: 0.68rem 0.85rem;
+}
+
+.documents-hero__copy strong {
+	justify-self: start;
+	padding: 0.35rem 0.55rem;
+	color: var(--ink-reverse);
+	background: var(--ink);
+	font-size: 0.9rem;
+}
+
+.ideas-hero__panel strong {
+	justify-self: start;
+	padding: 0.35rem 0.55rem;
+	color: var(--ink-reverse);
+	background: var(--ink);
+	font-size: 0.9rem;
+}
+
+@media (max-width: 1020px) {
+	.ideas-hero {
+		grid-template-columns: 1fr;
+	}
+
+	.documents-hero,
+	.contact-hero {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.hero,
+	.documents-hero,
+	.ideas-hero,
+	.contact-hero {
+		padding-right: 1rem;
+		padding-left: 1rem;
+	}
+
+	.documents-hero__copy,
+	.ideas-hero__panel,
+	.contact-card {
+		transform: none !important;
+	}
+}
+
+@media (max-width: 520px) {
+	.hero {
+		padding-right: 1rem;
+		padding-left: 1rem;
+	}
+
+	.documents-hero__copy,
+	.ideas-hero__panel,
+	.documents-note,
+	.contact-card {
+		max-width: 100%;
+		min-width: 0;
+	}
+}

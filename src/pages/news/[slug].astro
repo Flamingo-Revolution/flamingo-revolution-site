@@ -59,8 +59,17 @@ const updatedLabel =
 	title={`${article.title} | ${siteCopy.sq.meta.title}`}
 	description={description}
 	locale="sq"
+	pageType="NewsArticle"
+	publishedTime={article.publishedAt ?? undefined}
+	modifiedTime={article.updatedAt}
+	authorName={article.reporter.name}
 	socialImagePath={article.coverImageUrl ?? undefined}
 	socialImageAlt={article.coverImageUrl ? article.title : undefined}
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: "Lajme", path: "/news/" },
+		{ name: article.title, path: `/news/${article.slug}/` }
+	]}
 >
 	<SiteFrame locale="sq" copy={siteCopy.sq} currentPage="times" localePath="news">
 		<main class="news-article" id="main" tabindex="-1">

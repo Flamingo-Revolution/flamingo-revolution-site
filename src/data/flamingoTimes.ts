@@ -8,9 +8,25 @@ export type FlamingoTimesIssue = {
   topics: string[];
   href: string;
   pdfHref: string;
+  imageSrc?: string;
+  imageAlt?: string;
 };
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
+  {
+    number: 5,
+    date: "Gusht 2026",
+    datetime: "2026-08",
+    title: "Na mungon sistemi që mund të sjellë ndryshim",
+    category: "Institucionet & llogaridhënia",
+    excerpt:
+      "Kujt i shërben bindja se «të gjithë do të vidhnin» dhe se Shqipëria nuk mund të bëjë pa ta?",
+    topics: ["institucionet", "korrupsioni", "llogaridhënia", "mandatet", "drejtësia"],
+    href: "/flamingo-times/artikujt/botimi-5/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-5.pdf",
+    imageSrc: "/images/flamingo-times/botimi-5/dy-rruget-e-jetes.png",
+    imageAlt: "Dy rrugët e jetës, pikturë nga Kolë Idromeno"
+  },
   {
     number: 4,
     date: "Gusht 2026",
@@ -21,7 +37,9 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
       "Një komb i shpërndarë, një zë i përbashkët. Mbi 280 protesta në më shumë se 70 qytete të botës.",
     topics: ["diaspora", "protesta", "Zvërneci", "qytetaria", "mërgata"],
     href: "/flamingo-times/artikujt/botimi-4/",
-    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-4.pdf"
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-4.pdf",
+    imageSrc: "/images/flamingo-times/botimi-4/diaspora-march-hero.jpeg",
+    imageAlt: "Diaspora shqiptare marshon në Tiranë"
   },
   {
     number: 3,
@@ -33,7 +51,9 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
       "Administrata është pasqyra e qeverisë. Kur dështimet përsëriten, përgjegjësia fillon te sistemi që i prodhon.",
     topics: ["administrata", "qeverisja", "korrupsioni", "meritokracia"],
     href: "/flamingo-times/artikujt/botimi-3/",
-    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-3.pdf"
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-3.pdf",
+    imageSrc: "/images/flamingo-times/botimi-3/img-1.png",
+    imageAlt: "Administrata shtetërore dhe qeverisja — ilustrim Flamingo Times"
   },
   {
     number: 2,
@@ -45,7 +65,9 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
       "Nga Dhjetori 1990 te Qershori 2026: tri breza studentësh, një traditë guximi dhe pjesëmarrjeje qytetare.",
     topics: ["studentët", "rinia", "protesta", "demokracia", "historia"],
     href: "/flamingo-times/artikujt/botimi-2/",
-    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-2.pdf"
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-2.pdf",
+    imageSrc: "/images/flamingo-times/botimi-2/img-1.jpg",
+    imageAlt: "Studentë në protestë — Revolucioni Flamingo"
   },
   {
     number: 1,
@@ -60,3 +82,23 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
     pdfHref: "/documents/flamingo-times/flamingo-times-botimi-i.pdf"
   }
 ];
+
+export function toRomanIssue(number: number): string {
+  return ["", "I", "II", "III", "IV", "V"][number] ?? String(number);
+}
+
+export function issuePublishedDate(issue: FlamingoTimesIssue): Date {
+  return new Date(`${issue.datetime}-01T00:00:00.000Z`);
+}
+
+export function issuePageTitle(issue: FlamingoTimesIssue): string {
+  return `${issue.title} | Flamingo Times`;
+}
+
+export function isLatestIssue(issue: FlamingoTimesIssue): boolean {
+  return flamingoTimesIssues[0]?.number === issue.number;
+}
+
+export function issueReadHref(issue: FlamingoTimesIssue): string {
+  return isLatestIssue(issue) ? "/flamingo-times/" : issue.href;
+}

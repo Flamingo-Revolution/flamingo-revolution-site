@@ -1,0 +1,93 @@
+---
+import {
+	getGroupHighlightImage,
+	groupInitials,
+	groups,
+type GroupHighlightOverride,
+type GroupId,
+} from "../../../data/groups";
+
+const groupHighlightOverrides: Partial<Record<GroupId, GroupHighlightOverride>> = {
+	resu: {
+		logo: {
+			class: "group-highlight__img--resu"
+		}
+	},
+	 
+	lumi: {
+		logo: {
+			class: "group-highlight__img--resu"
+		}
+	},
+	 
+};
+
+export const highlighted = [
+	['adcn', 'flamingo', 'lumi', 'resu', 'albnatyra']
+] as const;
+
+const rows = highlighted.map((row, level) => ({
+	level,
+	items: row.flatMap((id) => {
+		const group = groups.find((v) => v.id === id);
+
+		return group ? [group] : [];
+	})
+}));
+---
+
+<div class="group-highlights" aria-labelledby="group-highlights-kicker">
+	<p id="group-highlights-kicker" class="group-highlights__kicker">Mbështetur nga</p>
+	{
+		rows.map((row) => (
+			<div class="group-highlights__row">
+				{row.items.map((group) => {
+					const image = getGroupHighlightImage(group);
+					const override = groupHighlightOverrides[group.id];
+					const assetClass = image?.kind === "icon" ? override?.icon?.class : override?.logo?.class;
+					return (
+						<a
+							class:list={["group-highlight", override?.container?.class]}
+							href={group.href}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label={group.name}
+						>
+							<span class={`level-${row.level}`}>
+								{image ? (
+									image.black && image.white ? (
+										<>
+											<img
+												class:list={["group-highlight__img--light", assetClass]}
+												src={image.primary ?? image.black}
+												alt=""
+											/>
+											<img
+												class:list={["group-highlight__img--dark", assetClass]}
+												src={image.white}
+												alt=""
+											/>
+										</>
+									) : (
+										<img
+											class:list={[
+												!image.black && image.white && "group-highlight__img--invert",
+												assetClass
+											]}
+											src={image.black ?? image.white ?? image.primary}
+											alt=""
+										/>
+									)
+								) : (
+									<span class="group-highlight__fallback" aria-hidden="true">
+										{groupInitials(group.name)}
+									</span>
+								)}
+							</span>
+						</a>
+					);
+				})}
+			</div>
+		))
+	}
+</div>

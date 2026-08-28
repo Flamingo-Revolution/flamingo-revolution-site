@@ -1,0 +1,145 @@
+---
+// Shared hero for content pages: a title/lead block with primary/secondary CTAs,
+// plus an optional side panel of in-page anchor links ("Ne kete faqe").
+// Used by pages such as /protestat/, /rreth-nesh/ and /kerkesat/ so the hero
+// markup and styling live in one place instead of being copy-pasted per page.
+import { splitTitleLines } from "../utils/text";
+
+interface CtaLink {
+  label: string;
+  href: string;
+}
+
+interface PanelLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  primaryCta: CtaLink;
+  secondaryCta?: CtaLink;
+  panelTitle?: string;
+  panelLinks?: PanelLink[];
+}
+
+const { eyebrow, title, lead, primaryCta, secondaryCta, panelTitle, panelLinks } = Astro.props;
+const hasPanel = Boolean(panelLinks && panelLinks.length > 0);
+const titleWords = splitTitleLines(title);
+---
+
+<section class="page-hero" data-with-panel={hasPanel ? "true" : undefined}>
+  <div class="page-hero__content">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>
+      {titleWords.map((word) => <span>{word}</span>)}
+    </h1>
+    <p class="lead">{lead}</p>
+    <div class="hero__actions">
+      <a class="button button--primary" href={primaryCta.href}>
+        {primaryCta.label}
+      </a>
+      {
+        secondaryCta && (
+          <a class="button button--ghost" href={secondaryCta.href}>
+            {secondaryCta.label}
+          </a>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    hasPanel && (
+      <nav class="page-hero__panel" aria-label={panelTitle}>
+        <h2>{panelTitle}</h2>
+        <ul>
+          {panelLinks!.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
+</section>
+
+<style>
+  .page-hero {
+    padding: clamp(1.4rem, 5vw, 3.6rem) clamp(1rem, 5vw, 3.4rem);
+    background: linear-gradient(135deg, var(--paper-warm), var(--paper-cool));
+    border-top: 1px solid var(--line);
+    border-bottom: 4px solid var(--line);
+  }
+
+  .page-hero[data-with-panel="true"] {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.7fr);
+    gap: clamp(1.5rem, 4vw, 3.4rem);
+    align-items: start;
+  }
+
+  .page-hero__content {
+    width: min(100%, 760px);
+    min-width: 0;
+  }
+
+  .page-hero__panel {
+    display: grid;
+    gap: 0.75rem;
+    height: fit-content;
+    min-width: 0;
+    padding: clamp(1rem, 3vw, 1.4rem);
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 7px 7px 0 var(--ink);
+    transform: rotate(-1deg);
+  }
+
+  .page-hero__panel h2 {
+    margin: 0;
+    color: var(--accent-strong);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .page-hero__panel ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .page-hero__panel a {
+    display: inline-flex;
+    align-items: center;
+    padding-bottom: 0.12rem;
+    border-bottom: 0.14rem solid var(--accent);
+    color: var(--text);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .page-hero__panel a:hover,
+  .page-hero__panel a:focus-visible {
+    color: var(--accent-strong);
+  }
+
+  @media (max-width: 1020px) {
+    .page-hero[data-with-panel="true"] {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .page-hero__panel {
+      transform: none !important;
+    }
+  }
+</style>

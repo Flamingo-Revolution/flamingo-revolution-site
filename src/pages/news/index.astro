@@ -50,7 +50,16 @@ if (!databaseUrl) {
 }
 ---
 
-<BaseLayout title={`${title} | ${siteCopy.sq.meta.title}`} description={description} locale="sq">
+<BaseLayout
+	title={`${title} | ${siteCopy.sq.meta.title}`}
+	description={description}
+	locale="sq"
+	pageType="CollectionPage"
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: title, path: "/news/" }
+	]}
+>
 	<SiteFrame locale="sq" copy={siteCopy.sq} currentPage="times" localePath="news">
 		<main class="news-page" id="main" tabindex="-1">
 			<section class="news-hero">
