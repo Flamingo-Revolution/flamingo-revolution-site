@@ -50,6 +50,7 @@ async function notifyDiscord(content: string, name: string | null) {
 				embeds: [
 					{
 						title: 'New idea submitted',
+						url: 'https://flamingorevolution.eu/idete-tuaja',
 						description: content.slice(0, 4096),
 						color: 0x5865f2,
 						fields: [{ name: 'Author', value: author, inline: true }],
