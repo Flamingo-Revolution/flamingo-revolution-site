@@ -11,7 +11,7 @@ The public site is currently Albanian-first. English copy and a small set of Eng
 - A protest history, timeline, register, and gallery area
 - A searchable draft-law library with PDFs that can be opened or downloaded
 - A civic ideas board where visitors can submit ideas, optionally add a display name, sort the feed, and vote from their device
-- A searchable **Flamingo Times** archive with four web editions and downloadable newspaper PDFs
+- A searchable **Flamingo Times** archive with six web editions and downloadable newspaper PDFs
 - A Markdown-powered blog with typed author references, draft support, and statically generated article pages
 - Embedded protest-map and dossier applications, plus a protest-pulse page linking to the full external data platform
 - An About page covering the movement, mission, partners, contact details, and social channels
