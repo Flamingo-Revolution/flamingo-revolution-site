@@ -1,0 +1,482 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  flamingoTimesIssues,
+  isLatestIssue,
+  issuePageTitle,
+  issuePublishedDate
+} from "../data/flamingoTimes";
+import { siteCopy } from "../data/site";
+import FlamingoCrosswordSix from "./FlamingoCrosswordSix.svelte";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+import "../styles/flamingo-times-issue-six.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-6.pdf";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+const issue = flamingoTimesIssues.find((entry) => entry.number === 6)!;
+const publishedTime = issuePublishedDate(issue);
+const canonicalPath = isLatest || isLatestIssue(issue) ? "/flamingo-times/" : undefined;
+
+---
+
+<BaseLayout
+  title={issuePageTitle(issue)}
+  description={issue.excerpt}
+  locale="sq"
+  pageType="NewsArticle"
+  publishedTime={publishedTime}
+  canonicalPath={canonicalPath}
+  socialImagePath={issue.imageSrc}
+  socialImageAlt={issue.imageAlt}
+  breadcrumbs={
+    isLatest
+      ? [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" }
+        ]
+      : [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" },
+          { name: issue.title, path: issue.href }
+        ]
+  }
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Gusht 2026</span>
+          <span>Botimi VI</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#organizimi">Organizimi</a>
+        <a href="#referendumi">Referendumi</a>
+        <a href="#kerkesat">5 kërkesat</a>
+        <a href="#fjalekryqi">Fjalëkryqi</a>
+      </nav>
+
+      <article class="times-government times-six" id="kryeartikulli">
+        <header class="times-government__hero times-six__hero">
+          <p class="times-label">Kur reagimi kthehet në forcë qytetare</p>
+          <h2>Fuqia që harruam se kemi</h2>
+          <p class="times-deck">
+            Mashtrimi i tyre më i madh është se na bindën që nuk mund të ndryshojmë gjë.
+          </p>
+        </header>
+
+        <div class="times-six__responsive-section" id="organizimi">
+        <section class="times-six__spread times-six__spread--page-one">
+          <div class="times-six__column times-six__page-one-column-one">
+            <p class="times-dropcap">
+              Revolucioni Flamingo riktheu diçka, që për shumë vite kishte humbur: shpresën që
+              shqiptarët mund të bëhen bashkë. Njerëz që nuk njiheshin më parë, u bashkuan në të
+              njëjtin shesh. Brenda e jashtë kufijve u organizuan në protesta, pa parti pas vetes,
+              pa pritur që dikush t’u jepte leje për të qenë qytetarë.
+            </p>
+            <p>
+              Megjithatë, asnjë revolucion nuk mbetet vetëm në shesh. Kur zemërimi shoqërohet me
+              organizim, kur reagimi kthehet në një forcë qytetare, që vazhdon çdo ditë, shoqëria e
+              kupton që ka në dorë më shumë se çfarë mendon.
+            </p>
+            <h3>Shoqata, sindikata, referendumi: fuqia e organizimit</h3>
+            <p>
+              Një grup qytetarësh, që shqetësohen për të njëjtën çështje, mund të ankohen çdo ditë,
+              por mund edhe të organizohen. Një shoqatë mund të mbrojë një park, një lagje,
+              pensionistët, studentët, konsumatorët apo një kauzë kombëtare. Mund të mbledhë
+              ekspertë, të informojë qytetarët dhe të kërkojë llogari, madje historia na tregon që
+              mund të sjellë ndryshim real.
+            </p>
+            <p>
+              Në vitin 2013, Urgenda, një shoqatë e vogël mjedisore, ngriti një çështje gjyqësore
+              kundër qeverisë holandeze së bashku me rreth 900 qytetarë, duke ngritur një pretendim
+              të pazakontë: shteti, duke mos marrë masa të mjaftueshme kundër ndryshimeve klimatike,
+              po dështonte në detyrimin e tij për të mbrojtur qytetarët.
+            </p>
+          </div>
+
+          <figure class="times-six__feature times-six__page-one-image-one">
+            <img
+              src="/images/flamingo-times/botimi-6/imazh-1.jpg"
+              alt="Qytetarë të mbledhur në Holandë pas çështjes klimatike Urgenda"
+              width="768"
+              height="512"
+            />
+            <figcaption><strong>Urgenda, Holandë.</strong> 900 qytetarë vendosin një precedent historik.</figcaption>
+          </figure>
+
+          <div class="times-six__column times-six__page-one-column-two">
+            <p>
+              Në vitin 2015, gjykata i dha të drejtë Urgenda-s. Pas apelimeve të qeverisë, në{" "}
+              <strong>2019, Gjykata e Lartë e Holandës e
+              konfirmoi përfundimisht vendimin</strong>, duke detyruar shtetin të ulte emetimet me të
+              paktën 25% krahasuar me nivelin e vitit 1990. <em>Ishte <strong>rasti i parë në botë</strong>{" "}
+              ku qytetarët arritën të vendosnin juridikisht se qeveria kishte detyrim të vepronte
+              kundër ndryshimeve klimatike.</em>
+            </p>
+            <p class="times-six__legal-note">
+              <em>Neni 39 e vijues i Kodit Civil të Republikës së Shqipërisë përcakton se edhe vetëm
+              5 persona mund të hapin një shoqatë, pa procedura të komplikuara dhe pa kosto reale.</em>
+            </p>
+            <p>
+              E njëjta logjikë vlen në punë. Një punonjës i vetëm mund të ketë frikë të kërkojë
+            </p>
+          </div>
+
+          <div class="times-six__column times-six__page-one-column-three">
+            <p>
+              të drejtat e tij; një sindikatë e vërtetë e kthen problemin individual në një kërkesë
+              të përbashkët. Aty ku individi ka frikë, bashkësia krijon ndryshim real.
+            </p>
+            <p>
+              Më <strong>22 maj 2023</strong>, sindikatat e arsimit në Rumani nisën një{" "}
+              <strong>grevë të përgjithshme kombëtare</strong>. Në qendër ishin dy federatat e mëdha,
+              {" "}<strong>FSLI</strong> dhe <strong>Federația „Spiru Haret”</strong>, të cilat kishin negociuar
+              prej muajsh me qeverinë. Përmasat ishin të mëdha: rreth <strong>150,000 mësues</strong>,
+              së bashku me dhjetëra mijëra punonjës të tjerë të arsimit, u përfshinë në grevë.
+              Presioni funksionoi dhe qeveria rumune miratoi me urgjencë masa, që sollën një{" "}
+              <strong>rritje mesatare prej rreth 25% të pagave në arsim</strong>. Madje, vetë akti
+              ligjor, që rriti pagat, përmend <strong>“situatën e jashtëzakonshme të krijuar nga greva
+              e përgjithshme”</strong> si shkakun, që kërkohej ndërhyrje e menjëhershme ligjore.
+            </p>
+          </div>
+
+          <figure class="times-six__feature times-six__page-one-image-two">
+            <img
+              src="/images/flamingo-times/botimi-6/imazh-2.webp"
+              alt="Marshim i madh qytetar në Rumani me flamuj rumunë"
+              width="800"
+              height="531"
+            />
+            <figcaption><strong>Rumani, 2023.</strong> Mësuesit që detyruan qeverinë të rriste pagat.</figcaption>
+          </figure>
+
+          <div class="times-six__column times-six__page-one-ending">
+            <p class="times-six__legal-note">
+              <em>Neni 176 dhe vijues i Kodit të Punës në Republikën e Shqipërisë parashikon se
+              mjaftojnë 20 anëtarë themelues për të krijuar një sindikatë, me një procedurë po aq të
+              thjeshtë sa në krijimin e shoqatave.</em>
+            </p>
+            <h3>Referendumi: kur fjalën e merr qytetari</h3>
+            <p>
+              Këtu arrijmë te një nga format më të drejtpërdrejta të pjesëmarrjes në demokraci:
+              referendumi.
+            </p>
+          </div>
+        </section>
+
+        <section class="times-six__mobile-article" aria-label="Fuqia e organizimit">
+          <p class="times-dropcap">
+            Revolucioni Flamingo riktheu diçka, që për shumë vite kishte humbur: shpresën që
+            shqiptarët mund të bëhen bashkë. Njerëz që nuk njiheshin më parë, u bashkuan në të
+            njëjtin shesh. Brenda e jashtë kufijve u organizuan në protesta, pa parti pas vetes, pa
+            pritur që dikush t’u jepte leje për të qenë qytetarë.
+          </p>
+          <p>
+            Megjithatë, asnjë revolucion nuk mbetet vetëm në shesh. Kur zemërimi shoqërohet me
+            organizim, kur reagimi kthehet në një forcë qytetare, që vazhdon çdo ditë, shoqëria e
+            kupton që ka në dorë më shumë se çfarë mendon.
+          </p>
+          <h3>Shoqata, sindikata, referendumi: fuqia e organizimit</h3>
+          <p>
+            Një grup qytetarësh, që shqetësohen për të njëjtën çështje, mund të ankohen çdo ditë,
+            por mund edhe të organizohen. Një shoqatë mund të mbrojë një park, një lagje,
+            pensionistët, studentët, konsumatorët apo një kauzë kombëtare. Mund të mbledhë ekspertë,
+            të informojë qytetarët dhe të kërkojë llogari, madje historia na tregon që mund të sjellë
+            ndryshim real.
+          </p>
+          <p>
+            Në vitin 2013, Urgenda, një shoqatë e vogël mjedisore, ngriti një çështje gjyqësore
+            kundër qeverisë holandeze së bashku me rreth 900 qytetarë, duke ngritur një pretendim të
+            pazakontë: shteti, duke mos marrë masa të mjaftueshme kundër ndryshimeve klimatike, po
+            dështonte në detyrimin e tij për të mbrojtur qytetarët. Në vitin 2015, gjykata i dha të
+            drejtë Urgenda-s. Pas apelimeve të qeverisë, në <strong>2019, Gjykata e Lartë e Holandës
+            e konfirmoi përfundimisht vendimin</strong>, duke detyruar shtetin të ulte emetimet me të
+            paktën 25% krahasuar me nivelin e vitit 1990. <em>Ishte <strong>rasti i parë në botë</strong>{" "}
+            ku qytetarët arritën të vendosnin juridikisht se qeveria kishte detyrim të vepronte
+            kundër ndryshimeve klimatike.</em>
+          </p>
+          <figure class="times-six__feature">
+            <img
+              src="/images/flamingo-times/botimi-6/imazh-1.jpg"
+              alt="Qytetarë të mbledhur në Holandë pas çështjes klimatike Urgenda"
+              width="768"
+              height="512"
+            />
+            <figcaption><strong>Urgenda, Holandë.</strong> 900 qytetarë vendosin një precedent historik.</figcaption>
+          </figure>
+          <p class="times-six__legal-note">
+            <em>Neni 39 e vijues i Kodit Civil të Republikës së Shqipërisë përcakton se edhe vetëm 5
+            persona mund të hapin një shoqatë, pa procedura të komplikuara dhe pa kosto reale.</em>
+          </p>
+          <p>
+            E njëjta logjikë vlen në punë. Një punonjës i vetëm mund të ketë frikë të kërkojë të
+            drejtat e tij; një sindikatë e vërtetë e kthen problemin individual në një kërkesë të
+            përbashkët. Aty ku individi ka frikë, bashkësia krijon ndryshim real.
+          </p>
+          <p>
+            Më <strong>22 maj 2023</strong>, sindikatat e arsimit në Rumani nisën një{" "}
+            <strong>grevë të përgjithshme kombëtare</strong>. Në qendër ishin dy federatat e mëdha,
+            {" "}<strong>FSLI</strong> dhe <strong>Federația „Spiru Haret”</strong>, të cilat kishin negociuar
+            prej muajsh me qeverinë. Përmasat ishin të mëdha: rreth <strong>150,000 mësues</strong>, së
+            bashku me dhjetëra mijëra punonjës të tjerë të arsimit, u përfshinë në grevë. Presioni
+            funksionoi dhe qeveria rumune miratoi me urgjencë masa, që sollën një{" "}
+            <strong>rritje mesatare prej rreth 25% të pagave në arsim</strong>. Madje, vetë akti
+            ligjor, që rriti pagat, përmend <strong>“situatën e jashtëzakonshme të krijuar nga greva e
+            përgjithshme”</strong> si shkakun, që kërkohej ndërhyrje e menjëhershme ligjore.
+          </p>
+          <figure class="times-six__feature">
+            <img
+              src="/images/flamingo-times/botimi-6/imazh-2.webp"
+              alt="Marshim i madh qytetar në Rumani me flamuj rumunë"
+              width="800"
+              height="531"
+            />
+            <figcaption><strong>Rumani, 2023.</strong> Mësuesit që detyruan qeverinë të rriste pagat.</figcaption>
+          </figure>
+          <p class="times-six__legal-note">
+            <em>Neni 176 dhe vijues i Kodit të Punës në Republikën e Shqipërisë parashikon se
+            mjaftojnë 20 anëtarë themelues për të krijuar një sindikatë, me një procedurë po aq të
+            thjeshtë sa në krijimin e shoqatave.</em>
+          </p>
+          <h3>Referendumi: kur fjalën e merr qytetari</h3>
+          <p>
+            Këtu arrijmë te një nga format më të drejtpërdrejta të pjesëmarrjes në demokraci:
+            referendumi.
+          </p>
+        </section>
+        </div>
+
+        <div class="times-six__responsive-section" id="referendumi">
+        <section class="times-six__spread times-six__spread--page-two">
+          <div class="times-six__column times-six__page-two-column-one">
+            <p>
+              Referendumi ka një peshë të veçantë, sepse e afron vendimmarrjen me burimin e saj:
+              qytetarin. Vetë procesi i një nisme për referendum ka vlera themelore demokratike: i
+              nxit njerëzit të informohen, të diskutojnë, të organizohen dhe të ndërgjegjësojnë
+              bashkëqytetarët e tyre për të vendosur mbi të ardhmen e përbashkët.
+            </p>
+            <blockquote class="times-six__callout">“Çfarë mund të bëjmë ne?”</blockquote>
+            <figure class="times-six__feature times-six__page-two-image">
+              <img
+                src="/images/flamingo-times/botimi-6/imazh-3.jpg"
+                alt="Protestues në Shqipëri me banderolën Boll plehra ka Shqipëria"
+                width="300"
+                height="130"
+              />
+              <figcaption>
+                <strong>Referendumi.</strong> Demokraci e drejtpërdrejtë dhe presion qytetar:
+                protesta kundër importit të mbetjeve, 2013.
+              </figcaption>
+            </figure>
+            <p>Nisma për referendum mund të jetë</p>
+          </div>
+
+          <div class="times-six__column times-six__page-two-column-two">
+            <p>
+              prova më e mirë për të treguar nëse një shoqëri që mësoi të protestojë, mund të mësojë
+              edhe të përdorë instrumentet, që i jep demokracia. <strong>Sepse demokracia nuk ushtrohet
+              vetëm nga politikanët dhe politika nuk është pronë e tyre. Ajo u përket qytetarëve.</strong>
+            </p>
+            <p>
+              Në <strong>2012</strong>, <strong>Aleanca Kundër Importit të Plehrave (AKIP)</strong>, një
+              bashkim organizatash dhe aktivistësh të shoqërisë civile, ndërmori një{" "}
+              <strong>nismë qytetare për referendum</strong> kundër ligjit nr. 10 463/2011, që lejonte
+              importin e mbetjeve për riciklim. AKIP-i arriti të mblidhte{" "}
+              <strong>mbi 60,000 nënshkrime</strong>, duke tejkaluar pragun kushtetues (prej 50,000
+              zgjedhësish). Referendumi nuk pati nevojë të zhvillohej, pasi presioni qytetar ishte aq
+              i madh, sa Qeveria u detyrua të bënte <strong>menjëherë</strong> ndryshimin, që kërkonte
+              nisma qytetare,
+            </p>
+          </div>
+
+          <div class="times-six__column times-six__page-two-column-three">
+            <p>
+              duke <strong>shfuqizuar dispozitat që lejonin importin e mbetjeve</strong>.
+            </p>
+            <p class="times-six__legal-note">
+              <em>Neni 150 e vijues i Kushtetutës parashikojnë se 50 mijë zgjedhës kanë të drejtën e
+              referendumit për shfuqizimin e një ligji. 12 nismëtarë apartiakë dhe disa grupe e
+              organizata, të dalë nga protesta dhe shoqëria civile, po ndërmarrin tashmë nismën për
+              referendum për shfuqizimin e ligjit 21/2024, që lejoi fillimin e ndërtimeve në
+              Zvërnec dhe qe shkëndija që nisi Revolucionin e Flamingove.</em>
+            </p>
+            <p>
+              Një demokraci bëhet më e fortë kur qytetari nuk pyet vetëm “çfarë do të bëjnë ata?”,
+              por edhe “çfarë mund të bëjmë ne?”. Shoqata, sindikata dhe referendumi japin përgjigje
+              të ndryshme, por kanë të njëjtën rrënjë: njerëz të zakonshëm që vendosin të mos jenë
+              spektatorë.
+            </p>
+          </div>
+        </section>
+
+        <section class="times-six__mobile-article" aria-label="Referendumi">
+          <p>
+            Referendumi ka një peshë të veçantë, sepse e afron vendimmarrjen me burimin e saj:
+            qytetarin. Vetë procesi i një nisme për referendum ka vlera themelore demokratike: i
+            nxit njerëzit të informohen, të diskutojnë, të organizohen dhe të ndërgjegjësojnë
+            bashkëqytetarët e tyre për të vendosur mbi të ardhmen e përbashkët.
+          </p>
+          <blockquote class="times-six__callout">“Çfarë mund të bëjmë ne?”</blockquote>
+          <figure class="times-six__feature">
+            <img
+              src="/images/flamingo-times/botimi-6/imazh-3.jpg"
+              alt="Protestues në Shqipëri me banderolën Boll plehra ka Shqipëria"
+              width="300"
+              height="130"
+            />
+            <figcaption>
+              <strong>Referendumi.</strong> Demokraci e drejtpërdrejtë dhe presion qytetar: protesta
+              kundër importit të mbetjeve, 2013.
+            </figcaption>
+          </figure>
+          <p>
+            Nisma për referendum mund të jetë prova më e mirë për të treguar nëse një shoqëri që
+            mësoi të protestojë, mund të mësojë edhe të përdorë instrumentet, që i jep demokracia.{" "}
+            <strong>Sepse demokracia nuk ushtrohet vetëm nga politikanët dhe politika nuk është pronë
+            e tyre. Ajo u përket qytetarëve.</strong>
+          </p>
+          <p>
+            Në <strong>2012</strong>, <strong>Aleanca Kundër Importit të Plehrave (AKIP)</strong>, një
+            bashkim organizatash dhe aktivistësh të shoqërisë civile, ndërmori një{" "}
+            <strong>nismë qytetare për referendum</strong> kundër ligjit nr. 10 463/2011, që lejonte
+            importin e mbetjeve për riciklim. AKIP-i arriti të mblidhte{" "}
+            <strong>mbi 60,000 nënshkrime</strong>, duke tejkaluar pragun kushtetues (prej 50,000
+            zgjedhësish). Referendumi nuk pati nevojë të zhvillohej, pasi presioni qytetar ishte aq i
+            madh, sa Qeveria u detyrua të bënte <strong>menjëherë</strong> ndryshimin, që kërkonte
+            nisma qytetare, duke <strong>shfuqizuar dispozitat që lejonin importin e mbetjeve</strong>.
+          </p>
+          <p class="times-six__legal-note">
+            <em>Neni 150 e vijues i Kushtetutës parashikojnë se 50 mijë zgjedhës kanë të drejtën e
+            referendumit për shfuqizimin e një ligji. 12 nismëtarë apartiakë dhe disa grupe e
+            organizata, të dalë nga protesta dhe shoqëria civile, po ndërmarrin tashmë nismën për
+            referendum për shfuqizimin e ligjit 21/2024, që lejoi fillimin e ndërtimeve në Zvërnec
+            dhe qe shkëndija që nisi Revolucionin e Flamingove.</em>
+          </p>
+          <p>
+            Një demokraci bëhet më e fortë kur qytetari nuk pyet vetëm “çfarë do të bëjnë ata?”, por
+            edhe “çfarë mund të bëjmë ne?”. Shoqata, sindikata dhe referendumi japin përgjigje të
+            ndryshme, por kanë të njëjtën rrënjë: njerëz të zakonshëm që vendosin të mos jenë
+            spektatorë.
+          </p>
+        </section>
+        </div>
+
+        <blockquote class="times-six__statement">
+          Shqipëria nuk ndryshon kur gjejmë një shpëtimtar të ri. Ndryshon kur qytetari zbulon
+          fuqinë që ka.
+        </blockquote>
+
+        <section class="times-six__demands" id="kerkesat">
+          <header>
+            <p class="times-label">Nga reagimi te organizimi</p>
+            <h3>5 kërkesat që na bashkojnë</h3>
+            <p class="times-six__demands-intro">
+              Ndërkohë që shoqëria mëson të organizohet, protesta na bashkon me 5 kërkesat e saj:
+            </p>
+          </header>
+          <ol>
+            <li>Dorëheqjen e panegociueshme të Kryeministrit dhe të qeverisë.</li>
+            <li>Krijimin e një qeverie teknike tranzitore, jopartiake, me mandat 12-mujor.</li>
+            <li>
+              Ndryshime kushtetuese, ku të gjithë shtetasit shqiptarë të jenë të barabartë para
+              ligjit, të miratuara me referendum popullor, duke përfshirë ndër të tjera:
+              <ul>
+                <li>Ndryshimin e Kodit Zgjedhor.</li>
+                <li>Ndryshimin e ligjit për financimin e partive politike dhe organizatave të ndryshme.</li>
+                <li>
+                  Kufizimin e ushtrimit të detyrës së Kryeministrit në jo më shumë se dy mandate, të
+                  plota ose të pjesshme, gjatë gjithë jetës politike të një individi.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Paralelisht, kërkojmë:
+              <ul>
+                <li>Anulimin e ndryshimeve të bëra në ligjin për “Zonat e Mbrojtura”.</li>
+                <li>Anulimin e ndryshimeve të bëra në ligjin për “Trashëgiminë kulturore”.</li>
+                <li>Shfuqizimin e paketës ligjore të njohur si “Paketa e Maleve”.</li>
+                <li>Shfuqizimin e statusit dhe të kuadrit ligjor për “Investimet Strategjike”.</li>
+              </ul>
+            </li>
+            <li>
+              Hartimin e një kontrate të re sociale mes qytetarëve dhe shtetit, pas konsultimit me
+              intelektualë, ekspertë teknikë dhe qytetarë apartiakë të propozuar nga sheshi i
+              protestës.
+            </li>
+          </ol>
+          <aside>
+            <div class="times-six__demands-brand">
+              <img
+                class="times-six__demands-logo"
+                src="/images/flamingo-wordmark-dark.svg"
+                alt="Flamingo Revolution"
+                width="426"
+                height="187"
+              />
+              <a href="https://www.flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+                <span>flamingorevolution.eu</span>
+                <img
+                  class="times-six__demands-qr"
+                  src="/images/qr-code/png/black.png"
+                  alt="QR code për flamingorevolution.eu"
+                  width="480"
+                  height="480"
+                />
+              </a>
+            </div>
+          </aside>
+        </section>
+
+        <section
+          class="times-six__crossword times-six__crossword--playable"
+          id="fjalekryqi"
+          aria-labelledby="crossword-title"
+        >
+          <header>
+            <p class="times-label">Në fund të botimit</p>
+            <h3 id="crossword-title">Fjalëkryqi</h3>
+            <p>Plotëso përgjigjet horizontalisht. Kolona e theksuar jep zgjidhjen.</p>
+          </header>
+          <div class="times-six__crossword-render">
+            <FlamingoCrosswordSix client:load />
+          </div>
+          <p class="times-six__crossword-note">
+            Frymëzuar nga marshimi i grave të protestës. Ju duam pa masë. Na prini.
+          </p>
+        </section>
+
+      </article>
+
+      <footer class="times-source times-six__sources">
+        <p>
+          Burime:{" "}
+          <a href="https://www.theguardian.com/environment/2020/may/04/climate-action-under-duress-how-dutch-were-forced-into-emissions-cuts">The Guardian, 4 maj 2020</a>
+          {" · "}<a href="https://www.reuters.com/world/europe/romanian-teachers-end-pay-strike-after-government-negotiations-2023-06-12/">Reuters, 12 qershor 2023</a>
+          {" · "}<a href="https://www.podiumi.com/2016/09/23/historiku-i-ligjit-per-importin-e-plehrave/">Podiumi, 23 shtator 2016</a>
+        </p>
+        <strong>FLAMINGO TIMES · Botimi VI · Gusht 2026</strong>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>
