@@ -14,6 +14,20 @@ export type FlamingoTimesIssue = {
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
   {
+    number: 6,
+    date: "Gusht 2026",
+    datetime: "2026-08",
+    title: "Fuqia që harruam se kemi",
+    category: "Organizim & demokraci",
+    excerpt:
+      "Shoqata, sindikata dhe referendumi: si qytetarët e zakonshëm e kthejnë reagimin në ndryshim real.",
+    topics: ["organizimi", "shoqatat", "sindikatat", "referendumi", "qytetaria"],
+    href: "/flamingo-times/artikujt/botimi-6/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-6.pdf",
+    imageSrc: "/images/flamingo-times/botimi-6/imazh-1.jpg",
+    imageAlt: "Qytetarët e Urgenda-s në Holandë — Flamingo Times, Botimi VI"
+  },
+  {
     number: 5,
     date: "Gusht 2026",
     datetime: "2026-08",
@@ -84,7 +98,7 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
 ];
 
 export function toRomanIssue(number: number): string {
-  return ["", "I", "II", "III", "IV", "V"][number] ?? String(number);
+  return ["", "I", "II", "III", "IV", "V", "VI"][number] ?? String(number);
 }
 
 export function issuePublishedDate(issue: FlamingoTimesIssue): Date {
