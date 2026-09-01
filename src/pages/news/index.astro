@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteFrame from "../../components/SiteFrame.astro";
+import NewsList from "../../components/News/NewsList.svelte";
+import type { NewsCard } from "../../components/News/types";
+import { siteCopy } from "../../data/site";
+import { createPrisma } from "@lib/db";
+import { getDatabaseUrl } from "@lib/env/server";
+import { formatArticleDate } from "@lib/articles/format";
+import { summarize } from "@lib/articles/render";
+import { normalizeMediaUrl } from "@lib/media";
+
+export const prerender = false;
+
+const title = "Lajme";
+const description = "Artikujt më të fundit të shkruar nga reporterët e Flamingo News.";
+
+let articles: NewsCard[] = [];
+let loadFailed = false;
+
+const databaseUrl = getDatabaseUrl();
+
+if (!databaseUrl) {
+	loadFailed = true;
+} else {
+	const prisma = createPrisma(databaseUrl);
+
+	try {
+		const rows = await prisma.article.findMany({
+			where: { status: "PUBLISHED", slug: { not: null } },
+			orderBy: [{ publishedAt: "desc" }, { updatedAt: "desc" }],
+			include: { reporter: { select: { name: true } } }
+		});
+
+		articles = rows.map((article) => ({
+			slug: article.slug ?? "",
+			title: article.title || "Pa titull",
+			excerpt: article.excerpt || summarize(article.content, 160),
+			tags: article.tags,
+			coverImageUrl: article.coverImageUrl ? normalizeMediaUrl(article.coverImageUrl) : null,
+			publishedAt: article.publishedAt?.toISOString() ?? null,
+			publishedLabel: formatArticleDate(article.publishedAt),
+			author: article.reporter.name
+		}));
+	} catch (error) {
+		console.error("News index error:", error);
+		loadFailed = true;
+	} finally {
+		await prisma.$disconnect();
+	}
+}
+---
+
+<BaseLayout
+	title={`${title} | ${siteCopy.sq.meta.title}`}
+	description={description}
+	locale="sq"
+	pageType="CollectionPage"
+	breadcrumbs={[
+		{ name: "Ballina", path: "/" },
+		{ name: title, path: "/news/" }
+	]}
+>
+	<SiteFrame locale="sq" copy={siteCopy.sq} currentPage="news" localePath="news">
+		<main class="news-page" id="main" tabindex="-1">
+			<section class="news-hero">
+				<p class="eyebrow">Flamingo News</p>
+				<h1><span>{title}</span></h1>
+				<p class="lead">{description}</p>
+			</section>
+
+			<section class="news-body" aria-label="Lista e artikujve">
+				{
+					loadFailed ? (
+						<p class="news-error">Artikujt nuk mund të ngarkohen për momentin. Provoni sërish më vonë.</p>
+					) : articles.length === 0 ? (
+						<p class="news-error">Ende nuk ka artikuj të publikuar.</p>
+					) : (
+						<NewsList client:load articles={articles} />
+					)
+				}
+			</section>
+		</main>
+	</SiteFrame>
+</BaseLayout>
+
+<style>
+	.news-page {
+		width: 100%;
+		padding: 2.5rem clamp(1rem, 5vw, 3.4rem) 4rem;
+	}
+
+	.news-hero {
+		margin-bottom: 2.4rem;
+		padding-bottom: 1.6rem;
+		border-bottom: 3px solid var(--ink);
+	}
+
+	.eyebrow {
+		margin: 0 0 0.4rem;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-size: 1.15rem;
+		color: var(--accent-strong);
+	}
+
+	h1 {
+		margin: 0 0 0.6rem;
+		font-size: clamp(2.2rem, 6vw, 3.4rem);
+		line-height: 1.05;
+		font-weight: 800;
+	}
+
+	.lead {
+		margin: 0;
+		max-width: 46rem;
+		font-size: 1.05rem;
+		line-height: 1.6;
+		color: var(--muted);
+	}
+
+	.news-error {
+		margin: 2.5rem 0;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-size: 1.25rem;
+		color: var(--muted);
+	}
+</style>

@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import SiteFrame from "../../../../components/SiteFrame.astro";
+import ArticleEditor from "../../../../components/Redaksia/ArticleEditor.svelte";
+import { siteCopy } from "../../../../data/site";
+
+export const prerender = false;
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/redaksia/panel/");
+}
+---
+
+<BaseLayout
+  title="Redakto artikullin — Flamingo News"
+  description="Redaktori i artikujve për reporterët e miratuar të Flamingo News."
+  locale="sq"
+  noindex
+>
+  <SiteFrame locale="sq" copy={siteCopy.sq} currentPage="news" localePath="redaksia">
+    <main class="redaksia-editor-page" id="main" tabindex="-1">
+      <ArticleEditor client:only="svelte" articleId={id} />
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  /* Match the topbar's horizontal rhythm so the editor spans the full shell. */
+  .redaksia-editor-page {
+    width: 100%;
+    padding: 2rem clamp(1rem, 5vw, 3.4rem) 4rem;
+  }
+
+  /* The editor has its own sticky topbar; keep the site navbar static here
+     so the two never overlap while scrolling. */
+  :global(.topbar) {
+    position: static;
+  }
+</style>

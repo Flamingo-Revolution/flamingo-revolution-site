@@ -34,6 +34,7 @@ export default defineConfig({
 			filter: (page) => {
 				const pathname = new URL(page).pathname;
 				return (
+					!pathname.startsWith('/redaksia/panel/') &&
 					!redirectOnlyPaths.has(pathname) &&
 					!noindexPaths.has(pathname) &&
 					pathname !== latestTimesIssuePath
