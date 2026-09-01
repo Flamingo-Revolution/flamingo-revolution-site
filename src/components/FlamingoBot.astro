@@ -399,6 +399,7 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 					};
 
 					const dragObservers = new WeakMap();
+					const dragLayouts = new WeakMap();
 					const dragPadding = 8;
 
 					const getHorizontalDockLimits = (surfaceWidth) => {
@@ -424,7 +425,10 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						widget.dataset.userPositioned = 'true';
 					};
 
-					const clampWidgetToViewport = (widget) => {
+					const clampWidgetToViewport = (
+						widget,
+						{ anchorBottom, preserveSide = false } = {}
+					) => {
 						const root = widget.shadowRoot;
 						const surface = root?.querySelector('.dialog, .launcher');
 						if (!(surface instanceof HTMLElement)) return;
@@ -433,12 +437,25 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						const dockLimits = getHorizontalDockLimits(rect.width);
 						const maxTop = Math.max(dragPadding, window.innerHeight - rect.height - dragPadding);
 						const dockCenter = (dockLimits.left + dockLimits.right + rect.width) / 2;
-						const dockSide = rect.left + rect.width / 2 < dockCenter ? 'left' : 'right';
+						const rememberedSide = preserveSide ? widget.dataset.dockSide : undefined;
+						const dockSide =
+							rememberedSide === 'left' || rememberedSide === 'right'
+								? rememberedSide
+								: rect.left + rect.width / 2 < dockCenter
+									? 'left'
+									: 'right';
 						const left = dockSide === 'left' ? dockLimits.left : dockLimits.right;
-						const top = Math.min(Math.max(rect.top, dragPadding), maxTop);
+						const desiredTop = Number.isFinite(anchorBottom)
+							? anchorBottom - rect.height
+							: rect.top;
+						const top = Math.min(Math.max(desiredTop, dragPadding), maxTop);
 
 						setWidgetPosition(widget, left, top);
 						widget.dataset.dockSide = dockSide;
+						dragLayouts.set(widget, {
+							kind: surface.classList.contains('dialog') ? 'dialog' : 'launcher',
+							bottom: top + rect.height
+						});
 					};
 
 					const bindDragHandle = (widget, handle, surface) => {
@@ -544,7 +561,19 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 								bindDragHandle(widget, header, dialog);
 							}
 
-							requestAnimationFrame(() => clampWidgetToViewport(widget));
+							const surface = dialog instanceof HTMLElement ? dialog : launcher;
+							if (!(surface instanceof HTMLElement)) return;
+
+							const kind = surface.classList.contains('dialog') ? 'dialog' : 'launcher';
+							const previousLayout = dragLayouts.get(widget);
+							const anchorBottom =
+								previousLayout && previousLayout.kind !== kind
+									? previousLayout.bottom
+									: undefined;
+
+							requestAnimationFrame(() =>
+								clampWidgetToViewport(widget, { anchorBottom, preserveSide: true })
+							);
 						};
 
 						wireVisibleSurface();
@@ -585,7 +614,9 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						attributeFilter: ['data-theme']
 					});
 					window.addEventListener('resize', () => {
-						document.querySelectorAll('flamingo-chat').forEach(clampWidgetToViewport);
+						document
+							.querySelectorAll('flamingo-chat')
+							.forEach((widget) => clampWidgetToViewport(widget, { preserveSide: true }));
 					});
 				})();
 			</script>
