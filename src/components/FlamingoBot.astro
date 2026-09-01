@@ -70,11 +70,30 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						}
 
 						.launcher {
-							box-shadow: var(--site-bot-shadow) !important;
+							border: 2px solid var(--site-bot-ink) !important;
+							border-radius: 0 !important;
+							box-shadow: 4px 4px 0 var(--site-bot-accent) !important;
+							font-weight: 800 !important;
+							touch-action: none !important;
+							transition:
+								box-shadow 160ms ease,
+								transform 160ms ease !important;
+						}
+
+						.launcher:hover,
+						.launcher:focus-visible {
+							box-shadow: 6px 6px 0 var(--site-bot-accent) !important;
+							transform: translate(-1px, -1px) !important;
+						}
+
+						.launcher:active {
+							box-shadow: 1px 1px 0 var(--site-bot-accent) !important;
+							transform: translate(2px, 2px) !important;
 						}
 
 						.mark {
-							border: 1px solid var(--site-bot-line) !important;
+							border: 2px solid var(--site-bot-ink-reverse) !important;
+							border-radius: 0 !important;
 							background-color: var(--site-bot-surface-strong) !important;
 							background-image: url('/favicon-32x32.png') !important;
 							background-position: center !important;
@@ -134,25 +153,39 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 
 						.identity h2 {
 							font-family: var(--site-bot-font-display) !important;
+							font-weight: 700 !important;
 						}
 
 						.dialog {
-							border-color: var(--site-bot-line) !important;
+							border: 2px solid var(--site-bot-ink) !important;
+							border-radius: 0 !important;
 							background: var(--site-bot-surface) !important;
-							box-shadow: var(--site-bot-shadow) !important;
+							box-shadow: 8px 8px 0 var(--site-bot-accent) !important;
 							color: var(--site-bot-text) !important;
 						}
 
 						.header,
 						.disclosure,
 						form {
-							border-color: var(--site-bot-line) !important;
+							border-color: var(--site-bot-ink) !important;
+							border-width: 2px !important;
 						}
 
 						.header,
 						.messages {
-							background: var(--site-bot-surface) !important;
+							background: var(--site-bot-paper) !important;
 							color: var(--site-bot-text) !important;
+						}
+
+						.header {
+							cursor: grab !important;
+							touch-action: none !important;
+							user-select: none !important;
+						}
+
+						:host([data-dragging='true']) .header,
+						:host([data-dragging='true']) .launcher {
+							cursor: grabbing !important;
 						}
 
 						.messages {
@@ -160,41 +193,83 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						}
 
 						.avatar {
+							border: 2px solid var(--site-bot-ink) !important;
+							border-radius: 0 !important;
 							background: var(--site-bot-surface-strong) !important;
+							box-shadow: 3px 3px 0 var(--site-bot-accent) !important;
+						}
+
+						article {
+							border: 2px solid var(--site-bot-ink) !important;
+							border-radius: 0 !important;
+							font-weight: 600 !important;
 						}
 
 						article.assistant {
 							background: var(--site-bot-surface-strong) !important;
+							box-shadow: 3px 3px 0 var(--site-bot-ink) !important;
 							color: var(--site-bot-text) !important;
+						}
+
+						article.user {
+							box-shadow: 3px 3px 0 var(--site-bot-accent) !important;
 						}
 
 						.reset {
-							border-color: var(--site-bot-line) !important;
+							border: 2px solid var(--site-bot-ink) !important;
+							border-radius: 0 !important;
 							background: var(--site-bot-surface) !important;
-							color: var(--site-bot-muted) !important;
+							box-shadow: 2px 2px 0 var(--site-bot-accent) !important;
+							color: var(--site-bot-text) !important;
+							font-weight: 800 !important;
+							transition:
+								box-shadow 160ms ease,
+								transform 160ms ease !important;
 						}
 
 						.reset:hover:not(:disabled) {
-							border-color: var(--site-bot-accent) !important;
-							background: var(--site-bot-surface-strong) !important;
-							color: var(--site-bot-accent) !important;
+							border-color: var(--site-bot-ink) !important;
+							background: var(--site-bot-surface) !important;
+							box-shadow: 4px 4px 0 var(--site-bot-accent) !important;
+							color: var(--site-bot-text) !important;
+							transform: translate(-1px, -1px) !important;
 						}
 
 						.close {
+							display: inline-grid !important;
+							place-items: center !important;
+							width: 38px !important;
+							height: 38px !important;
+							padding: 0 !important;
+							border: 2px solid var(--site-bot-ink) !important;
+							border-radius: 0 !important;
+							background: var(--site-bot-surface) !important;
+							box-shadow: 2px 2px 0 var(--site-bot-accent) !important;
 							color: var(--site-bot-text) !important;
+							font-weight: 800 !important;
+							line-height: 1 !important;
+							text-align: center !important;
+							transition:
+								box-shadow 160ms ease,
+								transform 160ms ease !important;
 						}
 
 						.close:hover {
-							background: var(--site-bot-surface-strong) !important;
+							background: var(--site-bot-surface) !important;
+							box-shadow: 4px 4px 0 var(--site-bot-accent) !important;
+							transform: translate(-1px, -1px) !important;
 						}
 
 						.disclosure {
 							background: var(--site-bot-accent-soft) !important;
+							box-shadow: inset 6px 0 0 var(--site-bot-accent) !important;
 							color: var(--site-bot-text) !important;
+							font-weight: 700 !important;
 						}
 
 						.citations {
-							border-color: var(--site-bot-line) !important;
+							border-color: var(--site-bot-ink) !important;
+							border-width: 2px !important;
 						}
 
 						.citations a,
@@ -213,22 +288,26 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						}
 
 						.composer {
-							border-color: var(--site-bot-line) !important;
+							border: 2px solid var(--site-bot-ink) !important;
+							border-radius: 0 !important;
 							background: var(--site-bot-surface-strong) !important;
-							box-shadow: 0 0 0 0 transparent !important;
+							box-shadow: 4px 4px 0 var(--site-bot-ink) !important;
 							transition:
 								border-color 140ms ease,
-								box-shadow 140ms ease !important;
+								box-shadow 140ms ease,
+								transform 140ms ease !important;
 						}
 
 						.composer:focus-within {
-							border-color: var(--site-bot-accent) !important;
-							box-shadow: 0 0 0 3px var(--site-bot-accent-soft) !important;
+							border-color: var(--site-bot-ink) !important;
+							box-shadow: 6px 6px 0 var(--site-bot-accent) !important;
+							transform: translate(-1px, -1px) !important;
 						}
 
 						textarea {
 							color: var(--site-bot-text) !important;
 							caret-color: var(--site-bot-accent) !important;
+							font-weight: 700 !important;
 						}
 
 						textarea:focus,
@@ -241,7 +320,21 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						}
 
 						.error {
+							border-left: 4px solid var(--site-bot-error) !important;
 							color: var(--site-bot-error) !important;
+							font-weight: 700 !important;
+							padding-left: 8px !important;
+						}
+
+						@media (max-width: 520px) {
+							.dialog {
+								border-radius: 0 !important;
+								box-shadow: 4px 4px 0 var(--site-bot-accent) !important;
+							}
+
+							.reset {
+								border-radius: 0 !important;
+							}
 						}
 					`;
 
@@ -305,6 +398,192 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						});
 					};
 
+					const dragObservers = new WeakMap();
+					const dragLayouts = new WeakMap();
+					const dragPadding = 8;
+
+					const getHorizontalDockLimits = (surfaceWidth) => {
+						const pageShell = document.querySelector('.page-shell');
+						const shellRect =
+							pageShell instanceof HTMLElement
+								? pageShell.getBoundingClientRect()
+								: { left: 0, right: window.innerWidth };
+						const left = Math.max(dragPadding, shellRect.left);
+						const rightEdge = Math.min(window.innerWidth - dragPadding, shellRect.right);
+
+						return {
+							left,
+							right: Math.max(left, rightEdge - surfaceWidth)
+						};
+					};
+
+					const setWidgetPosition = (widget, left, top) => {
+						widget.style.setProperty('left', `${Math.round(left)}px`, 'important');
+						widget.style.setProperty('top', `${Math.round(top)}px`, 'important');
+						widget.style.setProperty('right', 'auto', 'important');
+						widget.style.setProperty('bottom', 'auto', 'important');
+						widget.dataset.userPositioned = 'true';
+					};
+
+					const clampWidgetToViewport = (
+						widget,
+						{ anchorBottom, preserveSide = false } = {}
+					) => {
+						const root = widget.shadowRoot;
+						const surface = root?.querySelector('.dialog, .launcher');
+						if (!(surface instanceof HTMLElement)) return;
+
+						const rect = surface.getBoundingClientRect();
+						const dockLimits = getHorizontalDockLimits(rect.width);
+						const maxTop = Math.max(dragPadding, window.innerHeight - rect.height - dragPadding);
+						const dockCenter = (dockLimits.left + dockLimits.right + rect.width) / 2;
+						const rememberedSide = preserveSide ? widget.dataset.dockSide : undefined;
+						const dockSide =
+							rememberedSide === 'left' || rememberedSide === 'right'
+								? rememberedSide
+								: rect.left + rect.width / 2 < dockCenter
+									? 'left'
+									: 'right';
+						const left = dockSide === 'left' ? dockLimits.left : dockLimits.right;
+						const desiredTop = Number.isFinite(anchorBottom)
+							? anchorBottom - rect.height
+							: rect.top;
+						const top = Math.min(Math.max(desiredTop, dragPadding), maxTop);
+
+						setWidgetPosition(widget, left, top);
+						widget.dataset.dockSide = dockSide;
+						dragLayouts.set(widget, {
+							kind: surface.classList.contains('dialog') ? 'dialog' : 'launcher',
+							bottom: top + rect.height
+						});
+					};
+
+					const bindDragHandle = (widget, handle, surface) => {
+						if (handle.dataset.siteDragHandle === 'true') return;
+						handle.dataset.siteDragHandle = 'true';
+
+						let dragState = null;
+						let suppressClick = false;
+
+						handle.addEventListener(
+							'click',
+							(event) => {
+								if (!suppressClick) return;
+								event.preventDefault();
+								event.stopImmediatePropagation();
+								suppressClick = false;
+							},
+							true
+						);
+
+						handle.addEventListener('pointerdown', (event) => {
+							if (!event.isPrimary || event.button !== 0) return;
+							if (
+								handle !== surface &&
+								event.target instanceof Element &&
+								event.target.closest('button, a, input, textarea, select')
+							) {
+								return;
+							}
+
+							const rect = surface.getBoundingClientRect();
+							dragState = {
+								pointerId: event.pointerId,
+								startX: event.clientX,
+								startY: event.clientY,
+								left: rect.left,
+								top: rect.top,
+								width: rect.width,
+								height: rect.height,
+								moved: false
+							};
+							handle.setPointerCapture(event.pointerId);
+						});
+
+						handle.addEventListener('pointermove', (event) => {
+							if (!dragState || event.pointerId !== dragState.pointerId) return;
+
+							const deltaX = event.clientX - dragState.startX;
+							const deltaY = event.clientY - dragState.startY;
+							if (!dragState.moved && Math.hypot(deltaX, deltaY) < 5) return;
+
+							dragState.moved = true;
+							widget.dataset.dragging = 'true';
+							const dockLimits = getHorizontalDockLimits(dragState.width);
+							const maxTop = Math.max(
+								dragPadding,
+								window.innerHeight - dragState.height - dragPadding
+							);
+							const left = Math.min(
+								Math.max(dragState.left + deltaX, dockLimits.left),
+								dockLimits.right
+							);
+							const top = Math.min(Math.max(dragState.top + deltaY, dragPadding), maxTop);
+
+							setWidgetPosition(widget, left, top);
+							event.preventDefault();
+						});
+
+						const finishDrag = (event) => {
+							if (!dragState || event.pointerId !== dragState.pointerId) return;
+							const moved = dragState.moved;
+							dragState = null;
+							delete widget.dataset.dragging;
+							if (handle.hasPointerCapture(event.pointerId)) {
+								handle.releasePointerCapture(event.pointerId);
+							}
+
+							if (moved) {
+								clampWidgetToViewport(widget);
+								suppressClick = true;
+								window.setTimeout(() => {
+									suppressClick = false;
+								}, 250);
+							}
+						};
+
+						handle.addEventListener('pointerup', finishDrag);
+						handle.addEventListener('pointercancel', finishDrag);
+					};
+
+					const installWidgetDragging = (widget, root) => {
+						const wireVisibleSurface = () => {
+							const launcher = root.querySelector('.launcher');
+							if (launcher instanceof HTMLElement) {
+								launcher.title = 'Drag to move · Click to open';
+								bindDragHandle(widget, launcher, launcher);
+							}
+
+							const dialog = root.querySelector('.dialog');
+							const header = root.querySelector('.header');
+							if (dialog instanceof HTMLElement && header instanceof HTMLElement) {
+								header.title = 'Drag to move chat';
+								bindDragHandle(widget, header, dialog);
+							}
+
+							const surface = dialog instanceof HTMLElement ? dialog : launcher;
+							if (!(surface instanceof HTMLElement)) return;
+
+							const kind = surface.classList.contains('dialog') ? 'dialog' : 'launcher';
+							const previousLayout = dragLayouts.get(widget);
+							const anchorBottom =
+								previousLayout && previousLayout.kind !== kind
+									? previousLayout.bottom
+									: undefined;
+
+							requestAnimationFrame(() =>
+								clampWidgetToViewport(widget, { anchorBottom, preserveSide: true })
+							);
+						};
+
+						wireVisibleSurface();
+						if (dragObservers.has(widget)) return;
+
+						const observer = new MutationObserver(wireVisibleSurface);
+						observer.observe(root, { childList: true, subtree: true });
+						dragObservers.set(widget, observer);
+					};
+
 					const installThemeBridge = async () => {
 						await customElements.whenDefined('flamingo-chat');
 						await new Promise((resolve) => {
@@ -322,6 +601,7 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 							style.textContent = themeStyles;
 							// Re-appending also moves an existing bridge after the widget's own styles.
 							root.append(style);
+							installWidgetDragging(widget, root);
 						});
 					};
 
@@ -332,6 +612,11 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 					}).observe(document.documentElement, {
 						attributes: true,
 						attributeFilter: ['data-theme']
+					});
+					window.addEventListener('resize', () => {
+						document
+							.querySelectorAll('flamingo-chat')
+							.forEach((widget) => clampWidgetToViewport(widget, { preserveSide: true }));
 					});
 				})();
 			</script>

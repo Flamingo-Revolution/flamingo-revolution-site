@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteFrame from "../../../components/SiteFrame.astro";
+import RedaksiaDashboard from "../../../components/Redaksia/RedaksiaDashboard.svelte";
+import { siteCopy } from "../../../data/site";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Redaksia — Flamingo News"
+  description="Hapësira e punës për reporterët e miratuar të Flamingo News."
+  locale="sq"
+  noindex
+>
+  <SiteFrame locale="sq" copy={siteCopy.sq} currentPage="news" localePath="redaksia">
+    <main class="redaksia-page" id="main" tabindex="-1">
+      <RedaksiaDashboard client:only="svelte" />
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  /* Match the topbar's horizontal rhythm so the dashboard spans the full shell. */
+  .redaksia-page {
+    width: 100%;
+    padding: 2.5rem clamp(1rem, 5vw, 3.4rem) 4rem;
+  }
+</style>

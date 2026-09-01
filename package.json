@@ -20,6 +20,7 @@
 		"db:migrate": "prisma migrate dev",
 		"db:migrate:deploy": "prisma migrate deploy",
 		"db:seed": "prisma db seed",
+		"reporter:create": "node scripts/create-reporter.mjs",
 		"db:studio": "prisma studio"
 	},
 	"dependencies": {
@@ -28,6 +29,12 @@
 		"@astrojs/svelte": "^9.0.1",
 		"@prisma/adapter-neon": "^7.8.0",
 		"@prisma/client": "^7.8.0",
+		"@tiptap/core": "3.30.0",
+		"@tiptap/extension-image": "3.30.0",
+		"@tiptap/extension-text-align": "3.30.0",
+		"@tiptap/extensions": "3.30.0",
+		"@tiptap/pm": "3.30.0",
+		"@tiptap/starter-kit": "3.30.0",
 		"astro": "^7.0.8",
 		"dotenv": "^17.4.2",
 		"prettier-plugin-svelte": "^4.1.1",
@@ -44,5 +51,11 @@
 		"sharp": "^0.35.3",
 		"tsx": "^4.21.0",
 		"wrangler": "^4.107.0"
+	},
+	"allowScripts": {
+		"prisma@7.9.1": true,
+		"workerd@1.20260811.1": true,
+		"@prisma/engines@7.9.1": true,
+		"esbuild": true
 	}
 }
