@@ -4,6 +4,25 @@
 
 The public site is currently Albanian-first. English copy and a small set of English pages remain in the codebase, but English routes and the locale switch are disabled until that experience is complete.
 
+## Table of Contents
+
+- [What the Project Includes](#what-the-project-includes)
+- [Public Routes](#public-routes)
+- [Technology](#technology)
+- [Volunteering and Local Development](#volunteering-and-local-development)
+- [Environment Variables](#environment-variables)
+  - [Flamingo Bot](#flamingo-bot)
+- [Scripts](#scripts)
+- [Project Structure](#project-structure)
+- [Content Management](#content-management)
+  - [Blog](#blog)
+  - [Referendum](#referendum)
+  - [PDF Documents and Flamingo Times](#pdf-documents-and-flamingo-times)
+  - [Localization](#localization)
+- [Runtime APIs](#runtime-apis)
+  - [Flamingo News Reporters](#flamingo-news-reporters)
+- [Cloudflare Deployment](#cloudflare-deployment)
+
 ## What the Project Includes
 
 - A campaign landing page explaining the movement, its demands, and ways to participate
