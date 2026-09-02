@@ -11,7 +11,7 @@ const copy = siteCopy.sq;
 
 <BaseLayout
   title="Këndi i Lojërave | Revolucioni Flamingo"
-  description="Argëtohu me sfidën Rama apo Berisha dhe fjalëkryqet e Flamingo Times."
+  description="Argëtohu me kuize qytetare, sfidën Rama apo Berisha dhe fjalëkryqet e Flamingo Times."
   locale="sq"
   pageType="CollectionPage"
   canonicalPath="/lojerat/"
@@ -51,6 +51,19 @@ const copy = siteCopy.sq;
               <h3>Rama apo Berisha?</h3>
               <p>Lexo faktin, zgjidh politikanin dhe shih sa mirë e njeh historinë e pushtetit.</p>
               <a class="button button--primary" href="/lojerat/rama-apo-berisha/">Luaj tani <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="game-card game-card--citizen">
+            <div class="game-card__preview game-card__preview--citizen" aria-hidden="true">
+              <strong>?</strong>
+              <span>A</span><span>B</span><span>C</span>
+            </div>
+            <div class="game-card__body">
+              <p class="game-card__meta"><span>Kuiz</span><span>Edukim qytetar</span></p>
+              <h3>Kuizi Qytetar</h3>
+              <p>Testo njohuritë për shërbimet publike, mjedisin, premtimet dhe të drejtat qytetare.</p>
+              <a class="button button--primary" href="/lojerat/kuizi-qytetar/">Fillo kuizin <span aria-hidden="true">→</span></a>
             </div>
           </article>
 
@@ -140,6 +153,10 @@ const copy = siteCopy.sq;
   .game-card__preview--grid { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0; background: #ffe172; }
   .game-card__preview--grid span { display: grid; place-items: center; aspect-ratio: 1; padding: 0; border-width: 1px; border-color: #151515; box-shadow: none; background: #fff8ef; color: #151515; }
   .game-card__preview--grid span:empty { background: #151515; }
+
+  .game-card__preview--citizen { grid-template-columns: 1fr repeat(3, auto); background: #71d5d7; }
+  .game-card__preview--citizen strong { justify-self: center; color: #151515; font-size: clamp(4rem, 10vw, 7rem); font-style: normal; line-height: 1; }
+  .game-card__preview--citizen span { display: grid; place-items: center; width: 3rem; height: 3rem; padding: 0; border-radius: 50%; background: #fff8ef; color: #151515; }
 
   .game-card__body { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(1.4rem, 4vw, 2.2rem); }
   .game-card__body h3 { max-width: 16ch; font-size: clamp(1.8rem, 4vw, 2.7rem); }
