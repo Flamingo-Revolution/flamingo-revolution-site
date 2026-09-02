@@ -13,6 +13,7 @@ const highPriorityPaths = new Map([
 	['/referendum/', 0.9],
 	['/idete-tuaja/', 0.9],
 	['/flamingo-times/', 0.9],
+	['/lojerat/', 0.9],
 	['/dosjet/', 0.9],
 	['/rreth-nesh/', 0.9],
 	['/protestat/', 0.9]

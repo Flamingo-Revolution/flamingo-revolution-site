@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteFrame from "../../components/SiteFrame.astro";
+import FlamingoCrossword from "../../components/FlamingoCrossword.svelte";
+import FlamingoCrosswordSix from "../../components/FlamingoCrosswordSix.svelte";
+import { siteCopy } from "../../data/site";
+
+export const prerender = true;
+
+const copy = siteCopy.sq;
+---
+
+<BaseLayout
+  title="Fjalëkryqet e Flamingo Times | Lojërat"
+  description="Luaj në një vend fjalëkryqet interaktive nga botimet e Flamingo Times."
+  locale="sq"
+  pageType="CollectionPage"
+  canonicalPath="/lojerat/fjalekryqet/"
+  socialImagePath="/flamingo-times-social.png?v=20260805"
+  socialImageAlt="Fjalëkryqet e Flamingo Times"
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Këndi i Lojërave", path: "/lojerat/" },
+    { name: "Fjalëkryqet", path: "/lojerat/fjalekryqet/" }
+  ]}
+>
+  <SiteFrame locale="sq" {copy} currentPage="games" shellClass="games-shell">
+    <main class="crossword-collection" id="main" tabindex="-1">
+      <nav class="crossword-collection__bar" aria-label="Navigimi i lojës">
+        <a href="/lojerat/"><span aria-hidden="true">←</span> Të gjitha lojërat</a>
+        <a href="/lojerat/rama-apo-berisha/">Rama apo Berisha? <span aria-hidden="true">→</span></a>
+      </nav>
+
+      <header class="crossword-collection__hero">
+        <div>
+          <p class="eyebrow">Nga faqet e gazetës</p>
+          <h1><span>Fjalëkryqet</span><span>e Flamingo</span><span>Times</span></h1>
+          <p class="lead">Zgjidh një botim dhe plotësoje fjalëkryqin direkt në ekran.</p>
+        </div>
+        <div class="crossword-collection__stamp" aria-hidden="true">
+          <span>F</span><span>L</span><span>A</span><span>M</span>
+          <span>I</span><span>N</span><span>G</span><span>O</span>
+          <span></span><strong>FT</strong><span></span><span></span>
+        </div>
+      </header>
+
+      <nav class="puzzle-picker" aria-label="Zgjidh fjalëkryqin">
+        <a href="#botimi-vi"><span>06</span><strong>Botimi VI</strong><small>12 përgjigje</small></a>
+        <a href="#botimi-v"><span>05</span><strong>Botimi V</strong><small>6 përgjigje</small></a>
+      </nav>
+
+      <section class="puzzle" id="botimi-vi" aria-labelledby="puzzle-six-title">
+        <header class="puzzle__header">
+          <div><span>Flamingo Times</span><span>Botimi VI</span></div>
+          <h2 id="puzzle-six-title">Kush është kush?</h2>
+          <p>Dymbëdhjetë përgjigje horizontale zbulojnë frazën përfundimtare në kolonën e verdhë.</p>
+        </header>
+        <div class="puzzle__game"><FlamingoCrosswordSix client:visible /></div>
+        <footer class="puzzle__footer"><a href="/flamingo-times/artikujt/botimi-6/">Lexo Botimin VI <span aria-hidden="true">→</span></a></footer>
+      </section>
+
+      <section class="puzzle" id="botimi-v" aria-labelledby="puzzle-five-title">
+        <header class="puzzle__header">
+          <div><span>Flamingo Times</span><span>Botimi V</span></div>
+          <h2 id="puzzle-five-title">Fjala e fshehur</h2>
+          <p>Gjashtë përgjigje horizontale çojnë te fjala vertikale e fshehur.</p>
+        </header>
+        <div class="puzzle__game"><FlamingoCrossword client:visible /></div>
+        <footer class="puzzle__footer"><a href="/flamingo-times/artikujt/botimi-5/">Lexo Botimin V <span aria-hidden="true">→</span></a></footer>
+      </section>
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .crossword-collection { position: relative; z-index: 1; }
+  .crossword-collection__bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem clamp(1rem, 5vw, 3.4rem);
+    border-bottom: 3px solid var(--ink);
+    background: var(--paper-cool);
+  }
+  .crossword-collection__bar a,
+  .puzzle__footer a { border-bottom: 0.16rem solid var(--accent); font-weight: 800; }
+  .crossword-collection__bar a:hover,
+  .crossword-collection__bar a:focus-visible,
+  .puzzle__footer a:hover,
+  .puzzle__footer a:focus-visible { color: var(--accent-strong); }
+
+  .crossword-collection__hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.55fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+    padding: clamp(2.5rem, 7vw, 6rem) clamp(1rem, 5vw, 3.4rem);
+    border-bottom: 4px solid var(--ink);
+    background: var(--paper-warm);
+  }
+
+  .crossword-collection__stamp {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border: 3px solid var(--ink);
+    background: var(--ink);
+    box-shadow: 9px 9px 0 var(--ink);
+    transform: rotate(2deg);
+  }
+  .crossword-collection__stamp span,
+  .crossword-collection__stamp strong { display: grid; place-items: center; aspect-ratio: 1; border: 1px solid var(--ink); background: var(--surface); color: var(--ink); font-size: clamp(1rem, 3vw, 2rem); }
+  .crossword-collection__stamp span:empty { background: var(--ink); }
+  .crossword-collection__stamp strong { background: #ffe172; }
+
+  .puzzle-picker {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1.3rem clamp(1rem, 5vw, 3.4rem);
+    border-bottom: 3px solid var(--ink);
+    background: var(--paper-cool);
+  }
+  .puzzle-picker a { display: grid; grid-template-columns: auto 1fr auto; gap: 0.75rem; align-items: center; min-width: 0; padding: 0.9rem; border: 2px solid var(--ink); background: var(--surface); box-shadow: 4px 4px 0 var(--ink); }
+  .puzzle-picker a:hover,
+  .puzzle-picker a:focus-visible { transform: translate(-1px, -1px); box-shadow: 6px 6px 0 var(--ink); }
+  .puzzle-picker a > span { color: var(--accent-strong); font-size: 1.7rem; font-weight: 800; }
+  .puzzle-picker small { color: var(--muted); font-weight: 700; }
+
+  .puzzle { scroll-margin-top: 7rem; padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 5vw, 3.4rem); border-bottom: 4px solid var(--ink); }
+  .puzzle:nth-of-type(even) { background: var(--accent-soft); }
+  .puzzle__header { max-width: 58rem; margin-bottom: 2rem; }
+  .puzzle__header > div { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .puzzle__header > div span { padding: 0.3rem 0.55rem; border: 1px solid var(--ink); background: var(--surface); color: var(--accent-strong); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+  .puzzle__header h2 { max-width: none; }
+  .puzzle__header > p { max-width: 56ch; margin: 0.9rem 0 0; color: var(--muted); font-weight: 700; line-height: 1.55; }
+  .puzzle__game { padding: clamp(1rem, 4vw, 2.2rem); border: 3px solid #151515; background: #f1ece6; box-shadow: 9px 9px 0 #151515; color: #151515; }
+  .puzzle__footer { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
+
+  @media (max-width: 820px) {
+    .crossword-collection__hero { grid-template-columns: 1fr; }
+    .crossword-collection__stamp { width: min(100%, 24rem); transform: none; }
+  }
+
+  @media (max-width: 620px) {
+    .crossword-collection__bar { align-items: flex-start; font-size: 0.8rem; }
+    .puzzle-picker { grid-template-columns: 1fr; }
+    .puzzle-picker a { grid-template-columns: auto 1fr; }
+    .puzzle-picker small { grid-column: 2; }
+    .puzzle { padding-right: 0.75rem; padding-left: 0.75rem; }
+    .puzzle__game { padding: 0.7rem; box-shadow: 5px 5px 0 #151515; }
+  }
+</style>

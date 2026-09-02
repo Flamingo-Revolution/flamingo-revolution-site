@@ -51,6 +51,7 @@ export type SiteCopy = {
     labLabel: string;
     documentsLabel: string;
     timesLabel: string;
+    gamesLabel: string;
     blogLabel: string;
     ideasLabel: string;
     referendumLabel: string;
@@ -147,6 +148,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       referendumLabel: "Referendum",
       documentsLabel: "Projektligjet",
       timesLabel: "Flamingo Times",
+      gamesLabel: "Këndi i Lojërave",
       dossierLabel: "Flamingo Dossier",
       newsLabel: "Flamingo News",
       aboutLabel: "Rreth nesh",
@@ -373,6 +375,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       referendumLabel: "Referendum",
       documentsLabel: "Draft Laws",
       timesLabel: "Flamingo Times",
+      gamesLabel: "Games",
       dossierLabel: "Flamingo Dossier",
       newsLabel: "Flamingo News",
       aboutLabel: "About us",

@@ -17,6 +17,7 @@ type NavPage =
   | "ideas"
   | "referendum"
   | "times"
+  | "games"
   | "dossier"
   | "news"
   | "about";
@@ -56,6 +57,7 @@ const navGroups: NavGroup[] = [
       { page: "ideas", label: copy.nav.ideasLabel, href: `${prefix}/idete-tuaja/`, icon: "bulb" },
       { page: "documents", label: copy.nav.documentsLabel, href: `${prefix}/projektligje/`, icon: "document", divider: true },
       { page: "times", label: copy.nav.timesLabel, href: `${prefix}/flamingo-times/`, icon: "newspaper" },
+      { page: "games", label: copy.nav.gamesLabel, href: `${prefix}/lojerat/`, icon: "gamepad" },
       { page: "dossier", label: copy.nav.dossierLabel, href: `${prefix}/dosjet/`, icon: "folder" },
       { page: "news", label: copy.nav.newsLabel, href: `${prefix}/news/`, icon: "megaphone", divider: true },
       { page: "map", label: copy.nav.mapLabel, href: `${prefix}/harta/`, icon: "map" },

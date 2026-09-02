@@ -5,6 +5,8 @@ export const navIcons: Record<string, string> = {
   bulb: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6V16h5.4v-.5c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3Z"/></svg>',
   newspaper:
     '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Z"/><path d="M16 8h2a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2"/><path d="M7 9h6"/><path d="M7 12h6"/><path d="M7 15h4"/></svg>',
+  gamepad:
+    '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7h7a5.5 5.5 0 0 1 5.2 7.3l-1.1 3.2a2.1 2.1 0 0 1-3.4.9l-2-1.7H9.8l-2 1.7a2.1 2.1 0 0 1-3.4-.9l-1.1-3.2A5.5 5.5 0 0 1 8.5 7Z"/><path d="M7 11v4M5 13h4"/><circle cx="16.5" cy="11.5" r=".7" fill="currentColor" stroke="none"/><circle cx="18.5" cy="14" r=".7" fill="currentColor" stroke="none"/></svg>',
   folder:
     '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4.2a2 2 0 0 1 1.4.6L12 7h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg>',
   ballot:

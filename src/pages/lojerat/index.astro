@@ -1,0 +1,169 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import GamesFlightScene from "../../components/GamesFlightScene.astro";
+import SiteFrame from "../../components/SiteFrame.astro";
+import { siteCopy } from "../../data/site";
+
+export const prerender = true;
+
+const copy = siteCopy.sq;
+---
+
+<BaseLayout
+  title="Këndi i Lojërave | Revolucioni Flamingo"
+  description="Argëtohu me sfidën Rama apo Berisha dhe fjalëkryqet e Flamingo Times."
+  locale="sq"
+  pageType="CollectionPage"
+  canonicalPath="/lojerat/"
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Këndi i Lojërave", path: "/lojerat/" }
+  ]}
+>
+  <SiteFrame locale="sq" {copy} currentPage="games" shellClass="games-shell">
+    <main class="games-page" id="main" tabindex="-1">
+      <section class="games-hero" aria-labelledby="games-title">
+        <div class="games-hero__copy">
+          <p class="eyebrow">Luaj. Mendo. Kujto.</p>
+          <h1 id="games-title"><span>Këndi</span><span>i Lojërave</span></h1>
+          <p class="lead">Argëtohu!</p>
+          <a class="button button--primary" href="#zgjidh-lojen">Zgjidh lojën</a>
+        </div>
+
+        <div class="games-hero__scene" aria-hidden="true">
+          <GamesFlightScene />
+        </div>
+      </section>
+
+      <section class="games-library" id="zgjidh-lojen" aria-labelledby="library-title">
+        <header class="games-library__header">
+          <p class="eyebrow">Koleksioni</p>
+          <h2 id="library-title">Çfarë do të luash?</h2>
+        </header>
+
+        <div class="games-grid">
+          <article class="game-card game-card--quiz">
+            <div class="game-card__preview" aria-hidden="true">
+              <span>BERISHA</span><strong>APO?</strong><span>RAMA</span>
+            </div>
+            <div class="game-card__body">
+              <p class="game-card__meta"><span>Kuiz</span><span>10 raunde</span></p>
+              <h3>Rama apo Berisha?</h3>
+              <p>Lexo faktin, zgjidh politikanin dhe shih sa mirë e njeh historinë e pushtetit.</p>
+              <a class="button button--primary" href="/lojerat/rama-apo-berisha/">Luaj tani <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="game-card game-card--crossword">
+            <div class="game-card__preview game-card__preview--grid" aria-hidden="true">
+              <span>F</span><span>L</span><span>A</span><span>M</span><span>I</span><span>N</span><span>G</span><span>O</span>
+              <span></span><span>T</span><span>I</span><span>M</span><span>E</span><span>S</span><span></span><span></span>
+            </div>
+            <div class="game-card__body">
+              <p class="game-card__meta"><span>Fjalëkryqe</span><span>Flamingo Times</span></p>
+              <h3>Fjalëkryqet e Flamingo Times</h3>
+              <p>Të gjitha fjalëkryqet interaktive të gazetës, të mbledhura në një vend.</p>
+              <a class="button button--primary" href="/lojerat/fjalekryqet/">Hap koleksionin <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .games-page { position: relative; z-index: 1; }
+
+  .games-hero {
+    display: grid;
+    grid-template-columns: minmax(19rem, 0.72fr) minmax(0, 1.28fr);
+    margin: clamp(1.25rem, 4vw, 3rem);
+    border: 3px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 12px 12px 0 var(--ink);
+  }
+
+  .games-hero__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-width: 0;
+    padding: clamp(2rem, 5vw, 4rem);
+    border-right: 3px solid var(--ink);
+    background: var(--paper-warm);
+  }
+
+  .games-hero__copy .button { margin-top: 1.5rem; }
+  .games-hero__copy h1 { max-width: 100%; font-size: clamp(2.6rem, 4.1vw, 4.4rem); }
+
+  .games-hero__scene {
+    position: relative;
+    min-height: 29rem;
+    overflow: hidden;
+  }
+
+  .games-library { padding: clamp(3.2rem, 7vw, 6rem) clamp(1rem, 5vw, 3.4rem); }
+  .games-library__header { display: grid; gap: 0.25rem; margin-bottom: 2rem; }
+
+  .games-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 2.6rem); }
+
+  .game-card {
+    display: grid;
+    grid-template-rows: minmax(13rem, 0.8fr) 1fr;
+    min-width: 0;
+    border: 3px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 9px 9px 0 var(--ink);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .game-card:hover { transform: translate(-3px, -3px); box-shadow: 12px 12px 0 var(--ink); }
+
+  .game-card__preview {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.7rem;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    border-bottom: 3px solid var(--ink);
+    background: var(--accent-soft);
+    color: var(--ink);
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .game-card__preview span { padding: 0.7rem 0.45rem; border: 2px solid var(--ink); background: var(--surface); box-shadow: 4px 4px 0 var(--ink); }
+  .game-card__preview strong { color: var(--accent-strong); font-family: var(--font-display); font-size: 2rem; font-style: italic; }
+
+  .game-card__preview--grid { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0; background: #ffe172; }
+  .game-card__preview--grid span { display: grid; place-items: center; aspect-ratio: 1; padding: 0; border-width: 1px; border-color: #151515; box-shadow: none; background: #fff8ef; color: #151515; }
+  .game-card__preview--grid span:empty { background: #151515; }
+
+  .game-card__body { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(1.4rem, 4vw, 2.2rem); }
+  .game-card__body h3 { max-width: 16ch; font-size: clamp(1.8rem, 4vw, 2.7rem); }
+  .game-card__body > p:not(.game-card__meta) { max-width: 44ch; margin: 1rem 0 1.6rem; color: var(--muted); font-weight: 700; line-height: 1.55; }
+  .game-card__body .button { margin-top: auto; }
+
+  .game-card__meta { display: flex; gap: 0.5rem; margin: 0 0 1rem; }
+  .game-card__meta span { padding: 0.3rem 0.55rem; border: 1px solid var(--ink); background: var(--paper-cool); color: var(--ink); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  @media (max-width: 900px) {
+    .games-hero { grid-template-columns: 1fr; }
+    .games-hero__copy { border-right: 0; border-bottom: 3px solid var(--ink); }
+    .games-hero__scene { min-height: 22rem; }
+    .games-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    .games-hero { margin: 0; border-right: 0; border-left: 0; box-shadow: none; }
+    .games-hero__copy { padding: 2rem 1rem; }
+    .games-hero__scene { min-height: 18rem; }
+    .games-hero__sun { top: 1.5rem; left: 1.5rem; width: 5rem; height: 5rem; }
+    .games-library { padding-top: 3rem; }
+    .game-card { box-shadow: 6px 6px 0 var(--ink); }
+    .game-card__preview { padding: 1rem; }
+    .game-card__preview--grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+</style>

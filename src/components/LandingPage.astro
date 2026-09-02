@@ -66,6 +66,19 @@ const projectCards: CardSliderItem[] = [
     image: { src: "/images/projects/ftimes.png", alt: "Faqja e Flamingo Times, botimet e fundit" }
   },
   {
+    title: copy.nav.gamesLabel,
+    href: "/lojerat/",
+    icon: getNavIcon("gamepad"),
+    description:
+      locale === "sq"
+        ? "Lojëra, fjalëkryqe dhe sfida nga Flamingo Times."
+        : "Games, crosswords and challenges from Flamingo Times.",
+    image: {
+      src: "/images/projects/kendi.png",
+      alt: "Këndi i Lojërave me flamingot në fluturim"
+    }
+  },
+  {
     title: copy.nav.dossierLabel,
     href: `${prefix}/dosjet/`,
     icon: getNavIcon("folder"),
