@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteFrame from "../../components/SiteFrame.astro";
+import RamaApoBerisha from "../../components/RamaApoBerisha.svelte";
+import { siteCopy } from "../../data/site";
+
+export const prerender = true;
+
+const copy = siteCopy.sq;
+---
+
+<BaseLayout
+  title="Rama apo Berisha? | Lojërat"
+  description="Lexo rastin dhe gjej nëse i përket Edi Ramës apo Sali Berishës në këtë lojë interaktive."
+  locale="sq"
+  canonicalPath="/lojerat/rama-apo-berisha/"
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Këndi i Lojërave", path: "/lojerat/" },
+    { name: "Rama apo Berisha?", path: "/lojerat/rama-apo-berisha/" }
+  ]}
+>
+  <SiteFrame locale="sq" {copy} currentPage="games" shellClass="games-shell">
+    <main class="game-detail" id="main" tabindex="-1">
+      <nav class="game-detail__bar" aria-label="Navigimi i lojës">
+        <a href="/lojerat/"><span aria-hidden="true">←</span> Të gjitha lojërat</a>
+        <a href="/lojerat/fjalekryqet/">Fjalëkryqet <span aria-hidden="true">→</span></a>
+      </nav>
+      <div class="game-detail__stage">
+        <RamaApoBerisha client:load />
+      </div>
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .game-detail { position: relative; z-index: 1; }
+  .game-detail__bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem clamp(1rem, 5vw, 3.4rem);
+    border-bottom: 3px solid var(--ink);
+    background: var(--paper-cool);
+  }
+  .game-detail__bar a { border-bottom: 0.16rem solid var(--accent); font-weight: 800; }
+  .game-detail__bar a:hover,
+  .game-detail__bar a:focus-visible { color: var(--accent-strong); }
+  .game-detail__stage { padding: clamp(2.2rem, 6vw, 5rem) clamp(1rem, 5vw, 3.4rem) clamp(4rem, 8vw, 7rem); }
+
+  @media (max-width: 520px) {
+    .game-detail__bar { align-items: flex-start; font-size: 0.82rem; }
+    .game-detail__stage { padding-right: 0.75rem; padding-left: 0.75rem; }
+  }
+</style>
