@@ -1,4 +1,7 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+	let { share }: { share?: Snippet } = $props();
+
 	type Question = {
 		tag: string;
 		question: string;
@@ -181,7 +184,10 @@
 <section class="citizen-quiz" aria-labelledby="citizen-quiz-title">
 	<header class="quiz-masthead">
 		<p>Edukim qytetar</p>
-		<h1 id="citizen-quiz-title">Kuizi Qytetar</h1>
+		<div class="game-title-row">
+			<h1 id="citizen-quiz-title">Kuizi Qytetar</h1>
+			{#if share}<div class="game-title-share">{@render share()}</div>{/if}
+		</div>
 		<p>Sa i mirëinformuar je për gjërat që i jetojmë çdo ditë? Pyetje të thjeshta, pa gjykime.</p>
 	</header>
 
@@ -257,7 +263,10 @@
 
 <style>
 	.citizen-quiz { width: min(100%, 42rem); margin: 0 auto; color: var(--text); }
-	.quiz-masthead { margin-bottom: 1.5rem; text-align: center; }
+	.quiz-masthead { position: relative; z-index: 40; margin-bottom: 1.5rem; text-align: center; }
+	.game-title-row { display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-top: 0.8rem; }
+	.game-title-row h1 { min-width: 0; margin: 0; }
+	.game-title-share { flex-shrink: 0; text-align: left; }
 	.quiz-masthead > p:first-child,
 	.question-tag {
 		display: inline-block;
@@ -271,7 +280,7 @@
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 	}
-	.quiz-masthead h1 { max-width: none; margin-top: 0.8rem; color: var(--text); font-size: clamp(2.3rem, 8vw, 4rem); line-height: 0.95; text-align: center; }
+	.quiz-masthead h1 { max-width: none; color: var(--text); font-size: clamp(2.3rem, 8vw, 4rem); line-height: 0.95; text-align: center; }
 	.quiz-masthead > p:last-child { max-width: 31rem; margin: 0.9rem auto 0; color: var(--muted); font-weight: 700; line-height: 1.5; }
 
 	.quiz-card { position: relative; padding: clamp(1.4rem, 5vw, 2.4rem); border: 3px solid var(--ink); background: var(--surface); box-shadow: 9px 9px 0 var(--ink); overflow: hidden; }

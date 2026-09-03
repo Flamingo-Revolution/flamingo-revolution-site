@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteFrame from "../../components/SiteFrame.astro";
+import GameShare from "../../components/GameShare.astro";
 import FlamingoCrossword from "../../components/FlamingoCrossword.svelte";
 import FlamingoCrosswordSix from "../../components/FlamingoCrosswordSix.svelte";
 import { siteCopy } from "../../data/site";
+import { gameSocialImage } from "../../data/games";
 
 export const prerender = true;
 
@@ -16,8 +18,7 @@ const copy = siteCopy.sq;
   locale="sq"
   pageType="CollectionPage"
   canonicalPath="/lojerat/fjalekryqet/"
-  socialImagePath="/flamingo-times-social.png?v=20260805"
-  socialImageAlt="Fjalëkryqet e Flamingo Times"
+  {...gameSocialImage}
   breadcrumbs={[
     { name: "Ballina", path: "/" },
     { name: "Këndi i Lojërave", path: "/lojerat/" },
@@ -32,7 +33,7 @@ const copy = siteCopy.sq;
       </nav>
 
       <header class="crossword-collection__hero">
-        <div>
+        <div class="crossword-collection__intro">
           <p class="eyebrow">Nga faqet e gazetës</p>
           <h1><span>Fjalëkryqet</span><span>e Flamingo</span><span>Times</span></h1>
           <p class="lead">Zgjidh një botim dhe plotësoje fjalëkryqin direkt në ekran.</p>
@@ -51,8 +52,11 @@ const copy = siteCopy.sq;
 
       <section class="puzzle" id="botimi-vi" aria-labelledby="puzzle-six-title">
         <header class="puzzle__header">
-          <div><span>Flamingo Times</span><span>Botimi VI</span></div>
-          <h2 id="puzzle-six-title">Kush është kush?</h2>
+          <div class="puzzle__meta"><span>Flamingo Times</span><span>Botimi VI</span></div>
+          <div class="puzzle__title-row">
+            <h2 id="puzzle-six-title">Kush është kush?</h2>
+            <GameShare title="Kush është kush? — Flamingo Times, Botimi VI" path="/lojerat/fjalekryqet/#botimi-vi" compact />
+          </div>
           <p>Dymbëdhjetë përgjigje horizontale zbulojnë frazën përfundimtare në kolonën e verdhë.</p>
         </header>
         <div class="puzzle__game"><FlamingoCrosswordSix client:visible /></div>
@@ -61,8 +65,11 @@ const copy = siteCopy.sq;
 
       <section class="puzzle" id="botimi-v" aria-labelledby="puzzle-five-title">
         <header class="puzzle__header">
-          <div><span>Flamingo Times</span><span>Botimi V</span></div>
-          <h2 id="puzzle-five-title">Fjala e fshehur</h2>
+          <div class="puzzle__meta"><span>Flamingo Times</span><span>Botimi V</span></div>
+          <div class="puzzle__title-row">
+            <h2 id="puzzle-five-title">Fjala e fshehur</h2>
+            <GameShare title="Fjala e fshehur — Flamingo Times, Botimi V" path="/lojerat/fjalekryqet/#botimi-v" compact />
+          </div>
           <p>Gjashtë përgjigje horizontale çojnë te fjala vertikale e fshehur.</p>
         </header>
         <div class="puzzle__game"><FlamingoCrossword client:visible /></div>
@@ -107,6 +114,8 @@ const copy = siteCopy.sq;
     box-shadow: 9px 9px 0 var(--ink);
     transform: rotate(2deg);
   }
+
+  .crossword-collection__intro { min-width: 0; }
   .crossword-collection__stamp span,
   .crossword-collection__stamp strong { display: grid; place-items: center; aspect-ratio: 1; border: 1px solid var(--ink); background: var(--surface); color: var(--ink); font-size: clamp(1rem, 3vw, 2rem); }
   .crossword-collection__stamp span:empty { background: var(--ink); }
@@ -128,10 +137,12 @@ const copy = siteCopy.sq;
 
   .puzzle { scroll-margin-top: 7rem; padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 5vw, 3.4rem); border-bottom: 4px solid var(--ink); }
   .puzzle:nth-of-type(even) { background: var(--accent-soft); }
-  .puzzle__header { max-width: 58rem; margin-bottom: 2rem; }
-  .puzzle__header > div { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-  .puzzle__header > div span { padding: 0.3rem 0.55rem; border: 1px solid var(--ink); background: var(--surface); color: var(--accent-strong); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
-  .puzzle__header h2 { max-width: none; }
+  .puzzle__header { position: relative; z-index: 2; max-width: 58rem; margin-bottom: 2rem; }
+  .puzzle__meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .puzzle__meta > span { padding: 0.3rem 0.55rem; border: 1px solid var(--ink); background: var(--surface); color: var(--accent-strong); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+  .puzzle__title-row { display: flex; align-items: center; gap: 0.8rem; }
+  .puzzle__title-row h2 { min-width: 0; max-width: none; margin: 0; }
+  .puzzle__title-row > :global(game-share) { flex: 0 0 auto; }
   .puzzle__header > p { max-width: 56ch; margin: 0.9rem 0 0; color: var(--muted); font-weight: 700; line-height: 1.55; }
   .puzzle__game { padding: clamp(1rem, 4vw, 2.2rem); border: 3px solid #151515; background: #f1ece6; box-shadow: 9px 9px 0 #151515; color: #151515; }
   .puzzle__footer { display: flex; justify-content: flex-end; margin-top: 1.5rem; }

@@ -1,8 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import GamesFlightScene from "../../components/GamesFlightScene.astro";
+import GameShare from "../../components/GameShare.astro";
 import SiteFrame from "../../components/SiteFrame.astro";
 import { siteCopy } from "../../data/site";
+import { gameSocialImage } from "../../data/games";
 
 export const prerender = true;
 
@@ -15,6 +17,7 @@ const copy = siteCopy.sq;
   locale="sq"
   pageType="CollectionPage"
   canonicalPath="/lojerat/"
+  {...gameSocialImage}
   breadcrumbs={[
     { name: "Ballina", path: "/" },
     { name: "Këndi i Lojërave", path: "/lojerat/" }
@@ -50,7 +53,10 @@ const copy = siteCopy.sq;
               <p class="game-card__meta"><span>Kuiz</span><span>10 raunde</span></p>
               <h3>Rama apo Berisha?</h3>
               <p>Lexo faktin, zgjidh politikanin dhe shih sa mirë e njeh historinë e pushtetit.</p>
-              <a class="button button--primary" href="/lojerat/rama-apo-berisha/">Luaj tani <span aria-hidden="true">→</span></a>
+              <div class="game-card__actions">
+                <a class="button button--primary" href="/lojerat/rama-apo-berisha/">Luaj tani <span aria-hidden="true">→</span></a>
+                <GameShare title="Rama apo Berisha?" path="/lojerat/rama-apo-berisha/" />
+              </div>
             </div>
           </article>
 
@@ -63,7 +69,10 @@ const copy = siteCopy.sq;
               <p class="game-card__meta"><span>Kuiz</span><span>Edukim qytetar</span></p>
               <h3>Kuizi Qytetar</h3>
               <p>Testo njohuritë për shërbimet publike, mjedisin, premtimet dhe të drejtat qytetare.</p>
-              <a class="button button--primary" href="/lojerat/kuizi-qytetar/">Fillo kuizin <span aria-hidden="true">→</span></a>
+              <div class="game-card__actions">
+                <a class="button button--primary" href="/lojerat/kuizi-qytetar/">Fillo kuizin <span aria-hidden="true">→</span></a>
+                <GameShare title="Kuizi Qytetar" path="/lojerat/kuizi-qytetar/" />
+              </div>
             </div>
           </article>
 
@@ -76,7 +85,10 @@ const copy = siteCopy.sq;
               <p class="game-card__meta"><span>Fjalëkryqe</span><span>Flamingo Times</span></p>
               <h3>Fjalëkryqet e Flamingo Times</h3>
               <p>Të gjitha fjalëkryqet interaktive të gazetës, të mbledhura në një vend.</p>
-              <a class="button button--primary" href="/lojerat/fjalekryqet/">Hap koleksionin <span aria-hidden="true">→</span></a>
+              <div class="game-card__actions">
+                <a class="button button--primary" href="/lojerat/fjalekryqet/">Hap koleksionin <span aria-hidden="true">→</span></a>
+                <GameShare title="Fjalëkryqet e Flamingo Times" path="/lojerat/fjalekryqet/" />
+              </div>
             </div>
           </article>
         </div>
@@ -123,6 +135,7 @@ const copy = siteCopy.sq;
   .games-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 2.6rem); }
 
   .game-card {
+    position: relative;
     display: grid;
     grid-template-rows: minmax(13rem, 0.8fr) 1fr;
     min-width: 0;
@@ -133,6 +146,7 @@ const copy = siteCopy.sq;
   }
 
   .game-card:hover { transform: translate(-3px, -3px); box-shadow: 12px 12px 0 var(--ink); }
+  .game-card:focus-within, .game-card:has(details[open]) { z-index: 5; }
 
   .game-card__preview {
     display: grid;
@@ -161,7 +175,9 @@ const copy = siteCopy.sq;
   .game-card__body { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(1.4rem, 4vw, 2.2rem); }
   .game-card__body h3 { max-width: 16ch; font-size: clamp(1.8rem, 4vw, 2.7rem); }
   .game-card__body > p:not(.game-card__meta) { max-width: 44ch; margin: 1rem 0 1.6rem; color: var(--muted); font-weight: 700; line-height: 1.55; }
-  .game-card__body .button { margin-top: auto; }
+  .game-card__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; margin-top: auto; }
+  .game-card__actions .button { margin: 0; }
+  .game-card__actions > :global(game-share) { margin-left: auto; }
 
   .game-card__meta { display: flex; gap: 0.5rem; margin: 0 0 1rem; }
   .game-card__meta span { padding: 0.3rem 0.55rem; border: 1px solid var(--ink); background: var(--paper-cool); color: var(--ink); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }

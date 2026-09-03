@@ -2,7 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteFrame from "../../components/SiteFrame.astro";
 import RamaApoBerisha from "../../components/RamaApoBerisha.svelte";
+import GameShare from "../../components/GameShare.astro";
 import { siteCopy } from "../../data/site";
+import { gameSocialImage } from "../../data/games";
 
 export const prerender = true;
 
@@ -14,6 +16,7 @@ const copy = siteCopy.sq;
   description="Lexo rastin dhe gjej nëse i përket Edi Ramës apo Sali Berishës në këtë lojë interaktive."
   locale="sq"
   canonicalPath="/lojerat/rama-apo-berisha/"
+  {...gameSocialImage}
   breadcrumbs={[
     { name: "Ballina", path: "/" },
     { name: "Këndi i Lojërave", path: "/lojerat/" },
@@ -27,7 +30,9 @@ const copy = siteCopy.sq;
         <a href="/lojerat/fjalekryqet/">Fjalëkryqet <span aria-hidden="true">→</span></a>
       </nav>
       <div class="game-detail__stage">
-        <RamaApoBerisha client:load />
+        <RamaApoBerisha client:load>
+          <GameShare slot="share" title="Rama apo Berisha?" path="/lojerat/rama-apo-berisha/" compact />
+        </RamaApoBerisha>
       </div>
     </main>
   </SiteFrame>
