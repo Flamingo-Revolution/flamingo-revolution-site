@@ -180,7 +180,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       demandsTeaser: "Nga dorëheqja e qeverisë te shfuqizimi i ligjeve që hapën zonat e mbrojtura.",
       triggerTitle: "Shkrepja që e ndezi",
       triggerText:
-        "Më 30 maj 2026, një protestues u tërhoq zvarrë nga anëtarë të sigurisë private në Zvërnec, ndërkohë që Policia e Shtetit ishte e pranishme dhe nuk ndërhyu. Pamjet u bënë një nga shkëndijat kryesore të mobilizimit më të gjerë.",
+        "Më 30 maj 2026, një protestues u tërhoq zvarrë nga anëtarë të sigurisë private në Zvërnec, ndërkohë që Policia e Shtetit ishte e pranishme dhe nuk ndërhyri. Pamjet u bënë një nga shkëndijat kryesore të mobilizimit më të gjerë.",
       demands: [
         "Dorëheqja e qeverisë",
         "Shfuqizimi i statusit dhe i kuadrit ligjor që lidhet me investitorët strategjikë",
