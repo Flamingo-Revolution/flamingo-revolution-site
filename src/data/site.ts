@@ -167,7 +167,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "Nga 23 maji 2026",
       title: "Revolucioni Flamingo",
       description:
-        "Jemi një nëngrup i pavarur i lëvizjes Revolucioni Flamingo, i nisur nga komunikime në platformat Reddit dhe Discord. E mbështesim lëvizjen dhe kërkesat e saj me ide, projekte konkrete, dhe dokumentim.",
+        "Jemi një nëngrup i pavarur i lëvizjes Revolucioni Flamingo, i nisur nga komunikime në platformat Reddit dhe Discord. E mbështesim lëvizjen dhe kërkesat e saj me ide, projekte konkrete dhe dokumentim.",
       primaryCta: "Jepni mendimin tuaj",
       documentsCta: "Ide dhe projektligje",
       secondaryCta: "Pse nisi",
