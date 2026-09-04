@@ -86,7 +86,10 @@ const copy = siteCopy.sq;
               <p class="game-card__meta"><span>Arcade</span><span>Flamingo e Fundit</span></p>
               <h3>Flamingoja e Fundit</h3>
               <p>Drejto flamingon në një vrap satirik me pengesa, slogane dhe ritmin e protestës.</p>
-              <a class="button button--primary" href="/lojerat/flamingoja-e-fundit/">Luaj tani <span aria-hidden="true">→</span></a>
+              <div class="game-card__actions">
+                <a class="button button--primary" href="/lojerat/flamingoja-e-fundit/">Luaj tani <span aria-hidden="true">→</span></a>
+                <GameShare title="Flamingoja e Fundit" path="/lojerat/flamingoja-e-fundit/" />
+              </div>
             </div>
           </article>
 
@@ -242,6 +245,5 @@ const copy = siteCopy.sq;
     .games-library { padding-top: 3rem; }
     .game-card { box-shadow: 6px 6px 0 var(--ink); }
     .game-card__preview { padding: 1rem; }
-    .game-card__preview--grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
 </style>
