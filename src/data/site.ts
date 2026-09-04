@@ -167,7 +167,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "Nga 23 maji 2026",
       title: "Revolucioni Flamingo",
       description:
-        "Jemi një nëngrup i pavarur i lëvizjes Revolucioni Flamingo, i nisur nga komunikime në platformat Reddit dhe Discord. E mbështesim lëvizjen dhe kërkesat e saj me ide, projekte konkrete, dhe dokumentim.",
+        "Jemi një nëngrup i pavarur i lëvizjes Revolucioni Flamingo, i nisur nga komunikime në platformat Reddit dhe Discord. E mbështesim lëvizjen dhe kërkesat e saj me ide, projekte konkrete dhe dokumentim.",
       primaryCta: "Jepni mendimin tuaj",
       documentsCta: "Ide dhe projektligje",
       secondaryCta: "Pse nisi",
@@ -180,7 +180,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       demandsTeaser: "Nga dorëheqja e qeverisë te shfuqizimi i ligjeve që hapën zonat e mbrojtura.",
       triggerTitle: "Shkrepja që e ndezi",
       triggerText:
-        "Më 30 maj 2026, një protestues u tërhoq zvarrë nga anëtarë të sigurisë private në Zvërnec, ndërkohë që Policia e Shtetit ishte e pranishme dhe nuk ndërhyu. Pamjet u bënë një nga shkëndijat kryesore të mobilizimit më të gjerë.",
+        "Më 30 maj 2026, një protestues u tërhoq zvarrë nga anëtarë të sigurisë private në Zvërnec, ndërkohë që Policia e Shtetit ishte e pranishme dhe nuk ndërhyri. Pamjet u bënë një nga shkëndijat kryesore të mobilizimit më të gjerë.",
       demands: [
         "Dorëheqja e qeverisë",
         "Shfuqizimi i statusit dhe i kuadrit ligjor që lidhet me investitorët strategjikë",
@@ -247,16 +247,16 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     pillars: {
       kicker: "Kush proteston",
       title: "Një lëvizje, shumë profile.",
-      teaser: "Nga bankat e shkollës te mosha e pensionit: protesta bashkon profile shoqërore që rrallë dalin bashkë në rrugë.",
+      teaser: "Nga bankat e shkollës te mosha e pensionit: protesta bashkon profile shoqërore, që rrallë dalin bashkë në rrugë.",
       items: [
         {
           title: "Aktivistët",
-          body: "Krijuesit e simboleve të protestës: nga flamingoja fluturues te busulla dhe flamuri i mbajtur çdo ditë.",
+          body: "Krijuesit e simboleve të protestës: nga flamingoja fluturuese te busulla dhe flamuri i mbajtur çdo ditë.",
           image: { src: "/images/protests/aktivistet.jpg", alt: "Kolazh me simbolet e protestës: flamingoja, busulla dhe flamurtari" }
         },
         {
-          title: "Nëpunësit",
-          body: "Punonjës zyre që mbyllin ditën e punës dhe shkojnë drejt e në protestë, ende me çantën e punës në krah.",
+          title: "Nënpunësit",
+          body: "Punonjës zyre, që mbyllin ditën e punës dhe shkojnë drejt e në protestë, ende me çantën e punës në krah.",
           image: { src: "/images/protests/fundi-sesionit.jpg", alt: "Protestues përballë kordonit policor jashtë Kuvendit" }
         },
         {
@@ -271,22 +271,22 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "Profesionistët",
-          body: "Avokatë, mjekë, inxhinierë e arkitektë që lidhin çështjen e Nartës me gjendjen e profesionit dhe shtetin e së drejtës.",
+          body: "Avokatë, mjekë, inxhinierë e arkitektë, që lidhin çështjen e Nartës me gjendjen e profesionit dhe shtetin e së drejtës.",
           image: { src: "/images/protests/vala-kombetare.jpg", alt: "Turmë protestuesish me pankarta para Kryeministrisë në Tiranë" }
         },
         {
           title: "Familjarët",
-          body: "Prindër që sjellin fëmijët me vete çdo mbrëmje, duke e kthyer bulevardin në një hapësirë familjare.",
+          body: "Prindër, që sjellin fëmijët me vete çdo mbrëmje, duke e kthyer bulevardin në një hapësirë familjare.",
           image: { src: "/images/protests/java-e-21.jpg", alt: "Protestuesit natën në bulevardin e Tiranës, me flamuj kuq e zi" }
         },
         {
           title: "Të moshuarit",
-          body: "Pensionistë që dalin krah për krah me brezat e rinj, duke kujtuar se çështja e kësaj toke i përket të gjithëve.",
+          body: "Pensionistë, që dalin krah për krah me brezat e rinj, duke kujtuar se çështja e kësaj toke i përket të gjithëve.",
           image: { src: "/images/protests/vazhdimi.jpg", alt: "Protestuesit natën para Kryeministrisë, me flamuj shqiptarë" }
         },
         {
           title: "Diaspora",
-          body: "Shqiptarë kudo në botë që marshojnë çdo javë, nga Berlini e Milano te New York, duke i dhënë protestës jehonë ndërkombëtare.",
+          body: "Shqiptarë, kudo në botë, që marshojnë çdo javë nga Berlini, Milano e New York, duke i dhënë protestës jehonë ndërkombëtare.",
           image: { src: "/images/protests/diaspora.jpg", alt: "Protestues me flamuj shqiptarë në një marshim të diasporës në Cyrih" }
         },
         {
@@ -300,7 +300,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       kicker: "Këshilli",
       title: "Nga reagimi publik te propozimet e organizuara.",
       description:
-        "Këshilli mund të shërbejë si vendi ku idetë, dokumentet dhe propozimet mblidhen, renditen dhe kthehen në punë konkrete. Qëllimi është që energjia e protestës të mos mbetet vetëm në komente, por të kthehet në pjesëmarrje.",
+        "Këshilli mund të shërbejë si vendi ku idetë, dokumentet dhe propozimet, mblidhen, renditen dhe kthehen në punë konkrete. Qëllimi është që energjia e protestës të mos mbetet vetëm në komente, por të kthehet në pjesëmarrje.",
       primaryLink: {
         label: "Jepni mendimin tuaj",
         href: "/idete-tuaja/"
@@ -320,7 +320,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       quote:
         "\"Shqipëria nuk shitet.\"",
       note:
-        "Në këto protesta u lidhën mbrojtja e mjedisit, prona publike dhe kërkesa për llogaridhënie politike në një gjuhë të përbashkët qytetare.",
+        "Në këto protesta u lidhën mbrojtja e mjedisit, prona publike dhe kërkesa për llogaridhënie politike, në një gjuhë të përbashkët qytetare.",
       primaryLink: {
         label: "Jepni mendimin tuaj",
         href: "/idete-tuaja/"
@@ -356,7 +356,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     meta: {
       title: "Flamingo Revolution",
       description:
-        "A civic website for transparently collecting public concerns, ideas and proposals in service of the protest and the public interest."
+        "A civic website for transparently collecting public concerns, ideas and proposals, in service of the protest and the public interest."
     },
     brand: {
       name: "Flamingo Revolution",
@@ -394,7 +394,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "Since May 23, 2026",
       title: "Flamingo Revolution",
       description:
-        "We're a subgroup of the Flamingo Revolution movement, not the movement itself. We support it with projects, ideas and by spreading its message.",
+        "We are a subgroup of the Flamingo Revolution movement, not the movement itself. We support it with projects, ideas and by spreading its message.",
       primaryCta: "Share your opinion",
       documentsCta: "Ideas and draft laws",
       secondaryCta: "Why it began",
@@ -407,7 +407,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       demandsTeaser: "From the government's resignation to repealing the laws that opened the protected areas.",
       triggerTitle: "What triggered it",
       triggerText:
-        "On May 30, 2026, a protester in Zvërnec was dragged by private security personnel while State Police officers were present and did not intervene. Footage of the incident became one of the main sparks for the wider mobilization.",
+        "On May 30, 2026, a protester in Zvërnec was dragged by private security personnel, while State Police officers were present and did not intervene. Footage of the incident became one of the main sparks for the wider mobilization.",
       demands: [
         "Resignation of the government",
         "Repeal of the legal status and framework for strategic investors",
@@ -453,7 +453,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     manifesto: {
       kicker: "What it was",
-      title: "A reaction against building in protected areas and against how those decisions were being made.",
+      title: "A reaction against building in protected areas and against the way those decisions were being made.",
       description:
         "Based on the linked references, the protests were driven by opposition to projects in Portonovo, Sazan Island and Baks-Rrjoll, then widened into a broader accusation of opacity, state capture and the sale of public interest.",
       cards: [
@@ -478,12 +478,12 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       items: [
         {
           title: "Activists",
-          body: "The people behind the protest's symbols: the floating flamingo, the compass, and the flag carried every day.",
-          image: { src: "/images/protests/aktivistet.jpg", alt: "Collage of the protest's symbols: the flamingo, the compass, and the flag-bearer" }
+          body: "The people behind the protest's symbols: the floating flamingo, the compass and the flag carried every day.",
+          image: { src: "/images/protests/aktivistet.jpg", alt: "Collage of the protest's symbols: the flamingo, the compass and the flag-bearer" }
         },
         {
           title: "Civil servants",
-          body: "Office workers who clock out and head straight to the protest, still carrying their work bag.",
+          body: "Office workers, who clock out and head straight to the protest, still carrying their work bag.",
           image: { src: "/images/protests/fundi-sesionit.jpg", alt: "Protesters facing a police cordon outside Parliament" }
         },
         {
@@ -503,8 +503,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "Families",
-          body: "Parents who bring their children along every evening, turning the boulevard into a family space.",
-          image: { src: "/images/protests/java-e-21.jpg", alt: "Protesters at night on Tirana's boulevard, carrying red-and-black flags" }
+          body: "Parents, who bring their children along every evening, turning the boulevard into a family space.",
+          image: { src: "/images/protests/java-e-21.jpg", alt: "Protesters at night, on Tirana's boulevard, carrying red-and-black flags" }
         },
         {
           title: "The elderly",
@@ -518,7 +518,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: "Internationals",
-          body: "MEPs and foreign allies who visited Zvërnec and spoke out publicly against the destruction of the protected area.",
+          body: "MEPs and foreign allies, who visited Zvërnec and spoke out publicly against the destruction of the protected area.",
           image: { src: "/images/protests/nderkombetaret.jpg", alt: "The delegation of MEPs above the Zvërnec and Portonovo bay" }
         }
       ]

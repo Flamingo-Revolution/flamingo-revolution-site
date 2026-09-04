@@ -1,4 +1,7 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+	let { share }: { share?: Snippet } = $props();
+
 	type Person = 'rama' | 'berisha';
 
 	type Card = {
@@ -203,7 +206,10 @@
 <section class="politics-game" aria-labelledby="politics-game-title">
 	<header class="politics-game__masthead">
 		<p>Kush e bëri?</p>
-		<h1 id="politics-game-title">Rama apo Berisha?</h1>
+		<div class="game-title-row">
+			<h1 id="politics-game-title">Rama apo Berisha?</h1>
+			{#if share}<div class="game-title-share">{@render share()}</div>{/if}
+		</div>
 		<p>Lëviz djathtas për Ramën, majtas për Berishën — ose përdor butonat.</p>
 	</header>
 
@@ -294,7 +300,10 @@
 		color: var(--text);
 	}
 
-	.politics-game__masthead { margin-bottom: 1.4rem; text-align: center; }
+	.politics-game__masthead { position: relative; z-index: 40; margin-bottom: 1.4rem; text-align: center; }
+	.game-title-row { display: flex; align-items: center; justify-content: center; gap: 0.8rem; }
+	.game-title-row h1 { min-width: 0; margin: 0; }
+	.game-title-share { flex-shrink: 0; text-align: left; }
 	.politics-game__masthead > p:first-child {
 		display: inline-block;
 		margin: 0 0 0.8rem;
