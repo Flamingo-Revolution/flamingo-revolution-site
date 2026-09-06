@@ -1,3 +1,7 @@
+packages:
+  - "."
+  - "games/*"
+
 allowBuilds:
   '@prisma/engines': true
   esbuild: true

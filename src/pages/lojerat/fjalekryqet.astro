@@ -5,7 +5,7 @@ import GameShare from "../../components/GameShare.astro";
 import FlamingoCrossword from "../../components/FlamingoCrossword.svelte";
 import FlamingoCrosswordSix from "../../components/FlamingoCrosswordSix.svelte";
 import { siteCopy } from "../../data/site";
-import { gameSocialImage } from "../../data/games";
+import { crosswordSocialImage } from "../../data/games";
 
 export const prerender = true;
 
@@ -18,7 +18,7 @@ const copy = siteCopy.sq;
   locale="sq"
   pageType="CollectionPage"
   canonicalPath="/lojerat/fjalekryqet/"
-  {...gameSocialImage}
+  {...crosswordSocialImage}
   breadcrumbs={[
     { name: "Ballina", path: "/" },
     { name: "Këndi i Lojërave", path: "/lojerat/" },
