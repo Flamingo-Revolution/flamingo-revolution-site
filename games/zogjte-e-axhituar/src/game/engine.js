@@ -958,7 +958,7 @@ export function createGame(canvas, callbacks) {
 
     b.hp -= dmg;
 
-    createBurst(particles, 
+    createBurst(particles,
       hx == null
         ? b.x + b.w / 2
         : hx,
@@ -982,7 +982,7 @@ export function createGame(canvas, callbacks) {
 
     score += 100;
 
-    createBurst(particles, 
+    createBurst(particles,
       b.x + b.w / 2,
       b.y + b.h / 2,
       getBlockColor(b.style)
@@ -1021,13 +1021,13 @@ export function createGame(canvas, callbacks) {
     const cy =
       b.y + b.h / 2;
 
-    createBurst(particles, 
+    createBurst(particles,
       cx,
       cy,
       '#ff8c1a'
     );
 
-    createBurst(particles, 
+    createBurst(particles,
       cx,
       cy,
       '#ffd23f'
@@ -1095,7 +1095,7 @@ export function createGame(canvas, callbacks) {
 
           score += 500;
 
-          createBurst(particles, 
+          createBurst(particles,
             px,
             py,
             '#7cc63f'
@@ -1211,7 +1211,7 @@ export function createGame(canvas, callbacks) {
             p
           );
 
-          createBurst(particles, 
+          createBurst(particles,
             currentBird.x,
             currentBird.y,
             '#f1c40f'
@@ -1222,7 +1222,7 @@ export function createGame(canvas, callbacks) {
 
             score += 500;
 
-            createBurst(particles, 
+            createBurst(particles,
               p.x + p.w / 2,
               p.y + p.h / 2,
               '#c0392b'
@@ -1644,7 +1644,7 @@ export function createGame(canvas, callbacks) {
       currentBird.vy *= 0.75;
       currentBird.boosted = true;
 
-      createBurst(particles, 
+      createBurst(particles,
         currentBird.x -
           currentBird.r,
         currentBird.y,
