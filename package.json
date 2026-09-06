@@ -45,6 +45,7 @@
 		"typescript": "^6.0.3"
 	},
 	"devDependencies": {
+		"@bruits/satteri-wasm32-wasi": "0.9.5",
 		"@types/node": "24.0.0",
 		"prettier": "3.9.5",
 		"prisma": "^7.8.0",
