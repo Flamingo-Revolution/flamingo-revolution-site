@@ -10,7 +10,7 @@ touch handling inside its own document.
 
 Run `pnpm install` at the repository root. Normal `pnpm dev`, `pnpm build`, and
 Cloudflare build/deploy scripts build this game first. After changing game code,
-run `pnpm game:build` and reload the page (the embedded bundle has no hot reload).
+run `pnpm run game:build:dev` and reload the page (the embedded bundle has no hot reload).
 
 ## Online scores
 
@@ -28,3 +28,5 @@ The original game accepts client-reported scores; it does not verify gameplay.
 Without these variables, the game remains playable and stores scores locally
 in the browser. Online score submission requires the Supabase schema as well
 as the environment values.
+
+Development uses `/games/zogjte-dev/` with stable asset filenames so rebuilding the game does not invalidate the running Astro asset manifest. Production builds use their own directory and hashed assets.
