@@ -72,6 +72,9 @@ const id = `share-${path.split(/[\/#]/).filter(Boolean).join('-')}`;
 			const input = manual.querySelector('input')!;
 			const discordLink = this.querySelector<HTMLAnchorElement>('.discord-link')!;
 			const url = this.dataset.url!;
+			const title = this.dataset.title!;
+			const useNativeShare = typeof navigator.share === 'function'
+				&& (navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches);
 			let busy = false;
 			const positionPanel = () => {
 				if (!details.open) return;
@@ -103,6 +106,21 @@ const id = `share-${path.split(/[\/#]/).filter(Boolean).join('-')}`;
 			}, { signal });
 			window.addEventListener('resize', positionPanel, { signal });
 			window.addEventListener('scroll', positionPanel, { signal, passive: true });
+			trigger.addEventListener('click', async (event) => {
+				if (!useNativeShare || busy) return;
+				event.preventDefault();
+				busy = true;
+				try {
+					await navigator.share({ title, text: title, url });
+				} catch (error) {
+					if (!(error instanceof DOMException && error.name === 'AbortError')) {
+						details.open = true;
+						status.textContent = 'Shpërndarja e telefonit nuk u hap. Zgjidh një aplikacion më poshtë.';
+					}
+				} finally {
+					busy = false;
+				}
+			}, { signal });
 			this.querySelector('[data-close]')!.addEventListener('click', () => close(true), { signal });
 			document.addEventListener('pointerdown', (event) => {
 				if (event.target instanceof Node && !this.contains(event.target)) close();

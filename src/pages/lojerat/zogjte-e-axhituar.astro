@@ -7,7 +7,7 @@ import { birdsSocialImage } from "../../data/games";
 
 export const prerender = true;
 const copy = siteCopy.sq;
-const gamePath = "/games/zogjte-e-axhituar/index.html";
+const gamePath = import.meta.env.DEV ? "/games/zogjte-dev/index.html" : "/games/zogjte-e-axhituar/index.html";
 ---
 
 <BaseLayout
@@ -36,7 +36,7 @@ const gamePath = "/games/zogjte-e-axhituar/index.html";
         </div>
         <p class="game-description">Nis zogjtë në fluturim, mbro Lagunën e Nartës dhe sfido rekordin tënd.</p>
       </header>
-      <iframe src={gamePath} title="Luaj Zogjtë e Axhituar" allow="fullscreen" allowfullscreen></iframe>
+      <iframe src={gamePath} title="Luaj Zogjtë e Axhituar" allow="fullscreen; web-share" allowfullscreen></iframe>
     </main>
   </SiteFrame>
 </BaseLayout>

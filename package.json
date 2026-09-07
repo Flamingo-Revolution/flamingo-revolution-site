@@ -8,8 +8,8 @@
 		"node": ">=22.12.0"
 	},
 	"scripts": {
-		"dev": "pnpm run game:build && astro dev",
-		"start": "pnpm run game:build && astro dev",
+		"dev": "pnpm run game:build:dev && astro dev",
+		"start": "pnpm run game:build:dev && astro dev",
 		"assets:generate": "node scripts/generate-assets.mjs",
 		"postinstall": "prisma generate",
 		"build": "pnpm run game:build && prisma generate && astro build",
@@ -22,6 +22,7 @@
 		"db:seed": "prisma db seed",
 		"reporter:create": "node scripts/create-reporter.mjs",
 		"db:studio": "prisma studio",
+		"game:build:dev": "pnpm --dir games/zogjte-e-axhituar run build --mode development",
 		"game:build": "pnpm --dir games/zogjte-e-axhituar run build"
 	},
 	"dependencies": {

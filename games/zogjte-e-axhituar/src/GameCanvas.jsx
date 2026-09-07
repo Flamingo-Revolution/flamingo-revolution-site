@@ -22,14 +22,20 @@ export default function GameCanvas({ playerName, onExit }) {
   const [queue, setQueue] = useState([]);
   const [message, setMessage] = useState({ visible: false, text: '', action: null });
   const [showBirdGuide, setShowBirdGuide] = useState(false);
+  const [finalScore, setFinalScore] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
 
   function showLeaderboard(finalScore = scoreRef.current) {
     if (finalScoreSavedRef.current) return;
     finalScoreSavedRef.current = true;
-    const savedScores = JSON.parse(localStorage.getItem('zogjte-leaderboard') || '[]');
-    const scores = [...savedScores, { name: playerName, score: finalScore }].sort((first, second) => second.score - first.score).slice(0, 10);
-    localStorage.setItem('zogjte-leaderboard', JSON.stringify(scores));
+    setFinalScore(finalScore);
+    const normalizedName = playerName.trim().slice(0, 24);
+    const savedScores = JSON.parse(localStorage.getItem('zogjte-leaderboard') || '[]')
+      .map(({ name, score }) => ({ name, score }));
+    const scores = [...savedScores, { name: normalizedName, score: finalScore, isCurrentPlayer: true }]
+      .sort((first, second) => second.score - first.score)
+      .slice(0, 10);
+    localStorage.setItem('zogjte-leaderboard', JSON.stringify(scores.map(({ name, score }) => ({ name, score }))));
     setLeaderboard(scores);
 
     void (async () => {
@@ -38,7 +44,14 @@ export default function GameCanvas({ playerName, onExit }) {
         if (!savedOnline) return;
 
         const onlineScores = await fetchLeaderboard();
-        if (onlineScores) setLeaderboard(onlineScores);
+        if (onlineScores) {
+          let currentPlayerFound = false;
+          setLeaderboard(onlineScores.map((entry) => {
+            const isCurrentPlayer = !currentPlayerFound && entry.name === normalizedName && entry.score === finalScore;
+            if (isCurrentPlayer) currentPlayerFound = true;
+            return { ...entry, isCurrentPlayer };
+          }));
+        }
       } catch (error) {
         console.error('Unable to save the online leaderboard score.', error);
       }
@@ -180,7 +193,7 @@ export default function GameCanvas({ playerName, onExit }) {
           </section>
         </div>
       )}
-      {leaderboard.length > 0 && <Leaderboard scores={leaderboard} onPlayAgain={onExit} />}
+      {leaderboard.length > 0 && <Leaderboard finalScore={finalScore} scores={leaderboard} onPlayAgain={onExit} />}
       {showBirdGuide && <BirdGuide onClose={() => setShowBirdGuide(false)} />}
       </div>
     </div>
