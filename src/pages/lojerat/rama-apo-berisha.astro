@@ -4,7 +4,7 @@ import SiteFrame from "../../components/SiteFrame.astro";
 import RamaApoBerisha from "../../components/RamaApoBerisha.svelte";
 import GameShare from "../../components/GameShare.astro";
 import { siteCopy } from "../../data/site";
-import { gameSocialImage } from "../../data/games";
+import { politicsSocialImage } from "../../data/games";
 
 export const prerender = true;
 
@@ -16,7 +16,7 @@ const copy = siteCopy.sq;
   description="Lexo rastin dhe gjej nëse i përket Edi Ramës apo Sali Berishës në këtë lojë interaktive."
   locale="sq"
   canonicalPath="/lojerat/rama-apo-berisha/"
-  {...gameSocialImage}
+  {...politicsSocialImage}
   breadcrumbs={[
     { name: "Ballina", path: "/" },
     { name: "Këndi i Lojërave", path: "/lojerat/" },

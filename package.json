@@ -8,20 +8,21 @@
 		"node": ">=22.12.0"
 	},
 	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
+		"dev": "pnpm run game:build && astro dev",
+		"start": "pnpm run game:build && astro dev",
 		"assets:generate": "node scripts/generate-assets.mjs",
 		"postinstall": "prisma generate",
-		"build": "prisma generate && astro build",
+		"build": "pnpm run game:build && prisma generate && astro build",
 		"preview": "astro preview",
-		"cf:preview": "prisma generate && astro build && astro preview",
-		"cf:deploy": "prisma generate && astro build && wrangler deploy",
+		"cf:preview": "pnpm run game:build && prisma generate && astro build && astro preview",
+		"cf:deploy": "pnpm run game:build && prisma generate && astro build && wrangler deploy",
 		"db:generate": "prisma generate",
 		"db:migrate": "prisma migrate dev",
 		"db:migrate:deploy": "prisma migrate deploy",
 		"db:seed": "prisma db seed",
 		"reporter:create": "node scripts/create-reporter.mjs",
-		"db:studio": "prisma studio"
+		"db:studio": "prisma studio",
+		"game:build": "pnpm --dir games/zogjte-e-axhituar run build"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "14.1.3",

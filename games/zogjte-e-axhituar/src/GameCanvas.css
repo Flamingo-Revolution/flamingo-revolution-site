@@ -1,0 +1,250 @@
+.game-frame {
+  position: relative;
+  --ui-scale: 1;
+  width: 1000px;
+  max-width: 96vw;
+  aspect-ratio: 8 / 5;
+  margin: 16px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 14px 36px #000000aa;
+}
+
+.game-frame canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.game-frame .game-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 500px;
+  pointer-events: none;
+  transform: scale(var(--ui-scale));
+  transform-origin: top left;
+}
+
+.game-frame .game-ui button,
+.game-frame .game-ui [role='dialog'] { pointer-events: auto; }
+
+.game-frame .score-board {
+  position: absolute; top: 12px; right: 14px; z-index: 10;
+  color: #fffdf1; font-family: Impact, 'Arial Black', sans-serif;
+  font-size: clamp(14px, 2vw, 24px); font-weight: 900; line-height: .95;
+  letter-spacing: 0; text-align: right; text-shadow: 2px 2px 0 #172330, -1px -1px 0 #172330, 1px -1px 0 #172330;
+}
+
+.game-frame .score-row { display: flex; justify-content: flex-end; align-items: baseline; gap: 10px; }
+.game-frame .score-row strong { min-width: 56px; color: #fffdf1; font-size: 1.2em; }
+
+.game-frame .hud {
+  position: absolute; top: -6px; left: -6px; z-index: 10;
+  width: 220px; height: 150px; pointer-events: none;
+}
+
+.game-frame .hud .vine {
+  position: absolute; top: 0; left: 0; pointer-events: none;
+}
+
+.game-frame .bird-avatar {
+  position: absolute; top: 54px; left: 36px; z-index: 2;
+  width: 62px; height: 62px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffffee, #ffffffaa);
+  border: 3px solid #ffffff; box-shadow: 0 3px 10px #00000044;
+  display: flex; align-items: center; justify-content: center; font-size: 30px;
+}
+
+.game-frame .bird-avatar .bird-count {
+  position: absolute; bottom: -5px; right: -5px;
+  background: #25412f; color: #fff; font-size: 11px; font-weight: 800;
+  border-radius: 50%; width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff;
+}
+
+.game-frame .level-trail {
+  position: absolute; top: 18px; left: 78px;
+  display: flex; align-items: center; gap: 16px;
+}
+
+.game-frame .level-trail::before {
+  content: ''; position: absolute; top: 50%; left: 0; right: 0;
+  height: 2px; background: #ffffffbb; transform: translateY(-50%); z-index: -1;
+}
+
+.game-frame .level-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #ffffffcc; border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px #00000033;
+}
+
+.game-frame .level-dot.done { background: #4a9d5f; border-color: #4a9d5f; }
+.game-frame .level-dot.current {
+  background: #ffb400; border-color: #ffb400;
+  box-shadow: 0 0 0 4px #ffb40055;
+}
+
+.game-frame .enemy-badge {
+  position: absolute; top: 96px; left: 108px;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffffee, #ffffffaa);
+  border: 3px solid #ffffff; box-shadow: 0 3px 10px #00000044;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+.game-frame .enemy-badge .enemy-icon { font-size: 18px; line-height: 1; }
+.game-frame .enemy-badge .enemy-count {
+  font-size: 12px; font-weight: 800; color: #25412f; line-height: 1; margin-top: 1px;
+}
+
+.game-frame .bird-queue-mini {
+  position: absolute; top: 108px; left: 8px; z-index: 1;
+  display: flex; align-items: center; gap: 3px;
+}
+
+.game-frame .mini-bird {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #ffffffcc; border: 1.5px solid #ffffff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; box-shadow: 0 2px 5px #00000022;
+}
+
+.game-frame .bird-avatar { pointer-events: auto; cursor: help; }
+.game-frame .mini-bird { position: relative; pointer-events: auto; cursor: help; }
+
+.game-frame .bird-tip {
+  position: absolute; top: calc(100% + 8px); left: 0; z-index: 30;
+  width: 200px; padding: 8px 10px; border-radius: 10px;
+  background: #1f3327f2; color: #fff; text-align: left;
+  box-shadow: 0 6px 18px #00000055;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.game-frame .bird-tip::before {
+  content: ''; position: absolute; bottom: 100%; left: 16px;
+  border: 6px solid transparent; border-bottom-color: #1f3327f2;
+}
+
+.game-frame .bird-tip strong {
+  display: block; font-size: 12px; margin-bottom: 3px; color: #ffd23f;
+}
+
+.game-frame .bird-tip span { display: block; font-size: 11px; line-height: 1.35; }
+
+.game-frame .bird-avatar:hover .bird-tip,
+.game-frame .mini-bird:hover .bird-tip {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+
+.game-frame .tip-backdrop {
+  position: absolute; inset: 0; z-index: 35; display: grid; place-items: center;
+  padding: 28px; background: #102b3e99;
+}
+
+.game-frame .tip-dialog {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 150px;
+  width: min(690px, 94%); min-height: 210px; overflow: hidden;
+  border: 5px solid #1c4c5f; border-radius: 9px; background: #fffdf4;
+  box-shadow: 0 12px 28px #00000088;
+}
+
+.game-frame .tip-copy { padding: 35px 38px 30px; text-align: center; }
+.game-frame .tip-eyebrow { color: #db721d; font: 900 14px/1 Arial, sans-serif; letter-spacing: 1px; }
+.game-frame .tip-copy h2 { margin-top: 8px; color: #15394c; font: 900 clamp(24px, 3.5vw, 34px)/1 Chewy, Impact, sans-serif; }
+.game-frame .tips-table { width: 100%; margin-top: 15px; border-collapse: collapse; color: #28475b; font: 800 clamp(11px, 1.6vw, 14px)/1.15 Arial, sans-serif; text-align: left; }
+.game-frame .tips-table th, .game-frame .tips-table td { padding: 8px 6px; border-bottom: 2px solid #d5e4e2; vertical-align: top; }
+.game-frame .tips-table th { width: 35%; color: #d36b1e; font-weight: 900; }
+.game-frame .tips-table tr:last-child th, .game-frame .tips-table tr:last-child td { border-bottom: 0; }
+.game-frame .tip-accent { display: grid; place-items: center; border-left: 10px solid #f39a1a; background: linear-gradient(#32b9bb, #139887); color: #fff; font-size: 86px; text-shadow: 0 4px #145d58; }
+
+.game-frame .tip-close {
+  position: absolute; top: -18px; right: -18px; z-index: 1; width: 58px; height: 58px; padding: 0;
+  border: 4px solid #7d4a1b; border-radius: 50%; background: linear-gradient(#ffdb62, #f4a127);
+  box-shadow: 0 4px #573214; color: #fffdf4; cursor: pointer; font: 900 45px/45px Arial, sans-serif;
+  text-shadow: 2px 2px #a4651c;
+}
+
+.game-frame .restart {
+  position: absolute; bottom: 12px; right: 12px; z-index: 10;
+  width: 48px; height: 48px; padding: 0; border: 3px solid #a44c14; border-radius: 50%;
+  background: linear-gradient(#ffe26b, #f3a226); box-shadow: inset 0 3px #fff4ae, 0 3px #7b3412;
+  color: #7b3412; cursor: pointer; font: 900 35px/40px Arial, sans-serif;
+}
+
+.game-frame .restart:hover { transform: translateY(-1px); filter: brightness(1.06); }
+.game-frame .restart:active { transform: translateY(2px); box-shadow: inset 0 2px #db8319, 0 1px #7b3412; }
+
+.game-frame .bird-guide-button {
+  position: absolute; right: 14px; bottom: 70px; z-index: 12;
+  width: 42px; height: 42px; padding: 0; border: 3px solid #2c6c52; border-radius: 50%;
+  background: linear-gradient(#f4fcde, #9cda71); box-shadow: inset 0 2px #ffffffcc, 0 3px #24523d;
+  cursor: pointer; font-size: 23px; line-height: 1;
+}
+
+.game-frame .bird-guide-button:hover { transform: translateY(-1px); filter: brightness(1.05); }
+
+.game-frame .bird-guide-backdrop {
+  position: absolute; inset: 0; z-index: 40; display: grid; place-items: center;
+  padding: 22px; background: #0b2435b8;
+}
+
+.game-frame .bird-guide {
+  position: relative; width: min(880px, 96%); max-height: 94%; overflow: auto;
+  padding: 18px 18px 16px; border: 5px solid #164b64; border-radius: 10px;
+  background: linear-gradient(#65c9ed, #c3f0e9 78%, #86bd60 79%);
+  box-shadow: 0 12px 28px #00000088;
+}
+
+.game-frame .guide-header { padding-bottom: 12px; text-align: center; }
+.game-frame .guide-header h2 { color: #fffdf0; font: 900 clamp(25px, 4vw, 42px)/.9 Impact, 'Arial Black', sans-serif; text-transform: uppercase; text-shadow: 3px 3px 0 #173448, -2px -2px 0 #173448, 2px -2px 0 #173448; }
+.game-frame .guide-header p { margin-top: 6px; color: #173c52; font: 800 clamp(11px, 1.7vw, 15px)/1 Arial, sans-serif; text-transform: uppercase; }
+
+.game-frame .guide-close {
+  position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; padding: 0;
+  border: 3px solid #8d3519; border-radius: 50%; background: linear-gradient(#ff8c59, #dc3d26);
+  box-shadow: 0 2px #792c19; color: #fff5d5; cursor: pointer; font: 900 28px/22px Arial, sans-serif;
+}
+
+.game-frame .guide-roster { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+.game-frame .guide-card { position: relative; min-width: 0; padding: 8px; border: 4px solid #8b4a13; border-radius: 8px; background: linear-gradient(135deg, #fff4b4, #e8b15e); box-shadow: inset 0 0 0 3px #ffeec2, 0 5px 0 #6e3514, 0 8px 11px #173f4d66; text-align: left; }
+.game-frame .guide-ribbon { position: absolute; top: -11px; left: 50%; z-index: 2; min-width: 72px; padding: 4px 9px; border: 2px solid #823616; border-radius: 4px; background: #e55a25; box-shadow: 0 2px #743116; color: #fff9d5; font: 900 10px/1 Arial, sans-serif; text-align: center; transform: translateX(-50%) rotate(-2deg); }
+.game-frame .guide-portrait { height: 128px; overflow: hidden; border: 3px solid #4d936a; border-radius: 5px; background: radial-gradient(circle at 40% 35%, #dffaff, #5dbdd8 70%); box-shadow: inset 0 0 0 3px #c9f1df; }
+.game-frame .guide-bird-canvas { display: block; width: 100%; height: 100%; }
+.game-frame .guide-details { padding: 7px 4px 2px; }
+.game-frame .guide-details h3 { color: #183b51; font: 900 clamp(13px, 1.8vw, 18px)/1 Arial, sans-serif; text-transform: uppercase; }
+.game-frame .guide-details h4 { margin-top: 5px; color: #bd481d; font: 900 clamp(10px, 1.4vw, 13px)/1 Arial, sans-serif; text-transform: uppercase; }
+.game-frame .guide-details p { margin-top: 4px; color: #28475b; font: 700 clamp(9px, 1.2vw, 11px)/1.12 Arial, sans-serif; }
+.game-frame .guide-details .guide-fact { color: #526979; font-weight: 600; }
+
+.game-frame .result-backdrop {
+  position: absolute; inset: 0; z-index: 35; display: grid; place-items: center;
+  padding: 28px; background: #102b3e99;
+}
+
+.game-frame .result-dialog {
+  width: min(390px, 94%); overflow: hidden; border: 5px solid #1c4c5f; border-radius: 8px;
+  background: #fffdf4; box-shadow: 0 14px 34px #00000099;
+}
+
+.game-frame .result-copy { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; }
+.game-frame .result-eyebrow { color: #db721d; font: 900 14px/1 Arial, sans-serif; letter-spacing: 1px; }
+.game-frame .result-score { margin-top: 7px; color: #15394c; font: 400 clamp(56px, 9vw, 82px)/1 Chewy, Impact, sans-serif; }
+.game-frame .result-actions { display: flex; gap: 10px; margin-top: 20px; }
+.game-frame .result-actions button { min-width: 130px; padding: 10px 14px 8px; border: 3px solid #743715; border-radius: 8px; box-shadow: inset 0 2px #fff3a8, 0 3px #593516; color: #fffdf4; cursor: pointer; font: 900 19px/1 Chewy, Impact, sans-serif; text-shadow: 1px 2px #a4651c; }
+.game-frame .result-restart { background: linear-gradient(#89d7d0, #259e90); border-color: #176459 !important; text-shadow: 1px 2px #176459 !important; }
+.game-frame .result-continue { background: linear-gradient(#ffdc63, #f2a127); }
+.game-frame .leaderboard-backdrop { position: absolute; inset: 0; z-index: 50; display: grid; place-items: center; padding: 22px; background: #102b3eb8; }
+.game-frame .leaderboard-dialog { width: min(510px, 94%); padding: 26px 32px; border: 5px solid #8b4a13; border-radius: 9px; background: #fffdf4; box-shadow: 0 12px 28px #00000088; text-align: center; }
+.game-frame .leaderboard-dialog h2 { margin-top: 6px; color: #15394c; font: 400 clamp(28px, 4vw, 40px)/1 Chewy, Impact, sans-serif; }.game-frame .leaderboard-dialog ol { margin: 18px 0 0; padding: 0; list-style: none; }.game-frame .leaderboard-dialog li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 12px; border-bottom: 2px solid #d5e4e2; color: #28475b; font: 800 15px/1 Arial, sans-serif; text-align: left; }.game-frame .leaderboard-dialog li strong { color: #d36b1e; }.game-frame .leaderboard-play-again { min-width: 160px; margin-top: 20px; padding: 10px 14px 8px; border: 3px solid #743715; border-radius: 8px; box-shadow: inset 0 2px #fff3a8, 0 3px #593516; color: #fffdf4; cursor: pointer; font: 900 19px/1 Chewy, Impact, sans-serif; text-shadow: 1px 2px #a4651c; }
+
+@media (max-width: 680px) {
+  .game-frame { width: 100%; max-width: 100vw; margin: 0; border-radius: 0; }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .game-frame { width: min(100vw, calc(100vh * 8 / 5)); max-width: 100vw; margin: 0 auto; }
+}

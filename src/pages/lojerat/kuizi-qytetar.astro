@@ -4,7 +4,7 @@ import SiteFrame from "../../components/SiteFrame.astro";
 import QytetarQuiz from "../../components/QytetarQuiz.svelte";
 import GameShare from "../../components/GameShare.astro";
 import { siteCopy } from "../../data/site";
-import { gameSocialImage } from "../../data/games";
+import { quizSocialImage } from "../../data/games";
 
 export const prerender = true;
 
@@ -16,7 +16,7 @@ const copy = siteCopy.sq;
   description="Testo njohuritë për shërbimet publike, mjedisin, premtimet elektorale dhe të drejtat qytetare."
   locale="sq"
   canonicalPath="/lojerat/kuizi-qytetar/"
-  {...gameSocialImage}
+  {...quizSocialImage}
   breadcrumbs={[
     { name: "Ballina", path: "/" },
     { name: "Këndi i Lojërave", path: "/lojerat/" },

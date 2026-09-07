@@ -243,3 +243,10 @@ pnpm cf:deploy
 ```
 
 The configured production site is [flamingorevolution.eu](https://flamingorevolution.eu).
+
+## Zogjtë e Axhituar game
+
+The games hub includes the bundled React game at `/lojerat/zogjte-e-axhituar/`.
+See [game setup](games/zogjte-e-axhituar/README.md) for build details and Supabase
+leaderboard configuration. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
+in the root `.env` and the production build environment to enable online scores.

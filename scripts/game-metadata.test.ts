@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { gameSocialImage } from '../src/data/games.ts';
+import { gameSocialImage, quizSocialImage, politicsSocialImage, birdsSocialImage, crosswordSocialImage } from '../src/data/games.ts';
 
 const origin = 'https://www.flamingorevolution.eu';
 const routes = [
 	['lojerat', 'Këndi i Lojërave | Revolucioni Flamingo'],
 	['lojerat/rama-apo-berisha', 'Rama apo Berisha? | Lojërat'],
 	['lojerat/kuizi-qytetar', 'Kuizi Qytetar | Këndi i Lojërave'],
+	['lojerat/zogjte-e-axhituar', 'Zogjtë e Axhituar | Këndi i Lojërave'],
 	['lojerat/fjalekryqet', 'Fjalëkryqet e Flamingo Times | Lojërat']
 ];
 
@@ -22,15 +23,21 @@ function metadata(html: string) {
 for (const [route, title] of routes) {
 	test(`${route} uses games artwork with its own title and description`, () => {
 		const meta = metadata(readPage(route));
-		const image = `${origin}${gameSocialImage.socialImagePath}`;
+		const artwork = ({
+			'lojerat/kuizi-qytetar': quizSocialImage,
+			'lojerat/rama-apo-berisha': politicsSocialImage,
+			'lojerat/zogjte-e-axhituar': birdsSocialImage,
+			'lojerat/fjalekryqet': crosswordSocialImage
+		} as Record<string, typeof gameSocialImage>)[route] ?? gameSocialImage;
+		const image = `${origin}${artwork.socialImagePath}`;
 		assert.equal(meta.get('og:image'), image);
 		assert.equal(meta.get('og:image:secure_url'), image);
 		assert.equal(meta.get('twitter:image'), image);
 		assert.equal(meta.get('og:image:type'), 'image/png');
-		assert.equal(meta.get('og:image:width'), '1001');
-		assert.equal(meta.get('og:image:height'), '592');
-		assert.equal(meta.get('og:image:alt'), gameSocialImage.socialImageAlt);
-		assert.equal(meta.get('twitter:image:alt'), gameSocialImage.socialImageAlt);
+		assert.equal(meta.get('og:image:width'), String(artwork.socialImageWidth));
+		assert.equal(meta.get('og:image:height'), String(artwork.socialImageHeight));
+		assert.equal(meta.get('og:image:alt'), artwork.socialImageAlt);
+		assert.equal(meta.get('twitter:image:alt'), artwork.socialImageAlt);
 		assert.equal(meta.get('og:title'), title);
 		assert.equal(meta.get('twitter:title'), title);
 		assert.equal(meta.get('og:url'), `${origin}/${route}/`);
@@ -43,7 +50,7 @@ for (const [route, title] of routes) {
 test('every game menu has SVG icons and Discord instead of Instagram', () => {
 	for (const [route] of routes) {
 		const menus = [...readPage(route).matchAll(/<game-share\b[\s\S]*?<\/game-share>/g)];
-		assert.equal(menus.length, route === 'lojerat' ? 3 : route.endsWith('fjalekryqet') ? 2 : 1);
+		assert.equal(menus.length, route === 'lojerat' ? 4 : route.endsWith('fjalekryqet') ? 2 : 1);
 		for (const [menu] of menus) {
 			const options = [...menu.matchAll(/<li\b[\s\S]*?<\/li>/g)];
 			assert.equal(options.length, 5);

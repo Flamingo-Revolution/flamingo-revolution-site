@@ -1,0 +1,91 @@
+.start-screen {
+  --ink: #132b39;
+  --yellow: #f7bb27;
+  position: relative;
+  width: min(1000px, 96vw);
+  aspect-ratio: 8 / 5;
+  min-height: 0;
+  margin: 16px auto;
+  overflow: hidden;
+  isolation: isolate;
+  background: #79cbed;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.start-sky { position: absolute; inset: 0; background: linear-gradient(#2873cf 0%, #73cbed 51%, #c9f0ed 78%, #8dc75b 79%); z-index: -4; }
+.start-cloud { position: absolute; width: 250px; height: 65px; border-radius: 50%; background: #eafaff; box-shadow: 62px -18px 0 8px #f8feff, 135px 8px 0 -2px #eafaff; opacity: .92; z-index: -3; animation: cloud-drift 10s ease-in-out infinite alternate; }
+.cloud-one { top: 19%; left: 4%; transform: scale(.72); }.cloud-two { top: 27%; right: 16%; }.cloud-three { top: 6%; right: -8%; transform: scale(.55); }
+
+.start-ruins { position: absolute; bottom: 10%; width: 250px; height: 310px; background: #d7af70; clip-path: polygon(0 100%, 7% 30%, 20% 40%, 35% 0, 48% 34%, 67% 20%, 75% 57%, 100% 42%, 100% 100%); opacity: .95; z-index: -2; }
+.ruin-left { left: -90px; transform: rotate(-8deg); }.ruin-right { right: -104px; transform: scaleX(-1) rotate(-6deg); }
+
+.start-content { width: min(760px, 94vw); height: 100%; margin: 0 auto; padding: 18px 0 0; text-align: center; }
+.start-kicker { color: #fff7db; font: 800 14px/1 Arial, sans-serif; letter-spacing: 2px; text-shadow: 0 2px #1a4d88; text-transform: uppercase; }
+.start-content h1 { --title-offset: 30px; margin-top: 6px; color: #fffdf0; font-family: Chewy, Impact, sans-serif; font-size: clamp(51px, 8.6vw, 90px); font-weight: 400; line-height: .78; letter-spacing: -2px; text-transform: uppercase; text-shadow: 4px 5px 0 #182733, -2px -2px 0 #182733, 2px -2px 0 #182733; transform: translateY(var(--title-offset)) rotate(-2deg) scaleX(.84); animation: title-pop .65s cubic-bezier(.18,.9,.24,1.25) both; }
+.start-content h1 span { display: inline-block; paint-order: stroke fill; -webkit-text-stroke: 2px #182733; }.start-content h1 span:first-child { transform: rotate(-4deg); }.start-content h1 span:last-child { transform: rotate(3deg) translateY(3px); }
+.start-tagline { margin-top: 14px; color: var(--ink); font: 800 clamp(14px, 2vw, 18px)/1 Arial, sans-serif; text-transform: uppercase; }
+
+.start-birds { position: relative; left: 4%; height: min(42%, 260px); margin: 76px auto 0; width: min(700px, 92vw); }
+.start-bird { position: absolute; width: clamp(185px, 25vw, 280px); height: clamp(154px, 21vw, 235px); transform-origin: center; }
+.start-bird-canvas { display: block; width: 100%; height: 100%; }
+.pelican { left: 1%; top: 36px; transform: rotate(-13deg); animation: pelican-fly 3.8s ease-in-out infinite; }.flamingo { left: 29%; top: -28px; z-index: 2; width: clamp(250px, 34vw, 365px); height: clamp(208px, 28vw, 304px); animation: flamingo-bob 2.6s ease-in-out infinite; }.heron { right: 0; top: 45px; transform: rotate(13deg); animation: heron-fly 4.1s ease-in-out infinite; }
+
+.play-button { position: relative; z-index: 3; display: inline-flex; align-items: center; justify-content: center; min-width: 198px; margin-top: 8px; padding: 12px 35px 10px; border: 5px solid #513a29; border-radius: 14px; background: linear-gradient(135deg, #ffd86e 0 14%, #ffc02e 15% 62%, #e4941d 63%); box-shadow: inset 0 0 0 5px #fff8df, inset 0 5px #fff2a9, 0 5px 0 #2b241e, 0 9px 12px #0e243766; cursor: pointer; transform: rotate(-1deg); animation: play-pulse 2s ease-in-out infinite; }.play-button span { display: inline-block; color: #fffdf2; font-family: Chewy, Impact, sans-serif; font-size: 41px; font-weight: 400; line-height: .9; letter-spacing: -5px; paint-order: stroke fill; -webkit-text-stroke: 2px #98621a; text-shadow: 3px 3px 0 #98621a, -2px -2px 0 #98621a, 2px -2px 0 #98621a; transform: scaleX(.92); }.play-button span:nth-child(1) { transform: rotate(-7deg) translateY(2px) scaleX(.92); }.play-button span:nth-child(2) { transform: rotate(4deg) translateY(-2px) scaleX(.92); }.play-button span:nth-child(3) { transform: rotate(-3deg) translateY(1px) scaleX(.92); }.play-button span:nth-child(4) { transform: rotate(6deg) translateY(-1px) scaleX(.92); letter-spacing: 0; }.play-button:hover { transform: translateY(-2px) scale(1.03) rotate(-1deg); }.play-button:active { transform: translateY(4px) rotate(-1deg); box-shadow: inset 0 0 0 5px #fff8df, inset 0 2px #d88818, 0 2px 0 #2b241e; }
+
+.opponents { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.opponent { position: absolute; width: 112px; height: 112px; filter: drop-shadow(0 7px 2px #173f2c66); animation: opponent-wobble 1.45s ease-in-out infinite; }.opponent-canvas { display: block; width: 100%; height: 100%; }.opponent-0 { left: 1%; top: 35%; animation-delay: -1.4s; }.opponent-1 { right: 3%; top: 20%; animation-delay: -.4s; }.opponent-2 { right: 1%; top: 48%; animation-delay: -2.3s; }.opponent-3 { left: 6%; bottom: 6%; animation-delay: -.9s; }.opponent-4 { right: 13%; bottom: 5%; animation-delay: -2.8s; }.opponent-5 { left: 17%; top: 61%; animation-delay: -1.8s; }
+.start-screen { border: 5px solid #164b64; box-shadow: 0 14px 36px #000000aa; }
+.start-sky { background: linear-gradient(#2a90db 0%, #74d2ee 58%, #c8f4ef 78%, #8dc75b 79%); }
+.start-content { width: min(910px, 94vw); padding-top: 21px; }
+.roster-header { position: relative; z-index: 1; }
+.roster-header h1 { margin-top: 0; color: #fffdf0; font-size: clamp(29px, 5vw, 52px); line-height: .88; text-shadow: 3px 4px 0 #173448, -2px -2px 0 #173448, 2px -2px 0 #173448; transform: rotate(-1deg); }
+.roster-header p { margin-top: 6px; color: #163b52; font: 900 clamp(11px, 1.8vw, 16px)/1 Arial, sans-serif; text-shadow: 0 1px #d9f9ff; text-transform: uppercase; }
+
+.bird-roster { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; width: 100%; margin: 13px auto 0; }
+.bird-card { position: relative; min-width: 0; padding: 8px; border: 4px solid #8b4a13; border-radius: 8px; background: linear-gradient(135deg, #fff4b4, #e8b15e); box-shadow: inset 0 0 0 3px #ffeec2, 0 5px 0 #6e3514, 0 8px 11px #173f4d66; text-align: left; transform: rotate(-1deg); animation: card-enter .55s both; }
+.bird-card:nth-child(2) { transform: rotate(1deg); animation-delay: .1s; }.bird-card:nth-child(3) { transform: rotate(-.5deg); animation-delay: .2s; }
+.card-ribbon { position: absolute; top: -11px; left: 50%; z-index: 2; min-width: 72px; padding: 4px 9px; border: 2px solid #823616; border-radius: 4px; background: #e55a25; box-shadow: 0 2px #743116; color: #fff9d5; font: 900 10px/1 Arial, sans-serif; text-align: center; transform: translateX(-50%) rotate(-2deg); }
+.bird-portrait { height: 135px; overflow: hidden; border: 3px solid #4d936a; border-radius: 5px; background: radial-gradient(circle at 40% 35%, #dffaff, #5dbdd8 70%); box-shadow: inset 0 0 0 3px #c9f1df; }
+.bird-portrait .start-bird-canvas { display: block; width: 100%; height: 100%; }
+.bird-details { padding: 7px 4px 2px; }
+.bird-details h2 { color: #183b51; font: 900 clamp(14px, 2vw, 20px)/1 Arial, sans-serif; text-transform: uppercase; }
+.bird-details h3 { margin-top: 5px; color: #bd481d; font: 900 clamp(11px, 1.6vw, 14px)/1 Arial, sans-serif; text-transform: uppercase; }
+.bird-details p { margin-top: 4px; color: #28475b; font: 700 clamp(9px, 1.3vw, 12px)/1.12 Arial, sans-serif; }
+.bird-details .bird-fact { color: #526979; font-weight: 600; }
+.play-button { min-width: 222px; margin-top: 13px; }
+
+@keyframes cloud-drift { to { translate: 32px 7px; } }
+@keyframes title-pop { from { opacity: 0; transform: translateY(var(--title-offset)) rotate(-7deg) scale(.72) scaleX(.84); } to { opacity: 1; transform: translateY(var(--title-offset)) rotate(-2deg) scaleX(.84); } }
+@keyframes card-enter { from { opacity: 0; translate: 0 22px; } to { opacity: 1; translate: 0; } }
+@keyframes flamingo-bob { 50% { transform: rotate(-2deg) translateY(-12px) scale(1.04); } }
+@keyframes pelican-fly { 50% { transform: rotate(-9deg) translate(7px, -17px); } }
+@keyframes heron-fly { 50% { transform: rotate(8deg) translate(-8px, -17px); } }
+@keyframes opponent-wobble { 25% { transform: rotate(-5deg) translateY(-4px); } 70% { transform: rotate(7deg) translateY(-8px); } }
+@keyframes play-pulse { 50% { box-shadow: inset 0 4px #fff0a3, 0 6px #723114, 0 0 0 7px #ffdf6d66; } }
+
+@media (max-width: 680px) { .start-content { padding-top: 14px; }.bird-roster { gap: 6px; margin-top: 10px; }.bird-card { padding: 5px; border-width: 3px; }.bird-portrait { height: 90px; border-width: 2px; }.bird-details { padding: 5px 1px 0; }.bird-details h3 { margin-top: 3px; }.bird-details p { font-size: 7px; }.bird-details .bird-fact { display: none; }.card-ribbon { font-size: 7px; min-width: 52px; padding: 3px 4px; }.start-birds { margin-top: 50px; }.play-button { margin-top: 10px; transform: scale(.78); }.start-ruins { opacity: .58; } }
+@media (max-width: 680px) and (orientation: portrait) {
+  .start-screen { min-height: 100dvh; aspect-ratio: auto; margin: 0; }
+  .start-content h1 { --title-offset: 0; }
+  .start-birds { left: 0; width: 100%; height: 205px; margin: 36px auto 0; }
+  .start-bird { width: 145px; height: 125px; }
+  .pelican { left: 0; top: 48px; }
+  .flamingo { left: 27%; top: 0; width: 160px; height: 140px; }
+  .heron { right: 0; top: 62px; }
+  .opponent { display: none; }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .start-screen { width: min(100vw, calc(100vh * 8 / 5)); max-width: 100vw; margin: 0 auto; }
+  .start-content { padding-top: 10px; }
+  .start-content h1 { --title-offset: 0; margin-top: 0; font-size: clamp(34px, 10vh, 54px); }
+  .start-birds { width: min(560px, 88%); height: 145px; margin-top: 22px; }
+  .start-bird { width: 160px; height: 135px; }
+  .flamingo { top: -20px; width: 220px; height: 180px; }
+  .pelican { top: 26px; }
+  .heron { top: 34px; }
+  .play-button { min-width: 170px; margin-top: 0; padding: 8px 24px 7px; }
+  .play-button span { font-size: 32px; }
+  .opponent { width: 76px; height: 76px; }
+  .opponent-0 { top: 38%; }.opponent-1 { top: 28%; }.opponent-2 { top: 57%; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
