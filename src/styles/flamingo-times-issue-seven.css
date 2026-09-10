@@ -1,0 +1,325 @@
+.times-seven {
+	border-bottom: 4px solid #151515;
+}
+
+.times-seven__hero {
+	padding-bottom: clamp(1.8rem, 4vw, 3rem);
+}
+
+.times-seven__hero h2 {
+	max-width: none;
+	margin: 0;
+	font-size: clamp(3rem, 7vw, 6.75rem);
+	line-height: 0.83;
+	letter-spacing: -0.055em;
+	text-wrap: balance;
+}
+
+.times-seven__page-one {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-rows: auto auto;
+	gap: 0;
+	align-items: start;
+	padding: clamp(1.8rem, 5vw, 3.4rem);
+	border-bottom: 3px solid #151515;
+	background: #fff8ef;
+}
+
+.times-seven__page-one-column {
+	min-width: 0;
+}
+
+.times-seven__page-one-column--first {
+	grid-column: 1;
+	grid-row: 1 / span 2;
+	padding-right: clamp(0.9rem, 1.8vw, 1.4rem);
+	border-right: 1px solid rgba(21, 21, 21, 0.38);
+}
+
+.times-seven__page-one-column--second {
+	grid-column: 2;
+	grid-row: 2;
+	padding: 0 clamp(0.9rem, 1.8vw, 1.4rem);
+	border-right: 1px solid rgba(21, 21, 21, 0.38);
+}
+
+.times-seven__page-one-column--third {
+	grid-column: 3;
+	grid-row: 2;
+	padding-left: clamp(0.9rem, 1.8vw, 1.4rem);
+}
+
+.times-seven__page-one-column p,
+.times-seven__story p {
+	font-family: Georgia, serif;
+	font-size: clamp(1rem, 1.25vw, 1.08rem);
+	line-height: 1.62;
+}
+
+.times-seven__page-one-column p {
+	margin: 0 0 1rem;
+}
+
+.times-seven__page-one-column h3 {
+	margin: 1.6rem 0 0.8rem;
+	font-family: var(--font-display);
+	font-size: clamp(1.55rem, 2.3vw, 2.2rem);
+	line-height: 0.96;
+	letter-spacing: -0.018em;
+	text-transform: uppercase;
+}
+
+.times-seven__page-one-column--second h3 {
+	margin-top: 0;
+}
+
+.times-seven__page-one-column--third > p:first-child {
+	margin-top: 0;
+}
+
+.times-seven__feature {
+	margin: 0;
+	border: 3px solid #151515;
+	background: #151515;
+	box-shadow: 8px 8px 0 #c83e72;
+}
+
+.times-seven__feature img {
+	display: block;
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+}
+
+.times-seven__feature figcaption {
+	padding: 0.72rem 0.9rem;
+	color: #fff8ef;
+	font-size: 0.78rem;
+	font-weight: 700;
+	line-height: 1.42;
+}
+
+.times-seven__feature--coffee img {
+	aspect-ratio: 2.15 / 1;
+	object-fit: cover;
+}
+
+.times-seven__feature--coffee {
+	grid-column: 2 / 4;
+	grid-row: 1;
+	margin: 0 0 clamp(1.2rem, 2vw, 1.65rem) clamp(0.9rem, 1.8vw, 1.4rem);
+}
+
+.times-seven__story {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	background: #fff8ef;
+}
+
+.times-seven__story > section {
+	min-width: 0;
+	padding: clamp(1.7rem, 3.5vw, 2.7rem);
+	border-right: 1px solid rgba(21, 21, 21, 0.38);
+	border-bottom: 3px solid #151515;
+}
+
+.times-seven__story > section:nth-child(3n) {
+	border-right: 0;
+}
+
+.times-seven__story h3,
+.times-seven__crossword h3 {
+	margin: 0 0 1rem;
+	font-family: var(--font-display);
+	font-size: clamp(1.9rem, 3vw, 3rem);
+	line-height: 0.94;
+	letter-spacing: -0.025em;
+	text-transform: uppercase;
+}
+
+.times-seven__story p {
+	margin: 0 0 1rem;
+}
+
+.times-seven__page-one-callout {
+	width: auto;
+	max-width: none;
+	margin: 1.1rem 0;
+	padding: 0.85rem 0.95rem;
+	border: 0;
+	border-left: 0.55rem solid #c83e72;
+	background: #ffd7e3;
+	font-family: var(--font-display);
+	font-size: clamp(1.2rem, 1.7vw, 1.75rem);
+	font-style: normal;
+	font-weight: 700;
+	line-height: 0.98;
+	text-transform: uppercase;
+}
+
+.times-seven__feature--protest {
+	margin: 0 0 clamp(1.7rem, 3vw, 2.25rem);
+}
+
+.times-seven__feature--protest img {
+	aspect-ratio: 16 / 9;
+	object-position: center top;
+}
+
+.times-seven__story-lead {
+	margin-top: 0;
+}
+
+.times-seven__statement {
+	width: auto;
+	max-width: none;
+	margin: 0;
+	padding: clamp(2.2rem, 6vw, 5.2rem) clamp(1rem, 5vw, 3.4rem);
+	border: 0;
+	border-bottom: 3px solid #151515;
+	color: #fff8ef;
+	background: #151515;
+	font-family: var(--font-display);
+	font-size: clamp(2.8rem, 7vw, 7rem);
+	font-style: normal;
+	font-weight: 700;
+	line-height: 0.86;
+	letter-spacing: -0.035em;
+	text-transform: uppercase;
+}
+
+.times-seven__crossword h3 {
+	font-size: clamp(2.4rem, 5vw, 4.8rem);
+}
+
+.times-seven__crossword {
+	padding: clamp(1.8rem, 5vw, 3.4rem);
+	border-bottom: 3px solid #151515;
+	background: #fff8ef;
+}
+
+.times-seven__crossword > header {
+	max-width: 50rem;
+	margin-bottom: 1.5rem;
+}
+
+.times-seven__source {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+@media (max-width: 1020px) {
+	.times-seven__page-one {
+		grid-template-columns: 1fr;
+	}
+
+	.times-seven__page-one {
+		grid-template-rows: auto;
+		gap: 1.8rem;
+	}
+
+	.times-seven__page-one-column--first,
+	.times-seven__page-one-column--second,
+	.times-seven__page-one-column--third,
+	.times-seven__feature--coffee {
+		grid-column: 1;
+		grid-row: auto;
+		margin: 0;
+		padding: 0;
+		border-right: 0;
+	}
+
+	.times-seven__page-one-column--second h3 {
+		margin-top: 0;
+	}
+
+	.times-seven__story {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.times-seven__story > section,
+	.times-seven__story > section:nth-child(3n) {
+		border-right: 1px solid rgba(21, 21, 21, 0.38);
+	}
+
+	.times-seven__story > section:nth-child(2n) {
+		border-right: 0;
+	}
+}
+
+@media (max-width: 1020px) {
+	.times-seven__hero,
+	.times-seven__page-one,
+	.times-seven__story > section,
+	.times-seven__crossword,
+	.times-six__demands {
+		padding-right: 1rem;
+		padding-left: 1rem;
+	}
+
+	.times-seven__hero {
+		padding-bottom: 1rem;
+	}
+
+	.times-seven__page-one {
+		gap: 0;
+		padding-top: 0;
+		padding-bottom: 1rem;
+	}
+
+	.times-seven__feature--coffee {
+		margin: 0.4rem 0 1.35rem;
+	}
+
+	.times-seven__hero h2 {
+		font-size: clamp(3rem, 17vw, 4.8rem);
+		white-space: normal;
+	}
+
+	.times-seven__story {
+		grid-template-columns: 1fr;
+	}
+
+	.times-seven__story > section,
+	.times-seven__story > section:nth-child(2n),
+	.times-seven__story > section:nth-child(3n) {
+		padding-top: 0;
+		padding-bottom: 0;
+		border-right: 0;
+		border-bottom: 0;
+	}
+
+	.times-seven__story > section:first-child {
+		padding-top: 1rem;
+	}
+
+	.times-seven__story > section:last-child {
+		padding-bottom: 1rem;
+	}
+
+	.times-seven__feature--protest {
+		margin-bottom: 1.35rem;
+	}
+
+	.times-seven__page-one,
+	.times-seven__statement,
+	.times-seven__crossword,
+	.times-six__demands {
+		border-bottom: 0;
+	}
+
+	.times-seven__statement {
+		padding-top: 1.8rem;
+		padding-bottom: 1.8rem;
+	}
+
+	.times-seven__feature {
+		box-shadow: 5px 5px 0 #c83e72;
+	}
+
+	.times-seven__source {
+		flex-direction: column;
+	}
+}

@@ -4,6 +4,7 @@ import SiteFrame from "../../components/SiteFrame.astro";
 import GameShare from "../../components/GameShare.astro";
 import FlamingoCrossword from "../../components/FlamingoCrossword.svelte";
 import FlamingoCrosswordSix from "../../components/FlamingoCrosswordSix.svelte";
+import FlamingoCrosswordSeven from "../../components/FlamingoCrosswordSeven.svelte";
 import { siteCopy } from "../../data/site";
 import { crosswordSocialImage } from "../../data/games";
 
@@ -46,9 +47,23 @@ const copy = siteCopy.sq;
       </header>
 
       <nav class="puzzle-picker" aria-label="Zgjidh fjalëkryqin">
+        <a href="#botimi-vii"><span>07</span><strong>Botimi VII</strong><small>29 pyetje</small></a>
         <a href="#botimi-vi"><span>06</span><strong>Botimi VI</strong><small>12 përgjigje</small></a>
         <a href="#botimi-v"><span>05</span><strong>Botimi V</strong><small>6 përgjigje</small></a>
       </nav>
+
+      <section class="puzzle" id="botimi-vii" aria-labelledby="puzzle-seven-title">
+        <header class="puzzle__header">
+          <div class="puzzle__meta"><span>Flamingo Times</span><span>Botimi VII</span></div>
+          <div class="puzzle__title-row">
+            <h2 id="puzzle-seven-title">Nga kafeneja te sheshi</h2>
+            <GameShare title="Fjalëkryqi — Flamingo Times, Botimi VII" path="/lojerat/fjalekryqet/#botimi-vii" compact />
+          </div>
+          <p>Plotëso përgjigjet horizontalisht dhe vertikalisht.</p>
+        </header>
+        <div class="puzzle__game"><FlamingoCrosswordSeven client:visible /></div>
+        <footer class="puzzle__footer"><a href="/flamingo-times/">Lexo Botimin VII <span aria-hidden="true">→</span></a></footer>
+      </section>
 
       <section class="puzzle" id="botimi-vi" aria-labelledby="puzzle-six-title">
         <header class="puzzle__header">
@@ -123,7 +138,7 @@ const copy = siteCopy.sq;
 
   .puzzle-picker {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
     padding: 1.3rem clamp(1rem, 5vw, 3.4rem);
     border-bottom: 3px solid var(--ink);

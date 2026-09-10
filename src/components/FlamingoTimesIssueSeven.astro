@@ -1,0 +1,319 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  flamingoTimesIssues,
+  isLatestIssue,
+  issuePageTitle,
+  issuePublishedDate
+} from "../data/flamingoTimes";
+import { siteCopy } from "../data/site";
+import FlamingoCrosswordSeven from "./FlamingoCrosswordSeven.svelte";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+import "../styles/flamingo-times-issue-six.css";
+import "../styles/flamingo-times-issue-seven.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-7.pdf";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+const issue = flamingoTimesIssues.find((entry) => entry.number === 7)!;
+const canonicalPath = isLatest || isLatestIssue(issue) ? "/flamingo-times/" : undefined;
+---
+
+<BaseLayout
+  title={issuePageTitle(issue)}
+  description={issue.excerpt}
+  locale="sq"
+  pageType="NewsArticle"
+  publishedTime={issuePublishedDate(issue)}
+  canonicalPath={canonicalPath}
+  socialImagePath={issue.imageSrc}
+  socialImageAlt={issue.imageAlt}
+  breadcrumbs={
+    isLatest
+      ? [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" }
+        ]
+      : [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" },
+          { name: issue.title, path: issue.href }
+        ]
+  }
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Shtator 2026</span>
+          <span>Botimi VII</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#nga-kafeneja">Nga kafeneja</a>
+        <a href="#te-sheshi">Te sheshi</a>
+        <a href="#kerkesat">5 kërkesat</a>
+        <a href="#fjalekryqi">Fjalëkryqi</a>
+      </nav>
+
+      <article class="times-government times-seven" id="kryeartikulli">
+        <header class="times-government__hero times-seven__hero">
+          <p class="times-label">Kur protesta bëhet punë qytetare</p>
+          <h2>Nga kafeneja te sheshi</h2>
+          <p class="times-deck">
+            Kafeneja na ka mësuar të flasim. Sheshi mund të na mësojë ta kthejmë bisedën në
+            veprim; pa kaos, pa pritur një shpëtimtar dhe pa humbur mbështetjen që gjejmë te
+            njëri-tjetri.
+          </p>
+        </header>
+
+        <section class="times-seven__page-one" id="nga-kafeneja">
+          <div class="times-seven__page-one-column times-seven__page-one-column--first">
+            <p class="times-dropcap">
+              Prej brezash, një pjesë e madhe e jetës shoqërore shqiptare zhvillohet rreth një
+              filxhani kafeje. Aty takohen miq, familjarë, kolegë e të njohur; qahen halle, kërkohet
+              këshillë dhe flitet për qeverinë, korrupsionin, rrogat e jetën e përditshme. Mirëpo ka
+              ardhur koha që kafeneja të tejkalohet.
+            </p>
+            <p>
+              Kafeneja është vendi ku pakënaqësia merr fjalë. Sheshi është vendi ku fjala merr trup.
+            </p>
+            <h3>Nga institucioni i kafenesë te institucioni i sheshit</h3>
+            <p>
+              Kafeneja ka funksionuar si një parlament informal, por nuk ka pse të mbarojë këtu. E
+              njëjta tavolinë mund të jetë edhe pika e nisjes për diçka më shumë: miqtë që kanë qarë
+              hallet bashkë mund të dalin bashkë në shesh; familjari sjell familjarin, kolegu kolegun.
+              Rrjeti që na mban pranë në jetën private mund të na mbajë edhe në veprimin publik.
+            </p>
+            <p>
+              Sheshi nuk i fshin këto lidhje; i zgjeron. Problemi që dukej privat bëhet çështje
+              publike, ndërsa ankesa shndërrohet në prani, numër e zë. Vetmia bëhet solidaritet.
+            </p>
+            <h3>Problemi nuk është vetëm pushteti. Është edhe mpirja qytetare.</h3>
+            <p>
+              Kjo plogështi shoqërore nuk do të thotë mungesë problemesh. Shpesh është pasoja e
+              pakënaqësisë së grumbulluar: njerëzit janë të zemëruar, por nuk besojnë më se veprimi i
+              tyre ka peshë.
+            </p>
+            <p>
+              Kur qytetari bindet se asgjë nuk ndryshon, se të gjithë janë njësoj dhe se dikush tjetër
+              duhet ta bëjë, mbyllet rrethi: pakënaqësi, ankesë, shfryrje, dorëzim. Hallka e humbur
+              është angazhimi. Protesta nuk garanton fitore të menjëhershme, por thyen zakonin e
+              dorëzimit: njeriu kalon nga spektatori te pjesëmarrësi.
+            </p>
+          </div>
+          <figure class="times-seven__feature times-seven__feature--coffee">
+            <img
+              src="/images/flamingo-times/botimi-7/leximi-i-filxhanit.webp"
+              alt="Dy duar mbajnë një filxhan kafeje të zbrazur"
+              width="1024"
+              height="576"
+            />
+            <figcaption>
+              <strong>Leximi i filxhanit.</strong> Kafeneja, ky institucion informal i popullit
+              shqiptar ndër breza, ku diskutohet çdo gjë.
+            </figcaption>
+          </figure>
+
+          <div class="times-seven__page-one-column times-seven__page-one-column--second">
+            <h3>Kur plagët bëhen forcë qytetare</h3>
+            <p>
+              Shoqëria shqiptare ka mbartur dekada zhgënjimi, padrejtësie, emigrimi dhe mosbesimi.
+              Kjo përvojë mund të ngurtësohet në cinizëm: “S’ka kuptim.” Por mund të shndërrohet edhe
+              në një disiplinë të re për shoqërinë tonë: kujtesë, solidaritet, kërkesë për llogari dhe
+              këmbëngulje.
+            </p>
+            <p>
+              Një hark fiton fuqi nga tensioni, por pa drejtim ajo fuqi humbet. Shoqëria jonë e ka
+              tensionin, tanimë mungon një drejtim. Edhe një shoqëri mund ta kthejë tensionin mes
+              zemërimit dhe shpresës në energji qytetare; jo duke adhuruar plagët, por duke u dhënë
+              formë.
+            </p>
+            <p>
+              Vuajtja nuk na forcon vetvetiu. Pa kuptim dhe drejtim, ajo na konsumon. Forcë bëhet
+              vetëm kur e kthejmë në mësim, solidaritet dhe veprim. Ajo që synoi të na ulë kokën mund
+              të na mësojë të qëndrojmë; ajo që na izoloi mund të na mësojë të lidhemi.
+            </p>
+            <p>Sheshi është vendi ku zemërimi nuk ka pse të shpërthejë verbërisht.</p>
+          </div>
+
+          <div class="times-seven__page-one-column times-seven__page-one-column--third">
+            <p>
+              Atje mund të marrë formë, gjuhë dhe disiplinë qytetare. Forca nuk është të durosh
+              pafund; është të mos lejosh që ajo që ke duruar të shkojë dëm.
+            </p>
+            <h3>Protesta si punë qytetare</h3>
+            <p>
+              Protesta shpesh shihet si një ngjarje: shkon, bërtet, mban një pankartë dhe kthehesh në
+              shtëpi. Por një lëvizje që synon ndryshim kërkon punë: kohë, energji dhe përgjegjësi.
+            </p>
+            <blockquote class="times-seven__page-one-callout">
+              Ajo që nuk na theu, nuk duhet të na mësojë vetëm të durojmë. Duhet të na mësojë të
+              organizohemi.
+            </blockquote>
+            <p>
+              Njëri qëndron në shesh, tjetri organizon, informon apo dokumenton; një tjetër merret me
+              punë IT-je e me rrjetet sociale, xhiron dhe monton video, mbledh të dhëna apo harton
+              dosje; një tjetër sjell një mik. Vazhdimësia e ndan protestën nga spektakli. Një protestë
+              njëditore mund të bëhet lajm; një lëvizje që organizohet e rikthehet nis të bëhet
+              institucion. Të protestosh nuk duhet të jetë akt heroik, por zakon qytetar.
+            </p>
+          </div>
+        </section>
+
+        <div class="times-seven__story" id="te-sheshi">
+          <section class="times-seven__story-column times-seven__story-column--first">
+            <figure class="times-seven__feature times-seven__feature--protest">
+              <img
+                src="/images/flamingo-times/botimi-7/protesta-20-qershor.webp"
+                alt="Bulevardi i Tiranës i mbushur me protestues dhe flamuj shqiptarë"
+                width="401"
+                height="498"
+              />
+              <figcaption>
+                <strong>20 qershori.</strong> Data kur populli shqiptar u derdh në shesh në numra
+                skëterr.
+              </figcaption>
+            </figure>
+            <h3>Ndryshimi nuk ka pse të jetë kaos</h3>
+            <p>
+              Një protestë e organizuar ka rregulla, role, komunikim dhe përgjegjësi. Zemërimi është
+              energji; organizimi i jep drejtim. Ndryshimi mund të vijë si disiplinë qytetare, jo si
+              kaos.
+            </p>
+          </section>
+
+          <section class="times-seven__story-column times-seven__story-column--second">
+            <p class="times-seven__story-lead">
+              Edhe udhëheqja ka rëndësi: një udhëheqës mund të artikulojë qëllimin dhe të mbajë
+              kursin, por nuk duhet ta zëvendësojë qytetarin. Një lëvizje që shembet kur largohet një
+              njeri nuk është institucion; është varësi. Kauza duhet të mbetet edhe kur figurat
+              ndryshojnë.
+            </p>
+            <h3>Nga “çfarë do të bëhet?” te “çfarë bëjmë ne?”</h3>
+            <p>
+              Në kafene pyetja është shpesh: “Çfarë do të bëhet?” Në shesh ajo ndryshon: “Çfarë bëjmë
+              ne, dhe çfarë bëj unë?”
+            </p>
+          </section>
+
+          <section class="times-seven__story-column times-seven__story-column--third">
+            <p>
+              Dallimi është thelbësor. E para ia delegon përgjegjësinë “dikujt tjetër”; e dyta e kthen
+              në detyrë personale dhe të përbashkët. Një shoqëri fillon të dalë nga mpirja kur
+              përgjegjësia nuk i përket më gjithmonë dikujt tjetër.
+            </p>
+            <p>
+              Nuk kemi pse ta braktisim kafenenë; duhet ta çojmë bisedën përtej tryezës së saj. Fjalën
+              ta kthejmë në vendim, njohjen në besim, hallin e përbashkët në organizim dhe mbështetjen
+              mes nesh në fuqi publike.
+            </p>
+            <p>
+              Sepse një shoqëri nuk ndryshon kur të gjithë bien dakord se diçka nuk shkon. Ndryshon
+              kur mjaft njerëz vendosin që ajo që nuk i theu të mos shkojë dëm: ta kthejnë në arsye
+              për t’u ngritur, për t’u lidhur dhe për të vepruar.
+            </p>
+          </section>
+        </div>
+
+        <blockquote class="times-seven__statement">
+          Udhëheqja jep drejtim.<br />Qytetarët i japin fuqi.
+        </blockquote>
+
+        <section class="times-six__demands" id="kerkesat">
+          <header>
+            <p class="times-label">Nga reagimi te organizimi</p>
+            <h3>5 kërkesat që na bashkojnë</h3>
+            <p class="times-six__demands-intro">
+              Ndërkohë që shoqëria mëson të organizohet, protesta na bashkon me 5 kërkesat e saj:
+            </p>
+          </header>
+          <ol>
+            <li>Dorëheqjen e panegociueshme të Kryeministrit dhe të qeverisë.</li>
+            <li>Krijimin e një qeverie teknike tranzitore, jopartiake, me mandat 12-mujor.</li>
+            <li>
+              Ndryshime kushtetuese, ku të gjithë shtetasit shqiptarë të jenë të barabartë para
+              ligjit, të miratuara me referendum popullor, duke përfshirë ndër të tjera:
+              <ul>
+                <li>Ndryshimin e Kodit Zgjedhor.</li>
+                <li>Ndryshimin e ligjit për financimin e partive politike dhe organizatave të ndryshme.</li>
+                <li>
+                  Kufizimin e ushtrimit të detyrës së Kryeministrit në jo më shumë se dy mandate, të
+                  plota ose të pjesshme, gjatë gjithë jetës politike të një individi.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Paralelisht, kërkojmë:
+              <ul>
+                <li>Anulimin e ndryshimeve të bëra në ligjin për “Zonat e Mbrojtura”.</li>
+                <li>Anulimin e ndryshimeve të bëra në ligjin për “Trashëgiminë kulturore”.</li>
+                <li>Shfuqizimin e paketës ligjore të njohur si “Paketa e Maleve”.</li>
+                <li>Shfuqizimin e statusit dhe të kuadrit ligjor për “Investimet Strategjike”.</li>
+              </ul>
+            </li>
+            <li>
+              Hartimin e një kontrate të re sociale mes qytetarëve dhe shtetit, pas konsultimit me
+              intelektualë, ekspertë teknikë dhe qytetarë apartiakë të propozuar nga sheshi i
+              protestës.
+            </li>
+          </ol>
+          <aside>
+            <div class="times-six__demands-brand">
+              <img
+                class="times-six__demands-logo"
+                src="/images/flamingo-wordmark-dark.svg"
+                alt="Flamingo Revolution"
+                width="426"
+                height="187"
+              />
+              <a href="https://www.flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+                <span>flamingorevolution.eu</span>
+                <img
+                  class="times-six__demands-qr"
+                  src="/images/qr-code/png/black.png"
+                  alt="QR code për flamingorevolution.eu"
+                  width="480"
+                  height="480"
+                />
+              </a>
+            </div>
+          </aside>
+        </section>
+
+        <section class="times-seven__crossword" id="fjalekryqi" aria-labelledby="crossword-title">
+          <header>
+            <p class="times-label">Në fund të botimit</p>
+            <h3 id="crossword-title">Fjalëkryqi</h3>
+            <p>Plotëso fjalëkryqin e Botimit VII direkt në ekran.</p>
+          </header>
+          <FlamingoCrosswordSeven client:visible />
+        </section>
+      </article>
+
+      <footer class="times-source times-seven__source">
+        <strong>FLAMINGO TIMES · Botimi VII · Shtator 2026</strong>
+        <span>Lexoje. Fotokopjoje. Shpërndaje.</span>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>
