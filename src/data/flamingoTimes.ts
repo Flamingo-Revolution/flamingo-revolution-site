@@ -14,6 +14,20 @@ export type FlamingoTimesIssue = {
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
   {
+    number: 7,
+    date: "Shtator 2026",
+    datetime: "2026-09",
+    title: "Nga kafeneja te sheshi",
+    category: "Protesta & organizimi qytetar",
+    excerpt:
+      "Si ta kthejmë bisedën, pakënaqësinë dhe mbështetjen mes nesh në prani, organizim dhe fuqi publike.",
+    topics: ["protesta", "organizimi", "qytetaria", "solidariteti", "pjesëmarrja"],
+    href: "/flamingo-times/artikujt/botimi-7/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-7.pdf",
+    imageSrc: "/images/flamingo-times/botimi-7/leximi-i-filxhanit.webp",
+    imageAlt: "Dy duar mbajnë një filxhan kafeje — Flamingo Times, Botimi VII"
+  },
+  {
     number: 6,
     date: "Gusht 2026",
     datetime: "2026-08",
@@ -98,7 +112,7 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
 ];
 
 export function toRomanIssue(number: number): string {
-  return ["", "I", "II", "III", "IV", "V", "VI"][number] ?? String(number);
+  return ["", "I", "II", "III", "IV", "V", "VI", "VII"][number] ?? String(number);
 }
 
 export function issuePublishedDate(issue: FlamingoTimesIssue): Date {
