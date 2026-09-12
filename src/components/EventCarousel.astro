@@ -1,0 +1,512 @@
+---
+import type { EventsSectionCopy, HomepageEvent } from "../data/events";
+
+interface Props {
+  items: HomepageEvent[];
+  copy: EventsSectionCopy;
+}
+
+const { items, copy } = Astro.props;
+const hasMultipleItems = items.length > 1;
+---
+
+<section class="events" aria-labelledby="events-title" data-event-carousel>
+  <div class="events__header">
+    <div class="events__heading">
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h2 id="events-title">{copy.title}</h2>
+      <p>{copy.description}</p>
+    </div>
+
+    <div class="events__controls" class:list={{ "events__controls--single": !hasMultipleItems }}>
+      <span class="events__count" aria-live="polite">
+        <span data-event-current>01</span>
+        <span aria-hidden="true">/</span>
+        <span>{String(items.length).padStart(2, "0")}</span>
+      </span>
+      <button type="button" data-event-prev aria-label={copy.previousLabel} disabled={!hasMultipleItems}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <button type="button" data-event-next aria-label={copy.nextLabel} disabled={!hasMultipleItems}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <ol class="events__track" aria-label={copy.carouselLabel} data-event-track tabindex={hasMultipleItems ? 0 : undefined}>
+    {
+      items.map((event, index) => (
+        <li class="event-slide" id={`event-${event.slug}`} data-event-slide>
+          <article class="event-card">
+            <div class="event-card__poster" aria-hidden="true">
+              <img src="/images/flamingo-mark-dark.svg" alt="" />
+              <span class="event-card__poster-kicker">Flamingo<br />Revolution</span>
+              <time class="event-card__poster-date" datetime={event.datetime}>
+                <strong>{event.day}</strong>
+                <span>{event.month}</span>
+              </time>
+              <span class="event-card__poster-city">{event.location.split(",")[0]}</span>
+            </div>
+
+            <div class="event-card__content">
+              <div class="event-card__topline">
+                <span>{event.status}</span>
+                <span aria-hidden="true">#{String(index + 1).padStart(2, "0")}</span>
+              </div>
+              <h3>{event.title}</h3>
+              <p class="event-card__description">{event.description}</p>
+
+              <dl class="event-card__facts">
+                <div>
+                  <dt>{copy.dateLabel}</dt>
+                  <dd><time datetime={event.datetime}>{event.day} {event.month} {event.year}</time></dd>
+                </div>
+                <div>
+                  <dt>{copy.timeLabel}</dt>
+                  <dd>{event.time}</dd>
+                </div>
+                <div>
+                  <dt>{copy.venueLabel}</dt>
+                  <dd>
+                    {event.venue}<br />
+                    {event.locationHref ? (
+                      <a class="event-card__location" href={event.locationHref} target="_blank" rel="noreferrer">
+                        {event.location}<span aria-hidden="true"> ↗</span>
+                      </a>
+                    ) : event.location}
+                  </dd>
+                </div>
+                <div>
+                  <dt>{copy.admissionLabel}</dt>
+                  <dd>{event.admission}</dd>
+                </div>
+              </dl>
+
+              {(event.href || event.ticketHref) && (
+                <div class="event-card__actions">
+                  {event.href && (
+                    <a class="button button--primary" href={event.href} target="_blank" rel="noreferrer">
+                      {copy.detailsLabel}
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  {event.ticketHref && (
+                    <a class="button event-card__ticket" href={event.ticketHref} target="_blank" rel="noreferrer">
+                      {copy.ticketsLabel}
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          </article>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .events {
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 5vw, 3.4rem);
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--ink-reverse);
+    border-bottom: 4px solid var(--line);
+  }
+
+  .events__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .events__heading {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .events__heading .eyebrow {
+    margin: 0;
+    color: var(--accent);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-style: normal;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .events__heading h2 {
+    max-width: 14ch;
+    color: var(--ink-reverse);
+  }
+
+  .events__heading > p:last-child {
+    max-width: 58ch;
+    margin: 0;
+    color: color-mix(in srgb, var(--ink-reverse) 72%, transparent);
+    line-height: 1.6;
+  }
+
+  .events__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .events__controls.events__controls--single button {
+    display: none;
+  }
+
+  .events__count {
+    display: inline-flex;
+    gap: 0.3rem;
+    margin-right: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+  }
+
+  .events__controls button {
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    padding: 0;
+    place-items: center;
+    border: 2px solid var(--ink-reverse);
+    background: transparent;
+    color: var(--ink-reverse);
+    cursor: pointer;
+  }
+
+  .events__controls button:hover,
+  .events__controls button:focus-visible {
+    background: var(--accent);
+    color: var(--ink);
+  }
+
+  .events__controls svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .events__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(100%, 68rem);
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0 0 0.75rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    list-style: none;
+  }
+
+  .events__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .event-slide {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .event-card {
+    display: grid;
+    grid-template-columns: minmax(17rem, 0.78fr) minmax(0, 1.22fr);
+    min-height: 31rem;
+    border: 2px solid var(--ink-reverse);
+    background: var(--paper);
+    color: var(--text);
+    box-shadow: 9px 9px 0 var(--accent);
+  }
+
+  .event-card__poster {
+    position: relative;
+    display: grid;
+    min-height: 100%;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    align-content: space-between;
+    overflow: hidden;
+    color: #050505;
+    background:
+      radial-gradient(circle at 77% 20%, rgba(255, 255, 255, 0.62) 0 0.34rem, transparent 0.38rem),
+      linear-gradient(145deg, #ff78bd 0 58%, #ffd9e6 58% 75%, #78c6e8 75%);
+    border-right: 2px solid var(--ink);
+    isolation: isolate;
+  }
+
+  .event-card__poster::after {
+    position: absolute;
+    z-index: -1;
+    right: -3rem;
+    bottom: -4.5rem;
+    width: 15rem;
+    aspect-ratio: 1;
+    border: 2px solid #050505;
+    border-radius: 50%;
+    background: #ffe172;
+    content: "";
+  }
+
+  .event-card__poster img {
+    position: absolute;
+    z-index: -1;
+    right: -1.5rem;
+    top: 3.5rem;
+    width: min(20rem, 86%);
+    opacity: 0.18;
+    transform: rotate(-10deg);
+  }
+
+  .event-card__poster-kicker,
+  .event-card__poster-city {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  .event-card__poster-date {
+    display: grid;
+    justify-items: start;
+    align-self: center;
+  }
+
+  .event-card__poster-date strong {
+    font-size: clamp(6.5rem, 14vw, 11rem);
+    line-height: 0.7;
+    letter-spacing: -0.09em;
+  }
+
+  .event-card__poster-date span {
+    margin-top: 0.9rem;
+    padding: 0.22rem 0.45rem;
+    background: #050505;
+    color: #fff3df;
+    font-size: clamp(1.2rem, 3vw, 1.9rem);
+    font-weight: 800;
+    transform: rotate(-2deg);
+  }
+
+  .event-card__content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: clamp(1.4rem, 4vw, 2.6rem);
+  }
+
+  .event-card__topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--accent-strong);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .event-card h3 {
+    max-width: 16ch;
+    margin-top: 0.8rem;
+    font-size: clamp(2.1rem, 5vw, 4.25rem);
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+
+  .event-card__description {
+    max-width: 58ch;
+    margin: 1rem 0 0;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .event-card__facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: auto 0 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .event-card__facts > div {
+    padding: 0.8rem 0.8rem 0.8rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .event-card__facts > div:nth-child(odd) {
+    border-right: 1px solid var(--line);
+  }
+
+  .event-card__facts > div:nth-child(even) {
+    padding-left: 0.8rem;
+  }
+
+  .event-card__facts dt {
+    margin-bottom: 0.25rem;
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .event-card__facts dd {
+    margin: 0;
+    font-size: 0.88rem;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+
+  .event-card__location {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 0.12rem;
+    text-underline-offset: 0.2rem;
+  }
+
+  .event-card__location:hover,
+  .event-card__location:focus-visible {
+    color: var(--accent-strong);
+  }
+
+  .event-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .event-card__actions .button {
+    min-height: 2.8rem;
+    padding: 0.68rem 0.9rem;
+  }
+
+  .event-card__actions .button--primary {
+    gap: 0.55rem;
+  }
+
+  .event-card__ticket {
+    background: transparent;
+  }
+
+  @media (max-width: 780px) {
+    .events__header {
+      align-items: end;
+    }
+
+    .event-card {
+      grid-template-columns: 1fr;
+    }
+
+    .event-card__poster {
+      min-height: 18rem;
+      border-right: 0;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .event-card__poster-date strong {
+      font-size: clamp(6rem, 28vw, 9rem);
+    }
+
+    .event-card__content {
+      min-height: 30rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .events__header {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .events__controls {
+      justify-self: end;
+    }
+
+    .event-card {
+      box-shadow: 6px 6px 0 var(--accent);
+    }
+
+    .event-card__facts {
+      grid-template-columns: 1fr;
+      margin-top: 1.4rem;
+    }
+
+    .event-card__facts > div:nth-child(odd) {
+      border-right: 0;
+    }
+
+    .event-card__facts > div:nth-child(even) {
+      padding-left: 0;
+    }
+
+    .event-card__actions .button {
+      width: 100%;
+    }
+  }
+</style>
+
+{
+  hasMultipleItems && (
+    <script>
+      const attachEventCarousels = () => {
+        document.querySelectorAll("[data-event-carousel]").forEach((carousel) => {
+          if (!(carousel instanceof HTMLElement) || carousel.dataset.bound === "true") return;
+          carousel.dataset.bound = "true";
+
+          const track = carousel.querySelector("[data-event-track]");
+          const slides = Array.from(carousel.querySelectorAll("[data-event-slide]"));
+          const current = carousel.querySelector("[data-event-current]");
+          const previous = carousel.querySelector("[data-event-prev]");
+          const next = carousel.querySelector("[data-event-next]");
+          if (!(track instanceof HTMLElement) || slides.length < 2) return;
+
+          const goTo = (index) => {
+            const safeIndex = (index + slides.length) % slides.length;
+            slides[safeIndex]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+          };
+
+          const activeIndex = () => {
+            const trackLeft = track.getBoundingClientRect().left;
+            return slides.reduce((closest, slide, index) => {
+              const distance = Math.abs(slide.getBoundingClientRect().left - trackLeft);
+              return distance < closest.distance ? { index, distance } : closest;
+            }, { index: 0, distance: Number.POSITIVE_INFINITY }).index;
+          };
+
+          const updateCount = () => {
+            if (current) current.textContent = String(activeIndex() + 1).padStart(2, "0");
+          };
+
+          previous?.addEventListener("click", () => goTo(activeIndex() - 1));
+          next?.addEventListener("click", () => goTo(activeIndex() + 1));
+          track.addEventListener("keydown", (event) => {
+            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+            event.preventDefault();
+            goTo(activeIndex() + (event.key === "ArrowRight" ? 1 : -1));
+          });
+          track.addEventListener("scroll", updateCount, { passive: true });
+        });
+      };
+
+      document.addEventListener("astro:page-load", attachEventCarousels);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", attachEventCarousels, { once: true });
+      } else {
+        attachEventCarousels();
+      }
+    </script>
+  )
+}

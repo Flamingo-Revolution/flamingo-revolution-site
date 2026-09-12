@@ -8,6 +8,8 @@ import SiteFrame from "./SiteFrame.astro";
 import SectionMedia from "./SectionMedia.astro";
 import CardSlider from "./CardSlider.astro";
 import type { CardSliderItem } from "./CardSlider.astro";
+import EventCarousel from "./EventCarousel.astro";
+import { eventsSectionCopy, homepageEvents } from "../data/events";
 
 interface Props {
   locale: Locale;
@@ -147,6 +149,8 @@ const projectCards: CardSliderItem[] = [
           </ul>
         </div>
       </section>
+
+      <EventCarousel items={homepageEvents[locale]} copy={eventsSectionCopy[locale]} />
 
       <section class="section-block section-block--accent" id="protestat">
         <div class="section-heading">
