@@ -335,7 +335,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       links: [
         {
           label: "Discord",
-          href: "https://discord.gg/B8cQW9aqqb"
+          href: "https://discord.gg/flamingorevolution"
         },
         {
           label: "YouTube",
@@ -562,7 +562,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       links: [
         {
           label: "Discord",
-          href: "https://discord.gg/B8cQW9aqqb"
+          href: "https://discord.gg/flamingorevolution"
         },
         {
           label: "YouTube",
