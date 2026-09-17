@@ -67,6 +67,23 @@ export const eventsSectionCopy: Record<Locale, EventsSectionCopy> = {
 export const homepageEvents: Record<Locale, HomepageEvent[]> = {
 	sq: [
 		{
+			slug: 'insights-on-the-flamingo-revolution-hague',
+			status: 'Ligjëratë publike',
+			day: '17',
+			month: 'Shtator',
+			year: '2026',
+			datetime: '2026-09-17T13:00:00+02:00',
+			time: '13:00–14:30',
+			title: 'Insights on The Flamingo Revolution in Albania',
+			description:
+				'Një vështrim kritik mbi lëvizjen Flamingo, marrëdhënien e arkitekturës me pushtetin dhe historinë e rezistencës qytetare në Shqipëri. Me Dea Buza dhe Kedis Burrja në Universitetin e Leiden-it.',
+			venue: 'SPUI 3B.38 · Spui Campus (Universiteti i Leiden-it)',
+			location: 'Hagë, Holandë',
+			locationHref: 'https://www.google.com/maps/search/?api=1&query=Spui+5+2511+BL+The+Hague',
+			admission: 'Hyrja falas',
+			href: 'https://www.universiteitleiden.nl/en/events/2026/09/insights-on-the-flamingo-revolution-in-albania'
+		},
+		{
 			slug: 'the-flamingo-revolution-amsterdam',
 			status: 'Bisedë publike',
 			day: '15',
@@ -86,6 +103,23 @@ export const homepageEvents: Record<Locale, HomepageEvent[]> = {
 		}
 	],
 	en: [
+		{
+			slug: 'insights-on-the-flamingo-revolution-hague',
+			status: 'Public lecture',
+			day: '17',
+			month: 'September',
+			year: '2026',
+			datetime: '2026-09-17T13:00:00+02:00',
+			time: '13:00–14:30',
+			title: 'Insights on The Flamingo Revolution in Albania',
+			description:
+				'A critical look at the Flamingo movement, the role of architecture in governance and power, and civic resistance in Albania. With Dea Buza and Kedis Burrja at Leiden University.',
+			venue: 'SPUI 3B.38 · Spui Campus (Leiden University)',
+			location: 'The Hague, the Netherlands',
+			locationHref: 'https://www.google.com/maps/search/?api=1&query=Spui+5+2511+BL+The+Hague',
+			admission: 'Free admission',
+			href: 'https://www.universiteitleiden.nl/en/events/2026/09/insights-on-the-flamingo-revolution-in-albania'
+		},
 		{
 			slug: 'the-flamingo-revolution-amsterdam',
 			status: 'Public conversation',

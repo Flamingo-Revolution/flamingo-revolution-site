@@ -201,7 +201,9 @@ const hasMultipleItems = items.length > 1;
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: min(100%, 68rem);
+    grid-auto-rows: 1fr;
     gap: 1.25rem;
+    align-items: stretch;
     margin: 0;
     padding: 0 0 0.75rem;
     overflow-x: auto;
@@ -218,13 +220,17 @@ const hasMultipleItems = items.length > 1;
 
   .event-slide {
     min-width: 0;
+    height: 100%;
+    display: flex;
     scroll-snap-align: start;
   }
 
   .event-card {
     display: grid;
     grid-template-columns: minmax(17rem, 0.78fr) minmax(0, 1.22fr);
+    width: 100%;
     min-height: 31rem;
+    height: 100%;
     border: 2px solid var(--ink-reverse);
     background: var(--paper);
     color: var(--text);
@@ -473,7 +479,7 @@ const hasMultipleItems = items.length > 1;
           const next = carousel.querySelector("[data-event-next]");
           if (!(track instanceof HTMLElement) || slides.length < 2) return;
 
-          const goTo = (index) => {
+          const goTo = (index: number) => {
             const safeIndex = (index + slides.length) % slides.length;
             slides[safeIndex]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
           };
