@@ -14,6 +14,20 @@ export type FlamingoTimesIssue = {
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
   {
+    number: 8,
+    date: "Shtator 2026",
+    datetime: "2026-09",
+    title: "Shteti u bë dy herë më i pasur. Pensionisti jo.",
+    category: "Pensionet & ekonomia",
+    excerpt:
+      "Të ardhurat e shtetit u rritën 103%, pensioni mesatar vetëm 43%. Ku shkoi rritja e pasurisë publike dhe pse pleqëria mbeti pas?",
+    topics: ["pensionet", "ekonomia", "emigracioni", "remitancat", "PPP", "kostoja e jetesës"],
+    href: "/flamingo-times/artikujt/botimi-8/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-8.pdf",
+    imageSrc: "/images/flamingo-times/botimi-8/pensionisti-merr-para.jpeg",
+    imageAlt: "Duart e një pensionisti që mban para pranë çantës së tij"
+  },
+  {
     number: 7,
     date: "Shtator 2026",
     datetime: "2026-09",
@@ -112,7 +126,7 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
 ];
 
 export function toRomanIssue(number: number): string {
-  return ["", "I", "II", "III", "IV", "V", "VI", "VII"][number] ?? String(number);
+  return ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII"][number] ?? String(number);
 }
 
 export function issuePublishedDate(issue: FlamingoTimesIssue): Date {
