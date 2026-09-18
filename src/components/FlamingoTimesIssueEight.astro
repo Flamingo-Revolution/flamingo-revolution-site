@@ -1,0 +1,354 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  flamingoTimesIssues,
+  isLatestIssue,
+  issuePageTitle,
+  issuePublishedDate
+} from "../data/flamingoTimes";
+import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+import "../styles/flamingo-times-issue-six.css";
+import "../styles/flamingo-times-issue-eight.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-8.pdf";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+const issue = flamingoTimesIssues.find((entry) => entry.number === 8)!;
+const canonicalPath = isLatest || isLatestIssue(issue) ? "/flamingo-times/" : undefined;
+---
+
+<BaseLayout
+  title={issuePageTitle(issue)}
+  description={issue.excerpt}
+  locale="sq"
+  pageType="NewsArticle"
+  publishedTime={issuePublishedDate(issue)}
+  canonicalPath={canonicalPath}
+  socialImagePath={issue.imageSrc}
+  socialImageAlt={issue.imageAlt}
+  breadcrumbs={
+    isLatest
+      ? [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" }
+        ]
+      : [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" },
+          { name: issue.title, path: issue.href }
+        ]
+  }
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Shtator 2026</span>
+          <span>Botimi VIII</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#pensionet">Pensionet</a>
+        <a href="#emigracioni">Emigracioni</a>
+        <a href="#pyetjet">5 pyetje</a>
+        <a href="#kerkesat">5 kërkesat</a>
+      </nav>
+
+      <article class="times-government times-eight" id="kryeartikulli">
+        <header class="times-government__hero times-eight__hero">
+          <p class="times-label">Punuat 40 vjet. Ku shkuan paratë?</p>
+          <h2>Shteti u bë dy herë më i pasur.<br />Pensionisti jo.</h2>
+          <p class="times-deck">
+            Në vitin 2013, kur Edi Rama erdhi në pushtet, të ardhurat e përgjithshme të
+            shtetit ishin rreth 372.2 miliardë lekë. Në vitin 2025 arritën në 754.6 miliardë
+            lekë: një rritje prej 102.7%.
+          </p>
+        </header>
+
+        <section class="times-eight__lead" aria-label="Hyrja e kryeartikullit">
+          <div class="times-eight__lead-copy">
+            <p class="times-dropcap">
+              Në të njëjtën periudhë, pensioni mesatar urban i pleqërisë u rrit nga 14,076
+              lekë në 20,123 lekë në muaj, pra vetëm 43%. Pra, buxheti që administron qeveria
+              afërsisht u dyfishua. Pensioni individual jo. Qeveria Rama ka pasur në dispozicion
+              një shtet me shumë më tepër para, një ekonomi shumë më të madhe dhe buxhete që
+              paraardhësit e saj as nuk i imagjinonin. Por ky shpërthim i të ardhurave nuk
+              mbërriti me të njëjtin ritëm te njerëzit që punuan 30 apo 40 vjet për këtë vend,
+              sepse Rama ua ka çuar këto para të shtuara ortakëve të vet në formën e tenderave
+              apo kontratave PPP abuzive, shumica e të cilave sot janë në SPAK.
+            </p>
+          </div>
+          <figure class="times-eight__feature">
+            <img
+              src="/images/flamingo-times/botimi-8/pensionisti-merr-para.jpeg"
+              alt="Duart e një pensionisti që mban para pranë çantës së tij"
+              width="2048"
+              height="1479"
+            />
+            <figcaption>
+              <strong>Tiranë, 2008.</strong> Një pensionist mban shpërblimin e fundvitit. Foto
+              arkivi: Gent Shkullaku/AFP via Getty Images.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section class="times-eight__stats" aria-label="Krahasimi i rritjes">
+          <div>
+            <strong>+103%</strong>
+            <span>Paratë e shtetit</span>
+          </div>
+          <div>
+            <strong>+43%</strong>
+            <span>Pensioni mesatar</span>
+          </div>
+        </section>
+
+        <section class="times-eight__columns" id="pensionet" aria-label="Pensionet dhe kostoja e jetesës">
+          <h3>Pensioni mbeti pas pagës</h3>
+          <p>
+            Në 2013 pensioni mesatar urban i pleqërisë ishte sa 37.9% e pagës mesatare. Në 2025
+            kjo peshë ra në 30.5%. Kjo do të thotë se pensionisti ka humbur terren krahasuar me
+            të ardhurat e punëtorit normal gjithashtu.
+          </p>
+
+          <h3>Ushqim europian. Pension shqiptar.</h3>
+          <p>
+            Në vitin 2025, niveli i çmimeve për ushqime dhe pije joalkoolike në Shqipëri ishte
+            103.8% e mesatares së Bashkimit Europian. Për shkak të monopoleve dhe taksave të larta,
+            ushqimet në Shqipëri kanë arritur çmime mbi mesataren e BE-së, ndërsa për shumë
+            produkte bazë paguhet TVSH 20%, krahasuar me vetëm 5% në Maqedoninë e Veriut, 8% në
+            Kosovë dhe 10% në Serbi.
+          </p>
+          <p>
+            Pra, pensionistit shqiptar i kërkohet të paguajë TVSH deri dy, tre apo katër herë më
+            të lartë për ushqimet bazë se fqinjët, ndërkohë që pensioni mesatar urban është vetëm
+            20,123 lekë.
+          </p>
+
+          <blockquote class="times-eight__callout">
+            Qeveria na solli çmimet europiane. Harroi pensionet europiane.
+          </blockquote>
+
+          <h3>Fëmijët ikën. Prindërit mbetën të vetmuar</h3>
+          <p>
+            Sipas Censusit 2023, rreth 48% e shqiptarëve të regjistruar në Regjistrin Kombëtar të
+            Gjendjes Civile jetonin jashtë vendit. Dhe largimi vazhdon, sepse vetëm gjatë vitit
+            2025, 68,653 shqiptarë morën për herë të parë leje qëndrimi në vendet e Bashkimit
+            Europian. Pra, mesatarisht 188 shqiptarë çdo ditë. Emigracioni nuk është vetëm vetmi
+            për pensionistin e sotëm; zvogëlon edhe bazën e kontribuuesve që duhet të financojnë
+            sistemin.
+          </p>
+          <p>
+            Një nga pasojat më të dhimbshme të emigracionit dhe plakjes së popullsisë shihet
+            brenda shtëpive. Rreth 64,000 persona mbi 60 vjeç jetojnë vetëm. Pas këtyre shifrave
+            janë prindërit që mbeten pas, fëmijët që ndërtojnë jetën jashtë dhe nipërit e mbesat
+            që rriten larg gjyshërve.
+          </p>
+        </section>
+
+        <section class="times-eight__columns times-eight__columns--second" id="emigracioni" aria-label="Emigracioni, remitancat dhe shpenzimet publike">
+          <h3>Pensioni matet edhe me karriget bosh në tavolinë</h3>
+          <p>
+            Pensioni nuk është lëmoshë e qeverisë. Është kontrata e shtetit me njeriun që ka
+            punuar, paguar kontribute dhe mbajtur këtë vend për dekada. Por humbja e pensionistit
+            sot nuk është vetëm në portofol: është edhe djali, vajza dhe nipërit që jetojnë larg.
+          </p>
+
+          <h3>Djali dërgon po të njëjtat €300. Nëna merr më pak.</h3>
+          <p>
+            Në vitin 2013, një euro këmbehej mesatarisht me 140.3 lekë. Në vitin 2025, kursi
+            mesatar ra në rreth 98 lekë për euro. Kjo do të thotë se €300 që në 2013 ktheheshin
+            në 42,090 lekë, në 2025 ktheheshin në rreth 29,400 lekë, afro 12,700 lekë më pak.
+          </p>
+          <p>
+            Në një ekonomi ku prej vitesh ngrihen shqetësime serioze për pastrimin e parave dhe
+            hyrjen e parave informale, forcimi i jashtëzakonshëm i lekut ka zhvlerësuar në lekë
+            edhe ndihmën që emigrantët u dërgojnë prindërve. Fëmija dërgon të njëjtat €300;
+            prindi merr rreth 30% më pak lekë.
+          </p>
+
+          <blockquote class="times-eight__callout">
+            Emigrantët dërgojnë më shumë. Qeveria ua zhvlerëson ndihmën prindërve.
+          </blockquote>
+
+          <p>
+            Shqiptarët jashtë nuk i kanë braktisur prindërit e tyre. Përkundrazi: Banka e Shqipërisë
+            raportoi rreth 1 miliard euro remitanca në vitin 2024 dhe rritje të mëtejshme në gjysmën
+            e parë të vitit 2025. Pra, problemi nuk është se emigrantët po dërgojnë më pak euro.
+            Ndërsa emigranti punon dhe dërgon më shumë euro, prindi në Shqipëri merr gjithnjë e
+            më pak lekë për çdo euro. Dhe nuk zhvlerësohet vetëm ndihma mujore, por edhe kursimet
+            në euro që emigrantët dhe familjet e tyre kanë në Shqipëri vlejnë dukshëm më pak kur
+            konvertohen në lekë.
+          </p>
+          <p>
+            Ky është absurdi: familjet mbahen me paratë e fëmijëve që u larguan nga vendi, ndërsa
+            forcimi i lekut ua gërryen vlerën e këtyre parave në Shqipëri. Emigranti sakrifikon
+            jashtë; pensionisti humbet brenda.
+          </p>
+
+          <h3>13.36 miliardë lekë për koncesione/PPP në 2025</h3>
+          <p>
+            Pagesat buxhetore për kontratat koncesionare dhe PPP-të në vitin 2025 ishin rreth
+            13.36 miliardë lekë. Kjo shumë është e barabartë, aritmetikisht, me rreth:
+          </p>
+
+          <blockquote class="times-eight__callout">55,300 pensione mesatare vjetore</blockquote>
+
+          <p>
+            Kjo është vetëm një ekuivalencë për ta kuptuar madhësinë e shumës; nuk do të thotë
+            se fondet e pensioneve janë transferuar drejtpërdrejt te koncesionet. Pyetja politike
+            është shumë më e thjeshtë: kur të ardhurat e shtetit janë dyfishuar, sa nga rritja e
+            pasurisë publike është kthyer në siguri për pleqërinë?
+          </p>
+
+          <h3>Përtej propagandës: Shqipëria si e katandisi Rama</h3>
+          <p>
+            Qeveria Rama prej vitesh shet imazhin e një Shqipërie moderne, europiane dhe të
+            suksesshme. Por renditjet ndërkombëtare tregojnë një realitet tjetër. Në sundimin e
+            ligjit, Shqipëria renditet e 87-ta nga 143 vende (Indeksi i Sundimit të Ligjit 2025 të
+            World Justice Project). Në korrupsion, Shqipëria merr vetëm 39 pikë nga 100 dhe
+            renditet e 91-ta nga 182 vende (Indeksi i Perceptimit të Korrupsionit 2025 të
+            Transparency International).
+          </p>
+          <p>
+            Edhe imazhi ndërkombëtar është përkeqësuar. Sipas Indeksit Global të Fuqisë së Butë,
+            Shqipëria ra nga vendi 92 në 2024 në vendin 100 në 2025.
+          </p>
+          <p>
+            Ndërkohë, qindra mijëra shqiptarë janë larguar nga vendi. Pas 13 vitesh, bilanci i
+            qeverisë Rama është brutal: një Shqipëri më e zbrazët nga njerëzit, e dobët në sundimin
+            e ligjit, e zhytur në perceptimin e korrupsionit dhe me imazh ndërkombëtar në rënie.
+            Mund ta lyesh fasadën me propagandë sa të duash, por nuk mbulon dot një vend që po humbet
+            njerëzit, institucionet dhe reputacionin e tij.
+          </p>
+
+          <h3>Modeli Alabbar: pasuria më e madhe e vendit në shitje</h3>
+          <p>
+            Rasti i Portit të Durrësit është modeli Alabbar: miliarderit Mohamed Alabbar i jepet
+            porti më i vjetër dhe më i rëndësishëm i vendit, i jepet toka përreth, i jepet një pjesë
+            e detit për të ndërtuar dhe i jepen lehtësi fiskale; ndërsa shteti shqiptar duhet të
+            ndërtojë nga e para, me paratë e taksapaguesve, një port të ri në Porto Romano.
+          </p>
+
+          <div class="times-eight__questions" id="pyetjet">
+            <h3>5 pyetje që çdo pensionist duhet t’i bëjë qeverisë</h3>
+            <ol>
+              <li>Pse të ardhurat e shtetit u rritën 103%, ndërsa pensioni mesatar vetëm 43%?</li>
+              <li>Pse pensioni ishte 37.9% e pagës mesatare në 2013, por vetëm 30.5% në 2025?</li>
+              <li>
+                Pse ushqimi është mbi mesataren e BE-së, ndërsa pensionet janë shumë larg të
+                ardhurave europiane?
+              </li>
+              <li>Çfarë politike ka shteti për dhjetëra mijëra të moshuar që jetojnë vetëm?</li>
+              <li>
+                Kur buxheti ka më shumë para se kurrë, pse pleqëria vazhdon të mbështetet te
+                fëmijët jashtë vendit?
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="times-eight__closing" aria-label="Mesazhi përmbyllës">
+          <blockquote>
+            Ju nuk i keni borxh qeverisë.<br />Shteti ju ka borxh juve.
+          </blockquote>
+          <a href="https://www.flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+            <img
+              src="/images/qr-code/png/black.png"
+              alt="QR code për flamingorevolution.eu"
+              width="480"
+              height="480"
+            />
+            <span>flamingorevolution.eu</span>
+          </a>
+        </section>
+
+        <section class="times-six__demands" id="kerkesat">
+          <header>
+            <p class="times-label">Nga reagimi te organizimi</p>
+            <h3>5 kërkesat që na bashkojnë</h3>
+            <p class="times-six__demands-intro">
+              Ndërkohë që shoqëria mëson të organizohet, protesta na bashkon me 5 kërkesat e saj:
+            </p>
+          </header>
+          <ol>
+            <li>Dorëheqjen e panegociueshme të Kryeministrit dhe të qeverisë.</li>
+            <li>Krijimin e një qeverie teknike tranzitore, jopartiake, me mandat 12-mujor.</li>
+            <li>
+              Ndryshime kushtetuese, ku të gjithë shtetasit shqiptarë të jenë të barabartë para
+              ligjit, të miratuara me referendum popullor, duke përfshirë ndër të tjera:
+              <ul>
+                <li>Ndryshimin e Kodit Zgjedhor.</li>
+                <li>Ndryshimin e ligjit për financimin e partive politike dhe organizatave të ndryshme.</li>
+                <li>
+                  Kufizimin e ushtrimit të detyrës së Kryeministrit në jo më shumë se dy mandate,
+                  të plota ose të pjesshme, gjatë gjithë jetës politike të një individi.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Paralelisht, kërkojmë:
+              <ul>
+                <li>Anulimin e ndryshimeve të bëra në ligjin për “Zonat e Mbrojtura”.</li>
+                <li>Anulimin e ndryshimeve të bëra në ligjin për “Trashëgiminë kulturore”.</li>
+                <li>Shfuqizimin e paketës ligjore të njohur si “Paketa e Maleve”.</li>
+                <li>Shfuqizimin e statusit dhe të kuadrit ligjor për “Investimet Strategjike”.</li>
+              </ul>
+            </li>
+            <li>
+              Hartimin e një kontrate të re sociale mes qytetarëve dhe shtetit, pas konsultimit me
+              intelektualë, ekspertë teknikë dhe qytetarë apartiakë të propozuar nga sheshi i
+              protestës.
+            </li>
+          </ol>
+          <aside>
+            <div class="times-six__demands-brand">
+              <img
+                class="times-six__demands-logo"
+                src="/images/flamingo-wordmark-dark.svg"
+                alt="Flamingo Revolution"
+                width="426"
+                height="187"
+              />
+              <a href="https://www.flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+                <span>flamingorevolution.eu</span>
+                <img
+                  class="times-six__demands-qr"
+                  src="/images/qr-code/png/black.png"
+                  alt="QR code për flamingorevolution.eu"
+                  width="480"
+                  height="480"
+                />
+              </a>
+            </div>
+          </aside>
+        </section>
+      </article>
+
+      <footer class="times-source times-eight__source">
+        <strong>FLAMINGO TIMES · Botimi VIII · Shtator 2026</strong>
+        <span>Lexoje. Fotokopjoje. Shpërndaje.</span>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>
