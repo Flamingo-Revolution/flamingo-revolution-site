@@ -1,0 +1,464 @@
+.times-nine {
+	border-bottom: 4px solid #151515;
+}
+
+.times-nine__hero {
+	padding-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
+}
+
+.times-nine__hero h2 {
+	max-width: none;
+	margin: 0;
+	font-size: clamp(3rem, 4.5vw, 4.15rem);
+	line-height: 0.88;
+	letter-spacing: -0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.times-nine__hero .times-deck {
+	max-width: 72rem;
+	font-style: italic;
+}
+
+.times-nine__lead {
+	display: grid;
+	grid-template-columns: minmax(16rem, 0.78fr) minmax(0, 1.55fr);
+	gap: clamp(1.2rem, 2.8vw, 2.25rem);
+	align-items: start;
+	padding: clamp(1.8rem, 5vw, 3.4rem);
+	border-bottom: 3px solid #151515;
+	background: #fff8ef;
+}
+
+.times-nine__lead-copy,
+.times-nine__hawaii-copy {
+	min-width: 0;
+}
+
+.times-nine__lead-copy p,
+.times-nine__columns p,
+.times-nine__territory header > p:last-child,
+.times-nine__hawaii-copy p,
+.times-nine__referendum p {
+	font-family: Georgia, serif;
+	font-size: clamp(1rem, 1.2vw, 1.08rem);
+	line-height: 1.6;
+}
+
+.times-nine__lead-copy p {
+	margin: 0 0 1rem;
+}
+
+.times-nine__law {
+	width: auto;
+	max-width: none;
+	margin: 1.15rem 0;
+	padding: 0.9rem 1rem;
+	border: 0;
+	border-left: 0.45rem solid #c83e72;
+	background: #ffd7e3;
+	font-family: Georgia, serif;
+	font-size: 0.98rem;
+	font-style: italic;
+	line-height: 1.55;
+}
+
+.times-nine__feature {
+	margin: 0;
+	border: 3px solid #151515;
+	background: #151515;
+	box-shadow: 8px 8px 0 #c83e72;
+}
+
+.times-nine__feature img {
+	display: block;
+	width: 100%;
+	object-fit: cover;
+}
+
+.times-nine__feature figcaption {
+	padding: 0.72rem 0.9rem;
+	color: #fff8ef;
+	font-size: 0.78rem;
+	font-weight: 650;
+	line-height: 1.42;
+}
+
+.times-nine__feature--tomorr img {
+	height: clamp(24rem, 35vw, 32rem);
+	object-position: center;
+}
+
+.times-nine__columns {
+	padding: clamp(1.8rem, 5vw, 3.4rem);
+	border-bottom: 3px solid #151515;
+	background: #fff8ef;
+	column-count: 3;
+	column-gap: clamp(1.8rem, 3.4vw, 3.2rem);
+	column-fill: balance;
+	column-rule: 1px solid rgba(21, 21, 21, 0.38);
+}
+
+.times-nine__columns--second {
+	background: #f7f1e8;
+}
+
+.times-nine__columns h3,
+.times-nine__territory h3,
+.times-nine__hawaii h3,
+.times-nine__referendum h3 {
+	margin: 0 0 0.85rem;
+	padding-top: 1.35rem;
+	font-family: var(--font-display);
+	font-size: clamp(1.7rem, 2.65vw, 2.65rem);
+	line-height: 0.94;
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+	break-after: avoid-column;
+}
+
+.times-nine__columns > h3:first-child,
+.times-nine__hawaii h3,
+.times-nine__referendum h3 {
+	padding-top: 0;
+}
+
+.times-nine__columns p {
+	margin: 0 0 1rem;
+}
+
+.times-nine__cycle {
+	break-inside: avoid-column;
+}
+
+.times-nine__cycle ol {
+	display: grid;
+	gap: 0.72rem;
+	margin: 0;
+	padding-left: 1.5rem;
+}
+
+.times-nine__cycle li {
+	padding-left: 0.25rem;
+	font-weight: 700;
+	line-height: 1.42;
+}
+
+.times-nine__cycle li::marker {
+	color: #c83e72;
+	font-family: var(--font-display);
+	font-size: 1.15em;
+	font-weight: 800;
+}
+
+.times-nine__territory {
+	padding: clamp(1.8rem, 5vw, 3.4rem);
+	border-bottom: 3px solid #151515;
+	background: #ffd7e3;
+}
+
+.times-nine__territory header {
+	max-width: 64rem;
+	margin-bottom: 1.5rem;
+}
+
+.times-nine__territory h3 {
+	max-width: none;
+	padding-top: 0;
+	font-size: clamp(2.4rem, 5vw, 5rem);
+}
+
+.times-nine__territory header > p:last-child {
+	margin: 0;
+}
+
+.times-nine__stats {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	border: 3px solid #151515;
+	background: #fff8ef;
+}
+
+.times-nine__stats > div {
+	display: grid;
+	align-content: center;
+	justify-items: center;
+	gap: 0.6rem;
+	min-height: 12rem;
+	padding: 1.3rem 1rem;
+	text-align: center;
+}
+
+.times-nine__stats > div + div {
+	border-left: 2px solid #151515;
+}
+
+.times-nine__stats strong {
+	font-family: var(--font-display);
+	font-size: clamp(3rem, 6vw, 5.8rem);
+	line-height: 0.9;
+	letter-spacing: -0.04em;
+}
+
+.times-nine__stats span {
+	font-weight: 800;
+	line-height: 1.25;
+	text-transform: uppercase;
+}
+
+.times-nine__stats small {
+	font-family: Georgia, serif;
+	font-size: 0.78rem;
+	font-style: italic;
+}
+
+.times-nine__stats-note {
+	max-width: 72rem;
+	margin: 1rem auto 0;
+	font-family: Georgia, serif;
+	font-style: italic;
+	font-weight: 700;
+	line-height: 1.5;
+	text-align: center;
+}
+
+.times-nine__callout {
+	width: auto;
+	max-width: none;
+	margin: 1.35rem 0;
+	padding: 0.9rem 1rem;
+	border: 0;
+	border-left: 0.55rem solid #c83e72;
+	background: #ffd7e3;
+	font-family: var(--font-display);
+	font-size: clamp(1.35rem, 2.1vw, 2rem);
+	font-style: normal;
+	font-weight: 700;
+	line-height: 0.98;
+	text-transform: uppercase;
+	break-inside: avoid-column;
+}
+
+.times-nine__bullets {
+	display: grid;
+	gap: 0.8rem;
+	margin: 0 0 1.2rem;
+	padding-left: 1.2rem;
+	break-inside: avoid-column;
+}
+
+.times-nine__bullets li {
+	padding-left: 0.25rem;
+	font-weight: 700;
+	line-height: 1.45;
+}
+
+.times-nine__bullets li::marker {
+	color: #c83e72;
+}
+
+.times-nine__hawaii {
+	display: grid;
+	grid-template-columns: minmax(16rem, 0.68fr) minmax(0, 1.4fr);
+	gap: clamp(1.5rem, 4vw, 3.5rem);
+	align-items: start;
+	padding: clamp(1.8rem, 5vw, 3.4rem);
+	border-bottom: 3px solid #151515;
+	background: #fff8ef;
+}
+
+.times-nine__feature--hawaii img {
+	height: clamp(26rem, 39vw, 35rem);
+	object-position: center;
+}
+
+.times-nine__hawaii-copy p {
+	margin: 0 0 1rem;
+}
+
+.times-nine__hawaii-copy .times-label {
+	font-family: var(--font-body);
+	font-size: 0.76rem;
+	line-height: 1.2;
+}
+
+.times-nine__sources {
+	padding-top: 1rem;
+	border-top: 2px solid #151515;
+	font-family: var(--font-body) !important;
+	font-size: 0.82rem !important;
+	font-weight: 700;
+}
+
+.times-nine__slogan {
+	width: auto;
+	max-width: none;
+	margin: 0;
+	padding: clamp(2rem, 5vw, 4.6rem) clamp(1rem, 5vw, 3.4rem);
+	border: 0;
+	border-bottom: 3px solid #151515;
+	color: #fff8ef;
+	background: #151515;
+	font-family: var(--font-display);
+	font-size: clamp(2.8rem, 6.5vw, 6.4rem);
+	font-style: normal;
+	font-weight: 700;
+	line-height: 0.87;
+	letter-spacing: -0.035em;
+	text-transform: uppercase;
+}
+
+.times-nine__referendum {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: clamp(1.5rem, 5vw, 4rem);
+	align-items: center;
+	padding: clamp(1.8rem, 5vw, 3.4rem);
+	border-bottom: 3px solid #151515;
+	background: #dff4fb;
+}
+
+.times-nine__referendum h3 {
+	font-size: clamp(2.4rem, 5vw, 4.8rem);
+}
+
+.times-nine__referendum p {
+	max-width: 62rem;
+}
+
+.times-nine__referendum-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	margin-top: 1.2rem;
+	padding: 0.65rem 0.85rem;
+	border: 2px solid #151515;
+	background: #fff8ef;
+	font-weight: 800;
+}
+
+.times-nine__referendum-qr {
+	display: grid;
+	place-items: center;
+	padding: 0.85rem;
+	border: 3px solid #151515;
+	background: #fff;
+	box-shadow: 7px 7px 0 #c83e72;
+}
+
+.times-nine__referendum-qr img {
+	width: clamp(9rem, 16vw, 12rem);
+	height: auto;
+}
+
+.times-nine__source {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+@media (max-width: 1020px) {
+	.times-nine__hero h2 {
+		font-size: clamp(2.6rem, 5vw, 3.5rem);
+	}
+
+	.times-nine__lead,
+	.times-nine__hawaii {
+		grid-template-columns: 1fr;
+	}
+
+	.times-nine__feature--tomorr img {
+		height: auto;
+		aspect-ratio: 16 / 10;
+	}
+
+	.times-nine__columns {
+		column-count: 2;
+	}
+
+	.times-nine__feature--hawaii {
+		width: min(100%, 38rem);
+	}
+}
+
+@media (max-width: 760px) {
+	.times-nine__hero,
+	.times-nine__lead,
+	.times-nine__columns,
+	.times-nine__territory,
+	.times-nine__hawaii,
+	.times-nine__referendum,
+	.times-six__demands {
+		padding-right: 1rem;
+		padding-left: 1rem;
+	}
+
+	.times-nine__hero,
+	.times-nine__lead,
+	.times-nine__columns,
+	.times-nine__territory,
+	.times-nine__hawaii,
+	.times-nine__slogan,
+	.times-nine__referendum,
+	.times-six__demands {
+		border-bottom: 0;
+	}
+
+	.times-nine__hero h2 {
+		font-size: clamp(2.65rem, 12.4vw, 4.4rem);
+		white-space: normal;
+	}
+
+	.times-nine__lead {
+		gap: 1.4rem;
+		padding-top: 1rem;
+		padding-bottom: 1.4rem;
+	}
+
+	.times-nine__feature {
+		box-shadow: 5px 5px 0 #c83e72;
+	}
+
+	.times-nine__columns {
+		column-count: 1;
+		column-rule: 0;
+		padding-top: 1.25rem;
+		padding-bottom: 1.25rem;
+	}
+
+	.times-nine__columns h3,
+	.times-nine__hawaii h3 {
+		font-size: clamp(1.9rem, 9vw, 3rem);
+	}
+
+	.times-nine__stats {
+		grid-template-columns: 1fr;
+	}
+
+	.times-nine__stats > div {
+		min-height: 0;
+	}
+
+	.times-nine__stats > div + div {
+		border-top: 2px solid #151515;
+		border-left: 0;
+	}
+
+	.times-nine__feature--hawaii img {
+		height: auto;
+		max-height: 36rem;
+	}
+
+	.times-nine__referendum {
+		grid-template-columns: 1fr;
+	}
+
+	.times-nine__referendum-qr {
+		justify-self: start;
+	}
+
+	.times-nine__source {
+		flex-direction: column;
+	}
+}
