@@ -14,6 +14,20 @@ export type FlamingoTimesIssue = {
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
   {
+    number: 9,
+    date: "Shtator 2026",
+    datetime: "2026-09",
+    title: "Regjimi përpiqet të përvetësojë 80% të tokës shqiptare",
+    category: "Prona & Paketa e Maleve",
+    excerpt:
+      "Si neni 6 i Paketës së Maleve mund t’u hapë rrugë pretendimeve mbi pyje, kullota e toka në fshatrat e shpopulluara.",
+    topics: ["prona", "Paketa e Maleve", "pyjet", "kullotat", "shpopullimi", "referendumi"],
+    href: "/flamingo-times/artikujt/botimi-9/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-9.pdf",
+    imageSrc: "/images/flamingo-times/botimi-9/mali-i-tomorrit.jpeg",
+    imageAlt: "Mali i Tomorrit mbi luginën e gjelbër"
+  },
+  {
     number: 8,
     date: "Shtator 2026",
     datetime: "2026-09",
@@ -126,7 +140,7 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
 ];
 
 export function toRomanIssue(number: number): string {
-  return ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII"][number] ?? String(number);
+  return ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"][number] ?? String(number);
 }
 
 export function issuePublishedDate(issue: FlamingoTimesIssue): Date {

@@ -1,0 +1,391 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  flamingoTimesIssues,
+  isLatestIssue,
+  issuePageTitle,
+  issuePublishedDate
+} from "../data/flamingoTimes";
+import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+import "../styles/flamingo-times-issue-six.css";
+import "../styles/flamingo-times-issue-nine.css";
+
+const copy = siteCopy.sq;
+const pdfHref = "/documents/flamingo-times/flamingo-times-botimi-9.pdf";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+const issue = flamingoTimesIssues.find((entry) => entry.number === 9)!;
+const canonicalPath = isLatest || isLatestIssue(issue) ? "/flamingo-times/" : undefined;
+---
+
+<BaseLayout
+  title={issuePageTitle(issue)}
+  description={issue.excerpt}
+  locale="sq"
+  pageType="NewsArticle"
+  publishedTime={issuePublishedDate(issue)}
+  canonicalPath={canonicalPath}
+  socialImagePath={issue.imageSrc}
+  socialImageAlt={issue.imageAlt}
+  breadcrumbs={
+    isLatest
+      ? [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" }
+        ]
+      : [
+          { name: "Ballina", path: "/" },
+          { name: "Flamingo Times", path: "/flamingo-times/" },
+          { name: issue.title, path: issue.href }
+        ]
+  }
+>
+  <SiteFrame locale="sq" copy={copy} currentPage="times" shellClass="times-shell">
+    <main class="times-page" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, Shtator 2026</span>
+          <span>Botimi IX</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#ligji">Ligji</a>
+        <a href="#territori">Territori</a>
+        <a href="#havai">Havai</a>
+        <a href="#referendumi">Referendumi</a>
+        <a href="#kerkesat">5 kërkesat</a>
+      </nav>
+
+      <article class="times-government times-nine" id="kryeartikulli">
+        <header class="times-government__hero times-nine__hero">
+          <p class="times-label">Paketa e maleve</p>
+          <h2>Regjimi përpiqet të përvetësojë<br />80% të tokës shqiptare</h2>
+          <p class="times-deck">
+            Neni 6 i ligjit të ri i hap rrugën kujtdo të marrë, për shembull, 40 hektarë pyll a
+            livadh brenda 45 ditësh, ndërkohë që 150 mijë çështje pronësie presin drejtësi prej 36
+            vjetësh.
+          </p>
+        </header>
+
+        <section class="times-nine__lead" aria-label="Hyrja e kryeartikullit">
+          <div class="times-nine__lead-copy">
+            <p class="times-dropcap">
+              Kur e pyetën Artan Lamen pse nuk ka shumë probleme me pronat në veri, ai dha dy arsye:
+              banorët nuk e kanë pranuar ligjin 7501 dhe atje ka besë. Për t’i “zgjidhur” këto dy
+              probleme, si në veri, ashtu edhe në jug, Kuvendi ka miratuar ligjin për Paketën e
+              Maleve. Neni 6, pika 3, thotë:
+            </p>
+            <blockquote class="times-nine__law">
+              “Mungesa e dokumentacionit për posedimin nuk pezullon procedurën administrative për
+              njohjen e tij si posedues jopronar (të tokës) për sa kohë që nuk paraqiten prova apo
+              pretendime nga të tretët përgjatë afatit të afishimit publik (për 45 ditë).”
+            </blockquote>
+            <p>
+              Pra, kushdo mund të pretendojë pyll, livadh apo tokë në fshatrat e shkretuara të
+              Shqipërisë dhe të kërkojë të njihet si pronar. Nëse askush nuk kundërshton brenda 45
+              ditësh, prona bëhet e tij.
+            </p>
+          </div>
+          <figure class="times-nine__feature times-nine__feature--tomorr">
+            <img
+              src="/images/flamingo-times/botimi-9/mali-i-tomorrit-print.png"
+              alt="Mali i Tomorrit mbi një luginë me fusha dhe pemë"
+              width="1024"
+              height="683"
+            />
+            <figcaption>
+              <strong>Mali i Tomorrit.</strong> Mal i shenjtë i shqiptarëve, me tradita të lashta të
+              kultit e pelegrinazhit, të trashëguara brez pas brezi. Së shpejti, çdo centimetër i
+              Republikës do të ketë një pronar të huaj.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section class="times-nine__columns" id="ligji" aria-label="Paketa e Maleve dhe investimet strategjike">
+          <p>
+            Megjithatë, mos u çoni përpjetë nga kolltuku duke menduar se ky ligj është për ju. Ju,
+            qytetari i zakonshëm, prisni drejtësi për pronat tuaja prej 36 vjetësh, që nga rënia e
+            komunizmit. Epo, për ju duhen edhe 36 vite të tjera që të gjykohen 150 mijë çështjet e
+            mbetura pezull! Gati dy breza kanë ikur pa marrë drejtësi për pronat e tyre.
+          </p>
+
+          <h3>Ligji për investimet strategjike</h3>
+          <p>
+            Me ligjin për investimet strategjike, shteti ndërhyn në marrëdhëniet mes privatëve për
+            t’i shërbyer një interesi privat. Mjafton pretendimi se do të investohen 5 milionë euro,
+            ose thjesht një mesazh në WhatsApp te “Lartmadhëria e Tij”, mjekërroshi bardhërosh
+            laraman, Ramsi IV.
+          </p>
+          <p>
+            Ky mekanizëm ngre edhe pyetjen: Kush përfiton nga djegia e pyjeve, që mbollën prindërit
+            dhe gjyshërit tanë? Kur digjen kullota të tëra, ullishte e kultura të tjera bujqësore,
+            nuk humbet vetëm prodhimi i një viti, por shkatërrohet një trashëgimi pune e kulture, e
+            përcjellë prej shekujsh nga brezi në brez.
+          </p>
+          <p>
+            Duket sikur këtij regjimi, me urrejtjen e tij ndaj së bukurës, nuk i mjaftoi largimi i më
+            shumë se 750 mijë shqiptarëve, por tani ka në shënjestër dhe pronat e tyre. Çfarë ua
+            mbyll rrugën e kthimit më mirë sesa t’u marrësh tokën ku mund të kthehen?
+          </p>
+
+          <div class="times-nine__cycle">
+            <h3>Cikli i shkatërrimit dhe betonizimit</h3>
+            <ol>
+              <li>Digjen pyjet; pemët priten dhe shiten.</li>
+              <li>Në vend të tyre mund të ngrihen turbina me erë, ose të vendosen panele diellore.</li>
+              <li>Shpopullohen fshatrat, që i përdornin ato pyje për ngrohje.</li>
+              <li>
+                Largimi nga fshatrat dhe qytezat ushqen kërkesën për apartamentet e pashitura në
+                Tiranë: mbi 50 mijë të tilla (51 129 banesa me konsum zero energjie, OSHEE 2023).
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="times-nine__territory" id="territori" aria-labelledby="territory-title">
+          <header>
+            <p class="times-label">Llogaritja</p>
+            <h3 id="territory-title">Sa territor është realisht në lojë?</h3>
+            <p>
+              Shifra “80%” është vlerësim i Flamingo Times, jo statistikë zyrtare. Për ta
+              mbështetur, kjo është llogaritje mbi bazën e shifrave zyrtare:
+            </p>
+          </header>
+          <div class="times-nine__stats" aria-label="Shifrat e territorit">
+            <div>
+              <strong>36,6%</strong>
+              <span>e territorit janë pyje</span>
+              <small>INSTAT</small>
+            </div>
+            <div>
+              <strong>16,6%</strong>
+              <span>e territorit janë kullota</span>
+              <small>INSTAT</small>
+            </div>
+            <div>
+              <strong>28,8%</strong>
+              <span>mbulim pyjor sot, nga rreth 37% më parë</span>
+              <small>Banka Botërore, 2023</small>
+            </div>
+          </div>
+          <p class="times-nine__stats-note">
+            Të gjitha tokat së bashku, subjekt i paketës së maleve, për t’u falur nga lakejtë e
+            sulltanit aty ku duan.
+          </p>
+        </section>
+
+        <section class="times-nine__columns times-nine__columns--second" aria-label="Territori dhe shpopullimi">
+          <p>
+            Bashkë, pyjet dhe kullotat zënë 53,2% të fondit tokësor, pra mbi gjysmën e territorit
+            shqiptar (INSTAT). Shqipëria numëron gjithashtu rreth 4,5 milionë parcela toke dhe njësi
+            të veçanta prone, pasojë e fragmentimit të pronësisë pas viteve ’90. Pikërisht këtu,
+            neni 6 i Paketës së Maleve, gjen hapësirë për t’u zbatuar.
+          </p>
+          <p>
+            Nga shifra 21,6% për tokën e punueshme (Banka Botërore, 2023), llogaritet se 78,4% e
+            territorit mbetet jashtë kësaj kategorie. Kjo pjesë lidhet me pyjet, kullotat, malet dhe
+            toka të tjera ku pretendohet se mund të zbatohet neni 6. Kjo është llogaritje dhe
+            interpretim, jo përfundim i Bankës Botërore.
+          </p>
+
+          <blockquote class="times-nine__callout">
+            E gjithë kjo për ta mbajtur sulltanin në pushtet.
+          </blockquote>
+          <ul class="times-nine__bullets">
+            <li>
+              Fshati do të thotë pavarësi. Politikanët nuk duan njerëz të pavarur; duan njerëz, që
+              mund t’i kontrollojnë. Duan bujkrobër modernë.
+            </li>
+            <li>
+              Geto betoni: një tel korrenti, një tub uji, një ambulancë sa për të thënë, por asnjë
+              shkollë (si në Astir).
+            </li>
+          </ul>
+
+          <h3>Kritikët inatçorë të qeverisë</h3>
+          <p>
+            Tani kritikët inatçorë të qeverisë do të thonë se asnjë mjek nuk do të punojë në fshat
+            dhe se në komunizëm kjo arrihej me detyrim: punoje atje ku të dërgonte Partia. Në
+            kapitalizëm, zgjidhja është më e thjeshtë: pagat duhet t’u përgjigjen nevojave, jo të
+            mbeten peng i një hierarkie të ngurtë. Në Shqipëri, pagën më të lartë e ka Presidenti.
+            Ndërkaq edhe në komunizëm kishte inxhinierë, që fitonin më shumë se Enveri.
+          </p>
+          <p>
+            Edhe sot Tatimet kanë paga referencë. Në ndërtim, për shembull, paga e referencës për
+            administratorin e firmës është më e ulët se për inxhinierin. I njëjti parim duhet të
+            vlejë për mjekët: të rriten pagat në mënyrë që puna në fshatra e qytete të vogla të
+            bëhet zgjedhje, jo detyrim.
+          </p>
+          <p>
+            Të njëjtët kritikë do të na kujtojnë rritjen e çmimeve dhe të vlerës së pronës në
+            Tiranë. Kjo është e vërtetë, por nga kjo rritje galopante përfiton vetëm një grusht
+            njerëzish; shumica mbetet “me gisht në gojë”. Me këtë ritëm, a do t’u duhet çifteve të
+            reja të marrin kredi 50-vjeçare e të rropaten në punë mbi 12 orë në ditë, vetëm për të
+            paguar një shtëpi?
+          </p>
+          <p>
+            Në pjesën më të madhe të vendit, vlera e pronës ka rënë pothuajse në zero, ndërsa
+            zonat braktisen dita-ditës. Kjo është një arsye për reformën e tanishme territoriale,
+            që, si gjithmonë, hartohet me imtësi dhe detaje për t’i shërbyer plotësisht pushtetit.
+          </p>
+        </section>
+
+        <section class="times-nine__hawaii" id="havai" aria-labelledby="hawaii-title">
+          <figure class="times-nine__feature times-nine__feature--hawaii">
+            <img
+              src="/images/flamingo-times/botimi-9/protesta-prones-havai.jpeg"
+              alt="Protestues në Lahaina me flamuj dhe pankartën Every day a local family moves away"
+              width="1068"
+              height="1102"
+            />
+            <figcaption>
+              <strong>Lahaina, Havai.</strong> “Çdo ditë largohet një familje vendase”, shkruhet në
+              pankartën e protestuesve. Foto: Lahaina Community Land Trust, botuar në Ka Wai Ola.
+            </figcaption>
+          </figure>
+          <div class="times-nine__hawaii-copy">
+            <p class="times-label">Prona dhe largimi</p>
+            <h3 id="hawaii-title">Kur vendlindja kthehet në vend pushimesh</h3>
+            <p>
+              Havai nuk është vetëm vendi i pushimeve, që e njohim të gjithë; është vendlindja e
+              familjeve të panumërta, që kanë jetuar aty brez pas brezi. Blerjet nga investitorë
+              jashtë ishujve dhe kthimi i banesave në shtëpi pushimi për turistët, shtojnë trysninë
+              mbi një treg ku banesat janë të pakta dhe çmimet të larta. Shumë familje vendase,
+              përfshirë havaianë autoktonë, largohen sepse nuk e përballojnë më jetesën në vendin e
+              tyre.
+            </p>
+            <p>
+              Në Havai, tokat e trashëguara nga shumë breza janë bërë objekt procesesh gjyqësore,
+              që mund të përfundojnë me shitje të detyruar në ankand, ndërsa familjeve u duhen para
+              dhe dokumente rigoroze për të mbrojtur pronën e të parëve. Për Shqipërinë, ky është
+              paralajmërimi: nëse ligjet lehtësojnë kalimin e tokës te investitorët pa mbrojtur
+              realisht të drejtat e pronarëve të larguar, emigrimi për bukën e gojës mund të
+              përfundojë me humbjen e trashëgimisë dhe të mundësisë për t’u kthyer.
+            </p>
+            <p>
+              A do bëhet Shqipëria një Havai i dytë, në zemër të Evropës, qytetarët e së cilës ose
+              do mbushin getot në vendin e tyre ose do syrgjynosen tjetërkund në botë? A do i
+              referohemi Shqipërisë në të ardhmen thjesht si një vend pushimesh, ndërsa historia e të
+              parëve (ashtu si në Havai) do jetë zhdukur me kohë?
+            </p>
+            <p class="times-nine__sources">
+              <strong>Burime:</strong> Associated Press, 22 janar 2023; UHERO, The Hawaii Housing
+              Factbook 2025.
+            </p>
+          </div>
+        </section>
+
+        <blockquote class="times-nine__slogan">
+          Çohu shqiptar, se edhe tokën e të parëve po ta vjedhin!
+        </blockquote>
+
+        <section class="times-nine__referendum" id="referendumi" aria-labelledby="referendum-title">
+          <div>
+            <p class="times-label">Referendumi për ligjin 21/2024</p>
+            <h3 id="referendum-title">Mbro tokën e të parëve</h3>
+            <p>
+              Nënshkruaj peticionin për referendumin, që shfuqizon ligjin 21/2024. Po mbledhim
+              50.000 nënshkrime që qytetarët, jo qeveria, të vendosin për të ardhmen e zonave të
+              mbrojtura; deri tani janë mbledhur rreth 5.000.
+            </p>
+            <strong>Natyra nuk shitet, mbrohet, trashëgohet!</strong>
+            <a class="times-nine__referendum-link" href="/referendum/">Mëso më shumë <span aria-hidden="true">→</span></a>
+          </div>
+          <a class="times-nine__referendum-qr" href="/referendum/" aria-label="Hap faqen e referendumit">
+            <img
+              src="/images/flamingo-times/botimi-9/qr-referendumi.png"
+              alt="QR code për peticionin e referendumit"
+              width="328"
+              height="328"
+            />
+          </a>
+        </section>
+
+        <section class="times-six__demands" id="kerkesat">
+          <header>
+            <p class="times-label">Nga reagimi te organizimi</p>
+            <h3>5 kërkesat që na bashkojnë</h3>
+            <p class="times-six__demands-intro">
+              Ndërkohë që shoqëria mëson të organizohet, protesta na bashkon me 5 kërkesat e saj:
+            </p>
+          </header>
+          <ol>
+            <li>Dorëheqjen e panegociueshme të Kryeministrit dhe të qeverisë.</li>
+            <li>Krijimin e një qeverie teknike tranzitore, jopartiake, me mandat 12-mujor.</li>
+            <li>
+              Ndryshime kushtetuese, ku të gjithë shtetasit shqiptarë të jenë të barabartë para
+              ligjit, të miratuara me referendum popullor, duke përfshirë ndër të tjera:
+              <ul>
+                <li>Ndryshimin e Kodit Zgjedhor.</li>
+                <li>Ndryshimin e ligjit për financimin e partive politike dhe organizatave të ndryshme.</li>
+                <li>
+                  Kufizimin e ushtrimit të detyrës së Kryeministrit në jo më shumë se dy mandate,
+                  të plota ose të pjesshme, gjatë gjithë jetës politike të një individi.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Paralelisht, kërkojmë:
+              <ul>
+                <li>Anulimin e ndryshimeve të bëra në ligjin për “Zonat e Mbrojtura”.</li>
+                <li>Anulimin e ndryshimeve të bëra në ligjin për “Trashëgiminë kulturore”.</li>
+                <li>Shfuqizimin e paketës ligjore të njohur si “Paketa e Maleve”.</li>
+                <li>Shfuqizimin e statusit dhe të kuadrit ligjor për “Investimet Strategjike”.</li>
+              </ul>
+            </li>
+            <li>
+              Hartimin e një kontrate të re sociale mes qytetarëve dhe shtetit, pas konsultimit me
+              intelektualë, ekspertë teknikë dhe qytetarë apartiakë të propozuar nga sheshi i
+              protestës.
+            </li>
+          </ol>
+          <aside>
+            <div class="times-six__demands-brand">
+              <img
+                class="times-six__demands-logo"
+                src="/images/flamingo-wordmark-dark.svg"
+                alt="Flamingo Revolution"
+                width="426"
+                height="187"
+              />
+              <a href="https://www.flamingorevolution.eu" aria-label="Hap flamingorevolution.eu">
+                <span>flamingorevolution.eu</span>
+                <img
+                  class="times-six__demands-qr"
+                  src="/images/qr-code/png/black.png"
+                  alt="QR code për flamingorevolution.eu"
+                  width="480"
+                  height="480"
+                />
+              </a>
+            </div>
+          </aside>
+        </section>
+      </article>
+
+      <footer class="times-source times-nine__source">
+        <strong>FLAMINGO TIMES · Botimi IX · Shtator 2026</strong>
+        <span>Lexoje. Fotokopjoje. Shpërndaje.</span>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>
