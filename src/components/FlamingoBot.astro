@@ -2,9 +2,6 @@
 const defaultBotOrigin = 'https://flamingo-bot-949711463853.europe-west3.run.app';
 const configuredUrl = import.meta.env.PUBLIC_FLAMINGO_BOT_URL?.trim() || defaultBotOrigin;
 const botProxyBase = '/api/flamingo-bot';
-const isPrimarySiteHost =
-	Astro.url.hostname === 'www.flamingorevolution.eu' || Astro.url.hostname === 'flamingorevolution.eu';
-const useSameOriginBotProxy = import.meta.env.DEV || !isPrimarySiteHost;
 
 function resolveBotOrigin(value: string | undefined): string | undefined {
 	if (!value) return undefined;
@@ -29,13 +26,9 @@ function resolveBotOrigin(value: string | undefined): string | undefined {
 }
 
 const botOrigin = resolveBotOrigin(configuredUrl);
-const widgetScriptUrl = botOrigin
-	? useSameOriginBotProxy
-		? `${botProxyBase}/widget/flamingo-chat.js`
-		: new URL('/widget/flamingo-chat.js', botOrigin).href
-	: undefined;
-const clientApiBase = botOrigin ? (useSameOriginBotProxy ? botProxyBase : botOrigin) : undefined;
-const assetBase = useSameOriginBotProxy ? `${botProxyBase}/widget/media` : undefined;
+const widgetScriptUrl = botOrigin ? `${botProxyBase}/widget/flamingo-chat.js` : undefined;
+const clientApiBase = botOrigin ? botProxyBase : undefined;
+const assetBase = botOrigin ? `${botProxyBase}/widget/media` : undefined;
 ---
 
 {
