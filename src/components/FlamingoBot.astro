@@ -405,22 +405,24 @@ const assetBase = useSameOriginBotProxy ? `${botProxyBase}/widget/media` : undef
 					const dragLayouts = new WeakMap();
 					const dragPadding = 8;
 
-					const getFooterAvoidanceBottom = () => {
-						const footerBottom = document.querySelector('.footer-note__bottom');
-						if (!(footerBottom instanceof HTMLElement)) return window.innerHeight - dragPadding;
+					const getMaxTopForSurfaceHeight = (surfaceHeight) =>
+						Math.max(dragPadding, window.innerHeight - surfaceHeight - dragPadding);
 
-						const rect = footerBottom.getBoundingClientRect();
-						if (rect.top >= window.innerHeight) return window.innerHeight - dragPadding;
+					const getFooterAvoidanceTop = (left, surfaceWidth, surfaceHeight, preferredTop) => {
+						const footerLinks = document.querySelector('.footer-links');
+						if (!(footerLinks instanceof HTMLElement)) return preferredTop;
 
-						return Math.max(dragPadding, rect.top - dragPadding);
-					};
+						const rect = footerLinks.getBoundingClientRect();
+						if (rect.top >= window.innerHeight || rect.bottom <= 0) return preferredTop;
 
-					const getMaxTopForSurfaceHeight = (surfaceHeight) => {
-						const viewportBottom = window.innerHeight - dragPadding;
-						const footerBottom = getFooterAvoidanceBottom();
-						const availableBottom = Math.min(viewportBottom, footerBottom);
+						const horizontalOverlap =
+							left < rect.right + dragPadding && left + surfaceWidth > rect.left - dragPadding;
+						const verticalOverlap =
+							preferredTop + surfaceHeight > rect.top - dragPadding &&
+							preferredTop < rect.bottom + dragPadding;
+						if (!horizontalOverlap || !verticalOverlap) return preferredTop;
 
-						return Math.max(dragPadding, availableBottom - surfaceHeight);
+						return Math.max(dragPadding, rect.top - surfaceHeight - dragPadding);
 					};
 
 					const getHorizontalDockLimits = (surfaceWidth) => {
@@ -469,7 +471,8 @@ const assetBase = useSameOriginBotProxy ? `${botProxyBase}/widget/media` : undef
 						const desiredTop = Number.isFinite(anchorBottom)
 							? anchorBottom - rect.height
 							: rect.top;
-						const top = Math.min(Math.max(desiredTop, dragPadding), maxTop);
+						const baseTop = Math.min(Math.max(desiredTop, dragPadding), maxTop);
+						const top = getFooterAvoidanceTop(left, rect.width, rect.height, baseTop);
 
 						setWidgetPosition(widget, left, top);
 						widget.dataset.dockSide = dockSide;
@@ -552,6 +555,7 @@ const assetBase = useSameOriginBotProxy ? `${botProxyBase}/widget/media` : undef
 							}
 
 							if (moved) {
+								widget.dataset.userDragged = 'true';
 								clampWidgetToViewport(widget);
 								suppressClick = true;
 								window.setTimeout(() => {
@@ -634,7 +638,9 @@ const assetBase = useSameOriginBotProxy ? `${botProxyBase}/widget/media` : undef
 					const syncWidgetsToViewport = () => {
 						document.querySelectorAll('flamingo-chat').forEach((widget) => {
 							if (widget.dataset.dragging === 'true') return;
-							clampWidgetToViewport(widget, { preserveSide: true });
+							const anchorBottom =
+								widget.dataset.userDragged === 'true' ? undefined : window.innerHeight - dragPadding;
+							clampWidgetToViewport(widget, { anchorBottom, preserveSide: true });
 						});
 					};
 
