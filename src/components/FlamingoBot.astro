@@ -397,6 +397,8 @@ const assetBase = botOrigin ? `${botProxyBase}/widget/media` : undefined;
 					const dragObservers = new WeakMap();
 					const dragLayouts = new WeakMap();
 					const dragPadding = 8;
+					const desktopMinWidth = 761;
+					const isDesktopViewport = () => window.innerWidth >= desktopMinWidth;
 
 					const getMaxTopForSurfaceHeight = (surfaceHeight) =>
 						Math.max(dragPadding, window.innerHeight - surfaceHeight - dragPadding);
@@ -441,10 +443,26 @@ const assetBase = botOrigin ? `${botProxyBase}/widget/media` : undefined;
 						widget.dataset.userPositioned = 'true';
 					};
 
+					const resetWidgetPosition = (widget) => {
+						widget.style.removeProperty('left');
+						widget.style.removeProperty('top');
+						widget.style.removeProperty('right');
+						widget.style.removeProperty('bottom');
+						delete widget.dataset.userPositioned;
+						delete widget.dataset.userDragged;
+						delete widget.dataset.dockSide;
+						dragLayouts.delete(widget);
+					};
+
 					const clampWidgetToViewport = (
 						widget,
 						{ anchorBottom, preserveSide = false } = {}
 					) => {
+						if (!isDesktopViewport()) {
+							resetWidgetPosition(widget);
+							return;
+						}
+
 						const root = widget.shadowRoot;
 						const surface = root?.querySelector('.dialog, .launcher');
 						if (!(surface instanceof HTMLElement)) return;
@@ -494,7 +512,7 @@ const assetBase = botOrigin ? `${botProxyBase}/widget/media` : undefined;
 						);
 
 						handle.addEventListener('pointerdown', (event) => {
-							if (!event.isPrimary || event.button !== 0) return;
+							if (!isDesktopViewport() || !event.isPrimary || event.button !== 0) return;
 							if (
 								handle !== surface &&
 								event.target instanceof Element &&
@@ -586,9 +604,13 @@ const assetBase = botOrigin ? `${botProxyBase}/widget/media` : undefined;
 									? previousLayout.bottom
 									: undefined;
 
-							requestAnimationFrame(() =>
-								clampWidgetToViewport(widget, { anchorBottom, preserveSide: true })
-							);
+							requestAnimationFrame(() => {
+								if (!isDesktopViewport()) {
+									resetWidgetPosition(widget);
+									return;
+								}
+								clampWidgetToViewport(widget, { anchorBottom, preserveSide: true });
+							});
 						};
 
 						wireVisibleSurface();
@@ -631,6 +653,10 @@ const assetBase = botOrigin ? `${botProxyBase}/widget/media` : undefined;
 					const syncWidgetsToViewport = () => {
 						document.querySelectorAll('flamingo-chat').forEach((widget) => {
 							if (widget.dataset.dragging === 'true') return;
+							if (!isDesktopViewport()) {
+								resetWidgetPosition(widget);
+								return;
+							}
 							const anchorBottom =
 								widget.dataset.userDragged === 'true' ? undefined : window.innerHeight - dragPadding;
 							clampWidgetToViewport(widget, { anchorBottom, preserveSide: true });
