@@ -402,6 +402,24 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 					const dragLayouts = new WeakMap();
 					const dragPadding = 8;
 
+					const getFooterAvoidanceBottom = () => {
+						const footerBottom = document.querySelector('.footer-note__bottom');
+						if (!(footerBottom instanceof HTMLElement)) return window.innerHeight - dragPadding;
+
+						const rect = footerBottom.getBoundingClientRect();
+						if (rect.top >= window.innerHeight) return window.innerHeight - dragPadding;
+
+						return Math.max(dragPadding, rect.top - dragPadding);
+					};
+
+					const getMaxTopForSurfaceHeight = (surfaceHeight) => {
+						const viewportBottom = window.innerHeight - dragPadding;
+						const footerBottom = getFooterAvoidanceBottom();
+						const availableBottom = Math.min(viewportBottom, footerBottom);
+
+						return Math.max(dragPadding, availableBottom - surfaceHeight);
+					};
+
 					const getHorizontalDockLimits = (surfaceWidth) => {
 						const pageShell = document.querySelector('.page-shell');
 						const shellRect =
@@ -435,7 +453,7 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 
 						const rect = surface.getBoundingClientRect();
 						const dockLimits = getHorizontalDockLimits(rect.width);
-						const maxTop = Math.max(dragPadding, window.innerHeight - rect.height - dragPadding);
+						const maxTop = getMaxTopForSurfaceHeight(rect.height);
 						const dockCenter = (dockLimits.left + dockLimits.right + rect.width) / 2;
 						const rememberedSide = preserveSide ? widget.dataset.dockSide : undefined;
 						const dockSide =
@@ -510,10 +528,7 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 							dragState.moved = true;
 							widget.dataset.dragging = 'true';
 							const dockLimits = getHorizontalDockLimits(dragState.width);
-							const maxTop = Math.max(
-								dragPadding,
-								window.innerHeight - dragState.height - dragPadding
-							);
+							const maxTop = getMaxTopForSurfaceHeight(dragState.height);
 							const left = Math.min(
 								Math.max(dragState.left + deltaX, dockLimits.left),
 								dockLimits.right
@@ -613,11 +628,24 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						attributes: true,
 						attributeFilter: ['data-theme']
 					});
-					window.addEventListener('resize', () => {
-						document
-							.querySelectorAll('flamingo-chat')
-							.forEach((widget) => clampWidgetToViewport(widget, { preserveSide: true }));
-					});
+					const syncWidgetsToViewport = () => {
+						document.querySelectorAll('flamingo-chat').forEach((widget) => {
+							if (widget.dataset.dragging === 'true') return;
+							clampWidgetToViewport(widget, { preserveSide: true });
+						});
+					};
+
+					let viewportSyncFrame = null;
+					const scheduleViewportSync = () => {
+						if (viewportSyncFrame !== null) return;
+						viewportSyncFrame = requestAnimationFrame(() => {
+							viewportSyncFrame = null;
+							syncWidgetsToViewport();
+						});
+					};
+
+					window.addEventListener('resize', scheduleViewportSync);
+					window.addEventListener('scroll', scheduleViewportSync, { passive: true });
 				})();
 			</script>
 		</>
