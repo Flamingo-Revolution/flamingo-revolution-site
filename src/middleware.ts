@@ -6,14 +6,19 @@ import { TokenBucket } from '@lib/services/rateLimit';
 const bucket = new TokenBucket<string>(100, 3);
 const defaultBotOrigin = 'https://flamingo-bot-949711463853.europe-west3.run.app';
 const productionSiteOrigin = 'https://www.flamingorevolution.eu';
+const primarySiteHosts = new Set(['www.flamingorevolution.eu', 'flamingorevolution.eu']);
 
 function isAllowedBotProxyPath(path: string): boolean {
 	return path === 'v1/chat' || path === 'widget/flamingo-chat.js' || path.startsWith('widget/media/');
 }
 
+function shouldProxyFlamingoBot(url: URL): boolean {
+	return import.meta.env.DEV || !primarySiteHosts.has(url.hostname);
+}
+
 const flamingoBotDevelopmentProxy = defineMiddleware(async (context, next) => {
 	const proxyPrefix = '/api/flamingo-bot/';
-	if (!import.meta.env.DEV || !context.url.pathname.startsWith(proxyPrefix)) {
+	if (!context.url.pathname.startsWith(proxyPrefix) || !shouldProxyFlamingoBot(context.url)) {
 		return next();
 	}
 
