@@ -138,7 +138,8 @@ export const aboutPageCopy: Record<Locale, AboutPageCopy> = {
         "mitso",
         "johnyvista",
         "elthirtie",
-        "harlow"
+        "harlow",
+        "troj21"
       ],
       moreLabel: "+ 320 kontribues"
     },
