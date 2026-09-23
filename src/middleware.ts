@@ -13,7 +13,7 @@ function isAllowedBotProxyPath(path: string): boolean {
 
 const flamingoBotDevelopmentProxy = defineMiddleware(async (context, next) => {
 	const proxyPrefix = '/api/flamingo-bot/';
-	if (!import.meta.env.DEV || !context.url.pathname.startsWith(proxyPrefix)) {
+	if (!context.url.pathname.startsWith(proxyPrefix)) {
 		return next();
 	}
 

@@ -1,7 +1,7 @@
 ---
 const defaultBotOrigin = 'https://flamingo-bot-949711463853.europe-west3.run.app';
 const configuredUrl = import.meta.env.PUBLIC_FLAMINGO_BOT_URL?.trim() || defaultBotOrigin;
-const developmentProxyBase = '/api/flamingo-bot';
+const botProxyBase = '/api/flamingo-bot';
 
 function resolveBotOrigin(value: string | undefined): string | undefined {
 	if (!value) return undefined;
@@ -26,13 +26,9 @@ function resolveBotOrigin(value: string | undefined): string | undefined {
 }
 
 const botOrigin = resolveBotOrigin(configuredUrl);
-const widgetScriptUrl = botOrigin
-	? import.meta.env.DEV
-		? `${developmentProxyBase}/widget/flamingo-chat.js`
-		: new URL('/widget/flamingo-chat.js', botOrigin).href
-	: undefined;
-const clientApiBase = import.meta.env.DEV ? developmentProxyBase : botOrigin;
-const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` : undefined;
+const widgetScriptUrl = botOrigin ? `${botProxyBase}/widget/flamingo-chat.js` : undefined;
+const clientApiBase = botOrigin ? botProxyBase : undefined;
+const assetBase = botOrigin ? `${botProxyBase}/widget/media` : undefined;
 ---
 
 {
@@ -401,6 +397,28 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 					const dragObservers = new WeakMap();
 					const dragLayouts = new WeakMap();
 					const dragPadding = 8;
+					const desktopMinWidth = 761;
+					const isDesktopViewport = () => window.innerWidth >= desktopMinWidth;
+
+					const getMaxTopForSurfaceHeight = (surfaceHeight) =>
+						Math.max(dragPadding, window.innerHeight - surfaceHeight - dragPadding);
+
+					const getFooterAvoidanceTop = (left, surfaceWidth, surfaceHeight, preferredTop) => {
+						const footerLinks = document.querySelector('.footer-links');
+						if (!(footerLinks instanceof HTMLElement)) return preferredTop;
+
+						const rect = footerLinks.getBoundingClientRect();
+						if (rect.top >= window.innerHeight || rect.bottom <= 0) return preferredTop;
+
+						const horizontalOverlap =
+							left < rect.right + dragPadding && left + surfaceWidth > rect.left - dragPadding;
+						const verticalOverlap =
+							preferredTop + surfaceHeight > rect.top - dragPadding &&
+							preferredTop < rect.bottom + dragPadding;
+						if (!horizontalOverlap || !verticalOverlap) return preferredTop;
+
+						return Math.max(dragPadding, rect.top - surfaceHeight - dragPadding);
+					};
 
 					const getHorizontalDockLimits = (surfaceWidth) => {
 						const pageShell = document.querySelector('.page-shell');
@@ -425,17 +443,33 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						widget.dataset.userPositioned = 'true';
 					};
 
+					const resetWidgetPosition = (widget) => {
+						widget.style.removeProperty('left');
+						widget.style.removeProperty('top');
+						widget.style.removeProperty('right');
+						widget.style.removeProperty('bottom');
+						delete widget.dataset.userPositioned;
+						delete widget.dataset.userDragged;
+						delete widget.dataset.dockSide;
+						dragLayouts.delete(widget);
+					};
+
 					const clampWidgetToViewport = (
 						widget,
 						{ anchorBottom, preserveSide = false } = {}
 					) => {
+						if (!isDesktopViewport()) {
+							resetWidgetPosition(widget);
+							return;
+						}
+
 						const root = widget.shadowRoot;
 						const surface = root?.querySelector('.dialog, .launcher');
 						if (!(surface instanceof HTMLElement)) return;
 
 						const rect = surface.getBoundingClientRect();
 						const dockLimits = getHorizontalDockLimits(rect.width);
-						const maxTop = Math.max(dragPadding, window.innerHeight - rect.height - dragPadding);
+						const maxTop = getMaxTopForSurfaceHeight(rect.height);
 						const dockCenter = (dockLimits.left + dockLimits.right + rect.width) / 2;
 						const rememberedSide = preserveSide ? widget.dataset.dockSide : undefined;
 						const dockSide =
@@ -448,7 +482,8 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						const desiredTop = Number.isFinite(anchorBottom)
 							? anchorBottom - rect.height
 							: rect.top;
-						const top = Math.min(Math.max(desiredTop, dragPadding), maxTop);
+						const baseTop = Math.min(Math.max(desiredTop, dragPadding), maxTop);
+						const top = getFooterAvoidanceTop(left, rect.width, rect.height, baseTop);
 
 						setWidgetPosition(widget, left, top);
 						widget.dataset.dockSide = dockSide;
@@ -477,7 +512,7 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						);
 
 						handle.addEventListener('pointerdown', (event) => {
-							if (!event.isPrimary || event.button !== 0) return;
+							if (!isDesktopViewport() || !event.isPrimary || event.button !== 0) return;
 							if (
 								handle !== surface &&
 								event.target instanceof Element &&
@@ -510,10 +545,7 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 							dragState.moved = true;
 							widget.dataset.dragging = 'true';
 							const dockLimits = getHorizontalDockLimits(dragState.width);
-							const maxTop = Math.max(
-								dragPadding,
-								window.innerHeight - dragState.height - dragPadding
-							);
+							const maxTop = getMaxTopForSurfaceHeight(dragState.height);
 							const left = Math.min(
 								Math.max(dragState.left + deltaX, dockLimits.left),
 								dockLimits.right
@@ -534,6 +566,7 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 							}
 
 							if (moved) {
+								widget.dataset.userDragged = 'true';
 								clampWidgetToViewport(widget);
 								suppressClick = true;
 								window.setTimeout(() => {
@@ -571,9 +604,13 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 									? previousLayout.bottom
 									: undefined;
 
-							requestAnimationFrame(() =>
-								clampWidgetToViewport(widget, { anchorBottom, preserveSide: true })
-							);
+							requestAnimationFrame(() => {
+								if (!isDesktopViewport()) {
+									resetWidgetPosition(widget);
+									return;
+								}
+								clampWidgetToViewport(widget, { anchorBottom, preserveSide: true });
+							});
 						};
 
 						wireVisibleSurface();
@@ -613,11 +650,30 @@ const assetBase = import.meta.env.DEV ? `${developmentProxyBase}/widget/media` :
 						attributes: true,
 						attributeFilter: ['data-theme']
 					});
-					window.addEventListener('resize', () => {
-						document
-							.querySelectorAll('flamingo-chat')
-							.forEach((widget) => clampWidgetToViewport(widget, { preserveSide: true }));
-					});
+					const syncWidgetsToViewport = () => {
+						document.querySelectorAll('flamingo-chat').forEach((widget) => {
+							if (widget.dataset.dragging === 'true') return;
+							if (!isDesktopViewport()) {
+								resetWidgetPosition(widget);
+								return;
+							}
+							const anchorBottom =
+								widget.dataset.userDragged === 'true' ? undefined : window.innerHeight - dragPadding;
+							clampWidgetToViewport(widget, { anchorBottom, preserveSide: true });
+						});
+					};
+
+					let viewportSyncFrame = null;
+					const scheduleViewportSync = () => {
+						if (viewportSyncFrame !== null) return;
+						viewportSyncFrame = requestAnimationFrame(() => {
+							viewportSyncFrame = null;
+							syncWidgetsToViewport();
+						});
+					};
+
+					window.addEventListener('resize', scheduleViewportSync);
+					window.addEventListener('scroll', scheduleViewportSync, { passive: true });
 				})();
 			</script>
 		</>
