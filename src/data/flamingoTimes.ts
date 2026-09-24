@@ -14,6 +14,20 @@ export type FlamingoTimesIssue = {
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
   {
+    number: 10,
+    date: "Shtator 2026",
+    datetime: "2026-09",
+    title: "Arkitektura nuk është imazh",
+    category: "Qyteti & arkitektura",
+    excerpt:
+      "Një fasadë mund ta kuptosh nga fotografia. Për të kuptuar një qytet, duhet të zbresësh në rrugë.",
+    topics: ["arkitektura", "Tirana", "urbanistika", "hapësira publike", "pjesëmarrja qytetare"],
+    href: "/flamingo-times/artikujt/botimi-10/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-10.pdf",
+    imageSrc: "/images/flamingo-times/botimi-10/kullat.jpeg",
+    imageAlt: "Kullat e Tiranës të fotografuara nga niveli i rrugës"
+  },
+  {
     number: 9,
     date: "Shtator 2026",
     datetime: "2026-09",
@@ -140,7 +154,7 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
 ];
 
 export function toRomanIssue(number: number): string {
-  return ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"][number] ?? String(number);
+  return ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][number] ?? String(number);
 }
 
 export function issuePublishedDate(issue: FlamingoTimesIssue): Date {
