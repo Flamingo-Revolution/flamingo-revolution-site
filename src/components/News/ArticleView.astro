@@ -1,0 +1,322 @@
+---
+/**
+ * Rendered article, shared by the public article page and the reporter's
+ * draft preview so the two can never drift apart.
+ */
+interface Props {
+	title: string;
+	excerpt: string;
+	tags: string[];
+	coverImageUrl: string | null;
+	publishedIso: string | null;
+	publishedLabel: string;
+	updatedLabel: string;
+	authorName: string;
+	readingLabel: string;
+	bodyHtml: string;
+	backHref: string;
+	backLabel: string;
+}
+
+const {
+	title,
+	excerpt,
+	tags,
+	coverImageUrl,
+	publishedIso,
+	publishedLabel,
+	updatedLabel,
+	authorName,
+	readingLabel,
+	bodyHtml,
+	backHref,
+	backLabel
+} = Astro.props;
+---
+
+<main class="news-article" id="main" tabindex="-1">
+	<nav class="news-article__back" aria-label="Navigim">
+		<a href={backHref}>{backLabel}</a>
+	</nav>
+
+	<header class="news-article__header">
+		<p class="news-article__meta">
+			{publishedLabel && <time datetime={publishedIso ?? undefined}>{publishedLabel}</time>}
+			{authorName && <span>· {authorName}</span>}
+			<span>· {readingLabel}</span>
+		</p>
+		<h1>{title}</h1>
+		{excerpt && <p class="news-article__lead">{excerpt}</p>}
+		{
+			tags.length > 0 && (
+				<p class="news-article__tags">
+					{tags.map((tag) => (
+						<span class="news-article__tag">{tag}</span>
+					))}
+				</p>
+			)
+		}
+	</header>
+
+	{coverImageUrl && <img class="news-article__cover" src={coverImageUrl} alt={title} decoding="async" />}
+
+	<div class="news-article__body" set:html={bodyHtml} />
+
+	{updatedLabel && <p class="news-article__updated">Përditësuar më {updatedLabel}</p>}
+</main>
+
+<div
+	class="reading-progress"
+	data-reading-progress
+	role="progressbar"
+	aria-label="Ecuria e leximit"
+	aria-valuemin="0"
+	aria-valuemax="100"
+	aria-valuenow="0"
+>
+	<div class="reading-progress__bar" data-reading-progress-bar></div>
+</div>
+
+<script>
+	const container = document.querySelector("[data-reading-progress]");
+	const bar = document.querySelector("[data-reading-progress-bar]");
+	const body = document.querySelector(".news-article__body");
+
+	if (container instanceof HTMLElement && bar instanceof HTMLElement && body instanceof HTMLElement) {
+		let ticking = false;
+
+		const update = () => {
+			ticking = false;
+
+			// Progress runs from the top of the article body to the point where
+			// its end reaches the bottom of the viewport.
+			const start = body.offsetTop;
+			const distance = body.offsetHeight - window.innerHeight;
+			const scrolled = window.scrollY - start;
+			const ratio = distance > 0 ? scrolled / distance : scrolled > 0 ? 1 : 0;
+			const percent = Math.min(100, Math.max(0, Math.round(ratio * 100)));
+
+			bar.style.width = `${percent}%`;
+			container.setAttribute("aria-valuenow", String(percent));
+			container.classList.toggle("is-visible", percent > 0 && percent < 100);
+		};
+
+		const onScroll = () => {
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(update);
+		};
+
+		window.addEventListener("scroll", onScroll, { passive: true });
+		window.addEventListener("resize", onScroll, { passive: true });
+		update();
+	}
+</script>
+
+<style>
+	.news-article {
+		width: 100%;
+		max-width: 52rem;
+		margin: 0 auto;
+		padding: 2rem clamp(1rem, 5vw, 3.4rem) 4rem;
+	}
+
+	.news-article__back {
+		margin-bottom: 1.6rem;
+	}
+
+	.news-article__back a {
+		font-weight: 800;
+		color: var(--text);
+		text-decoration: none;
+	}
+
+	.news-article__back a:hover,
+	.news-article__back a:focus-visible {
+		color: var(--accent-strong);
+	}
+
+	.news-article__header {
+		padding-bottom: 1.4rem;
+		margin-bottom: 1.8rem;
+		border-bottom: 3px solid var(--ink);
+	}
+
+	.news-article__meta {
+		margin: 0 0 0.5rem;
+		font-size: 0.8rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent-strong);
+	}
+
+	/* The global h1 is cream-on-ink for masthead blocks; an article title is
+	   plain text on paper, so it needs the readable body colour. */
+	h1 {
+		max-width: none;
+		margin: 0 0 0.8rem;
+		color: var(--text);
+		font-size: clamp(2rem, 5.5vw, 3.1rem);
+		line-height: 1.1;
+		font-weight: 800;
+	}
+
+	.news-article__lead {
+		margin: 0;
+		font-size: 1.15rem;
+		line-height: 1.6;
+		color: var(--muted);
+	}
+
+	.news-article__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+		margin: 1rem 0 0;
+	}
+
+	.news-article__tag {
+		padding: 0.1rem 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 800;
+		text-transform: lowercase;
+		background: var(--accent-soft);
+		border: 2px solid var(--ink);
+	}
+
+	.news-article__cover {
+		width: 100%;
+		margin-bottom: 2rem;
+		border: 2px solid var(--ink);
+		box-shadow: 8px 8px 0 var(--ink);
+	}
+
+	.news-article__updated {
+		margin-top: 2.5rem;
+		font-size: 0.85rem;
+		font-style: italic;
+		color: var(--muted);
+	}
+
+	/* Reading progress, pinned to the bottom of the viewport. */
+	.reading-progress {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 30;
+		width: 100%;
+		height: 0.5rem;
+		background: var(--paper-cool);
+		border-top: 2px solid var(--ink);
+		opacity: 0;
+		transition: opacity 180ms ease;
+		pointer-events: none;
+	}
+
+	.reading-progress.is-visible {
+		opacity: 1;
+	}
+
+	.reading-progress__bar {
+		width: 0;
+		height: 100%;
+		background: var(--accent);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.reading-progress {
+			transition: none;
+		}
+	}
+
+	@media print {
+		.reading-progress {
+			display: none;
+		}
+	}
+
+	/* Rendered article body (allowlisted HTML from the stored editor JSON). */
+	.news-article__body {
+		font-size: 1.06rem;
+		line-height: 1.75;
+	}
+
+	.news-article__body :global(h2) {
+		margin: 2.2rem 0 0.8rem;
+		font-size: 1.75rem;
+		line-height: 1.2;
+		font-weight: 800;
+	}
+
+	.news-article__body :global(h3) {
+		margin: 1.8rem 0 0.6rem;
+		font-size: 1.35rem;
+		line-height: 1.25;
+		font-weight: 800;
+	}
+
+	.news-article__body :global(p) {
+		margin: 0 0 1.15rem;
+	}
+
+	.news-article__body :global(ul),
+	.news-article__body :global(ol) {
+		margin: 0 0 1.15rem;
+		padding-left: 1.4rem;
+	}
+
+	.news-article__body :global(li) {
+		margin-bottom: 0.4rem;
+	}
+
+	.news-article__body :global(blockquote) {
+		margin: 1.6rem 0;
+		padding: 0.6rem 1.2rem;
+		border-left: 4px solid var(--accent);
+		background: var(--paper);
+		font-family: var(--font-display);
+		font-style: italic;
+		font-size: 1.2em;
+	}
+
+	.news-article__body :global(img) {
+		max-width: 100%;
+		height: auto;
+		margin: 1.6rem 0;
+		border: 2px solid var(--ink);
+		box-shadow: 6px 6px 0 var(--ink);
+	}
+
+	.news-article__body :global(a) {
+		color: var(--accent-strong);
+		text-decoration: underline;
+	}
+
+	.news-article__body :global(hr) {
+		margin: 2.2rem 0;
+		border: none;
+		border-top: 3px solid var(--ink);
+	}
+
+	.news-article__body :global(code) {
+		padding: 0.1rem 0.3rem;
+		font-size: 0.92em;
+		background: var(--paper-cool);
+		border: 1px solid var(--line);
+	}
+
+	.news-article__body :global(pre) {
+		margin: 1.6rem 0;
+		padding: 1rem;
+		overflow-x: auto;
+		background: var(--paper-cool);
+		border: 2px solid var(--ink);
+	}
+
+	.news-article__body :global(pre code) {
+		padding: 0;
+		background: none;
+		border: none;
+	}
+</style>

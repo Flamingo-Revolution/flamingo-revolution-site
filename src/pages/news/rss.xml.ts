@@ -3,7 +3,8 @@ export const prerender = false;
 import type { APIContext } from 'astro';
 import { createPrisma } from '@lib/db';
 import { getDatabaseUrl } from '@lib/env/server';
-import { summarize } from '@lib/articles/render';
+import { plainText, summarize } from '@lib/articles/render';
+import { readingTimeLabel } from '@lib/articles/format';
 
 /** Most recent articles to include in the feed. */
 const FEED_LIMIT = 50;
@@ -64,7 +65,8 @@ export const GET = async (context: APIContext) => {
 		items = articles
 			.map((article) => {
 				const link = `${origin}/news/${article.slug}/`;
-				const description = article.excerpt || summarize(article.content, 300);
+				const summary = article.excerpt || summarize(article.content, 300);
+				const description = `${summary} (${readingTimeLabel(plainText(article.content))})`;
 				const pubDate = (article.publishedAt ?? article.updatedAt).toUTCString();
 				const categories = article.tags.map((tag) => `\n\t\t\t<category>${xmlText(tag)}</category>`).join('');
 

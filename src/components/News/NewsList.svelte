@@ -69,6 +69,7 @@
 							{#if article.author}
 								<span>· {article.author}</span>
 							{/if}
+							<span>· {article.readingLabel}</span>
 						</p>
 						<h2 class="news-card__title">{article.title}</h2>
 						{#if article.excerpt}

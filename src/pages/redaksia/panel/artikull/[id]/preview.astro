@@ -1,0 +1,138 @@
+---
+import type { Prisma } from "@prisma/client";
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import SiteFrame from "../../../../../components/SiteFrame.astro";
+import ArticleView from "../../../../../components/News/ArticleView.astro";
+import { siteCopy } from "../../../../../data/site";
+import { createPrisma } from "@lib/db";
+import { getDatabaseUrl } from "@lib/env/server";
+import { getSessionReporter } from "@lib/auth";
+import { formatArticleDate, readingTimeLabel } from "@lib/articles/format";
+import { plainText, renderArticleHtml } from "@lib/articles/render";
+import { normalizeMediaUrl } from "@lib/media";
+
+export const prerender = false;
+
+const id = Astro.params.id?.trim();
+
+if (!id) {
+	return Astro.redirect("/redaksia/panel/");
+}
+
+const databaseUrl = getDatabaseUrl();
+
+if (!databaseUrl) {
+	return new Response("Database is not configured", { status: 500 });
+}
+
+const prisma = createPrisma(databaseUrl);
+
+type ArticleWithReporter = Prisma.ArticleGetPayload<{
+	include: { reporter: { select: { name: true } } };
+}>;
+
+let article: ArticleWithReporter | null = null;
+
+try {
+	// Drafts are private: only the reporter who owns the article may preview it.
+	const reporter = await getSessionReporter(prisma, Astro.cookies);
+
+	if (!reporter) {
+		return Astro.redirect("/redaksia/panel/");
+	}
+
+	const found = await prisma.article.findUnique({
+		where: { id },
+		include: { reporter: { select: { name: true } } }
+	});
+
+	if (found && found.reporterId === reporter.id) {
+		article = found;
+	}
+} catch (error) {
+	console.error("Article preview error:", error);
+	return new Response("Preview could not be loaded", { status: 502 });
+} finally {
+	await prisma.$disconnect();
+}
+
+if (!article) {
+	return new Response(null, { status: 404, statusText: "Not found" });
+}
+
+const body = renderArticleHtml(article.content);
+const coverImageUrl = article.coverImageUrl ? normalizeMediaUrl(article.coverImageUrl) : null;
+const publishedLabel = formatArticleDate(article.publishedAt ?? article.updatedAt);
+const readingLabel = readingTimeLabel(plainText(article.content));
+const isPublished = article.status === "PUBLISHED";
+---
+
+<BaseLayout
+	title={`Parapamje: ${article.title || "Pa titull"}`}
+	description="Parapamje private e artikullit."
+	locale="sq"
+	noindex
+>
+	<SiteFrame locale="sq" copy={siteCopy.sq} currentPage="news" localePath="redaksia">
+		<p class="preview-banner">
+			<strong>Parapamje</strong>
+			<span>
+				{
+					isPublished
+						? "Ky artikull është i publikuar. Kështu duket për lexuesit."
+						: "Ky është një draft. Vetëm ju mund ta shihni këtë faqe."
+				}
+			</span>
+			<a class="button" href={`/redaksia/panel/artikull/${article.id}/`}>← Kthehu te redaktori</a>
+		</p>
+
+		<ArticleView
+			title={article.title || "Pa titull"}
+			excerpt={article.excerpt}
+			tags={article.tags}
+			coverImageUrl={coverImageUrl}
+			publishedIso={(article.publishedAt ?? article.updatedAt).toISOString()}
+			publishedLabel={publishedLabel}
+			updatedLabel=""
+			authorName={article.reporter.name}
+			readingLabel={readingLabel}
+			bodyHtml={body}
+			backHref={`/redaksia/panel/artikull/${article.id}/`}
+			backLabel="← Kthehu te redaktori"
+		/>
+	</SiteFrame>
+</BaseLayout>
+
+<style>
+	.preview-banner {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.8rem;
+		max-width: 52rem;
+		margin: 1.5rem auto 0;
+		padding: 0.8rem 1rem;
+		background: var(--accent-soft);
+		border: 2px solid var(--ink);
+		box-shadow: 4px 4px 0 var(--ink);
+	}
+
+	.preview-banner strong {
+		font-size: 0.78rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--accent-strong);
+	}
+
+	.preview-banner span {
+		flex: 1;
+		min-width: 12rem;
+		font-size: 0.9rem;
+		color: var(--text);
+	}
+
+	.preview-banner a {
+		text-decoration: none;
+	}
+</style>

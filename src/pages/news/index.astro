@@ -6,8 +6,8 @@ import type { NewsCard } from "../../components/News/types";
 import { siteCopy } from "../../data/site";
 import { createPrisma } from "@lib/db";
 import { getDatabaseUrl } from "@lib/env/server";
-import { formatArticleDate } from "@lib/articles/format";
-import { summarize } from "@lib/articles/render";
+import { formatArticleDate, readingTimeLabel } from "@lib/articles/format";
+import { plainText, summarize } from "@lib/articles/render";
 import { normalizeMediaUrl } from "@lib/media";
 
 export const prerender = false;
@@ -40,6 +40,7 @@ if (!databaseUrl) {
 			coverImageUrl: article.coverImageUrl ? normalizeMediaUrl(article.coverImageUrl) : null,
 			publishedAt: article.publishedAt?.toISOString() ?? null,
 			publishedLabel: formatArticleDate(article.publishedAt),
+			readingLabel: readingTimeLabel(plainText(article.content)),
 			author: article.reporter.name
 		}));
 	} catch (error) {
