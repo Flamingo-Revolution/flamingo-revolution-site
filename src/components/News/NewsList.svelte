@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ScrollContainer from '../ScrollContainer/ScrollContainer.svelte';
 	import type { NewsCard } from './types';
 
 	type Props = {
@@ -39,26 +40,28 @@
 </script>
 
 {#if allTags.length > 0}
-	<div class="news-filters" role="group" aria-label="Filtro sipas etiketave">
-		<button
-			type="button"
-			class="news-filters__chip"
-			class:is-active={activeTag === null}
-			onclick={() => (activeTag = null)}
-		>
-			Të gjitha
-		</button>
-		{#each allTags as tag (tag)}
+	<ScrollContainer class="news-filters" viewportClass="news-filters__track" fadeColor="var(--paper)" fadeSize="1.5rem">
+		<div role="group" aria-label="Filtro sipas etiketave" class="news-filters__group">
 			<button
 				type="button"
 				class="news-filters__chip"
-				class:is-active={activeTag === tag}
-				onclick={() => toggleTag(tag)}
+				class:is-active={activeTag === null}
+				onclick={() => (activeTag = null)}
 			>
-				{tagLabel(tag)}
+				Të gjitha
 			</button>
-		{/each}
-	</div>
+			{#each allTags as tag (tag)}
+				<button
+					type="button"
+					class="news-filters__chip"
+					class:is-active={activeTag === tag}
+					onclick={() => toggleTag(tag)}
+				>
+					{tagLabel(tag)}
+				</button>
+			{/each}
+		</div>
+	</ScrollContainer>
 {/if}
 
 <p class="news-count" aria-live="polite">
@@ -106,14 +109,26 @@
 {/if}
 
 <style>
-	.news-filters {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
+	/* One non-wrapping row: on phones it scrolls sideways with edge fades
+	   instead of stacking into several lines above the first headline. */
+	:global(.news-filters) {
 		margin-bottom: 1.2rem;
 	}
 
+	:global(.news-filters__track) {
+		/* Room for the chips' offset shadows. */
+		padding-bottom: 0.35rem;
+	}
+
+	.news-filters__group {
+		display: flex;
+		gap: 0.5rem;
+		width: max-content;
+	}
+
 	.news-filters__chip {
+		flex: none;
+		white-space: nowrap;
 		padding: 0.35rem 0.8rem;
 		font: inherit;
 		font-size: 0.85rem;
@@ -249,5 +264,25 @@
 	.news-card__tag:hover,
 	.news-card__tag:focus-visible {
 		background: var(--accent);
+	}
+
+	/* Phones: shorter covers so more headlines fit per scroll. */
+	@media (max-width: 640px) {
+		.news-grid {
+			grid-template-columns: 1fr;
+			gap: 1.2rem;
+		}
+
+		.news-card__cover {
+			aspect-ratio: 2.4 / 1;
+		}
+
+		.news-card__body {
+			padding: 0.9rem 1rem 0.8rem;
+		}
+
+		.news-card__title {
+			font-size: 1.2rem;
+		}
 	}
 </style>
