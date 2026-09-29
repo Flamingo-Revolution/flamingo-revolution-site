@@ -520,7 +520,7 @@
 					<a class="button button--ghost" href={`/news/${article.slug}/`} target="_blank" rel="noopener">Shiko</a>
 				{/if}
 				<button class="button" onclick={() => void openPreview()} disabled={previewing || saving || !article}>
-					{previewing ? 'Duke hapur…' : 'Parapamje'}
+					{previewing ? 'Duke hapur…' : 'Preview'}
 				</button>
 				<button class="button" onclick={() => void save()} disabled={saving || !article}>Ruaj</button>
 				<button class="button button--primary" onclick={togglePublish} disabled={publishing || !article}>

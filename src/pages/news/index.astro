@@ -6,7 +6,7 @@ import type { NewsCard } from "../../components/News/types";
 import { siteCopy } from "../../data/site";
 import { createPrisma } from "@lib/db";
 import { getDatabaseUrl } from "@lib/env/server";
-import { formatArticleDate, readingTimeLabel } from "@lib/articles/format";
+import { formatArticleDate, readingMinutes } from "@lib/articles/format";
 import { plainText, summarize } from "@lib/articles/render";
 import { normalizeMediaUrl } from "@lib/media";
 
@@ -40,7 +40,8 @@ if (!databaseUrl) {
 			coverImageUrl: article.coverImageUrl ? normalizeMediaUrl(article.coverImageUrl) : null,
 			publishedAt: article.publishedAt?.toISOString() ?? null,
 			publishedLabel: formatArticleDate(article.publishedAt),
-			readingLabel: readingTimeLabel(plainText(article.content)),
+			// Cards are tight on space, so the unit alone reads better than "min lexim".
+			readingLabel: `${readingMinutes(plainText(article.content))} min`,
 			author: article.reporter.name
 		}));
 	} catch (error) {

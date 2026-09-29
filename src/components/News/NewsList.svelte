@@ -9,9 +9,25 @@
 
 	let activeTag = $state<string | null>(null);
 
-	const allTags = $derived(
-		Array.from(new Set(articles.flatMap((article) => article.tags))).sort((a, b) => a.localeCompare(b, 'sq'))
-	);
+	const tagCounts = $derived.by(() => {
+		const counts = new Map<string, number>();
+
+		for (const article of articles) {
+			for (const tag of article.tags) {
+				counts.set(tag, (counts.get(tag) ?? 0) + 1);
+			}
+		}
+
+		return counts;
+	});
+
+	const allTags = $derived(Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b, 'sq')));
+
+	/** Show a count only when a tag covers more than one article. */
+	function tagLabel(tag: string): string {
+		const count = tagCounts.get(tag) ?? 0;
+		return count > 1 ? `${tag} (${count})` : tag;
+	}
 
 	const visible = $derived(
 		activeTag === null ? articles : articles.filter((article) => article.tags.includes(activeTag))
@@ -39,7 +55,7 @@
 				class:is-active={activeTag === tag}
 				onclick={() => toggleTag(tag)}
 			>
-				{tag}
+				{tagLabel(tag)}
 			</button>
 		{/each}
 	</div>
