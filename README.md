@@ -59,6 +59,7 @@ The public site is currently Albanian-first. English copy and a small set of Eng
 | `/diaspora-zbarkon/` | Diaspora Zbarkon project placeholder |
 | `/news/` | Published Flamingo News articles, filterable by tag |
 | `/news/<slug>/` | A single published article |
+| `/news/rss.xml` | RSS 2.0 feed of the 50 most recent published articles |
 | `/redaksia/panel/` | Reporter workspace: login, article dashboard, and editor (noindex, access-key gated) |
 | `/reporteret-e-diaspores/` | Diaspora reporters project placeholder |
 

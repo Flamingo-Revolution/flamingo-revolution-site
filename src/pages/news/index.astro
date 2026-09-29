@@ -56,6 +56,7 @@ if (!databaseUrl) {
 	description={description}
 	locale="sq"
 	pageType="CollectionPage"
+	rssPath="/news/rss.xml"
 	breadcrumbs={[
 		{ name: "Ballina", path: "/" },
 		{ name: title, path: "/news/" }
@@ -67,6 +68,9 @@ if (!databaseUrl) {
 				<p class="eyebrow">Flamingo News</p>
 				<h1><span>{title}</span></h1>
 				<p class="lead">{description}</p>
+				<p class="news-hero__feed">
+					<a href="/news/rss.xml">Ndiqni me RSS</a>
+				</p>
 			</section>
 
 			<section class="news-body" aria-label="Lista e artikujve">
@@ -117,6 +121,29 @@ if (!databaseUrl) {
 		font-size: 1.05rem;
 		line-height: 1.6;
 		color: var(--muted);
+	}
+
+	.news-hero__feed {
+		margin: 1.1rem 0 0;
+	}
+
+	.news-hero__feed a {
+		display: inline-block;
+		padding: 0.3rem 0.7rem;
+		font-size: 0.8rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--text);
+		text-decoration: none;
+		background: var(--surface);
+		border: 2px solid var(--ink);
+		box-shadow: 3px 3px 0 var(--ink);
+	}
+
+	.news-hero__feed a:hover,
+	.news-hero__feed a:focus-visible {
+		background: var(--accent-soft);
 	}
 
 	.news-error {
