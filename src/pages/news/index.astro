@@ -70,9 +70,6 @@ if (!databaseUrl) {
 				<p class="eyebrow">Flamingo News</p>
 				<h1><span>{title}</span></h1>
 				<p class="lead">{description}</p>
-				<p class="news-hero__feed">
-					<a href="/news/rss.xml">Ndiqni me RSS</a>
-				</p>
 			</section>
 
 			<section class="news-body" aria-label="Lista e artikujve">
@@ -86,6 +83,10 @@ if (!databaseUrl) {
 					)
 				}
 			</section>
+
+			<footer class="news-feed-note">
+				<a href="/news/rss.xml">Ndiqni me RSS</a>
+			</footer>
 		</main>
 	</SiteFrame>
 </BaseLayout>
@@ -125,27 +126,27 @@ if (!databaseUrl) {
 		color: var(--muted);
 	}
 
-	.news-hero__feed {
-		margin: 1.1rem 0 0;
+	/* Quiet footnote: feed readers find the feed via <link rel="alternate">,
+	   so this only needs to be reachable, not prominent. */
+	.news-feed-note {
+		margin-top: 3rem;
+		padding-top: 1.2rem;
+		border-top: 2px solid var(--line);
+		text-align: center;
 	}
 
-	.news-hero__feed a {
-		display: inline-block;
-		padding: 0.3rem 0.7rem;
+	.news-feed-note a {
 		font-size: 0.8rem;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: var(--text);
-		text-decoration: none;
-		background: var(--surface);
-		border: 2px solid var(--ink);
-		box-shadow: 3px 3px 0 var(--ink);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--muted);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
 	}
 
-	.news-hero__feed a:hover,
-	.news-hero__feed a:focus-visible {
-		background: var(--accent-soft);
+	.news-feed-note a:hover,
+	.news-feed-note a:focus-visible {
+		color: var(--accent-strong);
 	}
 
 	.news-error {
