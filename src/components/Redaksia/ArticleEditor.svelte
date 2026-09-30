@@ -53,6 +53,13 @@
 
 	const isPublished = $derived(article?.status === 'PUBLISHED');
 
+	/** Live reading-time estimate, recomputed as the document changes. */
+	const readingLabel = $derived.by(() => {
+		void editorTick;
+		const words = (editor?.getText() ?? '').trim().split(/\s+/).filter(Boolean).length;
+		return `${Math.max(1, Math.round(words / 200))} min lexim`;
+	});
+
 	/** Media URLs need a trailing slash to match the router. */
 	const coverPreviewUrl = $derived(
 		coverImageUrl.trim().startsWith('/media/') && !coverImageUrl.trim().endsWith('/')
@@ -290,6 +297,26 @@
 		}
 	}
 
+	let previewing = $state(false);
+
+	/** Save first so the preview shows exactly what is stored. */
+	async function openPreview() {
+		if (!article || previewing) return;
+
+		previewing = true;
+
+		try {
+			if (dirty) {
+				const saved = await save();
+				if (!saved) return;
+			}
+
+			window.open(`/redaksia/panel/artikull/${article.id}/preview/`, '_blank', 'noopener');
+		} finally {
+			previewing = false;
+		}
+	}
+
 	function chain() {
 		return editor?.chain().focus();
 	}
@@ -299,9 +326,34 @@
 		return editor?.isActive(name, attrs) ?? false;
 	}
 
+	/**
+	 * Left is the implicit default: treat "no alignment set" as left so the
+	 * left button reads as active on untouched text.
+	 */
 	function isAlignActive(alignment: string): boolean {
 		void editorTick;
-		return editor?.isActive({ textAlign: alignment }) ?? false;
+		if (!editor) return false;
+
+		if (editor.isActive({ textAlign: alignment })) return true;
+
+		return (
+			alignment === 'left' &&
+			!editor.isActive({ textAlign: 'center' }) &&
+			!editor.isActive({ textAlign: 'right' }) &&
+			!editor.isActive({ textAlign: 'justify' })
+		);
+	}
+
+	/** Clicking the active alignment clears it, returning the block to left. */
+	function toggleAlign(alignment: string) {
+		if (!editor) return;
+
+		if (alignment === 'left' || isAlignActive(alignment)) {
+			chain()?.unsetTextAlign().run();
+			return;
+		}
+
+		chain()?.setTextAlign(alignment).run();
 	}
 
 	function setLink() {
@@ -334,6 +386,16 @@
 		action: () => void;
 		active: () => boolean;
 		labelClass?: string;
+		/** Inline SVG path data, drawn instead of the text label when present. */
+		icon?: string;
+	};
+
+	/** Alignment glyphs: four rules with the ragged edge on the relevant side. */
+	const ALIGN_ICONS: Record<string, string> = {
+		left: 'M3 4h14M3 8h9M3 12h14M3 16h9',
+		center: 'M3 4h14M5 8h10M3 12h14M5 16h10',
+		right: 'M3 4h14M8 8h9M3 12h14M8 16h9',
+		justify: 'M3 4h14M3 8h14M3 12h14M3 16h14'
 	};
 
 	const toolbarButtons: ToolbarButton[] = [
@@ -373,26 +435,30 @@
 		},
 		{
 			label: 'L',
-			title: 'Rreshtim majtas',
-			action: () => chain()?.setTextAlign('left').run(),
+			icon: ALIGN_ICONS.left,
+			title: 'Rreshtim majtas (parazgjedhje)',
+			action: () => toggleAlign('left'),
 			active: () => isAlignActive('left')
 		},
 		{
 			label: 'C',
+			icon: ALIGN_ICONS.center,
 			title: 'Rreshtim në qendër',
-			action: () => chain()?.setTextAlign('center').run(),
+			action: () => toggleAlign('center'),
 			active: () => isAlignActive('center')
 		},
 		{
 			label: 'R',
+			icon: ALIGN_ICONS.right,
 			title: 'Rreshtim djathtas',
-			action: () => chain()?.setTextAlign('right').run(),
+			action: () => toggleAlign('right'),
 			active: () => isAlignActive('right')
 		},
 		{
 			label: 'J',
+			icon: ALIGN_ICONS.justify,
 			title: 'Rreshtim i plotë',
-			action: () => chain()?.setTextAlign('justify').run(),
+			action: () => toggleAlign('justify'),
 			active: () => isAlignActive('justify')
 		},
 		{
@@ -444,12 +510,18 @@
 				{:else if article}
 					<span data-status={article.status}>{isPublished ? 'I publikuar' : 'Draft'}</span>
 				{/if}
+				{#if editor}
+					<span class="editor-topbar__reading">· {readingLabel}</span>
+				{/if}
 			</div>
 
 			<div class="editor-topbar__actions">
 				{#if isPublished && article?.slug}
 					<a class="button button--ghost" href={`/news/${article.slug}/`} target="_blank" rel="noopener">Shiko</a>
 				{/if}
+				<button class="button" onclick={() => void openPreview()} disabled={previewing || saving || !article}>
+					{previewing ? 'Duke hapur…' : 'Preview'}
+				</button>
 				<button class="button" onclick={() => void save()} disabled={saving || !article}>Ruaj</button>
 				<button class="button button--primary" onclick={togglePublish} disabled={publishing || !article}>
 					{publishing ? 'Duke punuar…' : isPublished ? 'Hiq nga publikimi' : 'Publiko'}
@@ -525,7 +597,13 @@
 					onclick={tool.action}
 					disabled={!editor}
 				>
-					<span class={tool.labelClass}>{tool.label}</span>
+					{#if tool.icon}
+						<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+							<path d={tool.icon} />
+						</svg>
+					{:else}
+						<span class={tool.labelClass}>{tool.label}</span>
+					{/if}
 				</button>
 			{/each}
 		</div>
@@ -578,6 +656,12 @@
 
 	.editor-topbar__error {
 		color: var(--accent-strong);
+	}
+
+	.editor-topbar__reading {
+		margin-left: 0.35rem;
+		font-weight: 700;
+		color: var(--muted);
 	}
 
 	.editor-topbar__actions {
@@ -755,6 +839,21 @@
 		background: var(--surface);
 		border: 2px solid var(--ink);
 		cursor: pointer;
+	}
+
+	.editor-toolbar__button svg {
+		display: block;
+		width: 1.15rem;
+		height: 1.15rem;
+		margin: 0 auto;
+		stroke: currentColor;
+		stroke-width: 1.7;
+		stroke-linecap: square;
+		fill: none;
+	}
+
+	.editor-toolbar__button.is-active svg {
+		stroke: var(--ink-reverse);
 	}
 
 	.editor-toolbar__button :global(.is-underline) {

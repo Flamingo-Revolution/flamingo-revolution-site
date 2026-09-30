@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ScrollContainer from '../ScrollContainer/ScrollContainer.svelte';
 	import type { NewsCard } from './types';
 
 	type Props = {
@@ -9,9 +10,25 @@
 
 	let activeTag = $state<string | null>(null);
 
-	const allTags = $derived(
-		Array.from(new Set(articles.flatMap((article) => article.tags))).sort((a, b) => a.localeCompare(b, 'sq'))
-	);
+	const tagCounts = $derived.by(() => {
+		const counts = new Map<string, number>();
+
+		for (const article of articles) {
+			for (const tag of article.tags) {
+				counts.set(tag, (counts.get(tag) ?? 0) + 1);
+			}
+		}
+
+		return counts;
+	});
+
+	const allTags = $derived(Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b, 'sq')));
+
+	/** Show a count only when a tag covers more than one article. */
+	function tagLabel(tag: string): string {
+		const count = tagCounts.get(tag) ?? 0;
+		return count > 1 ? `${tag} (${count})` : tag;
+	}
 
 	const visible = $derived(
 		activeTag === null ? articles : articles.filter((article) => article.tags.includes(activeTag))
@@ -23,26 +40,28 @@
 </script>
 
 {#if allTags.length > 0}
-	<div class="news-filters" role="group" aria-label="Filtro sipas etiketave">
-		<button
-			type="button"
-			class="news-filters__chip"
-			class:is-active={activeTag === null}
-			onclick={() => (activeTag = null)}
-		>
-			Të gjitha
-		</button>
-		{#each allTags as tag (tag)}
+	<ScrollContainer class="news-filters" viewportClass="news-filters__track" fadeColor="var(--paper)" fadeSize="1.5rem">
+		<div role="group" aria-label="Filtro sipas etiketave" class="news-filters__group">
 			<button
 				type="button"
 				class="news-filters__chip"
-				class:is-active={activeTag === tag}
-				onclick={() => toggleTag(tag)}
+				class:is-active={activeTag === null}
+				onclick={() => (activeTag = null)}
 			>
-				{tag}
+				Të gjitha
 			</button>
-		{/each}
-	</div>
+			{#each allTags as tag (tag)}
+				<button
+					type="button"
+					class="news-filters__chip"
+					class:is-active={activeTag === tag}
+					onclick={() => toggleTag(tag)}
+				>
+					{tagLabel(tag)}
+				</button>
+			{/each}
+		</div>
+	</ScrollContainer>
 {/if}
 
 <p class="news-count" aria-live="polite">
@@ -69,6 +88,7 @@
 							{#if article.author}
 								<span>· {article.author}</span>
 							{/if}
+							<span>· {article.readingLabel}</span>
 						</p>
 						<h2 class="news-card__title">{article.title}</h2>
 						{#if article.excerpt}
@@ -89,14 +109,26 @@
 {/if}
 
 <style>
-	.news-filters {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
+	/* One non-wrapping row: on phones it scrolls sideways with edge fades
+	   instead of stacking into several lines above the first headline. */
+	:global(.news-filters) {
 		margin-bottom: 1.2rem;
 	}
 
+	:global(.news-filters__track) {
+		/* Room for the chips' offset shadows. */
+		padding-bottom: 0.35rem;
+	}
+
+	.news-filters__group {
+		display: flex;
+		gap: 0.5rem;
+		width: max-content;
+	}
+
 	.news-filters__chip {
+		flex: none;
+		white-space: nowrap;
 		padding: 0.35rem 0.8rem;
 		font: inherit;
 		font-size: 0.85rem;
@@ -232,5 +264,25 @@
 	.news-card__tag:hover,
 	.news-card__tag:focus-visible {
 		background: var(--accent);
+	}
+
+	/* Phones: shorter covers so more headlines fit per scroll. */
+	@media (max-width: 640px) {
+		.news-grid {
+			grid-template-columns: 1fr;
+			gap: 1.2rem;
+		}
+
+		.news-card__cover {
+			aspect-ratio: 2.4 / 1;
+		}
+
+		.news-card__body {
+			padding: 0.9rem 1rem 0.8rem;
+		}
+
+		.news-card__title {
+			font-size: 1.2rem;
+		}
 	}
 </style>

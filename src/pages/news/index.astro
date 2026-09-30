@@ -6,8 +6,8 @@ import type { NewsCard } from "../../components/News/types";
 import { siteCopy } from "../../data/site";
 import { createPrisma } from "@lib/db";
 import { getDatabaseUrl } from "@lib/env/server";
-import { formatArticleDate } from "@lib/articles/format";
-import { summarize } from "@lib/articles/render";
+import { formatArticleDate, readingMinutes } from "@lib/articles/format";
+import { plainText, summarize } from "@lib/articles/render";
 import { normalizeMediaUrl } from "@lib/media";
 
 export const prerender = false;
@@ -40,6 +40,8 @@ if (!databaseUrl) {
 			coverImageUrl: article.coverImageUrl ? normalizeMediaUrl(article.coverImageUrl) : null,
 			publishedAt: article.publishedAt?.toISOString() ?? null,
 			publishedLabel: formatArticleDate(article.publishedAt),
+			// Cards are tight on space, so the unit alone reads better than "min lexim".
+			readingLabel: `${readingMinutes(plainText(article.content))} min`,
 			author: article.reporter.name
 		}));
 	} catch (error) {
@@ -56,6 +58,7 @@ if (!databaseUrl) {
 	description={description}
 	locale="sq"
 	pageType="CollectionPage"
+	rssPath="/news/rss.xml"
 	breadcrumbs={[
 		{ name: "Ballina", path: "/" },
 		{ name: title, path: "/news/" }
@@ -80,6 +83,10 @@ if (!databaseUrl) {
 					)
 				}
 			</section>
+
+			<footer class="news-feed-note">
+				<a href="/news/rss.xml">Ndiqni me RSS</a>
+			</footer>
 		</main>
 	</SiteFrame>
 </BaseLayout>
@@ -117,6 +124,29 @@ if (!databaseUrl) {
 		font-size: 1.05rem;
 		line-height: 1.6;
 		color: var(--muted);
+	}
+
+	/* Quiet footnote: feed readers find the feed via <link rel="alternate">,
+	   so this only needs to be reachable, not prominent. */
+	.news-feed-note {
+		margin-top: 3rem;
+		padding-top: 1.2rem;
+		border-top: 2px solid var(--line);
+		text-align: center;
+	}
+
+	.news-feed-note a {
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--muted);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.news-feed-note a:hover,
+	.news-feed-note a:focus-visible {
+		color: var(--accent-strong);
 	}
 
 	.news-error {

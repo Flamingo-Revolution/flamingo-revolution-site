@@ -26,6 +26,8 @@ interface Props {
   authorName?: string;
   noindex?: boolean;
   canonicalPath?: string;
+  /** Path to an RSS feed for this section, e.g. "/news/rss.xml". */
+  rssPath?: string;
   jsonLdExtra?: object[];
   breadcrumbs?: BreadcrumbItem[];
 }
@@ -44,6 +46,7 @@ const {
   authorName,
   noindex = false,
   canonicalPath,
+  rssPath,
   jsonLdExtra = [],
   breadcrumbs
 } = Astro.props;
@@ -100,6 +103,7 @@ const { PUBLIC_UMAMI_SCRIPT, PUBLIC_UMAMI_DATA_WEBSITE_ID, DEV } = import.meta.e
     <meta name="theme-color" content="#edf6ff" />
     <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
     <link rel="canonical" href={canonicalUrl} />
+    {rssPath && <link rel="alternate" type="application/rss+xml" title={`${siteName} — RSS`} href={rssPath} />}
     <title>{title}</title>
     <link rel="icon" href={faviconIcoUrl} sizes="any" />
     <link rel="icon" href={faviconUrl} type="image/svg+xml" sizes="any" />

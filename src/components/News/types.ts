@@ -6,5 +6,6 @@ export type NewsCard = {
 	coverImageUrl: string | null;
 	publishedAt: string | null;
 	publishedLabel: string;
+	readingLabel: string;
 	author: string;
 };
