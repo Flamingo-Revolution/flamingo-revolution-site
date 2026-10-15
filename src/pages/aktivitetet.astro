@@ -1,0 +1,147 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EventCard from "../components/EventCard.astro";
+import PageHero from "../components/PageHero.astro";
+import SiteFrame from "../components/SiteFrame.astro";
+import { getPastEvents, getUpcomingEvents, homepageEvents } from "../data/events";
+import { siteCopy } from "../data/site";
+
+export const prerender = true;
+
+const locale = "sq";
+const copy = siteCopy[locale];
+const upcomingEvents = getUpcomingEvents(homepageEvents[locale]);
+const pastEvents = getPastEvents(homepageEvents[locale]);
+const discordHref = copy.footer.links.find((link) => link.label === "Discord")?.href ?? "https://discord.gg/flamingorevolution";
+---
+
+<BaseLayout
+  title="Aktivitetet | Revolucioni Flamingo"
+  description="Biseda publike, ligjërata dhe takime të Revolucionit Flamingo. Shiko aktivitetet e ardhshme dhe arkivin."
+  locale={locale}
+  pageType="CollectionPage"
+  canonicalPath="/aktivitetet/"
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Aktivitetet", path: "/aktivitetet/" }
+  ]}
+>
+  <SiteFrame {locale} {copy} currentPage="events" localePath="aktivitetet">
+    <main class="events-page" id="main" tabindex="-1">
+      <PageHero
+        eyebrow="Aktivitetet"
+        title="Ku takohemi"
+        lead="Biseda publike, ligjërata dhe takime ku temat e protestës diskutohen më gjatë, përballë një publiku."
+        primaryCta={{
+          label: upcomingEvents.length > 0 ? "Shiko aktivitetet e ardhshme" : "Shiko arkivin",
+          href: upcomingEvents.length > 0 ? "#te-ardhshme" : "#arkivi"
+        }}
+      />
+
+      <section class="section-block section-block--accent" id="te-ardhshme">
+        <div class="section-heading">
+          <p class="eyebrow">Në kalendar</p>
+          <h2>Aktivitetet e ardhshme</h2>
+          <p>Takimi i radhës do të shfaqet edhe si njoftim i vogël në ballinë.</p>
+        </div>
+
+        {upcomingEvents.length > 0 ? (
+          <div class="events-list">
+            {upcomingEvents.map((event) => <EventCard {event} />)}
+          </div>
+        ) : (
+          <div class="events-empty">
+            <p class="events-empty__mark" aria-hidden="true">○</p>
+            <div>
+              <h3>Nuk ka ende një datë të re</h3>
+              <p>Kur të konfirmohet aktiviteti i radhës, do ta publikojmë këtu dhe në Discord.</p>
+              <a class="button button--primary" href={discordHref} target="_blank" rel="noreferrer">
+                Bashkohu në Discord<span aria-hidden="true"> ↗</span>
+              </a>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {pastEvents.length > 0 && (
+        <section class="section-block" id="arkivi">
+          <div class="section-heading">
+            <p class="eyebrow">Arkivi</p>
+            <h2>Aktivitetet e kaluara</h2>
+            <p>Takime dhe biseda të organizuara ose me pjesëmarrjen e Revolucionit Flamingo.</p>
+          </div>
+
+          <div class="events-list">
+            {pastEvents.map((event) => <EventCard {event} past />)}
+          </div>
+        </section>
+      )}
+    </main>
+  </SiteFrame>
+</BaseLayout>
+
+<style>
+  .events-list {
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    width: 100%;
+    max-width: 100%;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .events-empty {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1.2rem;
+    width: 100%;
+    max-width: 100%;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+    padding: clamp(1.2rem, 4vw, 2rem);
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 7px 7px 0 var(--ink);
+  }
+
+  .events-empty__mark {
+    margin: -0.25rem 0 0;
+    color: var(--accent-strong);
+    font-size: 3.8rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .events-empty h3 {
+    margin: 0;
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+  }
+
+  .events-empty p:not(.events-empty__mark) {
+    max-width: 52ch;
+    margin: 0.65rem 0 1.1rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 560px) {
+    .events-list {
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .events-empty {
+      grid-template-columns: 1fr;
+      gap: 0;
+      margin-top: 1.25rem;
+      padding: 1.1rem;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    .events-empty__mark {
+      display: none;
+    }
+
+    .events-empty .button {
+      width: 100%;
+    }
+  }
+</style>

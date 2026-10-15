@@ -1,0 +1,252 @@
+---
+import type { EventNoticeCopy, HomepageEvent } from "../data/events";
+
+interface Props {
+  event: HomepageEvent;
+  copy: EventNoticeCopy;
+  preview?: boolean;
+}
+
+const { event, copy, preview = false } = Astro.props;
+---
+
+<aside
+  class="event-notice"
+  data-event-notice
+  data-event-slug={event.slug}
+  data-event-end={event.endDatetime ?? event.datetime}
+  data-preview={preview ? "true" : undefined}
+  aria-labelledby={`event-notice-${event.slug}`}
+  hidden
+>
+  <button class="event-notice__close" type="button" data-event-notice-close aria-label={copy.closeLabel}>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+    </svg>
+  </button>
+
+  <div class="event-notice__date" aria-hidden="true">
+    <strong>{event.day}</strong>
+    <span>{event.month}</span>
+  </div>
+
+  <div class="event-notice__content">
+    <p class="event-notice__eyebrow">{copy.eyebrow}</p>
+    <h2 id={`event-notice-${event.slug}`}>{event.title}</h2>
+    <p class="event-notice__meta">{event.time} · {event.location}</p>
+    <div class="event-notice__actions">
+      {event.href && (
+        <a class="event-notice__primary" href={event.href} target="_blank" rel="noreferrer">
+          {copy.detailsLabel}<span aria-hidden="true"> ↗</span>
+        </a>
+      )}
+      <a href="/aktivitetet/">{copy.allEventsLabel}</a>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .event-notice {
+    position: fixed;
+    z-index: 80;
+    left: var(--event-notice-left, 1rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    display: grid;
+    grid-template-columns: 5.25rem minmax(0, 1fr);
+    width: min(27rem, var(--event-notice-max-width, calc(100vw - 2rem)));
+    max-width: calc(100vw - 2rem);
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 7px 7px 0 var(--ink);
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+
+  .event-notice[hidden] {
+    display: none;
+  }
+
+  .event-notice[data-visible="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .event-notice__close {
+    position: absolute;
+    z-index: 1;
+    top: 0.45rem;
+    right: 0.45rem;
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .event-notice__close:hover,
+  .event-notice__close:focus-visible {
+    background: var(--ink);
+    color: var(--ink-reverse);
+  }
+
+  .event-notice__close svg {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .event-notice__date {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    padding: 1rem 0.65rem;
+    border-right: 2px solid var(--ink);
+    background: var(--accent);
+    color: #050505;
+    text-align: center;
+  }
+
+  .event-notice__date strong {
+    font-size: 2.8rem;
+    line-height: 0.85;
+    letter-spacing: -0.07em;
+  }
+
+  .event-notice__date span {
+    margin-top: 0.45rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .event-notice__content {
+    min-width: 0;
+    padding: 1rem 2.8rem 1rem 1rem;
+  }
+
+  .event-notice__eyebrow {
+    margin: 0 0 0.35rem;
+    color: var(--accent-strong);
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .event-notice h2 {
+    max-width: 19ch;
+    font-size: 1.15rem;
+    line-height: 1.05;
+  }
+
+  .event-notice__meta {
+    margin: 0.55rem 0 0;
+    color: var(--muted);
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .event-notice__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.8rem;
+    margin-top: 0.75rem;
+  }
+
+  .event-notice__actions a {
+    color: var(--text);
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 0.12rem;
+    text-underline-offset: 0.18rem;
+  }
+
+  .event-notice__actions a:hover,
+  .event-notice__actions a:focus-visible {
+    color: var(--accent-strong);
+  }
+
+  .event-notice__primary {
+    text-decoration-color: var(--ink) !important;
+  }
+
+  @media (max-width: 600px) {
+    .event-notice {
+      bottom: 5.5rem;
+      grid-template-columns: 4.4rem minmax(0, 1fr);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    .event-notice__date strong {
+      font-size: 2.35rem;
+    }
+
+    .event-notice__content {
+      padding: 0.85rem 2.5rem 0.85rem 0.85rem;
+    }
+  }
+</style>
+
+<script>
+  const attachEventNotices = () => {
+    document.querySelectorAll("[data-event-notice]").forEach((notice) => {
+      if (!(notice instanceof HTMLElement) || notice.dataset.bound === "true") return;
+      notice.dataset.bound = "true";
+
+      const preview = notice.dataset.preview === "true";
+      const endTime = Date.parse(notice.dataset.eventEnd ?? "");
+      const storageKey = `flamingo-event-dismissed:${notice.dataset.eventSlug ?? "event"}`;
+
+      const syncToPageFrame = () => {
+        const pageFrame = notice.closest(".page-shell");
+        if (!(pageFrame instanceof HTMLElement)) return;
+
+        const frame = pageFrame.getBoundingClientRect();
+        const inset = window.innerWidth <= 760 ? 16 : Math.min(32, Math.max(16, window.innerWidth * 0.03));
+        const left = Math.max(0, frame.left) + inset;
+        const right = Math.min(window.innerWidth, frame.right) - inset;
+
+        notice.style.setProperty("--event-notice-left", `${left}px`);
+        notice.style.setProperty("--event-notice-max-width", `${Math.max(0, right - left)}px`);
+      };
+
+      if (!preview && (!Number.isFinite(endTime) || endTime < Date.now())) {
+        notice.remove();
+        return;
+      }
+
+      if (localStorage.getItem(storageKey) === "true") return;
+
+      syncToPageFrame();
+      window.addEventListener("resize", syncToPageFrame, { passive: true });
+      notice.hidden = false;
+      window.setTimeout(() => {
+        notice.dataset.visible = "true";
+      }, 650);
+
+      notice.querySelector("[data-event-notice-close]")?.addEventListener("click", () => {
+        notice.dataset.visible = "false";
+        localStorage.setItem(storageKey, "true");
+        window.setTimeout(() => {
+          notice.hidden = true;
+        }, 180);
+      });
+    });
+  };
+
+  document.addEventListener("astro:page-load", attachEventNotices);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachEventNotices, { once: true });
+  } else {
+    attachEventNotices();
+  }
+</script>

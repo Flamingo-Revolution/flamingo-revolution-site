@@ -1,0 +1,249 @@
+---
+import type { HomepageEvent } from "../data/events";
+
+interface Props {
+  event: HomepageEvent;
+  past?: boolean;
+}
+
+const { event, past = false } = Astro.props;
+---
+
+<article class="event-card" data-past={past ? "true" : undefined}>
+  <time class="event-card__date" datetime={event.datetime}>
+    <strong>{event.day}</strong>
+    <span>{event.month}</span>
+    <small>{event.year}</small>
+  </time>
+
+  <div class="event-card__body">
+    <p class="event-card__status">{past ? "Përfunduar" : event.status}</p>
+    <h3>{event.title}</h3>
+    <p class="event-card__description">{event.description}</p>
+
+    <dl class="event-card__facts">
+      <div>
+        <dt>Ora</dt>
+        <dd>{event.time}</dd>
+      </div>
+      <div>
+        <dt>Vendi</dt>
+        <dd>{event.venue}</dd>
+      </div>
+      <div>
+        <dt>Qyteti</dt>
+        <dd>
+          {event.locationHref ? (
+            <a href={event.locationHref} target="_blank" rel="noreferrer">{event.location}<span aria-hidden="true"> ↗</span></a>
+          ) : event.location}
+        </dd>
+      </div>
+      <div>
+        <dt>Hyrja</dt>
+        <dd>{event.admission}</dd>
+      </div>
+    </dl>
+
+    <div class="event-card__actions">
+      {event.href && (
+        <a class="button button--primary" href={event.href} target="_blank" rel="noreferrer">
+          Shiko aktivitetin<span aria-hidden="true"> ↗</span>
+        </a>
+      )}
+      {!past && event.ticketHref && (
+        <a class="button button--ghost" href={event.ticketHref} target="_blank" rel="noreferrer">
+          Rezervo vendin<span aria-hidden="true"> ↗</span>
+        </a>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .event-card {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    border: 2px solid var(--ink);
+    background: var(--surface);
+    box-shadow: 7px 7px 0 var(--ink);
+  }
+
+  .event-card[data-past="true"] {
+    box-shadow: 5px 5px 0 color-mix(in srgb, var(--ink) 75%, transparent);
+  }
+
+  .event-card__date {
+    display: grid;
+    align-content: start;
+    justify-items: center;
+    padding: 1.35rem 0.75rem;
+    border-right: 2px solid var(--ink);
+    background: var(--accent);
+    color: #050505;
+    text-align: center;
+  }
+
+  .event-card[data-past="true"] .event-card__date {
+    background: var(--paper-cool);
+    color: var(--text);
+  }
+
+  .event-card__date strong {
+    font-size: clamp(2.8rem, 6vw, 4rem);
+    line-height: 0.85;
+    letter-spacing: -0.08em;
+  }
+
+  .event-card__date span {
+    margin-top: 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .event-card__date small {
+    margin-top: 0.18rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .event-card__body {
+    min-width: 0;
+    padding: clamp(1.2rem, 3vw, 2rem);
+  }
+
+  .event-card__status {
+    margin: 0 0 0.55rem;
+    color: var(--accent-strong);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .event-card[data-past="true"] .event-card__status {
+    color: var(--muted);
+  }
+
+  .event-card h3 {
+    max-width: 30ch;
+    margin: 0;
+    font-size: clamp(1.45rem, 4vw, 2.35rem);
+    line-height: 1;
+  }
+
+  .event-card__description {
+    max-width: 65ch;
+    margin: 0.9rem 0 0;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .event-card__facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem 1.4rem;
+    margin: 1.25rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .event-card__facts div {
+    min-width: 0;
+  }
+
+  .event-card__facts dt {
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .event-card__facts dd {
+    margin: 0.2rem 0 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .event-card__facts a {
+    color: var(--text);
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 0.12rem;
+    text-underline-offset: 0.18rem;
+  }
+
+  .event-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1.4rem;
+  }
+
+  @media (max-width: 620px) {
+    .event-card {
+      grid-template-columns: 1fr;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    .event-card__date {
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-right: 0;
+      border-bottom: 2px solid var(--ink);
+      text-align: left;
+    }
+
+    .event-card__date strong {
+      font-size: 2.2rem;
+    }
+
+    .event-card__date span {
+      margin-top: 0;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+    }
+
+    .event-card__date small {
+      margin-top: 0;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .event-card__body {
+      padding: 1.1rem;
+    }
+
+    .event-card h3 {
+      font-size: clamp(1.4rem, 7vw, 1.8rem);
+      line-height: 1.05;
+    }
+
+    .event-card__description {
+      margin-top: 0.75rem;
+      font-size: 0.94rem;
+      line-height: 1.48;
+    }
+
+    .event-card__facts {
+      gap: 0.8rem 1rem;
+      margin-top: 1rem;
+      padding-top: 0.85rem;
+    }
+
+    .event-card__actions .button {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .event-card__facts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
