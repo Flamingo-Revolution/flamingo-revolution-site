@@ -7,6 +7,7 @@ export type HomepageEvent = {
 	month: string;
 	year: string;
 	datetime: string;
+	endDatetime?: string;
 	time: string;
 	title: string;
 	description: string;
@@ -18,51 +19,39 @@ export type HomepageEvent = {
 	ticketHref?: string;
 };
 
-export type EventsSectionCopy = {
+export type EventNoticeCopy = {
 	eyebrow: string;
-	title: string;
-	description: string;
-	dateLabel: string;
-	timeLabel: string;
-	venueLabel: string;
-	admissionLabel: string;
 	detailsLabel: string;
-	ticketsLabel: string;
-	previousLabel: string;
-	nextLabel: string;
-	carouselLabel: string;
+	allEventsLabel: string;
+	closeLabel: string;
 };
 
-export const eventsSectionCopy: Record<Locale, EventsSectionCopy> = {
+export const eventNoticeCopy: Record<Locale, EventNoticeCopy> = {
 	sq: {
-		eyebrow: 'Së shpejti',
-		title: 'Ku takohemi më pas',
-		description: 'Protesta, diskutime dhe aktivitete të Revolucionit Flamingo, në Shqipëri dhe në diasporë.',
-		dateLabel: 'Data',
-		timeLabel: 'Ora',
-		venueLabel: 'Vendi',
-		admissionLabel: 'Hyrja',
+		eyebrow: 'Aktivitet',
 		detailsLabel: 'Shiko aktivitetin',
-		ticketsLabel: 'Rezervo falas',
-		previousLabel: 'Aktiviteti i mëparshëm',
-		nextLabel: 'Aktiviteti i ardhshëm',
-		carouselLabel: 'Aktivitetet e Revolucionit Flamingo'
+		allEventsLabel: 'Të gjitha aktivitetet',
+		closeLabel: 'Mbyll njoftimin'
 	},
 	en: {
-		eyebrow: 'On the agenda',
-		title: 'Where we meet next',
-		description: 'Protests, discussions and Flamingo Revolution events in Albania and across the diaspora.',
-		dateLabel: 'Date',
-		timeLabel: 'Time',
-		venueLabel: 'Venue',
-		admissionLabel: 'Admission',
+		eyebrow: 'Event',
 		detailsLabel: 'View event',
-		ticketsLabel: 'Reserve for free',
-		previousLabel: 'Previous event',
-		nextLabel: 'Next event',
-		carouselLabel: 'Flamingo Revolution events'
+		allEventsLabel: 'All events',
+		closeLabel: 'Dismiss event notice'
 	}
 };
+
+export const eventEndsAt = (event: HomepageEvent) => new Date(event.endDatetime ?? event.datetime).getTime();
+
+export const getUpcomingEvents = (items: HomepageEvent[], now = new Date()) =>
+	[...items]
+		.filter((event) => eventEndsAt(event) >= now.getTime())
+		.sort((a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime());
+
+export const getPastEvents = (items: HomepageEvent[], now = new Date()) =>
+	[...items]
+		.filter((event) => eventEndsAt(event) < now.getTime())
+		.sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
 
 export const homepageEvents: Record<Locale, HomepageEvent[]> = {
 	sq: [
@@ -73,6 +62,7 @@ export const homepageEvents: Record<Locale, HomepageEvent[]> = {
 			month: 'Shtator',
 			year: '2026',
 			datetime: '2026-09-17T13:00:00+02:00',
+			endDatetime: '2026-09-17T14:30:00+02:00',
 			time: '13:00–14:30',
 			title: 'Insights on The Flamingo Revolution in Albania',
 			description:
@@ -90,6 +80,7 @@ export const homepageEvents: Record<Locale, HomepageEvent[]> = {
 			month: 'Shtator',
 			year: '2026',
 			datetime: '2026-09-15T20:00:00+02:00',
+			endDatetime: '2026-09-15T21:30:00+02:00',
 			time: '20:00–21:30',
 			title: 'The Flamingo Revolution',
 			description:
@@ -110,6 +101,7 @@ export const homepageEvents: Record<Locale, HomepageEvent[]> = {
 			month: 'September',
 			year: '2026',
 			datetime: '2026-09-17T13:00:00+02:00',
+			endDatetime: '2026-09-17T14:30:00+02:00',
 			time: '13:00–14:30',
 			title: 'Insights on The Flamingo Revolution in Albania',
 			description:
@@ -127,6 +119,7 @@ export const homepageEvents: Record<Locale, HomepageEvent[]> = {
 			month: 'September',
 			year: '2026',
 			datetime: '2026-09-15T20:00:00+02:00',
+			endDatetime: '2026-09-15T21:30:00+02:00',
 			time: '20:00–21:30',
 			title: 'The Flamingo Revolution',
 			description:

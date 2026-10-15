@@ -8,8 +8,8 @@ import SiteFrame from "./SiteFrame.astro";
 import SectionMedia from "./SectionMedia.astro";
 import CardSlider from "./CardSlider.astro";
 import type { CardSliderItem } from "./CardSlider.astro";
-import EventCarousel from "./EventCarousel.astro";
-import { eventsSectionCopy, homepageEvents } from "../data/events";
+import EventNotice from "./EventNotice.astro";
+import { eventNoticeCopy, getPastEvents, getUpcomingEvents, homepageEvents } from "../data/events";
 
 interface Props {
   locale: Locale;
@@ -24,6 +24,12 @@ const protestsHref = `${prefix}/protestat/`;
 const protestsCopy = protestsPageCopy[locale];
 const discordHref = copy.footer.links.find((link) => link.label === "Discord")?.href ?? "#";
 const photoPlaceholder = protestsCopy.photoPlaceholderLabel;
+const upcomingEvents = getUpcomingEvents(homepageEvents[locale]);
+const previewEvent = import.meta.env.DEV && upcomingEvents.length === 0
+  ? getPastEvents(homepageEvents[locale])[0]
+  : undefined;
+const noticeEvent = upcomingEvents[0] ?? previewEvent;
+const noticeIsPreview = upcomingEvents.length === 0 && Boolean(previewEvent);
 
 // Every collection-shaped block on the page (stats, protest highlights,
 // demands, projects, timeline) feeds the same CardSlider, so the page reads
@@ -147,10 +153,9 @@ const projectCards: CardSliderItem[] = [
               ))
             }
           </ul>
+
         </div>
       </section>
-
-      <EventCarousel items={homepageEvents[locale]} copy={eventsSectionCopy[locale]} />
 
       <section class="section-block section-block--accent" id="protestat">
         <div class="section-heading">
@@ -240,6 +245,10 @@ const projectCards: CardSliderItem[] = [
         </div>
       </section>
     </main>
+
+    {noticeEvent && (
+      <EventNotice event={noticeEvent} copy={eventNoticeCopy[locale]} preview={noticeIsPreview} />
+    )}
 
   </SiteFrame>
 </BaseLayout>
