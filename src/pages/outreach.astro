@@ -1,0 +1,21 @@
+---
+import EmbedPage from "../components/EmbedPage.astro";
+import { siteCopy } from "../data/site";
+---
+
+<EmbedPage
+  locale="sq"
+  siteCopy={siteCopy.sq}
+  currentPage="outreach"
+  localePath="outreach"
+  title="Flamingo Outreach — kontakto median dhe institucionet | Revolucioni Flamingo"
+  heading="Flamingo Outreach"
+  description="Një mënyrë standarde për të kontaktuar median, institucionet dhe deputetët jashtë vendit."
+  lead="Flamingo Outreach jep shabllone dhe kontakte të gatshme për t'u drejtuar medias, institucioneve dhe deputetëve jashtë vendit me një zë të përbashkët."
+  links={[
+    { label: "Flamingo Dossier", href: "/dosjet/" },
+    { label: "Flamingo Times", href: "/flamingo-times/" },
+    { label: "Rreth nesh", href: "/rreth-nesh/" }
+  ]}
+  src="https://flamingo-revolution.github.io/flamingo-outreach/"
+/>
