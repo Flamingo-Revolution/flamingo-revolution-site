@@ -1,0 +1,160 @@
+.times-eleven .times-students__hero {
+	padding-block: clamp(1.1rem, 3vw, 2.2rem);
+}
+
+.times-eleven__spread {
+	max-width: 90rem;
+	margin-inline: auto;
+	padding: clamp(1rem, 2.6vw, 2rem) clamp(1rem, 5vw, 3.4rem);
+}
+
+.times-eleven__hero img {
+	aspect-ratio: 12 / 5;
+	object-fit: cover;
+	object-position: center 87%;
+}
+
+.times-eleven .times-student-timeline a {
+	display: block;
+	font-weight: 800;
+}
+
+.times-eleven .times-student-timeline a:hover span,
+.times-eleven .times-student-timeline a:focus-visible span {
+	text-decoration: underline;
+}
+
+.times-eleven__columns {
+	display: grid;
+	grid-template-columns: minmax(0, 1.1fr) repeat(2, minmax(0, 1fr));
+	margin-top: 1.15rem;
+}
+
+.times-eleven__column {
+	min-width: 0;
+	padding-inline: clamp(1rem, 2vw, 1.75rem);
+	font-family: Georgia, serif;
+	font-size: 1.0625rem;
+	line-height: 1.6;
+}
+
+.times-eleven__column:first-child {
+	padding-left: 0;
+}
+
+.times-eleven__column:last-child {
+	padding-right: 0;
+}
+
+.times-eleven__column + .times-eleven__column {
+	border-left: 1px solid #151515;
+}
+
+.times-eleven__column > p,
+.times-eleven__kruje-ending > p,
+.times-eleven .times-inline-quote > p {
+	margin: 0;
+}
+
+.times-eleven .times-inline-quote {
+	font-style: italic;
+}
+
+.times-eleven__column > p + p {
+	margin-top: 0.9rem;
+}
+
+.times-eleven__column .times-students__feature {
+	margin-block: 0.9rem;
+}
+
+.times-eleven__column .times-students__feature:first-child {
+	margin-top: 0;
+}
+
+.times-eleven__portrait {
+	max-width: 22rem;
+	margin-inline: auto;
+}
+
+.times-eleven__action {
+	gap: clamp(1rem, 3vw, 2.25rem);
+	padding-block: clamp(1.15rem, 3vw, 2.25rem);
+}
+
+.times-eleven__action h2 {
+	max-width: 23ch;
+	font-size: clamp(1.9rem, 4vw, 3.6rem);
+	line-height: 1;
+}
+
+.times-eleven__action .times-student-closing__statement {
+	margin-bottom: 0;
+	font-weight: 700;
+	line-height: 1.3;
+	text-transform: none;
+}
+
+.times-eleven__action-card {
+	align-self: start;
+	padding: 1.5rem;
+	border: 3px solid #151515;
+	background: #151515;
+	color: #fff8ef;
+	text-align: center;
+}
+
+.times-eleven__action .times-student-closing__rule {
+	margin-block: 1rem 0.75rem;
+}
+
+@media (min-width: 1021px) {
+	.times-eleven__kruje-ending {
+		display: grid;
+		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+		align-items: start;
+		gap: 0.85rem;
+		margin-top: 0.9rem;
+	}
+}
+
+@media (max-width: 1020px) {
+	.times-eleven__spread {
+		max-width: 48rem;
+	}
+
+	.times-eleven__columns {
+		display: block;
+		margin-top: 0.95rem;
+	}
+
+	.times-eleven__column {
+		padding-inline: 0;
+	}
+
+	.times-eleven__column + .times-eleven__column {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-left: 0;
+		border-top: 1px solid #151515;
+	}
+
+	.times-eleven__action-card {
+		width: min(100%, 20rem);
+	}
+}
+
+@media (max-width: 760px) {
+	.times-eleven__hero img {
+		aspect-ratio: auto;
+	}
+
+	.times-eleven .times-student-timeline li {
+		padding: 0.65rem 0.45rem;
+		text-align: center;
+	}
+
+	.times-eleven .times-student-timeline time {
+		font-size: clamp(1.6rem, 8vw, 2.35rem);
+	}
+}

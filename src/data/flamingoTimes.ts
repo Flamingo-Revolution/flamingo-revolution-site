@@ -1,3 +1,5 @@
+import { issueEleven } from "./flamingoTimesIssueEleven";
+
 export type FlamingoTimesIssue = {
   number: number;
   date: string;
@@ -13,6 +15,19 @@ export type FlamingoTimesIssue = {
 };
 
 export const flamingoTimesIssues: FlamingoTimesIssue[] = [
+  {
+    number: 11,
+    date: "Nëntor 2026",
+    datetime: "2026-11",
+    title: issueEleven.title,
+    category: "Historia & qytetaria",
+    excerpt: "1443, 1912, 2026. Tre nëntorë në historinë e shqiptarëve dhe në luftën për liri.",
+    topics: ["Skënderbeu", "Kruja", "pavarësia", "Vlora", "protesta"],
+    href: "/flamingo-times/artikujt/botimi-11/",
+    pdfHref: "/documents/flamingo-times/flamingo-times-botimi-11.pdf",
+    imageSrc: issueEleven.hero.src,
+    imageAlt: issueEleven.hero.alt
+  },
   {
     number: 10,
     date: "Shtator 2026",
@@ -154,7 +169,7 @@ export const flamingoTimesIssues: FlamingoTimesIssue[] = [
 ];
 
 export function toRomanIssue(number: number): string {
-  return ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][number] ?? String(number);
+  return ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"][number] ?? String(number);
 }
 
 export function issuePublishedDate(issue: FlamingoTimesIssue): Date {

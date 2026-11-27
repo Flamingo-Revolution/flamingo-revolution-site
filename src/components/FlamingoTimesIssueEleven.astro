@@ -1,0 +1,160 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  flamingoTimesIssues,
+  issuePageTitle,
+  issuePublishedDate,
+  toRomanIssue
+} from "../data/flamingoTimes";
+import { issueEleven as article } from "../data/flamingoTimesIssueEleven";
+import { siteCopy } from "../data/site";
+import FlamingoTimesNav from "./FlamingoTimesNav.astro";
+import SiteFrame from "./SiteFrame.astro";
+import "../styles/flamingo-times.css";
+import "../styles/flamingo-times-issue-six.css";
+import "../styles/flamingo-times-issue-eleven.css";
+
+interface Props {
+  isLatest?: boolean;
+}
+
+const { isLatest = false } = Astro.props;
+const issue = flamingoTimesIssues.find((entry) => entry.number === 11)!;
+const edition = `Botimi ${toRomanIssue(issue.number)}`;
+const timeline = [
+  { year: "1443", label: "Krujë" },
+  { year: "1912", label: "Vlorë" },
+  { year: "2026", label: "Tiranë" }
+];
+---
+
+<BaseLayout
+  title={issuePageTitle(issue)}
+  description={issue.excerpt}
+  locale="sq"
+  pageType="NewsArticle"
+  publishedTime={issuePublishedDate(issue)}
+  canonicalPath="/flamingo-times/"
+  socialImagePath={issue.imageSrc}
+  socialImageAlt={issue.imageAlt}
+  breadcrumbs={[
+    { name: "Ballina", path: "/" },
+    { name: "Flamingo Times", path: "/flamingo-times/" },
+    ...(!isLatest ? [{ name: issue.title, path: issue.href }] : [])
+  ]}
+>
+  <SiteFrame locale="sq" copy={siteCopy.sq} currentPage="times" shellClass="times-shell">
+    <main class="times-page times-eleven" id="main" tabindex="-1">
+      <section class="times-masthead" aria-labelledby="times-title">
+        <div class="times-masthead__meta">
+          <span>Tiranë, {issue.date}</span>
+          <span>{edition}</span>
+        </div>
+        <p class="times-masthead__kicker">Përgatitur nga flamingorevolution.eu</p>
+        <h1 id="times-title">Flamingo <em>Times</em></h1>
+        <div class="times-masthead__rule">
+          <p>Shtypur në zyrat e shtetit nga nëpunës me ndërgjegje</p>
+          <div class="times-masthead__actions">
+            <a class="times-download" href={issue.pdfHref} download>Shkarko botimin</a>
+          </div>
+        </div>
+      </section>
+
+      <FlamingoTimesNav current={isLatest ? "latest" : "archive"} />
+
+      <nav class="times-sections" aria-label="Seksionet e gazetës">
+        <a href="#kryeartikulli">Kryeartikulli</a>
+        <a href="#tre-nentoret">Tre nëntorët</a>
+        <a href="#vepro">28 nëntor</a>
+      </nav>
+
+      <article class="times-students" id="kryeartikulli">
+        <header class="times-students__hero">
+          <h2>{article.title}</h2>
+        </header>
+
+        <div class="times-eleven__spread">
+          <figure class="times-students__feature times-students__feature--wide times-eleven__hero">
+            <img {...article.hero} fetchpriority="high" />
+          </figure>
+
+          <ol class="times-student-timeline" id="tre-nentoret">
+            {
+              timeline.map(({ year, label }) => (
+                <li>
+                  <a href={`#nentor-${year}`}>
+                    <time datetime={`${year}-11`}>{year}</time>
+                    <span>{label}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+
+          <div class="times-eleven__columns">
+            <section class="times-eleven__column" id="nentor-1443" aria-label="Nëntor 1443">
+              <p><strong>{article.kruje.date}</strong>{article.kruje.intro}</p>
+              <blockquote class="times-inline-quote"><p>{article.kruje.quote}</p></blockquote>
+              <div class="times-eleven__kruje-ending">
+                <figure class="times-students__feature times-eleven__portrait">
+                  <img {...article.kruje.image} loading="lazy" />
+                </figure>
+                <p>{article.kruje.conclusion}</p>
+              </div>
+            </section>
+
+            <section class="times-eleven__column" id="nentor-1912" aria-label="Nëntor 1912">
+              <figure class="times-students__feature">
+                <img {...article.vlore.image} loading="lazy" />
+              </figure>
+              <p><strong>{article.vlore.date}</strong>{article.vlore.intro}</p>
+              <blockquote class="times-inline-quote"><p>{article.vlore.quote}</p></blockquote>
+            </section>
+
+            <section class="times-eleven__column" id="nentor-2026" aria-label="Nëntor 2026">
+              <p><strong>{article.tirane.date}</strong>{article.tirane.intro}</p>
+              <p>{article.tirane.conclusion}</p>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <section class="times-action times-eleven__action" id="vepro" aria-labelledby="times-action-title">
+        <div class="times-action__demands">
+          <p class="times-label">Thirrje për veprim</p>
+          <h2 id="times-action-title">{article.closing.call}</h2>
+          <hr class="times-student-closing__rule" />
+          <p class="times-student-closing__statement">{article.closing.event}</p>
+        </div>
+        <aside class="times-eleven__action-card">
+          <div class="times-six__demands-brand">
+            <img
+              class="times-six__demands-logo"
+              src="/images/flamingo-wordmark-dark.svg"
+              alt="Flamingo Revolution"
+              width="426"
+              height="187"
+              loading="lazy"
+            />
+            <a href="https://www.flamingorevolution.eu/" aria-label="Hap flamingorevolution.eu">
+              <span>flamingorevolution.eu</span>
+              <img
+                class="times-six__demands-qr"
+                src="/images/flamingo-times/botimi-11/qr-flamingorevolution.png"
+                alt="Kodi QR për flamingorevolution.eu"
+                width="592"
+                height="592"
+                loading="lazy"
+              />
+            </a>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="times-source">
+        <p>Lexoje. Fotokopjoje. Shpërndaje.</p>
+        <strong>FLAMINGO TIMES · {edition} · {issue.date}</strong>
+      </footer>
+    </main>
+  </SiteFrame>
+</BaseLayout>
